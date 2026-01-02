@@ -30,6 +30,14 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="lab"
+        options={{
+          href: null, // This hides the tab button from the bottom bar!
+          title: 'Lab',
+          headerShown: true, // Show the top back button
+        }}
+      />
     </Tabs>
   );
 }

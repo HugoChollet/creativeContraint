@@ -1,14 +1,17 @@
 import { ThemedView } from '@/components/themed-view';
+import { useRouter } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 export default function HomeScreen() {
+  const router = useRouter();
+  
   return (
     <ThemedView style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={() => console.log('Pressed')}>
-        <Text>Fiction Book</Text>
+      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 'Book' } })}>
+        <Text>Write a Fiction Book</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => console.log('Pressed')}>
-        <Text>Video Game</Text>
+      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 'Video Game' } })}>
+        <Text>Develop a Video Game</Text>
       </TouchableOpacity>
     </ThemedView>
   );
