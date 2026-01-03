@@ -1,8 +1,10 @@
 import book from '@/assets/book.json';
+import Category from '@/components/category-component';
 import { ThemedText } from '@/components/themed-text';
 import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SelectedState } from '../../types/constraints';
 
 type BookConstraints = {
     genre: number;
@@ -13,6 +15,16 @@ type BookConstraints = {
 export default function DetailsScreen() {
   const { id } = useLocalSearchParams(); // Access passed ID
   const [ randomConstraint, setRandomConstraint ] = useState<BookConstraints>({ genre: 0, theme: 0, format: 0 });
+  const [selectedItems, setSelectedItems] = useState<SelectedState>({});
+
+  const toggleOption = (categoryName: string, optionId: number) => {
+    const key = `${categoryName}-${optionId}`;
+    
+    setSelectedItems((prev) => ({
+      ...prev,
+      [key]: !prev[key], // Toggles between true/undefined (falsey)
+    }));
+  };
 
   function RefreshConstraint() {
     console.log('Refresh');
@@ -22,6 +34,16 @@ export default function DetailsScreen() {
   return (
     <View style={styles.container}>
         <ThemedText type="title">Lab for { id }</ThemedText>
+        <ScrollView contentContainerStyle={styles.content}>        
+          {book.constraints.map((cat) => (
+            <Category 
+              key={cat.category}
+              category={cat}
+              selectedItems={selectedItems}
+              onToggle={toggleOption}
+            />
+          ))}
+        </ScrollView>
         <ThemedText type="subtitle">{book.constraints[0].category}</ThemedText>
         <ThemedText>{book.constraints[0].options[randomConstraint.genre].value}</ThemedText>
         <ThemedText type="subtitle">{book.constraints[1].category}</ThemedText>
@@ -37,7 +59,7 @@ export default function DetailsScreen() {
 
 const styles = StyleSheet.create({
     container: { flex: 1, justifyContent: 'center', alignItems: 'center', color: 'white' },
-
+    content: { padding: 16, paddingBottom: 40 },
     button: {
         alignItems: 'center',
         backgroundColor: '#DDDDDD',
