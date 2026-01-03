@@ -12,6 +12,8 @@ type BookConstraints = {
     format: number;
 }
 
+export type GeneratedConstraints = Record<string, number>;
+
 export default function DetailsScreen() {
   const { id } = useLocalSearchParams(); // Access passed ID
   const [ randomConstraint, setRandomConstraint ] = useState<BookConstraints>({ genre: 0, theme: 0, format: 0 });
@@ -36,43 +38,99 @@ export default function DetailsScreen() {
   };
 
   function RefreshConstraint() {
-    console.log('Refresh');
-    setRandomConstraint({ genre: Math.floor(Math.random() * book.constraints[0].options.length), theme: Math.floor(Math.random() * book.constraints[1].options.length), format: Math.floor(Math.random() * book.constraints[2].options.length) });
-  }
+    const newConstraints = { ...randomConstraint };
+
+    book.constraints.forEach((cat, index) => {
+      const isCatActive = selectedItems.activeCategories[cat.category];
+      
+      if (isCatActive) {
+        // Find which options the user checked for THIS category
+        const availableOptions = cat.options.filter(
+          opt => selectedItems.selectedOptions[`${cat.category}-${opt.id}`]
+        );
+
+        if (availableOptions.length > 0) {
+          // Pick a random ID from the available filtered list
+          const randomIndex = Math.floor(Math.random() * availableOptions.length);
+          const selectedId = availableOptions[randomIndex].id;
+          
+          // Map back to the index in the original book.json so the UI updates
+          const originalIndex = cat.options.findIndex(o => o.id === selectedId);
+          
+          if (index === 0) newConstraints.genre = originalIndex;
+          if (index === 1) newConstraints.theme = originalIndex;
+          if (index === 2) newConstraints.format = originalIndex;
+        }
+      }
+    });
+
+    setRandomConstraint(newConstraints);
+  };
+
+  const renderResult = (catIndex: number, constraintIndex: number) => {
+    const cat = book.constraints[catIndex];
+    const isCatActive = selectedItems.activeCategories[cat.category];
+    const hasOptions = cat.options.some(opt => selectedItems.selectedOptions[`${cat.category}-${opt.id}`]);
+
+    if (!isCatActive) return "Category disabled";
+    if (!hasOptions) return "Select at least one option above";
+    
+    return cat.options[constraintIndex].value;
+  };
 
   return (
     <View style={styles.container}>
-        <ThemedText type="title">Lab for { id }</ThemedText>
-        <ScrollView contentContainerStyle={styles.content}>        
-          {book.constraints.map((cat) => (
-            <Category 
-              key={cat.category}
-              category={cat}
-              selectedItems={selectedItems}
-              onToggleCategory={toggleCategory}
-              onToggleOption={toggleOption}
-            />
+      <ThemedText type="title">Lab for { id }</ThemedText>
+
+      <ScrollView contentContainerStyle={styles.content}>        
+        {book.constraints.map((cat) => (
+          <Category 
+            key={cat.category}
+            category={cat}
+            selectedItems={selectedItems}
+            onToggleCategory={toggleCategory}
+            onToggleOption={toggleOption}
+          />
+        ))}
+
+        <View style={styles.resultsContainer}>
+          {book.constraints.map((cat, idx) => (
+            <View key={cat.category} style={styles.resultBox}>
+              <ThemedText type="subtitle">{cat.category}</ThemedText>
+              <ThemedText style={styles.resultValue}>
+                {renderResult(idx, idx === 0 ? randomConstraint.genre : idx === 1 ? randomConstraint.theme : randomConstraint.format)}
+              </ThemedText>
+            </View>
           ))}
-        </ScrollView>
-        <ThemedText type="subtitle">{book.constraints[0].category}</ThemedText>
-        <ThemedText>{book.constraints[0].options[randomConstraint.genre].value}</ThemedText>
-        <ThemedText type="subtitle">{book.constraints[1].category}</ThemedText>
-        <ThemedText>{book.constraints[1].options[randomConstraint.theme].value}</ThemedText>
-        <ThemedText type="subtitle">{book.constraints[2].category}</ThemedText>
-        <ThemedText>{book.constraints[2].options[randomConstraint.format].value}</ThemedText>
-            <TouchableOpacity style={styles.button} onPress={RefreshConstraint}>
-                <Text>Refresh</Text>
-            </TouchableOpacity>
+        </View>
+      </ScrollView>
+
+
+      <TouchableOpacity style={styles.button} onPress={RefreshConstraint}>
+          <Text style={styles.buttonText}>🎲 Generate Random Constraints</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, justifyContent: 'center', alignItems: 'center', color: 'white' },
-    content: { padding: 16, paddingBottom: 40 },
-    button: {
-        alignItems: 'center',
-        backgroundColor: '#DDDDDD',
-        padding: 10,
+    container: { flex: 1, backgroundColor: '#121212' }, // Dark background for 'ThemedText'
+    content: { padding: 16 },
+    resultsContainer: {
+        padding: 20,
+        backgroundColor: '#1E1E1E',
+        borderRadius: 15,
+        margin: 16,
+        width: '90%',
     },
+    resultBox: { marginBottom: 15 },
+    resultValue: { fontSize: 18, color: '#007AFF', fontWeight: '600' },
+    button: {
+        backgroundColor: '#007AFF',
+        padding: 15,
+        borderRadius: 10,
+        margin: 20,
+        alignItems: 'center'
+    },
+    buttonText: { color: 'white', fontWeight: 'bold', fontSize: 16 }
 });

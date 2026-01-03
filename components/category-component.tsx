@@ -1,7 +1,7 @@
-import { Category, Option, SelectedState } from '@/types/constraints';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { LayoutAnimation, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Category, Option, SelectedState } from '../types/constraints';
 import { ConstraintOption } from './constraint-option';
 
 interface CategoryProps {
