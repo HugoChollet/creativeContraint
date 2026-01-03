@@ -15,14 +15,23 @@ type BookConstraints = {
 export default function DetailsScreen() {
   const { id } = useLocalSearchParams(); // Access passed ID
   const [ randomConstraint, setRandomConstraint ] = useState<BookConstraints>({ genre: 0, theme: 0, format: 0 });
-  const [selectedItems, setSelectedItems] = useState<SelectedState>({});
+  const [selectedItems, setSelectedItems] = useState<SelectedState>({
+    activeCategories: {},
+    selectedOptions: {}
+  });
 
-  const toggleOption = (categoryName: string, optionId: number) => {
-    const key = `${categoryName}-${optionId}`;
-    
-    setSelectedItems((prev) => ({
+  const toggleCategory = (name: string) => {
+    setSelectedItems(prev => ({
       ...prev,
-      [key]: !prev[key], // Toggles between true/undefined (falsey)
+      activeCategories: { ...prev.activeCategories, [name]: !prev.activeCategories[name] }
+    }));
+  };
+
+  const toggleOption = (catName: string, id: number) => {
+    const key = `${catName}-${id}`;
+    setSelectedItems(prev => ({
+      ...prev,
+      selectedOptions: { ...prev.selectedOptions, [key]: !prev.selectedOptions[key] }
     }));
   };
 
@@ -40,7 +49,8 @@ export default function DetailsScreen() {
               key={cat.category}
               category={cat}
               selectedItems={selectedItems}
-              onToggle={toggleOption}
+              onToggleCategory={toggleCategory}
+              onToggleOption={toggleOption}
             />
           ))}
         </ScrollView>

@@ -13,5 +13,8 @@ export interface ProjectData {
   project_type: string;
   constraints: Category[];
 }
-// Our selection state type: { "Genre & Setting-1": true, "Core Theme-5": true }
-export type SelectedState = Record<string, boolean>;
+
+export type SelectedState = {
+  activeCategories: Record<string, boolean>; // e.g., { "Core Theme": true }
+  selectedOptions: Record<string, boolean>;  // e.g., { "Core Theme-5": true }
+};
