@@ -1,4 +1,5 @@
 import book from '@/assets/book.json';
+import music from '@/assets/music.json';
 import Category from '@/components/category-component';
 import { ThemedText } from '@/components/themed-text';
 import { useLocalSearchParams } from 'expo-router';
@@ -15,12 +16,37 @@ type BookConstraints = {
 export type GeneratedConstraints = Record<string, number>;
 
 export default function DetailsScreen() {
-  const { id } = useLocalSearchParams(); // Access passed ID
-  const [ randomConstraint, setRandomConstraint ] = useState<BookConstraints>({ genre: 0, theme: 0, format: 0 });
-  const [selectedItems, setSelectedItems] = useState<SelectedState>({
-    activeCategories: {},
-    selectedOptions: {}
-  });
+  const { id, type } = useLocalSearchParams(); 
+  
+  // 1. Determine which data to use based on 'type' prop or param
+  const dataSource = type === 'Music' ? music : book;
+
+// Helper to build initial state where everything is ON
+  const getInitialState = (): SelectedState => {
+    const activeCats: Record<string, boolean> = {};
+    const selOpts: Record<string, boolean> = {};
+
+    dataSource.constraints.forEach((cat) => {
+      // Enable the category by default
+      activeCats[cat.category] = true;
+      
+      // Enable every option by default
+      cat.options.forEach((opt) => {
+        selOpts[`${cat.category}-${opt.id}`] = true;
+      });
+    });
+
+    return {
+      activeCategories: activeCats,
+      selectedOptions: selOpts,
+    };
+  };
+
+  // Initialize state with the helper
+  const [selectedItems, setSelectedItems] = useState<SelectedState>(getInitialState);
+
+  // 2. State now stores Category Name -> Option Index
+  const [randomConstraints, setRandomConstraints] = useState<GeneratedConstraints>({});
 
   const toggleCategory = (name: string) => {
     setSelectedItems(prev => ({
@@ -37,53 +63,35 @@ export default function DetailsScreen() {
     }));
   };
 
-  function RefreshConstraint() {
-    const newConstraints = { ...randomConstraint };
+  // 3. The Generic Refresh Logic
+  function refreshConstraints() {
+    const results: GeneratedConstraints = {};
 
-    book.constraints.forEach((cat, index) => {
-      const isCatActive = selectedItems.activeCategories[cat.category];
-      
-      if (isCatActive) {
-        // Find which options the user checked for THIS category
+    dataSource.constraints.forEach((cat) => {
+      if (selectedItems.activeCategories[cat.category]) {
         const availableOptions = cat.options.filter(
           opt => selectedItems.selectedOptions[`${cat.category}-${opt.id}`]
         );
 
         if (availableOptions.length > 0) {
-          // Pick a random ID from the available filtered list
           const randomIndex = Math.floor(Math.random() * availableOptions.length);
           const selectedId = availableOptions[randomIndex].id;
           
-          // Map back to the index in the original book.json so the UI updates
-          const originalIndex = cat.options.findIndex(o => o.id === selectedId);
-          
-          if (index === 0) newConstraints.genre = originalIndex;
-          if (index === 1) newConstraints.theme = originalIndex;
-          if (index === 2) newConstraints.format = originalIndex;
+          // Store the index of the selected ID within the original options array
+          results[cat.category] = cat.options.findIndex(o => o.id === selectedId);
         }
       }
     });
 
-    setRandomConstraint(newConstraints);
-  };
-
-  const renderResult = (catIndex: number, constraintIndex: number) => {
-    const cat = book.constraints[catIndex];
-    const isCatActive = selectedItems.activeCategories[cat.category];
-    const hasOptions = cat.options.some(opt => selectedItems.selectedOptions[`${cat.category}-${opt.id}`]);
-
-    if (!isCatActive) return "Category disabled";
-    if (!hasOptions) return "Select at least one option above";
-    
-    return cat.options[constraintIndex].value;
-  };
+    setRandomConstraints(results);
+  }
 
   return (
     <View style={styles.container}>
-      <ThemedText type="title">Lab for { id }</ThemedText>
-
-      <ScrollView contentContainerStyle={styles.content}>        
-        {book.constraints.map((cat) => (
+      <ThemedText type="title">{dataSource.project_type} Lab</ThemedText>
+      
+      <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
+        {dataSource.constraints.map((cat) => (
           <Category 
             key={cat.category}
             category={cat}
@@ -92,45 +100,87 @@ export default function DetailsScreen() {
             onToggleOption={toggleOption}
           />
         ))}
-
-        <View style={styles.resultsContainer}>
-          {book.constraints.map((cat, idx) => (
-            <View key={cat.category} style={styles.resultBox}>
-              <ThemedText type="subtitle">{cat.category}</ThemedText>
-              <ThemedText style={styles.resultValue}>
-                {renderResult(idx, idx === 0 ? randomConstraint.genre : idx === 1 ? randomConstraint.theme : randomConstraint.format)}
-              </ThemedText>
-            </View>
-          ))}
-        </View>
       </ScrollView>
 
+      {/* 4. Generic Results Display */}
+      <View style={styles.resultsContainer}>
+        {dataSource.constraints.map((cat) => {
+          const isEnabled = selectedItems.activeCategories[cat.category];
+          const resultIdx = randomConstraints[cat.category];
+          const hasResult = resultIdx !== undefined;
 
-      <TouchableOpacity style={styles.button} onPress={RefreshConstraint}>
-          <Text style={styles.buttonText}>🎲 Generate Random Constraints</Text>
+          if (!isEnabled) return null; // Don't even show the label if category is off
+
+          return (
+            <View key={cat.category} style={styles.resultBox}>
+              <ThemedText type="subtitle" style={styles.dimText}>{cat.category}</ThemedText>
+              <ThemedText style={styles.resultValue}>
+                {hasResult ? cat.options[resultIdx].value : "Select options above..."}
+              </ThemedText>
+            </View>
+          );
+        })}
+      </View>
+
+      <TouchableOpacity style={styles.button} onPress={refreshConstraints}>
+        <Text style={styles.buttonText}>Generate {dataSource.project_type} Idea</Text>
       </TouchableOpacity>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#121212' }, // Dark background for 'ThemedText'
-    content: { padding: 16 },
-    resultsContainer: {
-        padding: 20,
-        backgroundColor: '#1E1E1E',
-        borderRadius: 15,
-        margin: 16,
-        width: '90%',
-    },
-    resultBox: { marginBottom: 15 },
-    resultValue: { fontSize: 18, color: '#007AFF', fontWeight: '600' },
-    button: {
-        backgroundColor: '#007AFF',
-        padding: 15,
-        borderRadius: 10,
-        margin: 20,
-        alignItems: 'center'
-    },
-    buttonText: { color: 'white', fontWeight: 'bold', fontSize: 16 }
+  container: {
+    flex: 1,
+    backgroundColor: '#121212', // Dark theme to match ThemedText
+  },
+  scroll: {
+    flex: 0.6, // Gives the list area most of the space
+  },
+  content: {
+    padding: 16,
+    paddingBottom: 20,
+  },
+  resultsContainer: {
+    flex: 0.4, // Area for the generated output
+    backgroundColor: '#1E1E1E',
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    padding: 20,
+    // Add shadow/elevation for a "floating sheet" look
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+    elevation: 8,
+  },
+  resultBox: {
+    marginBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#333',
+    paddingBottom: 8,
+  },
+  dimText: {
+    color: '#888',
+    textTransform: 'uppercase',
+    fontSize: 12,
+    letterSpacing: 1,
+    marginBottom: 4,
+  },
+  resultValue: {
+    fontSize: 18,
+    color: '#007AFF', // Vibrant blue for the actual constraint
+    fontWeight: '600',
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    padding: 18,
+    margin: 20,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
 });

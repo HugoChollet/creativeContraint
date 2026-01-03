@@ -7,11 +7,14 @@ export default function HomeScreen() {
   
   return (
     <ThemedView style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 'Book' } })}>
+      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 1, type: 'Book' } })}>
         <Text>Write a Fiction Book</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 'Video Game' } })}>
+      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 2, type: 'Video Game' } })}>
         <Text>Develop a Video Game</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 3, type: 'Music' } })}>
+        <Text>Compose a song</Text>
       </TouchableOpacity>
     </ThemedView>
   );

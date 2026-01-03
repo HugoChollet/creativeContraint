@@ -35,7 +35,6 @@ export default function TabLayout() {
         options={{
           href: null, // This hides the tab button from the bottom bar!
           title: 'Lab',
-          headerShown: true, // Show the top back button
         }}
       />
     </Tabs>
