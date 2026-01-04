@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { LayoutAnimation, Pressable, StyleSheet, Text, View } from 'react-native';
+import { LayoutAnimation, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Category, Option, SelectedState } from '../types/constraints';
 import { ConstraintOption } from './constraint-option';
 import { PresetMode, StatusSelector } from './ui/status-selector';
@@ -26,24 +26,12 @@ export default function CategorySelector({ category, selectedItems, onToggleCate
 
   const [mode, setMode] = useState<PresetMode>('all'); // Default to 'all' based on your previous init
 
-  const handleCycleMode = () => {
-    const modes: PresetMode[] = ['none', 'easy', 'hard', 'all'];
-    const currentIndex = modes.indexOf(mode === 'custom' ? 'none' : mode);
-    const nextMode = modes[(currentIndex + 1) % modes.length];
-    
-    setMode(nextMode);
-    // We pass a helper function via props to the parent to update the IDs
-    onBulkUpdate(category.category, category.options, nextMode);
-  };
-
-  // When a manual checkbox is clicked
-  const handleManualToggle = (id: number) => {
-    setMode('custom');
-    onToggleOption(category.category, id);
-  };
-
-  return (
-    <View style={[styles.card, !isEnabled && styles.cardDisabled]}>
+return (
+    <View style={[
+      styles.card, 
+      !isEnabled && styles.cardDisabled,
+      isExpanded && { height: 400 } // Set a fixed height when expanded to allow internal scroll
+    ]}>
       <View style={styles.headerRow}>
         <Pressable onPress={() => onToggleCategory(category.category)}>
           <Ionicons 
@@ -53,28 +41,20 @@ export default function CategorySelector({ category, selectedItems, onToggleCate
           />
         </Pressable>
 
-        <Pressable 
-          onPress={handleToggleExpand} 
-          style={styles.titleArea} 
-          disabled={!isEnabled}
-        >
+        <Pressable onPress={handleToggleExpand} style={styles.titleArea} disabled={!isEnabled}>
           <Text style={[styles.headerText, !isEnabled && styles.textDisabled]}>
             {category.category}
           </Text>
         </Pressable>
 
         <Pressable onPress={handleToggleExpand} disabled={!isEnabled}>
-          <Ionicons 
-            name={isExpanded ? "chevron-up" : "chevron-down"} 
-            size={20} 
-            color={isEnabled ? "#666" : "#ddd"} 
-          />
+          <Ionicons name={isExpanded ? "chevron-up" : "chevron-down"} size={20} color={isEnabled ? "#666" : "#ddd"} />
         </Pressable>
       </View>
 
       {isExpanded && isEnabled && (
-        <View style={styles.divider}>
-          <View style={{ marginRight: 10 }}>
+        <View style={styles.expandedContent}>
+          <View style={styles.fixedSelectorWrapper}>
             <StatusSelector 
               currentMode={mode} 
               onSelect={(newMode) => {
@@ -83,15 +63,23 @@ export default function CategorySelector({ category, selectedItems, onToggleCate
               }} 
             />
           </View>
-          {category.options.map((opt: Option) => (
-            <ConstraintOption 
-              key={opt.id}
-              option={opt}
-              isParentEnabled={isEnabled}
-              isSelected={!!selectedItems.selectedOptions[`${category.category}-${opt.id}`]}
-              onToggle={(id) => handleManualToggle(id)}
-            />
-          ))}
+          <ScrollView 
+            style={styles.optionsScrollView}
+            nestedScrollEnabled={true} // Crucial for Android support
+          >
+            {category.options.map((opt: Option) => (
+              <ConstraintOption 
+                key={opt.id}
+                option={opt}
+                isParentEnabled={isEnabled}
+                isSelected={!!selectedItems.selectedOptions[`${category.category}-${opt.id}`]}
+                onToggle={(id) => {
+                  setMode('custom');
+                  onToggleOption(category.category, id);
+                }}
+              />
+            ))}
+          </ScrollView>
         </View>
       )}
     </View>
@@ -99,11 +87,40 @@ export default function CategorySelector({ category, selectedItems, onToggleCate
 }
 
 const styles = StyleSheet.create({
-  card: { backgroundColor: '#fff', borderRadius: 12, marginBottom: 12, overflow: 'hidden',  borderColor: '#eee' },
-  cardDisabled: { backgroundColor: '#f9f9f9', borderColor: '#eee' },
-  headerRow: { flexDirection: 'row', alignItems: 'center', padding: 16 },
+  card: { 
+    backgroundColor: '#fff', 
+    borderRadius: 12, 
+    marginBottom: 12, 
+    overflow: 'hidden', 
+    borderColor: '#eee',
+    borderWidth: 1 
+  },
+  cardDisabled: { backgroundColor: '#f9f9f9', opacity: 0.8 },
+  headerRow: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    padding: 16,
+    zIndex: 10, // Ensure header stays on top
+    backgroundColor: '#fff'
+  },
   titleArea: { flex: 1, marginLeft: 12 },
   headerText: { fontSize: 17, fontWeight: '700' },
   textDisabled: { color: '#bbb' },
-  divider: { borderTopWidth: 1, borderTopColor: '#f0f0f0', paddingBottom: 8 }
+  
+  expandedContent: {
+    flex: 1, // Takes up remaining space in the 400px card
+  },
+  fixedSelectorWrapper: {
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+    backgroundColor: '#fff',
+  },
+  optionsScrollView: {
+    flex: 1, // This allows the list to scroll inside the fixed-height card
+  },
+  divider: { 
+    paddingBottom: 8 
+  }
 });
