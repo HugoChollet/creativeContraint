@@ -1,18 +1,13 @@
 import book from '@/assets/book.json';
 import music from '@/assets/music.json';
-import Category from '@/components/category-component';
+import CategorySelector from '@/components/category-selector';
 import { ThemedText } from '@/components/themed-text';
 import { BottomSheet } from '@/components/ui/bottom-sheet';
+import { PresetMode } from '@/components/ui/status-selector';
 import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { SelectedState } from '../../types/constraints';
-
-type BookConstraints = {
-    genre: number;
-    theme: number;
-    format: number;
-}
+import { Option, SelectedState } from '../../types/constraints';
 
 export type GeneratedConstraints = Record<string, number>;
 
@@ -89,41 +84,40 @@ export default function DetailsScreen() {
     setModalVisible(true);
   }
 
+
+  const bulkUpdateOptions = (categoryName: string, options: Option[], mode: PresetMode) => {
+    setSelectedItems(prev => {
+      const newOptions = { ...prev.selectedOptions };
+      
+      options.forEach(opt => {
+        const key = `${categoryName}-${opt.id}`;
+        if (mode === 'all') newOptions[key] = true;
+        else if (mode === 'none') newOptions[key] = false;
+        else if (mode === 'easy') newOptions[key] = opt.rarity <= 2;
+        else if (mode === 'hard') newOptions[key] = opt.rarity >= 3;
+        // 'custom' does nothing in bulk; it's handled by manual clicks
+      });
+
+      return { ...prev, selectedOptions: newOptions };
+    });
+  };
+
   return (
     <View style={styles.container}>
-      <ThemedText type="title">{dataSource.project_type} Lab</ThemedText>
+      <ThemedText style={styles.title} type="title">{dataSource.project_type} Lab</ThemedText>
       
       <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
         {dataSource.constraints.map((cat) => (
-          <Category 
+          <CategorySelector 
             key={cat.category}
             category={cat}
             selectedItems={selectedItems}
             onToggleCategory={toggleCategory}
             onToggleOption={toggleOption}
+            onBulkUpdate={bulkUpdateOptions}
           />
         ))}
       </ScrollView>
-
-      {/* 4. Generic Results Display 
-      <View style={styles.resultsContainer}>
-        {dataSource.constraints.map((cat) => {
-          const isEnabled = selectedItems.activeCategories[cat.category];
-          const resultIdx = randomConstraints[cat.category];
-          const hasResult = resultIdx !== undefined;
-
-          if (!isEnabled) return null; // Don't even show the label if category is off
-
-          return (
-            <View key={cat.category} style={styles.resultBox}>
-              <ThemedText type="subtitle" style={styles.dimText}>{cat.category}</ThemedText>
-              <ThemedText style={styles.resultValue}>
-                {hasResult ? cat.options[resultIdx].value : "Select options above..."}
-              </ThemedText>
-            </View>
-          );
-        })}
-      </View>*/}
 
       <TouchableOpacity style={styles.showResultButton} onPress={() => setModalVisible(true)}>
         <Text style={styles.buttonText}>A</Text>
@@ -158,6 +152,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#121212', // Dark theme to match ThemedText
+  },
+  title: {
+    marginBottom: 16,
+    marginTop: 16,
+    paddingHorizontal: 32,
   },
   scroll: {
     flex: 0.6, // Gives the list area most of the space

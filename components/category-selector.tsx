@@ -3,15 +3,17 @@ import React, { useState } from 'react';
 import { LayoutAnimation, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Category, Option, SelectedState } from '../types/constraints';
 import { ConstraintOption } from './constraint-option';
+import { PresetMode, StatusSelector } from './ui/status-selector';
 
 interface CategoryProps {
   category: Category;
   selectedItems: SelectedState;
   onToggleCategory: (name: string) => void;
   onToggleOption: (catName: string, id: number) => void;
+  onBulkUpdate: (catName: string, options: Option[], mode: PresetMode) => void;
 }
 
-export default function CategoryItem({ category, selectedItems, onToggleCategory, onToggleOption }: CategoryProps) {
+export default function CategorySelector({ category, selectedItems, onToggleCategory, onToggleOption, onBulkUpdate }: CategoryProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   
   const isEnabled = !!selectedItems.activeCategories[category.category];
@@ -20,6 +22,24 @@ export default function CategoryItem({ category, selectedItems, onToggleCategory
     if (!isEnabled) return;
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setIsExpanded(!isExpanded);
+  };
+
+  const [mode, setMode] = useState<PresetMode>('all'); // Default to 'all' based on your previous init
+
+  const handleCycleMode = () => {
+    const modes: PresetMode[] = ['none', 'easy', 'hard', 'all'];
+    const currentIndex = modes.indexOf(mode === 'custom' ? 'none' : mode);
+    const nextMode = modes[(currentIndex + 1) % modes.length];
+    
+    setMode(nextMode);
+    // We pass a helper function via props to the parent to update the IDs
+    onBulkUpdate(category.category, category.options, nextMode);
+  };
+
+  // When a manual checkbox is clicked
+  const handleManualToggle = (id: number) => {
+    setMode('custom');
+    onToggleOption(category.category, id);
   };
 
   return (
@@ -54,13 +74,22 @@ export default function CategoryItem({ category, selectedItems, onToggleCategory
 
       {isExpanded && isEnabled && (
         <View style={styles.divider}>
+          <View style={{ marginRight: 10 }}>
+            <StatusSelector 
+              currentMode={mode} 
+              onSelect={(newMode) => {
+                setMode(newMode);
+                onBulkUpdate(category.category, category.options, newMode);
+              }} 
+            />
+          </View>
           {category.options.map((opt: Option) => (
             <ConstraintOption 
               key={opt.id}
               option={opt}
               isParentEnabled={isEnabled}
               isSelected={!!selectedItems.selectedOptions[`${category.category}-${opt.id}`]}
-              onToggle={(id) => onToggleOption(category.category, id)}
+              onToggle={(id) => handleManualToggle(id)}
             />
           ))}
         </View>
@@ -70,7 +99,7 @@ export default function CategoryItem({ category, selectedItems, onToggleCategory
 }
 
 const styles = StyleSheet.create({
-  card: { backgroundColor: '#fff', borderRadius: 12, marginBottom: 12, overflow: 'hidden', borderWeight: 1, borderColor: '#eee' },
+  card: { backgroundColor: '#fff', borderRadius: 12, marginBottom: 12, overflow: 'hidden',  borderColor: '#eee' },
   cardDisabled: { backgroundColor: '#f9f9f9', borderColor: '#eee' },
   headerRow: { flexDirection: 'row', alignItems: 'center', padding: 16 },
   titleArea: { flex: 1, marginLeft: 12 },
