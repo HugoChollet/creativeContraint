@@ -2,6 +2,7 @@ import book from '@/assets/book.json';
 import music from '@/assets/music.json';
 import Category from '@/components/category-component';
 import { ThemedText } from '@/components/themed-text';
+import { BottomSheet } from '@/components/ui/bottom-sheet';
 import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -17,7 +18,8 @@ export type GeneratedConstraints = Record<string, number>;
 
 export default function DetailsScreen() {
   const { id, type } = useLocalSearchParams(); 
-  
+  const [modalVisible, setModalVisible] = useState(false);
+
   // 1. Determine which data to use based on 'type' prop or param
   const dataSource = type === 'Music' ? music : book;
 
@@ -84,6 +86,7 @@ export default function DetailsScreen() {
     });
 
     setRandomConstraints(results);
+    setModalVisible(true);
   }
 
   return (
@@ -102,7 +105,7 @@ export default function DetailsScreen() {
         ))}
       </ScrollView>
 
-      {/* 4. Generic Results Display */}
+      {/* 4. Generic Results Display 
       <View style={styles.resultsContainer}>
         {dataSource.constraints.map((cat) => {
           const isEnabled = selectedItems.activeCategories[cat.category];
@@ -120,11 +123,34 @@ export default function DetailsScreen() {
             </View>
           );
         })}
-      </View>
+      </View>*/}
 
+      <TouchableOpacity style={styles.showResultButton} onPress={() => setModalVisible(true)}>
+        <Text style={styles.buttonText}>A</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={refreshConstraints}>
         <Text style={styles.buttonText}>Generate {dataSource.project_type} Idea</Text>
       </TouchableOpacity>
+
+      <BottomSheet 
+        isVisible={modalVisible} 
+        onClose={() => setModalVisible(false)}
+        title={`${dataSource.project_type} Constraints`}
+        buttonText="Back to Lab"
+      >
+        {/* Everything here is passed as 'children' */}
+        {dataSource.constraints.map((cat) => {
+          const resultIdx = randomConstraints[cat.category];
+          if (!selectedItems.activeCategories[cat.category] || resultIdx === undefined) return null;
+
+          return (
+            <View key={cat.category} style={styles.modalResultBox}>
+              <Text style={styles.modalCategoryLabel}>{cat.category}</Text>
+              <Text style={styles.modalValueText}>{cat.options[resultIdx].value}</Text>
+            </View>
+          );
+        })}
+      </BottomSheet>
     </View>
   );
 }
@@ -182,5 +208,41 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  showResultButton: {
+    position: 'absolute',
+    bottom: 64,
+    alignSelf: 'center',
+    backgroundColor: '#767676ff',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 4,
+    paddingHorizontal: 32,
+    borderRadius: 32,
+    shadowColor: '#007AFF',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 12,
+    elevation: 10,
+  },
+  modalResultBox: {
+    backgroundColor: '#2C2C2E',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+  },
+  modalCategoryLabel: {
+    color: '#8E8E93',
+    fontSize: 12,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginBottom: 6,
+  },
+  modalValueText: {
+    color: '#0A84FF', // Brighter blue for high contrast
+    fontSize: 20,
+    fontWeight: '700',
+    lineHeight: 26,
   },
 });
