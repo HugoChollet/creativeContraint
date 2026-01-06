@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 28,
     borderTopRightRadius: 28,
     padding: 24,
-    maxHeight: '80%',
     minHeight: '40%',
   },
   handle: {

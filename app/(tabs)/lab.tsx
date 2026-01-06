@@ -9,13 +9,13 @@ import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Option, SelectedState } from '../../types/constraints';
 
-export type GeneratedConstraints = Record<string, number>;
+export type GeneratedConstraints = Record<string, string>;
 
 export default function DetailsScreen() {
   const { id, type } = useLocalSearchParams(); 
   const [modalVisible, setModalVisible] = useState(false);
+  const [randomConstraints, setRandomConstraints] = useState<GeneratedConstraints>({});
 
-  // 1. Determine which data to use based on 'type' prop or param
   const dataSource = type === 'Music' ? music : book;
 
 // Helper to build initial state where everything is ON
@@ -27,10 +27,19 @@ export default function DetailsScreen() {
       // Enable the category by default
       activeCats[cat.category] = true;
       
-      // Enable every option by default
-      cat.options.forEach((opt) => {
-        selOpts[`${cat.category}-${opt.id}`] = true;
-      });
+      if (cat.options) {
+        // Enable every option by default
+        cat.options.forEach((opt) => {
+          selOpts[`${cat.category}-${opt.id}`] = true;
+        });
+      } else if (cat.sub_categories) {
+        // Enable every subcategory by default
+        cat.sub_categories.forEach((subCat) => {
+          subCat.options.forEach((opt) => {
+            selOpts[`${cat.category}-${subCat.name}-${opt.id}`] = true;
+          });
+        });
+      }
     });
 
     return {
@@ -39,11 +48,7 @@ export default function DetailsScreen() {
     };
   };
 
-  // Initialize state with the helper
   const [selectedItems, setSelectedItems] = useState<SelectedState>(getInitialState);
-
-  // 2. State now stores Category Name -> Option Index
-  const [randomConstraints, setRandomConstraints] = useState<GeneratedConstraints>({});
 
   const toggleCategory = (name: string) => {
     setSelectedItems(prev => ({
@@ -66,16 +71,23 @@ export default function DetailsScreen() {
 
     dataSource.constraints.forEach((cat) => {
       if (selectedItems.activeCategories[cat.category]) {
-        const availableOptions = cat.options.filter(
+        const availableOptions = cat.options ? cat.options.filter(
           opt => selectedItems.selectedOptions[`${cat.category}-${opt.id}`]
-        );
+        ) : cat.sub_categories ? cat.sub_categories.flatMap(subCat => subCat.options.filter(
+          opt => selectedItems.selectedOptions[`${cat.category}-${subCat.name}-${opt.id}`]
+        )) : [];
 
         if (availableOptions.length > 0) {
-          const randomIndex = Math.floor(Math.random() * availableOptions.length);
-          const selectedId = availableOptions[randomIndex].id;
-          
-          // Store the index of the selected ID within the original options array
-          results[cat.category] = cat.options.findIndex(o => o.id === selectedId);
+          results[cat.category] = '';
+          if (cat.options) {
+            const randomIndex = Math.floor(Math.random() * availableOptions.length);
+            results[cat.category] = availableOptions[randomIndex].value;
+          } else if (cat.sub_categories) { // Concat all subCat result to result
+            for (const subCat of cat.sub_categories) {
+              const randomIndex = Math.floor(Math.random() * subCat.options.length);
+              results[cat.category] += ' ' + subCat.options[randomIndex].value;
+            }
+          }
         }
       }
     });
@@ -134,13 +146,10 @@ export default function DetailsScreen() {
       >
         {/* Everything here is passed as 'children' */}
         {dataSource.constraints.map((cat) => {
-          const resultIdx = randomConstraints[cat.category];
-          if (!selectedItems.activeCategories[cat.category] || resultIdx === undefined) return null;
-
           return (
             <View key={cat.category} style={styles.modalResultBox}>
               <Text style={styles.modalCategoryLabel}>{cat.category}</Text>
-              <Text style={styles.modalValueText}>{cat.options[resultIdx].value}</Text>
+              <Text style={styles.modalValueText}>{randomConstraints[cat.category] ?? "-"}</Text>
             </View>
           );
         })}

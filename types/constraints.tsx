@@ -4,9 +4,15 @@ export interface Option {
   rarity: number;
 }
 
+export interface SubCategory {
+  name: string;
+  options: Option[];
+}
+
 export interface Category {
   category: string;
-  options: Option[];
+  options?: Option[];
+  sub_categories?: SubCategory[];
 }
 
 export interface ProjectData {

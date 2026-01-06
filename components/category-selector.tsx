@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { LayoutAnimation, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Category, Option, SelectedState } from '../types/constraints';
+import { Category, Option, SelectedState, SubCategory } from '../types/constraints';
 import { ConstraintOption } from './constraint-option';
 import { PresetMode, StatusSelector } from './ui/status-selector';
 
@@ -15,8 +15,11 @@ interface CategoryProps {
 
 export default function CategorySelector({ category, selectedItems, onToggleCategory, onToggleOption, onBulkUpdate }: CategoryProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const [mode, setMode] = useState<PresetMode>('all');
+
   const isEnabled = !!selectedItems.activeCategories[category.category];
+  const hasSubCategories = category.sub_categories && category.sub_categories.length > 0;
 
   const handleToggleExpand = () => {
     if (!isEnabled) return;
@@ -24,13 +27,20 @@ export default function CategorySelector({ category, selectedItems, onToggleCate
     setIsExpanded(!isExpanded);
   };
 
-  const [mode, setMode] = useState<PresetMode>('all'); // Default to 'all' based on your previous init
+  // Helper to determine which options to show
+  const currentSubCategory: SubCategory | null = hasSubCategories 
+    ? category.sub_categories![activeTabIndex] 
+    : null;
 
-return (
+  const currentOptions = hasSubCategories 
+    ? currentSubCategory?.options || [] 
+    : category.options || [];
+
+  return (
     <View style={[
       styles.card, 
       !isEnabled && styles.cardDisabled,
-      isExpanded && { height: 400 } // Set a fixed height when expanded to allow internal scroll
+      isExpanded && { height: 500 } // Increased height to accommodate tabs
     ]}>
       <View style={styles.headerRow}>
         <Pressable onPress={() => onToggleCategory(category.category)}>
@@ -59,26 +69,52 @@ return (
               currentMode={mode} 
               onSelect={(newMode) => {
                 setMode(newMode);
-                onBulkUpdate(category.category, category.options, newMode);
+                onBulkUpdate(category.category, currentOptions, newMode);
               }} 
             />
           </View>
+
+          {hasSubCategories && (
+            <View style={styles.tabContainer}>
+              {category.sub_categories!.map((sub, index) => (
+                <Pressable 
+                  key={sub.name}
+                  onPress={() => setActiveTabIndex(index)}
+                  style={[styles.tab, activeTabIndex === index && styles.activeTab]}
+                >
+                  <Text style={[styles.tabText, activeTabIndex === index && styles.activeTabText]}>
+                    {sub.name}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+          )}
+
           <ScrollView 
             style={styles.optionsScrollView}
-            nestedScrollEnabled={true} // Crucial for Android support
+            nestedScrollEnabled={true}
           >
-            {category.options.map((opt: Option) => (
-              <ConstraintOption 
-                key={opt.id}
-                option={opt}
-                isParentEnabled={isEnabled}
-                isSelected={!!selectedItems.selectedOptions[`${category.category}-${opt.id}`]}
-                onToggle={(id) => {
-                  setMode('custom');
-                  onToggleOption(category.category, id);
-                }}
-              />
-            ))}
+            {currentOptions.map((opt: Option) => {
+              // Create a unique key for selection state: "Category-SubName-ID" or "Category-ID"
+              const selectionKey = hasSubCategories 
+                ? `${category.category}-${currentSubCategory?.name}-${opt.id}`
+                : `${category.category}-${opt.id}`;
+
+              return (
+                <ConstraintOption 
+                  key={opt.id}
+                  option={opt}
+                  isParentEnabled={isEnabled}
+                  isSelected={!!selectedItems.selectedOptions[selectionKey]}
+                  onToggle={(id) => {
+                    setMode('custom');
+                    // Pass the specialized key to the parent handler
+                    const fullKey = hasSubCategories ? `${category.category}-${currentSubCategory?.name}` : category.category;
+                    onToggleOption(fullKey, id);
+                  }}
+                />
+              );
+            })}
           </ScrollView>
         </View>
       )}
@@ -100,27 +136,40 @@ const styles = StyleSheet.create({
     flexDirection: 'row', 
     alignItems: 'center', 
     padding: 16,
-    zIndex: 10, // Ensure header stays on top
+    zIndex: 10,
     backgroundColor: '#fff'
   },
   titleArea: { flex: 1, marginLeft: 12 },
   headerText: { fontSize: 17, fontWeight: '700' },
   textDisabled: { color: '#bbb' },
-  
-  expandedContent: {
-    flex: 1, // Takes up remaining space in the 400px card
-  },
+  expandedContent: { flex: 1 },
   fixedSelectorWrapper: {
     paddingHorizontal: 16,
     paddingBottom: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+  },
+  tabContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#F2F2F7',
+    marginHorizontal: 16,
+    marginBottom: 12,
+    borderRadius: 8,
+    padding: 2,
+  },
+  tab: {
+    flex: 1,
+    paddingVertical: 8,
+    alignItems: 'center',
+    borderRadius: 6,
+  },
+  activeTab: {
     backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    elevation: 2,
   },
-  optionsScrollView: {
-    flex: 1, // This allows the list to scroll inside the fixed-height card
-  },
-  divider: { 
-    paddingBottom: 8 
-  }
+  tabText: { fontSize: 13, fontWeight: '600', color: '#8E8E93' },
+  activeTabText: { color: '#007AFF' },
+  optionsScrollView: { flex: 1 },
 });
