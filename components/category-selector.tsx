@@ -43,7 +43,10 @@ export default function CategorySelector({ category, selectedItems, onToggleCate
       isExpanded && { height: 500 } // Increased height to accommodate tabs
     ]}>
       <View style={styles.headerRow}>
-        <Pressable onPress={() => onToggleCategory(category.category)}>
+        <Pressable onPress={() => {
+          onToggleCategory(category.category)
+          if (isExpanded) handleToggleExpand();
+        }}>
           <Ionicons 
             name={isEnabled ? "checkbox" : "square-outline"} 
             size={24} 
@@ -54,6 +57,9 @@ export default function CategorySelector({ category, selectedItems, onToggleCate
         <Pressable onPress={handleToggleExpand} style={styles.titleArea} disabled={!isEnabled}>
           <Text style={[styles.headerText, !isEnabled && styles.textDisabled]}>
             {category.category}
+          </Text>
+          <Text style={[styles.subHeaderText, !isEnabled && styles.textDisabled]}>
+            {mode}
           </Text>
         </Pressable>
 
@@ -139,8 +145,9 @@ const styles = StyleSheet.create({
     zIndex: 10,
     backgroundColor: '#fff'
   },
-  titleArea: { flex: 1, marginLeft: 12 },
+  titleArea: { flex: 1, marginLeft: 12, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   headerText: { fontSize: 17, fontWeight: '700' },
+  subHeaderText: { fontSize: 11, color: '#8E8E93', fontWeight: '700', marginRight: 8 },
   textDisabled: { color: '#bbb' },
   expandedContent: { flex: 1 },
   fixedSelectorWrapper: {
