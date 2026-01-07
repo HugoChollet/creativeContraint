@@ -1,5 +1,7 @@
 import book from '@/assets/book.json';
+import internetVideo from '@/assets/internetVideo.json';
 import music from '@/assets/music.json';
+import videoFiction from '@/assets/videoFiction.json';
 import CategorySelector from '@/components/category-selector';
 import { ThemedText } from '@/components/themed-text';
 import { BottomSheet } from '@/components/ui/bottom-sheet';
@@ -16,7 +18,7 @@ export default function DetailsScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [randomConstraints, setRandomConstraints] = useState<GeneratedConstraints>({});
 
-  const dataSource = type === 'Music' ? music : book;
+  const dataSource = type === 'Music' ? music : type === 'videoFiction' ? videoFiction : type === 'Book' ? book : internetVideo;
 
 // Helper to build initial state where everything is ON
   const getInitialState = (): SelectedState => {
