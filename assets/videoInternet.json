@@ -3,7 +3,7 @@
   "constraints": [
     {
       "category": "Type",
-      "enabled": false,
+      "disabled": true,
       "options": [
         {"id": 1, "value": "Short-Form (Loop-based)", "rarity": 1},
         {"id": 2, "value": "Video Essay / Explainer", "rarity": 3},
@@ -127,7 +127,7 @@
     },
     {
       "category": "Platform & Delivery Format",
-      "enabled": false,
+      "disabled": true,
       "options": [
         {"id": 1, "value": "Vertical (9:16) - Native Mobile", "rarity": 1},
         {"id": 2, "value": "Square (1:1) - Aesthetic Feed", "rarity": 3},

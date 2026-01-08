@@ -4,7 +4,7 @@
   "constraints": [
     {
       "category": "Type",
-      "enabled": false,
+      "disabled": true,
       "options": [
         {"id": 1, "value": "Format court (en boucle)", "rarity": 1},
         {"id": 2, "value": "Essai vidéo / Explication", "rarity": 3},
@@ -131,7 +131,7 @@
     {
       "category": "Platform & Delivery Format",
       "label": "Plateforme & Format de Diffusion",
-      "enabled": false,
+      "disabled": true,
       "options": [
         {"id": 1, "value": "Vertical (9:16) - Natif Mobile", "rarity": 1},
         {"id": 2, "value": "Carré (1:1) - Flux esthétique", "rarity": 3},
