@@ -1,32 +1,47 @@
-import book from '@/assets/book.json';
-import music from '@/assets/music.json';
-import photography from '@/assets/photography.json';
-import videoFiction from '@/assets/videoFiction.json';
-import internetVideo from '@/assets/videoInternet.json';
 import CategorySelector from '@/components/category-selector';
 import { ThemedText } from '@/components/themed-text';
 import { BottomSheet } from '@/components/ui/bottom-sheet';
 import { PresetMode } from '@/components/ui/status-selector';
+import i18nInstance from '@/i18n';
 import { useLocalSearchParams } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { LayoutAnimation, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Option, ProjectData, SelectedState } from '../../types/constraints';
 
 export type GeneratedConstraints = Record<string, string>;
+const typeMapping: Record<string, string> = {
+  music: 'music',
+  book: 'book',
+  photography: 'photo', // Redirige 'photography' vers ton namespace 'photo'
+  videofiction: 'videoFiction',
+  videointernet: 'videoInternet',
+};
 
 export default function DetailsScreen() {
-  const { id, type } = useLocalSearchParams(); 
+  const { type } = useLocalSearchParams<{id: string, type: string}>(); 
   const [modalVisible, setModalVisible] = useState(false);
   const [randomConstraints, setRandomConstraints] = useState<GeneratedConstraints>({});
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const { t } = useTranslation();
+  
+  const rawType = (Array.isArray(type) ? type[0] : type ?? 'book').toLowerCase();
+  const typeKey = typeMapping[rawType] || 'book';
 
-  const dataSource: ProjectData = type === 'Music' ? music : type === 'videoFiction' ? videoFiction : type === 'Book' ? book : type === 'Internet Video' ? internetVideo : photography;
+const dataSource = useMemo(() => {
+    const data = i18nInstance.getResourceBundle(i18nInstance.language, typeKey);
+    // Log de sécurité pour voir ce qui est récupéré
+    if (!data) console.error(`Namespace "${typeKey}" introuvable pour la langue "${i18nInstance.language}"`);
+    return data as ProjectData;
+  }, [i18nInstance.language, typeKey]);
 
-// Helper to build initial state where everything is ON
+  // Helper to build initial state where everything is ON
   const getInitialState = (): SelectedState => {
     const activeCats: Record<string, boolean> = {};
     const selOpts: Record<string, boolean> = {};
 
+    console.log(dataSource);
+    
     dataSource.constraints.forEach((cat) => {
       if (cat.disabled) return;
       
@@ -53,6 +68,8 @@ export default function DetailsScreen() {
       selectedOptions: selOpts,
     };
   };
+
+  if (!dataSource) return <View><Text>Loading...</Text></View>;
 
   const [selectedItems, setSelectedItems] = useState<SelectedState>(getInitialState);
 
@@ -81,7 +98,6 @@ export default function DetailsScreen() {
     setExpandedCategory(prev => (prev === categoryName ? null : categoryName));
   };
 
-  // 3. The Generic Refresh Logic
   function refreshConstraints() {
     const results: GeneratedConstraints = {};
 
@@ -132,7 +148,9 @@ export default function DetailsScreen() {
 
   return (
     <View style={styles.container}>
-      <ThemedText style={styles.title} type="title">{dataSource.project_type} Lab</ThemedText>
+      <ThemedText style={styles.title} type="title">
+        {t('common:lab_title', { type: dataSource.project_type })}
+      </ThemedText>
       
       <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
         {dataSource.constraints.map((cat) => (
@@ -153,21 +171,23 @@ export default function DetailsScreen() {
         <Text style={styles.buttonText}>A</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={refreshConstraints}>
-        <Text style={styles.buttonText}>Generate {dataSource.project_type} Idea</Text>
+        <Text style={styles.buttonText}>
+          {t('common:generate_button', { type: dataSource.project_type })}
+        </Text>
       </TouchableOpacity>
 
       <BottomSheet 
         isVisible={modalVisible} 
         onClose={() => setModalVisible(false)}
         title={`${dataSource.project_type} Constraints`}
-        buttonText="Back to Lab"
+        buttonText={t('common:back_button')}
       >
         {dataSource.constraints.map((cat) => {
           if (!randomConstraints[cat.category]) return null;
           return (
             <View key={cat.category} style={styles.modalResultBox}>
-              <Text style={styles.modalCategoryLabel}>{cat.category}</Text>
-              <Text style={styles.modalValueText}>{randomConstraints[cat.category] ?? "-"}</Text>
+              <Text style={styles.modalCategoryLabel}>{cat.label || cat.category}</Text>
+              <Text style={styles.modalValueText}>{randomConstraints[cat.category] ?? t('common:empty_result')}</Text>
             </View>
           );
         })}

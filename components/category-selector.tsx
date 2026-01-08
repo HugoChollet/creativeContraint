@@ -56,14 +56,14 @@ export default function CategorySelector({ category, selectedItems, onToggleCate
 
         <View style={styles.titleArea} >
           <Text style={[styles.headerText, !isEnabled && styles.textDisabled]}>
-            {category.category}
+            {category.label || category.category}
           </Text>
           <Text style={[styles.subHeaderText, !isEnabled && styles.textDisabled]}>
             {mode}
           </Text>
         </View>
         <Ionicons name={isExpanded ? "chevron-up" : "chevron-down"} size={20} color={isEnabled ? "#666" : "#ddd"} />
-        
+
       </Pressable>
 
       {isExpanded && isEnabled && (

@@ -1,0 +1,8 @@
+{
+  "lab_title": "Lab pour {{type}}",
+  "generate_button": "Générer une idée de {{type}}",
+  "constraints_title": "Contraintes : {{type}}",
+  "back_button": "Retour au Lab",
+  "empty_result": "-",
+  "generate_symbol": "G"
+}

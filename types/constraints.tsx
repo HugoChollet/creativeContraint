@@ -12,6 +12,7 @@ export interface SubCategory {
 export interface Category {
   category: string;
   disabled?: boolean;
+  label?: string;
   options?: Option[];
   sub_categories?: SubCategory[];
 }

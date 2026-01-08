@@ -7,22 +7,22 @@ export default function HomeScreen() {
   
   return (
     <ThemedView style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 1, type: 'Book' } })}>
+      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 1, type: 'book' } })}>
         <Text style={styles.buttonText}>Write a Fiction Book 📖</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 2, type: 'Video Game' } })}>
         <Text style={styles.buttonText}>Develop a Video Game 🎮</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 3, type: 'Music' } })}>
+      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 3, type: 'music' } })}>
         <Text style={styles.buttonText}>Compose a song 🎵</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 3, type: 'Internet Video' } })}>
+      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 3, type: 'videInternet' } })}>
         <Text style={styles.buttonText}>Create Video Content 🌐</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 3, type: 'videoFiction' } })}>
         <Text style={styles.buttonText}>Film a Fiction 🎞️</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 3, type: 'phototography' } })}>
+      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 3, type: 'photography' } })}>
         <Text style={styles.buttonText}>Take a Photography 📷</Text>
       </TouchableOpacity>
     </ThemedView>
