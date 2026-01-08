@@ -2,7 +2,7 @@
   "project_type": "Internet Video",
   "constraints": [
     {
-      "category": "Video Type",
+      "category": "Type",
       "enabled": false,
       "options": [
         {"id": 1, "value": "Short-Form (Loop-based)", "rarity": 1},
@@ -16,7 +16,7 @@
       ]
     },
     {
-      "category": "The Hook (First 3 Seconds)",
+      "category": "The Hook",
       "options": [
         {"id": 1, "value": "Start with: 'I can't believe I'm showing you this'", "rarity": 2},
         {"id": 2, "value": "Show the 'Fail' or 'End Result' first", "rarity": 1},
@@ -138,7 +138,7 @@
       ]
     },
     {
-      "category": "Video Content Components",
+      "category": "Video Content",
       "Tabs": ["Subject", "Action", "Context"],
       "sub_categories": [
         {
@@ -309,7 +309,7 @@
       ]
     },
     {
-      "category": "Trump Constraints (Wildcards)",
+      "category": "Wildcards",
       "options": [
         {"id": 1, "value": "1920s Silent Film Style (B&W, Title cards, piano music)", "rarity": 4},
         {"id": 2, "value": "Props: A single tea bag must be the hero of a shot", "rarity": 3},
