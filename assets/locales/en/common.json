@@ -1,8 +1,27 @@
-{
-  "lab_title": "{{type}} Lab",
-  "generate_button": "Generate {{type}} Idea",
-  "constraints_title": "{{type}} Constraints",
-  "back_button": "Back to Lab",
-  "empty_result": "-",
-  "generate_symbol": "G"
+  {
+    "layout": {
+        "Home": "Home",
+        "Settings": "Settings"
+    },
+    "lab": 
+    {
+        "lab_title": "{{type}} Lab",
+        "generate_button": "Generate {{type}} Idea",
+        "constraints_title": "{{type}} Constraints",
+        "back_button": "Back to Lab",
+        "empty_result": "-",
+        "generate_symbol": "G"
+    },
+    "home": {
+        "book_button": "Write a Fiction Book 📖",
+        "music_button": "Compose a song 🎵",
+        "videointernet_button": "Create Video Content 🌐",
+        "videofiction_button": "Film a Fiction 🎞️",
+        "photography_button": "Take a Photography 📷",
+        "videogame_button": "Develop a Video Game 🎮"
+    },
+    "settings": {
+        "settings_title": "Settings",
+        "language_selection": "Application Language"
+    }
 }

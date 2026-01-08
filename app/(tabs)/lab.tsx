@@ -28,9 +28,8 @@ export default function DetailsScreen() {
   const rawType = (Array.isArray(type) ? type[0] : type ?? 'book').toLowerCase();
   const typeKey = typeMapping[rawType] || 'book';
 
-const dataSource = useMemo(() => {
+  const dataSource = useMemo(() => {
     const data = i18nInstance.getResourceBundle(i18nInstance.language, typeKey);
-    // Log de sécurité pour voir ce qui est récupéré
     if (!data) console.error(`Namespace "${typeKey}" introuvable pour la langue "${i18nInstance.language}"`);
     return data as ProjectData;
   }, [i18nInstance.language, typeKey]);
@@ -149,7 +148,7 @@ const dataSource = useMemo(() => {
   return (
     <View style={styles.container}>
       <ThemedText style={styles.title} type="title">
-        {t('common:lab_title', { type: dataSource.project_type })}
+        {t('common:lab.lab_title', { type: dataSource.project_type })}
       </ThemedText>
       
       <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
@@ -172,7 +171,7 @@ const dataSource = useMemo(() => {
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={refreshConstraints}>
         <Text style={styles.buttonText}>
-          {t('common:generate_button', { type: dataSource.project_type })}
+          {t('common:lab.generate_button', { type: dataSource.project_type })}
         </Text>
       </TouchableOpacity>
 
@@ -180,14 +179,14 @@ const dataSource = useMemo(() => {
         isVisible={modalVisible} 
         onClose={() => setModalVisible(false)}
         title={`${dataSource.project_type} Constraints`}
-        buttonText={t('common:back_button')}
+        buttonText={t('common:lab.back_button')}
       >
         {dataSource.constraints.map((cat) => {
           if (!randomConstraints[cat.category]) return null;
           return (
             <View key={cat.category} style={styles.modalResultBox}>
               <Text style={styles.modalCategoryLabel}>{cat.label || cat.category}</Text>
-              <Text style={styles.modalValueText}>{randomConstraints[cat.category] ?? t('common:empty_result')}</Text>
+              <Text style={styles.modalValueText}>{randomConstraints[cat.category] ?? t('common:lab.empty_result')}</Text>
             </View>
           );
         })}

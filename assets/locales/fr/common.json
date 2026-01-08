@@ -1,8 +1,28 @@
+
 {
-  "lab_title": "Lab pour {{type}}",
-  "generate_button": "Générer une idée de {{type}}",
-  "constraints_title": "Contraintes : {{type}}",
-  "back_button": "Retour au Lab",
-  "empty_result": "-",
-  "generate_symbol": "G"
+    "layout": {
+        "Home": "Accueil",
+        "Settings": "Paramètres"
+    },
+    "lab":
+    {
+        "lab_title": "Lab pour {{type}}",
+        "generate_button": "Générer une idée de {{type}}",
+        "constraints_title": "Contraintes : {{type}}",
+        "back_button": "Retour au Lab",
+        "empty_result": "-",
+        "generate_symbol": "G"
+    },
+    "home": {
+        "book_button": "Ecrire une fiction 📖",
+        "music_button": "Composer une musique 🎵",
+        "videointernet_button": "Créer un contenu Video 🌐",
+        "videofiction_button": "Filmer une fiction 🎞️",
+        "photography_button": "Prendre une photographie 📷",
+        "videogame_button": "Développer un jeu Video 🎮"
+    },
+    "settings": {
+        "settings_title": "Paramètres",
+        "language_selection": "Langue de l'application"
+    }
 }
