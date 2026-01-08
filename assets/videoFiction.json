@@ -1,5 +1,5 @@
 {
-  "project_type": "Fiction (Professional)",
+  "project_type": "Fiction Video",
   "constraints": [
     {
         "category": "Genre",
@@ -107,7 +107,7 @@
         ]
     },
     {
-        "category": "Subgenre & Tone",
+        "category": "Subgenre",
         "options": [
             {"id": 1, "value": "A24-Style", "rarity": 5},
             {"id": 2, "value": "Absurdist", "rarity": 5},
@@ -317,7 +317,7 @@
         ]
     },
     {
-        "category": "Narrative Components",
+        "category": "Scene",
         "Tabs": ["Subject", "Action", "Context"],
         "sub_categories": [
             {
