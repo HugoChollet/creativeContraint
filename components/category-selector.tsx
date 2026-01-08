@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { LayoutAnimation, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Category, Option, SelectedState, SubCategory } from '../types/constraints';
 import { ConstraintOption } from './constraint-option';
 import { PresetMode, StatusSelector } from './ui/status-selector';
@@ -11,10 +11,11 @@ interface CategoryProps {
   onToggleCategory: (name: string) => void;
   onToggleOption: (catName: string, id: number) => void;
   onBulkUpdate: (catName: string, options: Option[], mode: PresetMode) => void;
+  isExpanded: boolean;
+  onExpand: () => void;
 }
 
-export default function CategorySelector({ category, selectedItems, onToggleCategory, onToggleOption, onBulkUpdate }: CategoryProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
+export default function CategorySelector({ category, selectedItems, onToggleCategory, onToggleOption, onBulkUpdate, isExpanded, onExpand }: CategoryProps) {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [mode, setMode] = useState<PresetMode>('all');
 
@@ -23,11 +24,9 @@ export default function CategorySelector({ category, selectedItems, onToggleCate
 
   const handleToggleExpand = () => {
     if (!isEnabled) return;
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setIsExpanded(!isExpanded);
+    onExpand(); 
   };
 
-  // Helper to determine which options to show
   const currentSubCategory: SubCategory | null = hasSubCategories 
     ? category.sub_categories![activeTabIndex] 
     : null;
@@ -42,7 +41,8 @@ export default function CategorySelector({ category, selectedItems, onToggleCate
       !isEnabled && styles.cardDisabled,
       isExpanded && { height: 500 } // Increased height to accommodate tabs
     ]}>
-      <View style={styles.headerRow}>
+      <Pressable onPress={handleToggleExpand}  style={styles.headerRow}>
+        
         <Pressable onPress={() => {
           onToggleCategory(category.category)
           if (isExpanded) handleToggleExpand();
@@ -54,19 +54,17 @@ export default function CategorySelector({ category, selectedItems, onToggleCate
           />
         </Pressable>
 
-        <Pressable onPress={handleToggleExpand} style={styles.titleArea} disabled={!isEnabled}>
+        <View style={styles.titleArea} >
           <Text style={[styles.headerText, !isEnabled && styles.textDisabled]}>
             {category.category}
           </Text>
           <Text style={[styles.subHeaderText, !isEnabled && styles.textDisabled]}>
             {mode}
           </Text>
-        </Pressable>
-
-        <Pressable onPress={handleToggleExpand} disabled={!isEnabled}>
-          <Ionicons name={isExpanded ? "chevron-up" : "chevron-down"} size={20} color={isEnabled ? "#666" : "#ddd"} />
-        </Pressable>
-      </View>
+        </View>
+        <Ionicons name={isExpanded ? "chevron-up" : "chevron-down"} size={20} color={isEnabled ? "#666" : "#ddd"} />
+        
+      </Pressable>
 
       {isExpanded && isEnabled && (
         <View style={styles.expandedContent}>

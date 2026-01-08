@@ -9,7 +9,7 @@ import { BottomSheet } from '@/components/ui/bottom-sheet';
 import { PresetMode } from '@/components/ui/status-selector';
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { LayoutAnimation, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Option, ProjectData, SelectedState } from '../../types/constraints';
 
 export type GeneratedConstraints = Record<string, string>;
@@ -18,6 +18,7 @@ export default function DetailsScreen() {
   const { id, type } = useLocalSearchParams(); 
   const [modalVisible, setModalVisible] = useState(false);
   const [randomConstraints, setRandomConstraints] = useState<GeneratedConstraints>({});
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
   const dataSource: ProjectData = type === 'Music' ? music : type === 'videoFiction' ? videoFiction : type === 'Book' ? book : type === 'Internet Video' ? internetVideo : photography;
 
@@ -72,6 +73,12 @@ export default function DetailsScreen() {
       ...prev,
       selectedOptions: { ...prev.selectedOptions, [key]: !prev.selectedOptions[key] }
     }));
+  };
+
+
+  const handleToggleExpand = (categoryName: string) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setExpandedCategory(prev => (prev === categoryName ? null : categoryName));
   };
 
   // 3. The Generic Refresh Logic
@@ -136,6 +143,8 @@ export default function DetailsScreen() {
             onToggleCategory={toggleCategory}
             onToggleOption={toggleOption}
             onBulkUpdate={bulkUpdateOptions}
+            isExpanded={expandedCategory === cat.category} 
+            onExpand={() => handleToggleExpand(cat.category)}
           />
         ))}
       </ScrollView>
