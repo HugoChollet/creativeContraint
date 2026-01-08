@@ -1,15 +1,16 @@
 import book from '@/assets/book.json';
-import internetVideo from '@/assets/internetVideo.json';
 import music from '@/assets/music.json';
+import photography from '@/assets/photography.json';
 import videoFiction from '@/assets/videoFiction.json';
+import internetVideo from '@/assets/videoInternet.json';
 import CategorySelector from '@/components/category-selector';
 import { ThemedText } from '@/components/themed-text';
 import { BottomSheet } from '@/components/ui/bottom-sheet';
 import { PresetMode } from '@/components/ui/status-selector';
 import { useLocalSearchParams } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Option, SelectedState } from '../../types/constraints';
+import { Option, ProjectData, SelectedState } from '../../types/constraints';
 
 export type GeneratedConstraints = Record<string, string>;
 
@@ -18,7 +19,7 @@ export default function DetailsScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [randomConstraints, setRandomConstraints] = useState<GeneratedConstraints>({});
 
-  const dataSource = type === 'Music' ? music : type === 'videoFiction' ? videoFiction : type === 'Book' ? book : internetVideo;
+  const dataSource: ProjectData = type === 'Music' ? music : type === 'videoFiction' ? videoFiction : type === 'Book' ? book : type === 'Internet Video' ? internetVideo : photography;
 
 // Helper to build initial state where everything is ON
   const getInitialState = (): SelectedState => {
@@ -26,6 +27,8 @@ export default function DetailsScreen() {
     const selOpts: Record<string, boolean> = {};
 
     dataSource.constraints.forEach((cat) => {
+      if (cat.disabled) return;
+      
       // Enable the category by default
       activeCats[cat.category] = true;
       
@@ -51,6 +54,10 @@ export default function DetailsScreen() {
   };
 
   const [selectedItems, setSelectedItems] = useState<SelectedState>(getInitialState);
+
+  useEffect(() => {
+    setSelectedItems(getInitialState());
+  }, [type]);
 
   const toggleCategory = (name: string) => {
     setSelectedItems(prev => ({
@@ -146,8 +153,8 @@ export default function DetailsScreen() {
         title={`${dataSource.project_type} Constraints`}
         buttonText="Back to Lab"
       >
-        {/* Everything here is passed as 'children' */}
         {dataSource.constraints.map((cat) => {
+          if (!randomConstraints[cat.category]) return null;
           return (
             <View key={cat.category} style={styles.modalResultBox}>
               <Text style={styles.modalCategoryLabel}>{cat.category}</Text>
