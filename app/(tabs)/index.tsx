@@ -8,22 +8,22 @@ export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 1, type: 'Book' } })}>
-        <Text>Write a Fiction Book</Text>
+        <Text style={styles.buttonText}>Write a Fiction Book 📖</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 2, type: 'Video Game' } })}>
-        <Text>Develop a Video Game</Text>
+        <Text style={styles.buttonText}>Develop a Video Game 🎮</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 3, type: 'Music' } })}>
-        <Text>Compose a song</Text>
+        <Text style={styles.buttonText}>Compose a song 🎵</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 3, type: 'Internet Video' } })}>
-        <Text>Create Video Content</Text>
+        <Text style={styles.buttonText}>Create Video Content 🌐</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 3, type: 'videoFiction' } })}>
-        <Text>Film a Fiction</Text>
+        <Text style={styles.buttonText}>Film a Fiction 🎞️</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 3, type: 'phototography' } })}>
-        <Text>Take a Photography</Text>
+        <Text style={styles.buttonText}>Take a Photography 📷</Text>
       </TouchableOpacity>
     </ThemedView>
   );
@@ -36,9 +36,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     gap: 24,
   },
-    button: {
+  button: {
+    backgroundColor: '#007AFF',
+    padding: 18,
+    margin: 20,
+    borderRadius: 12,
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    padding: 10,
+  },
+    buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
