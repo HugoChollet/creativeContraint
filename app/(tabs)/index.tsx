@@ -22,6 +22,9 @@ export default function HomeScreen() {
       <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 3, type: 'videoFiction' } })}>
         <Text>Film a Fiction</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/lab', params: { id: 3, type: 'phototography' } })}>
+        <Text>Take a Photography</Text>
+      </TouchableOpacity>
     </ThemedView>
   );
 }
