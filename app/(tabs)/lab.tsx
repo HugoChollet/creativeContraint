@@ -18,7 +18,7 @@ const typeMapping: Record<string, string> = {
   videointernet: 'videoInternet',
 };
 
-export default function DetailsScreen() {
+export default function LabScreen() {
   const { type } = useLocalSearchParams<{id: string, type: string}>(); 
   const [modalVisible, setModalVisible] = useState(false);
   const [randomConstraints, setRandomConstraints] = useState<GeneratedConstraints>({});
@@ -30,7 +30,7 @@ export default function DetailsScreen() {
 
   const dataSource = useMemo(() => {
     const data = i18nInstance.getResourceBundle(i18nInstance.language, typeKey);
-    if (!data) console.error(`Namespace "${typeKey}" introuvable pour la langue "${i18nInstance.language}"`);
+    if (!data) console.error(`Namespace "${typeKey}" does not exist for "${i18nInstance.language}"`);
     return data as ProjectData;
   }, [i18nInstance.language, typeKey]);
 
@@ -145,6 +145,22 @@ export default function DetailsScreen() {
     });
   };
 
+  const getDifficultyGenerated = () => {
+    let count = 0;
+
+    dataSource.constraints.map((cat) => {
+      if (cat.disabled) return;
+      if (cat.options) {
+        count += cat.options.find(opt => opt.value === randomConstraints[cat.category])?.rarity || 0;        
+      } else if (cat.sub_categories) {
+        cat.sub_categories.map((subCat) => {
+          count += subCat.options.find(opt => randomConstraints[cat.category].includes(opt.value))?.rarity || 0;
+        })
+      }
+    });
+    return count;
+  }
+
   return (
     <View style={styles.container}>
       <ThemedText style={styles.title} type="title">
@@ -180,6 +196,7 @@ export default function DetailsScreen() {
         onClose={() => setModalVisible(false)}
         title={`${dataSource.project_type} Constraints`}
         buttonText={t('common:lab.back_button')}
+        difficultyIndicator={getDifficultyGenerated()}
       >
         {dataSource.constraints.map((cat) => {
           if (!randomConstraints[cat.category]) return null;

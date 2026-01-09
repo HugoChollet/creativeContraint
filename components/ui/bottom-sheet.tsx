@@ -9,9 +9,10 @@ interface BottomSheetProps {
   title: string;
   children: React.ReactNode; // This allows any result content
   buttonText?: string;
+  difficultyIndicator?: number;
 }
 
-export function BottomSheet({ isVisible, onClose, title, children, buttonText = "Close" }: BottomSheetProps) {
+export function BottomSheet({ isVisible, onClose, title, children, buttonText = "Close", difficultyIndicator }: BottomSheetProps) {
   return (
     <Modal
       animationType="slide"
@@ -26,7 +27,11 @@ export function BottomSheet({ isVisible, onClose, title, children, buttonText = 
         <View style={styles.sheet}>
           <View style={styles.handle} />
           
-          <ThemedText type="subtitle" style={styles.title}>{title}</ThemedText>
+          <View style={styles.titleContainer}>
+            <ThemedText type="subtitle" style={styles.title}>{difficultyIndicator}</ThemedText>
+            <ThemedText type="subtitle" style={styles.title}>{title}</ThemedText>
+            <ThemedText type="subtitle" style={styles.title}>{difficultyIndicator}</ThemedText>
+          </View>
 
           <ScrollView style={styles.contentScroll} showsVerticalScrollIndicator={false}>
             {children}
@@ -82,5 +87,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
