@@ -3,13 +3,13 @@ import { ThemedText } from '@/components/themed-text';
 import { BottomSheet } from '@/components/ui/bottom-sheet';
 import { PresetMode } from '@/components/ui/status-selector';
 import i18nInstance from '@/i18n';
+import { ProjectSaved } from '@/types/data';
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LayoutAnimation, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Option, ProjectData, SelectedState } from '../../types/constraints';
+import { GeneratedConstraints, Option, ProjectData, SelectedState } from '../../types/constraints';
 
-export type GeneratedConstraints = Record<string, string>;
 const typeMapping: Record<string, string> = {
   music: 'music',
   book: 'book',
@@ -161,6 +161,19 @@ export default function LabScreen() {
     return count;
   }
 
+  const onSaveConstraints = () => {
+    const saving: ProjectSaved = {
+      id: 0,
+      project_type: dataSource.project_type,
+      constraints: randomConstraints,
+      difficulty: getDifficultyGenerated(),
+      createdAt: new Date(),
+    }
+    console.log(randomConstraints);
+
+    
+  }
+
   return (
     <View style={styles.container}>
       <ThemedText style={styles.title} type="title">
@@ -197,6 +210,7 @@ export default function LabScreen() {
         title={`${dataSource.project_type} Constraints`}
         buttonText={t('common:lab.back_button')}
         difficultyIndicator={getDifficultyGenerated()}
+        onSaveConstraints={onSaveConstraints}
       >
         {dataSource.constraints.map((cat) => {
           if (!randomConstraints[cat.category]) return null;

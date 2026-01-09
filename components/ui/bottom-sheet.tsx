@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ThemedText } from '../themed-text';
@@ -10,9 +11,10 @@ interface BottomSheetProps {
   children: React.ReactNode; // This allows any result content
   buttonText?: string;
   difficultyIndicator?: number;
+  onSaveConstraints: () => void;
 }
 
-export function BottomSheet({ isVisible, onClose, title, children, buttonText = "Close", difficultyIndicator }: BottomSheetProps) {
+export function BottomSheet({ isVisible, onClose, title, children, buttonText = "Close", difficultyIndicator, onSaveConstraints }: BottomSheetProps) {
   return (
     <Modal
       animationType="slide"
@@ -30,7 +32,10 @@ export function BottomSheet({ isVisible, onClose, title, children, buttonText = 
           <View style={styles.titleContainer}>
             <ThemedText type="subtitle" style={styles.title}>{difficultyIndicator}</ThemedText>
             <ThemedText type="subtitle" style={styles.title}>{title}</ThemedText>
-            <ThemedText type="subtitle" style={styles.title}>{difficultyIndicator}</ThemedText>
+            <TouchableOpacity style={styles.actionButton} onPress={onSaveConstraints}>
+              <Ionicons size={28} name="heart-outline" color="white" />
+            </TouchableOpacity>
+
           </View>
 
           <ScrollView style={styles.contentScroll} showsVerticalScrollIndicator={false}>
@@ -91,6 +96,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-end',
+    paddingBottom: 8,
   },
 });
