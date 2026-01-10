@@ -1,10 +1,11 @@
-import { GeneratedConstraints } from "./constraints";
+import { Option } from '@/types/constraints';
 
+export type ChosenOption = Record<string, Option>;
 
-export type ProjectSaved = {
+export type SavedProjectConstraints = {
   id: number;
   project_type: string;
-  constraints: GeneratedConstraints;
+  constraints: ChosenOption;
   difficulty: number;
   createdAt: Date;
 };
