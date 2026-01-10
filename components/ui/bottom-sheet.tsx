@@ -1,8 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ThemedText } from '../themed-text';
 
+type IoniconsName = ComponentProps<typeof Ionicons>['name'];
 
 interface BottomSheetProps {
   isVisible: boolean;
@@ -12,9 +13,10 @@ interface BottomSheetProps {
   buttonText?: string;
   difficultyIndicator?: number;
   onSaveConstraints: () => void;
+  icon: IoniconsName;
 }
 
-export function BottomSheet({ isVisible, onClose, title, children, buttonText = "Close", difficultyIndicator, onSaveConstraints }: BottomSheetProps) {
+export function BottomSheet({ isVisible, onClose, title, children, buttonText = "Close", difficultyIndicator, onSaveConstraints, icon }: BottomSheetProps) {
   return (
     <Modal
       animationType="slide"
@@ -33,7 +35,7 @@ export function BottomSheet({ isVisible, onClose, title, children, buttonText = 
             <ThemedText type="subtitle" style={styles.title}>{difficultyIndicator}</ThemedText>
             <ThemedText type="subtitle" style={styles.title}>{title}</ThemedText>
             <TouchableOpacity style={styles.actionButton} onPress={onSaveConstraints}>
-              <Ionicons size={28} name="heart-outline" color="white" />
+              <Ionicons size={28} name={icon} color="white" />
             </TouchableOpacity>
 
           </View>

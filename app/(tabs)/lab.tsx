@@ -24,6 +24,7 @@ export default function LabScreen() {
   const [randomConstraints, setRandomConstraints] = useState<GeneratedConstraints>({});
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const { t } = useTranslation();
+  const [isSaved, setIsSaved] = useState(false);
   
   const rawType = (Array.isArray(type) ? type[0] : type ?? 'book').toLowerCase();
   const typeKey = typeMapping[rawType] || 'book';
@@ -126,6 +127,7 @@ export default function LabScreen() {
 
     setRandomConstraints(results);
     setModalVisible(true);
+    setIsSaved(false);
   }
 
 
@@ -196,18 +198,23 @@ const getConstraintData = (): ChosenOption => {
       console.warn("No constraints generated yet.");
       return;
     }
-
-    const saving: SavedProjectConstraints = {
-      id: Date.now(),
-      project_type: dataSource.project_type,
-      constraints: constraints,
-      difficulty: getDifficultyGenerated(),
-      createdAt: new Date(),
-    };
-
-    console.log("Saving project:", saving);
-    // Here you would typically call an API, use AsyncStorage, or dispatch to Redux/Zustand
-    setModalVisible(false);
+    if (!isSaved) {
+      const saving: SavedProjectConstraints = {
+        id: Date.now(),
+        project_type: dataSource.project_type,
+        constraints: constraints,
+        difficulty: getDifficultyGenerated(),
+        createdAt: new Date(),
+      };
+      console.log("Saving project:", saving);
+      // Here you would typically call an API, use AsyncStorage, or dispatch to Redux/Zustand
+    } else {
+      console.log("unsaving ?");
+    }
+    console.log(isSaved);
+    
+    setIsSaved(!isSaved);
+    //setModalVisible(false);
   }
 
   return (
@@ -248,6 +255,7 @@ const getConstraintData = (): ChosenOption => {
         buttonText={t('common:lab.back_button')}
         difficultyIndicator={getDifficultyGenerated()}
         onSaveConstraints={onSaveConstraints}
+        icon={isSaved ? "bookmark" : "bookmark-outline"}
       >
         {dataSource.constraints.map((cat) => {
           if (!randomConstraints[cat.category]) return null;
