@@ -40,7 +40,7 @@
         "email_read_only": "Email (Lecture seule)",
         "avatar_url": "Avatar (Url)",
         "update_profile": "Mettre à jour le profil",
-        "saving...": "Sauvegarde en cours...",
+        "saving": "Sauvegarde en cours...",
         "sign_out": "Deconnexion"
     }
 }

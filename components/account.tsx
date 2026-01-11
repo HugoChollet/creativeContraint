@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { supabase } from '../lib/supabase'
+import { ThemedText } from './themed-text'
 
 export default function     Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true)
@@ -114,15 +115,15 @@ return (
     </View>
 
     <TouchableOpacity
-      style={globalStyles.button}
+      style={globalStyles.secondaryButton}
       onPress={() => updateProfile({ username, website, avatar_url: avatarUrl })}
       disabled={loading}
     >
-      <Text style={styles.buttonText}>{loading ? t('common:account.sign_out') : t('common:account.update_profile')}</Text>
+      <ThemedText style={globalStyles.secondaryButtonText}>{loading ? t('common:account.saving') : t('common:account.update_profile')}</ThemedText>
     </TouchableOpacity>
 
     <TouchableOpacity 
-      style={[globalStyles.button, globalStyles.alertButton]} 
+      style={[globalStyles.secondaryButton, globalStyles.alertButton]} 
       onPress={() => supabase.auth.signOut()}
     >
       <Text style={globalStyles.alertText}>{t('common:account.sign_out')}</Text>
@@ -149,11 +150,6 @@ const styles = StyleSheet.create({
   verticallySpaced: {
     marginBottom: 20,
     alignSelf: 'stretch',
-  },
-  buttonText: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '700',
   },
   mt20: {
     marginTop: 20,

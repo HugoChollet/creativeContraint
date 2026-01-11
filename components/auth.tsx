@@ -75,19 +75,19 @@ export default function Auth() {
     </View>
 
     <TouchableOpacity 
-        style={[globalStyles.button, styles.btnSignIn, loading && { opacity: 0.7 }]} 
+        style={[globalStyles.secondaryButton, styles.btnSignIn, loading && { opacity: 0.7 }]} 
         disabled={loading} 
         onPress={() => signInWithEmail()}
     >
-        <Text style={styles.btnTextSignIn}>{t('common:auth.sign_in')}</Text>
+        <Text style={globalStyles.secondaryButtonText}>{t('common:auth.sign_in')}</Text>
     </TouchableOpacity>
 
     <TouchableOpacity 
-        style={[globalStyles.button, styles.btnSignUp]} 
+        style={[globalStyles.transparentButton]} 
         disabled={loading} 
         onPress={() => signUpWithEmail()}
     >
-        <Text style={styles.btnTextSignUp}>{t('common:auth.register')}</Text>
+        <Text style={globalStyles.transparentButtonText}>{t('common:auth.register')}</Text>
     </TouchableOpacity>
     </View>
   )
@@ -121,20 +121,5 @@ const styles = StyleSheet.create({
   },
   btnSignIn: {
     backgroundColor: '#fff', // Solid white button
-  },
-  btnTextSignIn: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  btnSignUp: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: '#444',
-  },
-  btnTextSignUp: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
   },
 });

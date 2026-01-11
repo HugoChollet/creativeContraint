@@ -39,7 +39,7 @@
         "email_read_only": "Email (Read Only)",
         "avatar_url": "Avatar URL",
         "update_profile": "Update Profile",
-        "saving...": "Saving...",
+        "saving": "Saving...",
         "sign_out": "Sign out"
     }
 }
