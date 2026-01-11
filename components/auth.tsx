@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Alert, AppState, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { supabase } from '../lib/supabase'
 
@@ -18,6 +19,7 @@ export default function Auth() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const { t } = useTranslation();
 
   async function signInWithEmail() {
     setLoading(true)
@@ -47,10 +49,10 @@ export default function Auth() {
 
   return (
    <View style={styles.container}>
-    <Text style={styles.header}>Creative Mindset</Text>
+    <Text style={styles.header}>{t('common:auth.title')}</Text>
     
     <View style={styles.verticallySpaced}>
-        <Text style={styles.label}>Email</Text>
+        <Text style={styles.label}>{t('common:auth.email')}</Text>
         <TextInput
         style={styles.input}
         onChangeText={(text) => setEmail(text)}
@@ -62,7 +64,7 @@ export default function Auth() {
     </View>
 
     <View style={styles.verticallySpaced}>
-        <Text style={styles.label}>Password</Text>
+        <Text style={styles.label}>{t('common:auth.password')}</Text>
         <TextInput
         style={styles.input}
         onChangeText={(text) => setPassword(text)}
@@ -79,7 +81,7 @@ export default function Auth() {
         disabled={loading} 
         onPress={() => signInWithEmail()}
     >
-        <Text style={styles.btnTextSignIn}>Sign In</Text>
+        <Text style={styles.btnTextSignIn}>{t('common:auth.sign_in')}</Text>
     </TouchableOpacity>
 
     <TouchableOpacity 
@@ -87,7 +89,7 @@ export default function Auth() {
         disabled={loading} 
         onPress={() => signUpWithEmail()}
     >
-        <Text style={styles.btnTextSignUp}>Create Account</Text>
+        <Text style={styles.btnTextSignUp}>{t('common:auth.register')}</Text>
     </TouchableOpacity>
     </View>
   )
@@ -96,7 +98,7 @@ export default function Auth() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000', // Pitch black for maximum contrast
+    backgroundColor: '#000',
     justifyContent: 'center',
     padding: 24,
   },

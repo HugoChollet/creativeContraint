@@ -1,5 +1,6 @@
 import { Session } from '@supabase/supabase-js'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { supabase } from '../lib/supabase'
 
@@ -8,6 +9,7 @@ export default function     Account({ session }: { session: Session }) {
   const [username, setUsername] = useState('')
   const [website, setWebsite] = useState('')
   const [avatarUrl, setAvatarUrl] = useState('')
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (session) getProfile()
@@ -78,7 +80,7 @@ export default function     Account({ session }: { session: Session }) {
 
 return (
   <View style={styles.container}>
-    <Text style={styles.label}>Email (Read Only)</Text>
+    <Text style={styles.label}>{t('common:account.email_read_only')}</Text>
     <View style={styles.verticallySpaced}>
       <TextInput 
         value={session?.user?.email} 
@@ -87,18 +89,18 @@ return (
       />
     </View>
 
-    <Text style={styles.label}>Artist Name</Text>
+    <Text style={styles.label}>{t('common:account.username')}</Text>
     <View style={styles.verticallySpaced}>
       <TextInput 
         value={username || ''} 
         onChangeText={setUsername} 
-        placeholder="How should we call you?"
+        placeholder={t('common:account.username_placeholder')}
         placeholderTextColor="#666"
         style={styles.input}
       />
     </View>
 
-    <Text style={styles.label}>Portfolio Website</Text>
+    <Text style={styles.label}>{t('common:account.portfolio')}</Text>
     <View style={styles.verticallySpaced}>
       <TextInput 
         value={website || ''} 
@@ -114,14 +116,14 @@ return (
       onPress={() => updateProfile({ username, website, avatar_url: avatarUrl })}
       disabled={loading}
     >
-      <Text style={styles.buttonText}>{loading ? 'Saving...' : 'Update Profile'}</Text>
+      <Text style={styles.buttonText}>{loading ? t('common:account.sign_out') : t('common:account.update_profile')}</Text>
     </TouchableOpacity>
 
     <TouchableOpacity 
       style={styles.signOutButton} 
       onPress={() => supabase.auth.signOut()}
     >
-      <Text style={styles.signOutText}>Sign Out</Text>
+      <Text style={styles.signOutText}>{t('common:account.sign_out')}</Text>
     </TouchableOpacity>
   </View>
 );
