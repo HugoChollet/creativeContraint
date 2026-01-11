@@ -1,12 +1,9 @@
-import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Alert, AppState, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { supabase } from '../lib/supabase'
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Alert, AppState, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useStyles } from '../hooks/use-styles';
+import { supabase } from '../lib/supabase';
 
-// Tells Supabase Auth to continuously refresh the session automatically if
-// the app is in the foreground. When this is added, you will continue to receive
-// `onAuthStateChange` events with the `TOKEN_REFRESHED` or `SIGNED_OUT` event
-// if the user's session is terminated. This should only be registered once.
 AppState.addEventListener('change', (state) => {
   if (state === 'active') {
     supabase.auth.startAutoRefresh()
@@ -20,6 +17,7 @@ export default function Auth() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const { t } = useTranslation();
+  const { globalStyles, colors } = useStyles();
 
   async function signInWithEmail() {
     setLoading(true)
@@ -54,30 +52,30 @@ export default function Auth() {
     <View style={styles.verticallySpaced}>
         <Text style={styles.label}>{t('common:auth.email')}</Text>
         <TextInput
-        style={styles.input}
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-        placeholder="email@address.com"
-        placeholderTextColor="#666"
-        autoCapitalize={'none'}
+            style={globalStyles.input}
+            onChangeText={(text) => setEmail(text)}
+            value={email}
+            placeholder="email@address.com"
+            placeholderTextColor="#666"
+            autoCapitalize={'none'}
         />
     </View>
 
     <View style={styles.verticallySpaced}>
         <Text style={styles.label}>{t('common:auth.password')}</Text>
         <TextInput
-        style={styles.input}
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-        secureTextEntry={true}
-        placeholder="Password"
-        placeholderTextColor="#666"
-        autoCapitalize={'none'}
+            style={globalStyles.input}
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            secureTextEntry={true}
+            placeholder="Password"
+            placeholderTextColor="#666"
+            autoCapitalize={'none'}
         />
     </View>
 
     <TouchableOpacity 
-        style={[styles.button, styles.btnSignIn, loading && { opacity: 0.7 }]} 
+        style={[globalStyles.button, styles.btnSignIn, loading && { opacity: 0.7 }]} 
         disabled={loading} 
         onPress={() => signInWithEmail()}
     >
@@ -85,7 +83,7 @@ export default function Auth() {
     </TouchableOpacity>
 
     <TouchableOpacity 
-        style={[styles.button, styles.btnSignUp]} 
+        style={[globalStyles.button, styles.btnSignUp]} 
         disabled={loading} 
         onPress={() => signUpWithEmail()}
     >
@@ -120,23 +118,6 @@ const styles = StyleSheet.create({
   verticallySpaced: {
     marginBottom: 16,
     alignSelf: 'stretch',
-  },
-  input: {
-    backgroundColor: '#1A1A1A',
-    color: '#fff',
-    height: 56,
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#333',
-  },
-  button: {
-    height: 56,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 12,
   },
   btnSignIn: {
     backgroundColor: '#fff', // Solid white button

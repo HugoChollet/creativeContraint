@@ -1,3 +1,4 @@
+import { useStyles } from '@/hooks/use-styles'
 import { Session } from '@supabase/supabase-js'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,6 +11,7 @@ export default function     Account({ session }: { session: Session }) {
   const [website, setWebsite] = useState('')
   const [avatarUrl, setAvatarUrl] = useState('')
   const { t } = useTranslation();
+  const { globalStyles, colors } = useStyles();
 
   useEffect(() => {
     if (session) getProfile()
@@ -85,7 +87,7 @@ return (
       <TextInput 
         value={session?.user?.email} 
         editable={false} 
-        style={[styles.input, { opacity: 0.5 }]} 
+        style={[globalStyles.input, { opacity: 0.5 }]} 
       />
     </View>
 
@@ -95,8 +97,8 @@ return (
         value={username || ''} 
         onChangeText={setUsername} 
         placeholder={t('common:account.username_placeholder')}
-        placeholderTextColor="#666"
-        style={styles.input}
+        placeholderTextColor={colors.placeholder}
+        style={globalStyles.input}
       />
     </View>
 
@@ -106,13 +108,13 @@ return (
         value={website || ''} 
         onChangeText={setWebsite} 
         placeholder="https://..."
-        placeholderTextColor="#666"
-        style={styles.input}
+        placeholderTextColor={colors.placeholder}
+        style={globalStyles.input}
       />
     </View>
 
     <TouchableOpacity
-      style={styles.button}
+      style={globalStyles.button}
       onPress={() => updateProfile({ username, website, avatar_url: avatarUrl })}
       disabled={loading}
     >
@@ -120,10 +122,10 @@ return (
     </TouchableOpacity>
 
     <TouchableOpacity 
-      style={styles.signOutButton} 
+      style={[globalStyles.button, globalStyles.alertButton]} 
       onPress={() => supabase.auth.signOut()}
     >
-      <Text style={styles.signOutText}>{t('common:account.sign_out')}</Text>
+      <Text style={globalStyles.alertText}>{t('common:account.sign_out')}</Text>
     </TouchableOpacity>
   </View>
 );
@@ -148,39 +150,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignSelf: 'stretch',
   },
-  input: {
-    backgroundColor: '#1e1e1e',
-    color: '#fff',
-    padding: 15,
-    borderRadius: 10,
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#333',
-  },
-  button: {
-    backgroundColor: '#fff', // High contrast for primary action
-    paddingVertical: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginTop: 20,
-  },
   buttonText: {
     color: '#000',
     fontSize: 16,
     fontWeight: '700',
-  },
-  signOutButton: {
-    marginTop: 15,
-    paddingVertical: 15,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ff4444',
-    borderRadius: 10,
-  },
-  signOutText: {
-    color: '#ff4444',
-    fontSize: 16,
-    fontWeight: '600',
   },
   mt20: {
     marginTop: 20,
