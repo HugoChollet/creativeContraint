@@ -1,6 +1,7 @@
 import Account from '@/components/account';
 import Auth from '@/components/auth';
 import ModalSelector from '@/components/ui/modal-selector';
+import { ThemeSwitcher } from '@/components/ui/theme-switcher';
 import { supabase } from '@/lib/supabase';
 import { Session } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
@@ -31,6 +32,7 @@ export default function SettingsScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#121212', padding: 20 }}>
+      <ThemeSwitcher />
       <ModalSelector
         label={t('common:settings.language_selection')}
         options={languages}

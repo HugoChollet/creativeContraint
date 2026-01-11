@@ -1,12 +1,17 @@
-import { useColorScheme } from 'react-native';
+// hooks/useStyles.ts
 import { getGlobalStyles } from '../constants/styles';
-import { AppThemeColors, Themes } from '../constants/theme';
+import { useTheme } from '../contexts/theme-context';
 
 export function useStyles() {
-  const systemTheme = useColorScheme() ?? 'light';
-  const colors: AppThemeColors = Themes[systemTheme];
+  const { colors, resolvedTheme, setThemeMode, themeMode } = useTheme();
   
   const globalStyles = getGlobalStyles(colors);
 
-  return { globalStyles, colors, theme: systemTheme };
+  return { 
+    globalStyles, 
+    colors, 
+    theme: resolvedTheme, // 'light' | 'dark'
+    themeMode,            // 'light' | 'dark' | 'system'
+    setThemeMode          // Function to change it
+  };
 }
