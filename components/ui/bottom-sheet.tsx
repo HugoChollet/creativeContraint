@@ -1,3 +1,4 @@
+import { useStyles } from '@/hooks/use-styles';
 import { Ionicons } from '@expo/vector-icons';
 import React, { ComponentProps } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -17,6 +18,8 @@ interface BottomSheetProps {
 }
 
 export function BottomSheet({ isVisible, onClose, title, children, buttonText = "Close", difficultyIndicator, onSaveConstraints, icon }: BottomSheetProps) {
+    const { globalStyles } = useStyles();
+  
   return (
     <Modal
       animationType="slide"
@@ -28,13 +31,13 @@ export function BottomSheet({ isVisible, onClose, title, children, buttonText = 
         {/* Transparent area to click and close */}
         <Pressable style={styles.backdrop} onPress={onClose} />
         
-        <View style={styles.sheet}>
+        <View style={[globalStyles.backgroundColor, styles.sheet]}>
           <View style={styles.handle} />
           
           <View style={styles.titleContainer}>
             <ThemedText type="subtitle" style={styles.title}>{difficultyIndicator}</ThemedText>
             <ThemedText type="subtitle" style={styles.title}>{title}</ThemedText>
-            <TouchableOpacity style={styles.actionButton} onPress={onSaveConstraints}>
+            <TouchableOpacity style={globalStyles.secondaryButton} onPress={onSaveConstraints}>
               <Ionicons size={28} name={icon} color="white" />
             </TouchableOpacity>
 
@@ -44,8 +47,8 @@ export function BottomSheet({ isVisible, onClose, title, children, buttonText = 
             {children}
           </ScrollView>
 
-          <TouchableOpacity style={styles.actionButton} onPress={onClose}>
-            <Text style={styles.actionButtonText}>{buttonText}</Text>
+          <TouchableOpacity style={globalStyles.secondaryButton} onPress={onClose}>
+            <Text style={globalStyles.secondaryButtonText}>{buttonText}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -63,7 +66,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sheet: {
-    backgroundColor: '#1E1E1E',
     borderTopLeftRadius: 28,
     borderTopRightRadius: 28,
     padding: 24,
@@ -83,17 +85,6 @@ const styles = StyleSheet.create({
   },
   contentScroll: {
     marginBottom: 20,
-  },
-  actionButton: {
-    backgroundColor: '#333',
-    padding: 16,
-    borderRadius: 14,
-    alignItems: 'center',
-  },
-  actionButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   titleContainer: {
     flexDirection: 'row',

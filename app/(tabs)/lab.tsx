@@ -2,6 +2,7 @@ import CategorySelector from '@/components/category-selector';
 import { ThemedText } from '@/components/themed-text';
 import { BottomSheet } from '@/components/ui/bottom-sheet';
 import { PresetMode } from '@/components/ui/status-selector';
+import { useStyles } from '@/hooks/use-styles';
 import i18nInstance from '@/i18n';
 import { ChosenOption, SavedProjectConstraints } from '@/types/data';
 import { useLocalSearchParams } from 'expo-router';
@@ -13,7 +14,7 @@ import { GeneratedConstraints, Option, ProjectData, SelectedState } from '../../
 const typeMapping: Record<string, string> = {
   music: 'music',
   book: 'book',
-  photography: 'photo', // Redirige 'photography' vers ton namespace 'photo'
+  photography: 'photo',
   videofiction: 'videoFiction',
   videointernet: 'videoInternet',
 };
@@ -25,7 +26,8 @@ export default function LabScreen() {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const { t } = useTranslation();
   const [isSaved, setIsSaved] = useState(false);
-  
+  const { globalStyles } = useStyles();
+
   const rawType = (Array.isArray(type) ? type[0] : type ?? 'book').toLowerCase();
   const typeKey = typeMapping[rawType] || 'book';
 
@@ -69,22 +71,21 @@ export default function LabScreen() {
     };
   };
 
-  if (!dataSource) return <View><Text>Loading...</Text></View>;
-
+  
   const [selectedItems, setSelectedItems] = useState<SelectedState>(getInitialState);
-
+  
   useEffect(() => {
     setSelectedItems(getInitialState());
     setRandomConstraints({});
   }, [type]);
-
+  
   const toggleCategory = (name: string) => {
     setSelectedItems(prev => ({
       ...prev,
       activeCategories: { ...prev.activeCategories, [name]: !prev.activeCategories[name] }
     }));
   };
-
+  
   const toggleOption = (catName: string, id: number) => {
     const key = `${catName}-${id}`;
     setSelectedItems(prev => ({
@@ -92,16 +93,16 @@ export default function LabScreen() {
       selectedOptions: { ...prev.selectedOptions, [key]: !prev.selectedOptions[key] }
     }));
   };
-
-
+  
+  
   const handleToggleExpand = (categoryName: string) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setExpandedCategory(prev => (prev === categoryName ? null : categoryName));
   };
-
+  
   function refreshConstraints() {
     const results: GeneratedConstraints = {};
-
+    
     dataSource.constraints.forEach((cat) => {
       if (selectedItems.activeCategories[cat.category]) {
         const availableOptions = cat.options ? cat.options.filter(
@@ -109,7 +110,7 @@ export default function LabScreen() {
         ) : cat.sub_categories ? cat.sub_categories.flatMap(subCat => subCat.options.filter(
           opt => selectedItems.selectedOptions[`${cat.category}-${subCat.name}-${opt.id}`]
         )) : [];
-
+        
         if (availableOptions.length > 0) {
           results[cat.category] = '';
           if (cat.options) {
@@ -130,7 +131,7 @@ export default function LabScreen() {
     setIsSaved(false);
   }
 
-
+  
   const bulkUpdateOptions = (categoryName: string, options: Option[], mode: PresetMode) => {
     setSelectedItems(prev => {
       const newOptions = { ...prev.selectedOptions };
@@ -143,7 +144,7 @@ export default function LabScreen() {
         else if (mode === 'hard') newOptions[key] = opt.rarity >= 3;
         // 'custom' does nothing in bulk; it's handled by manual clicks
       });
-
+      
       return { ...prev, selectedOptions: newOptions };
     });
   };
@@ -164,17 +165,17 @@ export default function LabScreen() {
     });
     return count;
   }
-
-const getConstraintData = (): ChosenOption => {
-  const selectedData: ChosenOption = {};
-
-  dataSource.constraints.forEach((cat) => {
-    const generatedValue = randomConstraints[cat.category];
-    if (!generatedValue) return;
-
-    if (cat.options) {
-      const foundOption = cat.options.find(opt => opt.value === generatedValue);
-      if (foundOption) {
+  
+  const getConstraintData = (): ChosenOption => {
+    const selectedData: ChosenOption = {};
+    
+    dataSource.constraints.forEach((cat) => {
+      const generatedValue = randomConstraints[cat.category];
+      if (!generatedValue) return;
+      
+      if (cat.options) {
+        const foundOption = cat.options.find(opt => opt.value === generatedValue);
+        if (foundOption) {
         selectedData[cat.category] = foundOption;
       }
     } else if (cat.sub_categories) {
@@ -186,39 +187,41 @@ const getConstraintData = (): ChosenOption => {
       });
     }
   });
-
+  
   return selectedData;
 };
 
-  const onSaveConstraints = () => {
-    const constraints = getConstraintData();
-    
-    // Ensure we have generated something before saving
-    if (Object.keys(constraints).length === 0) {
-      console.warn("No constraints generated yet.");
-      return;
-    }
-    if (!isSaved) {
-      const saving: SavedProjectConstraints = {
-        id: Date.now(),
-        project_type: dataSource.project_type,
-        constraints: constraints,
-        difficulty: getDifficultyGenerated(),
-        createdAt: new Date(),
-      };
-      console.log("Saving project:", saving);
-      // Here you would typically call an API, use AsyncStorage, or dispatch to Redux/Zustand
-    } else {
-      console.log("unsaving ?");
-    }
-    console.log(isSaved);
-    
-    setIsSaved(!isSaved);
-    //setModalVisible(false);
+const onSaveConstraints = () => {
+  const constraints = getConstraintData();
+  
+  // Ensure we have generated something before saving
+  if (Object.keys(constraints).length === 0) {
+    console.warn("No constraints generated yet.");
+    return;
   }
+  if (!isSaved) {
+    const saving: SavedProjectConstraints = {
+      id: Date.now(),
+      project_type: dataSource.project_type,
+      constraints: constraints,
+      difficulty: getDifficultyGenerated(),
+      createdAt: new Date(),
+    };
+    console.log("Saving project:", saving);
+    // Here you would typically call an API, use AsyncStorage, or dispatch to Redux/Zustand
+  } else {
+    console.log("unsaving ?");
+  }
+  console.log(isSaved);
+  
+  setIsSaved(!isSaved);
+  //setModalVisible(false);
+}
 
-  return (
-    <View style={styles.container}>
+if (!dataSource) return <View><Text>Loading...</Text></View>;
+
+return (
+  <View style={styles.container}>
       <ThemedText style={styles.title} type="title">
         {t('common:lab.lab_title', { type: dataSource.project_type })}
       </ThemedText>
@@ -240,10 +243,10 @@ const getConstraintData = (): ChosenOption => {
 
       <TouchableOpacity style={styles.showResultButton} onPress={() => {console.log(randomConstraints);
        setModalVisible(true)}} disabled={Object.keys(randomConstraints).length === 0}>
-        <Text style={styles.buttonText}>A</Text>
+        <Text style={globalStyles.secondaryButtonText}>A</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={refreshConstraints}>
-        <Text style={styles.buttonText}>
+      <TouchableOpacity style={globalStyles.secondaryButton} onPress={refreshConstraints}>
+        <Text style={globalStyles.secondaryButtonText}>
           {t('common:lab.generate_button', { type: dataSource.project_type })}
         </Text>
       </TouchableOpacity>
@@ -270,6 +273,7 @@ const getConstraintData = (): ChosenOption => {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -317,18 +321,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#007AFF', // Vibrant blue for the actual constraint
     fontWeight: '600',
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 18,
-    margin: 20,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   showResultButton: {
     position: 'absolute',

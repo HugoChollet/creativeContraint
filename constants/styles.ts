@@ -10,6 +10,7 @@ interface GlobalStyles {
   transparentButtonText: TextStyle;
   alertButton: ViewStyle;
   alertText: TextStyle;
+  backgroundColor: ViewStyle;
 }
 
 export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
@@ -64,6 +65,9 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     alertText: {
       ...baseButtonText,
         color: Colors.alert,
+    },
+    backgroundColor: {
+      backgroundColor: themes.background,
     }
   });
 }
