@@ -1,10 +1,11 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Tabs } from "expo-router";
+import React from "react";
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { useStyles } from '@/hooks/use-styles';
-import { useTranslation } from 'react-i18next';
+import { HapticTab } from "@/components/haptic-tab";
+import { IconSymbol } from "@/components/ui/icon-symbol";
+import { useStyles } from "@/hooks/use-styles";
+import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 
 export default function TabLayout() {
   const { colors } = useStyles();
@@ -14,32 +15,37 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: colors.container,
+          backgroundColor: colors.hardContainer,
           borderTopWidth: 0,
         },
         tabBarActiveTintColor: colors.tint,
         headerShown: false,
         tabBarButton: HapticTab,
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: t('common:layout.Home'),
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: t("common:layout.Home"),
+          tabBarIcon: ({ color }) => (
+            <Ionicons size={28} name="home" color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
-          title: t('common:layout.Settings'),
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: t("common:layout.Settings"),
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="paperplane.fill" color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="lab"
         options={{
           href: null, // This hides the tab button from the bottom bar!
-          title: 'Lab',
+          title: "Lab",
         }}
       />
     </Tabs>

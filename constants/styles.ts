@@ -1,8 +1,9 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
-import { AppThemeColors, Colors } from './theme';
+import { StyleSheet, TextStyle, ViewStyle } from "react-native";
+import { AppThemeColors, Colors } from "./theme";
 
 // Define an interface for your shared styles
 interface GlobalStyles {
+  container: ViewStyle;
   input: ViewStyle & TextStyle;
   secondaryButton: ViewStyle;
   secondaryButtonText: TextStyle;
@@ -14,22 +15,28 @@ interface GlobalStyles {
 }
 
 export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
-
   const baseButton: ViewStyle = {
     height: 56,
     borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 12,
   };
   const baseButtonText: TextStyle = {
     fontSize: 16,
-    fontWeight: '600',
-  }
+    fontWeight: "600",
+  };
 
   return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: themes.shadeContainer,
+      justifyContent: "center",
+      padding: 24,
+      borderRadius: 12,
+    },
     input: {
-      backgroundColor: themes.background === '#fff' ? '#F0F0F0' : '#1A1A1A',
+      backgroundColor: themes.background === "#fff" ? "#F0F0F0" : "#1A1A1A",
       height: 56,
       borderRadius: 12,
       paddingHorizontal: 16,
@@ -50,7 +57,7 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       ...baseButton,
       borderWidth: 1,
       borderColor: themes.borderColor,
-      backgroundColor: 'transparent',
+      backgroundColor: "transparent",
     },
     transparentButtonText: {
       ...baseButtonText,
@@ -58,16 +65,16 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     },
     alertButton: {
       ...baseButton,
-        borderWidth: 1,
-        borderColor: Colors.alert,
-        backgroundColor: 'transparent',
+      borderWidth: 1,
+      borderColor: Colors.alert,
+      backgroundColor: "transparent",
     },
     alertText: {
       ...baseButtonText,
-        color: Colors.alert,
+      color: Colors.alert,
     },
     backgroundColor: {
       backgroundColor: themes.background,
-    }
+    },
   });
-}
+};
