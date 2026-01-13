@@ -91,7 +91,7 @@ export default function Account({ session }: { session: Session }) {
   return (
     <>
       <Text style={globalStyles.title}>{t("common:auth.title")}</Text>
-      <View style={globalStyles.container}>
+      <View style={globalStyles.shadeContainer}>
         <Text style={globalStyles.label}>
           {t("common:account.email_read_only")}
         </Text>

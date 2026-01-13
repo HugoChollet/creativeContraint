@@ -57,7 +57,7 @@ export default function Auth() {
   return (
     <>
       <Text style={globalStyles.title}>{t("common:auth.title")}</Text>
-      <View style={globalStyles.container}>
+      <View style={globalStyles.shadeContainer}>
         <View style={styles.verticallySpaced}>
           <Text style={globalStyles.label}>{t("common:auth.email")}</Text>
           <TextInput

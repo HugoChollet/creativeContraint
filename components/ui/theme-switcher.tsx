@@ -13,7 +13,7 @@ export function ThemeSwitcher() {
   return (
     <>
       <Text style={globalStyles.title}>Appearance</Text>
-      <View style={globalStyles.container}>
+      <View style={globalStyles.shadeContainer}>
         {options.map((opt) => (
           <TouchableOpacity
             key={opt.value}

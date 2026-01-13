@@ -3,7 +3,8 @@ import { AppThemeColors, Colors } from "./theme";
 
 // Define an interface for your shared styles
 interface GlobalStyles {
-  container: ViewStyle;
+  shadeContainer: ViewStyle;
+  hardContainer: ViewStyle;
   input: ViewStyle & TextStyle;
   title: TextStyle;
   text: TextStyle;
@@ -34,14 +35,21 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     fontSize: 14,
     fontWeight: "600",
   };
+  const baseContainer: ViewStyle = {
+    flex: 1,
+    justifyContent: "center",
+    padding: 24,
+    borderRadius: 12,
+  };
 
   return StyleSheet.create({
-    container: {
-      flex: 1,
+    shadeContainer: {
+      ...baseContainer,
       backgroundColor: themes.shadeContainer,
-      justifyContent: "center",
-      padding: 24,
-      borderRadius: 12,
+    },
+    hardContainer: {
+      ...baseContainer,
+      backgroundColor: themes.hardContainer,
     },
     text: {
       ...baseText,
@@ -79,7 +87,7 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     transparentButton: {
       ...baseButton,
       borderWidth: 1,
-      borderColor: themes.borderColor,
+      borderColor: themes.tint,
       backgroundColor: "transparent",
     },
     transparentButtonText: {
