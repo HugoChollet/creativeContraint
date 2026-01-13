@@ -5,13 +5,20 @@ import { AppThemeColors, Colors } from "./theme";
 interface GlobalStyles {
   container: ViewStyle;
   input: ViewStyle & TextStyle;
+  title: TextStyle;
+  text: TextStyle;
+  label: TextStyle;
   secondaryButton: ViewStyle;
   secondaryButtonText: TextStyle;
   transparentButton: ViewStyle;
   transparentButtonText: TextStyle;
+  dropdownButton: ViewStyle;
   alertButton: ViewStyle;
   alertText: TextStyle;
   backgroundColor: ViewStyle;
+  optionItem: ViewStyle;
+  activeOption: ViewStyle;
+  activeOptionText: TextStyle;
 }
 
 export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
@@ -22,8 +29,9 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     alignItems: "center",
     marginTop: 12,
   };
-  const baseButtonText: TextStyle = {
-    fontSize: 16,
+  const baseText: TextStyle = {
+    color: themes.text,
+    fontSize: 14,
     fontWeight: "600",
   };
 
@@ -34,6 +42,21 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       justifyContent: "center",
       padding: 24,
       borderRadius: 12,
+    },
+    text: {
+      ...baseText,
+    },
+    label: {
+      ...baseText,
+      marginBottom: 8,
+      marginLeft: 4,
+    },
+    title: {
+      ...baseText,
+      fontSize: 16,
+      marginBottom: 8,
+      marginTop: 8,
+      textTransform: "uppercase",
     },
     input: {
       backgroundColor: themes.background === "#fff" ? "#F0F0F0" : "#1A1A1A",
@@ -50,7 +73,7 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       backgroundColor: themes.tint,
     },
     secondaryButtonText: {
-      ...baseButtonText,
+      ...baseText,
       color: themes.background,
     },
     transparentButton: {
@@ -60,8 +83,14 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       backgroundColor: "transparent",
     },
     transparentButtonText: {
-      ...baseButtonText,
+      ...baseText,
       color: themes.text,
+    },
+    dropdownButton: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 16,
     },
     alertButton: {
       ...baseButton,
@@ -70,11 +99,22 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       backgroundColor: "transparent",
     },
     alertText: {
-      ...baseButtonText,
+      ...baseText,
       color: Colors.alert,
     },
     backgroundColor: {
       backgroundColor: themes.background,
+    },
+    optionItem: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      padding: 16,
+      borderRadius: 8,
+    },
+    activeOption: { backgroundColor: themes.tint },
+    activeOptionText: {
+      color: themes.invertedText,
+      fontWeight: "bold",
     },
   });
 };

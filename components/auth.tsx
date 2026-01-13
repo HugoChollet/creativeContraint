@@ -55,82 +55,61 @@ export default function Auth() {
   }
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={styles.header}>{t("common:auth.title")}</Text>
+    <>
+      <Text style={globalStyles.title}>{t("common:auth.title")}</Text>
+      <View style={globalStyles.container}>
+        <View style={styles.verticallySpaced}>
+          <Text style={globalStyles.label}>{t("common:auth.email")}</Text>
+          <TextInput
+            style={globalStyles.input}
+            onChangeText={(text) => setEmail(text)}
+            value={email}
+            placeholder="email@address.com"
+            placeholderTextColor="#666"
+            autoCapitalize={"none"}
+          />
+        </View>
 
-      <View style={styles.verticallySpaced}>
-        <Text style={styles.label}>{t("common:auth.email")}</Text>
-        <TextInput
-          style={globalStyles.input}
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          placeholder="email@address.com"
-          placeholderTextColor="#666"
-          autoCapitalize={"none"}
-        />
+        <View style={styles.verticallySpaced}>
+          <Text style={globalStyles.label}>{t("common:auth.password")}</Text>
+          <TextInput
+            style={globalStyles.input}
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+            secureTextEntry={true}
+            placeholder="Password"
+            placeholderTextColor="#666"
+            autoCapitalize={"none"}
+          />
+        </View>
+
+        <TouchableOpacity
+          style={[globalStyles.secondaryButton, loading && { opacity: 0.7 }]}
+          disabled={loading}
+          onPress={() => signInWithEmail()}
+        >
+          <Text style={globalStyles.secondaryButtonText}>
+            {t("common:auth.sign_in")}
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[globalStyles.transparentButton]}
+          disabled={loading}
+          onPress={() => signUpWithEmail()}
+        >
+          <Text style={globalStyles.transparentButtonText}>
+            {t("common:auth.register")}
+          </Text>
+        </TouchableOpacity>
       </View>
-
-      <View style={styles.verticallySpaced}>
-        <Text style={styles.label}>{t("common:auth.password")}</Text>
-        <TextInput
-          style={globalStyles.input}
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          secureTextEntry={true}
-          placeholder="Password"
-          placeholderTextColor="#666"
-          autoCapitalize={"none"}
-        />
-      </View>
-
-      <TouchableOpacity
-        style={[
-          globalStyles.secondaryButton,
-          styles.btnSignIn,
-          loading && { opacity: 0.7 },
-        ]}
-        disabled={loading}
-        onPress={() => signInWithEmail()}
-      >
-        <Text style={globalStyles.secondaryButtonText}>
-          {t("common:auth.sign_in")}
-        </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={[globalStyles.transparentButton]}
-        disabled={loading}
-        onPress={() => signUpWithEmail()}
-      >
-        <Text style={globalStyles.transparentButtonText}>
-          {t("common:auth.register")}
-        </Text>
-      </TouchableOpacity>
-    </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
-    fontSize: 32,
-    fontWeight: "800",
-    color: "#fff",
-    marginBottom: 40,
-    textAlign: "center",
-    letterSpacing: -1,
-  },
-  label: {
-    color: "#fff",
-    fontSize: 14,
-    fontWeight: "600",
-    marginBottom: 8,
-    marginLeft: 4,
-  },
   verticallySpaced: {
     marginBottom: 16,
     alignSelf: "stretch",
-  },
-  btnSignIn: {
-    backgroundColor: "#fff", // Solid white button
   },
 });

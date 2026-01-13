@@ -1,5 +1,6 @@
-import { Ionicons } from '@expo/vector-icons'; // Built into Expo
-import React, { useState } from 'react';
+import { useStyles } from "@/hooks/use-styles";
+import { Ionicons } from "@expo/vector-icons"; // Built into Expo
+import React, { useState } from "react";
 import {
   FlatList,
   Modal,
@@ -7,8 +8,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
-} from 'react-native';
+  View,
+} from "react-native";
 
 interface Option {
   label: string;
@@ -22,10 +23,16 @@ interface Props {
   label: string;
 }
 
-export default function ModalSelector({ options, selectedValue, onValueChange, label }: Props) {
+export default function ModalSelector({
+  options,
+  selectedValue,
+  onValueChange,
+  label,
+}: Props) {
   const [visible, setVisible] = useState(false);
+  const { globalStyles, colors } = useStyles();
 
-  const selectedOption = options.find(opt => opt.value === selectedValue);
+  const selectedOption = options.find((opt) => opt.value === selectedValue);
 
   const handleSelect = (value: string) => {
     onValueChange(value);
@@ -34,34 +41,47 @@ export default function ModalSelector({ options, selectedValue, onValueChange, l
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
-      
-      <TouchableOpacity 
-        style={styles.dropdownButton} 
+      <Text style={globalStyles.title}>{label}</Text>
+
+      <TouchableOpacity
+        style={[globalStyles.transparentButton, globalStyles.dropdownButton]}
         onPress={() => setVisible(true)}
       >
-        <Text style={styles.selectedText}>{selectedOption?.label}</Text>
-        <Ionicons name="chevron-down" size={20} color="#007AFF" />
+        <Text style={globalStyles.transparentButtonText}>
+          {selectedOption?.label}
+        </Text>
+        <Ionicons name="chevron-down" size={20} color={colors.tint} />
       </TouchableOpacity>
 
       <Modal transparent visible={visible} animationType="fade">
-        <Pressable style={styles.modalOverlay} onPress={() => setVisible(false)}>
-          <View style={styles.modalContent}>
+        <Pressable
+          style={styles.modalOverlay}
+          onPress={() => setVisible(false)}
+        >
+          <View
+            style={{
+              ...styles.modalContent,
+              backgroundColor: colors.hardContainer,
+            }}
+          >
             <FlatList
               data={options}
               keyExtractor={(item) => item.value}
               renderItem={({ item }) => (
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={[
-                    styles.optionItem, 
-                    item.value === selectedValue && styles.activeOption
-                  ]} 
+                    globalStyles.optionItem,
+                    item.value === selectedValue && globalStyles.activeOption,
+                  ]}
                   onPress={() => handleSelect(item.value)}
                 >
-                  <Text style={[
-                    styles.optionText, 
-                    item.value === selectedValue && styles.activeOptionText
-                  ]}>
+                  <Text
+                    style={[
+                      globalStyles.text,
+                      item.value === selectedValue &&
+                        globalStyles.activeOptionText,
+                    ]}
+                  >
                     {item.label}
                   </Text>
                   {item.value === selectedValue && (
@@ -79,39 +99,17 @@ export default function ModalSelector({ options, selectedValue, onValueChange, l
 
 const styles = StyleSheet.create({
   container: { marginBottom: 20 },
-  label: { color: '#8E8E93', fontSize: 12, marginBottom: 8, textTransform: 'uppercase' },
-  dropdownButton: {
-    backgroundColor: '#2C2C2E',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 16,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#333',
-  },
-  selectedText: { color: '#FFF', fontSize: 16, fontWeight: '500' },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(0,0,0,0.7)",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   modalContent: {
-    width: '100%',
-    backgroundColor: '#1E1E1E',
+    width: "100%",
     borderRadius: 16,
     padding: 8,
-    maxHeight: '50%',
+    maxHeight: "30%",
   },
-  optionItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 16,
-    borderRadius: 8,
-  },
-  activeOption: { backgroundColor: '#007AFF' },
-  optionText: { color: '#FFF', fontSize: 16 },
-  activeOptionText: { fontWeight: 'bold' },
 });

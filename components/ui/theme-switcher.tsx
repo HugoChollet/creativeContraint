@@ -11,37 +11,34 @@ export function ThemeSwitcher() {
   ];
 
   return (
-    <View style={globalStyles.container}>
-      <Text
-        style={{ color: colors.text, marginBottom: 10, fontWeight: "bold" }}
-      >
-        Appearance
-      </Text>
-
-      {options.map((opt) => (
-        <TouchableOpacity
-          key={opt.value}
-          onPress={() => setThemeMode(opt.value)}
-          style={[
-            globalStyles.secondaryButton,
-            {
-              backgroundColor:
-                themeMode === opt.value ? colors.tint : "transparent",
-              borderWidth: 1,
-              borderColor: colors.tint,
-            },
-          ]}
-        >
-          <Text
-            style={{
-              color:
-                themeMode === opt.value ? colors.invertedText : colors.text,
-            }}
+    <>
+      <Text style={globalStyles.title}>Appearance</Text>
+      <View style={globalStyles.container}>
+        {options.map((opt) => (
+          <TouchableOpacity
+            key={opt.value}
+            onPress={() => setThemeMode(opt.value)}
+            style={[
+              globalStyles.secondaryButton,
+              {
+                backgroundColor:
+                  themeMode === opt.value ? colors.tint : "transparent",
+                borderWidth: 1,
+                borderColor: colors.tint,
+              },
+            ]}
           >
-            {opt.label}
-          </Text>
-        </TouchableOpacity>
-      ))}
-    </View>
+            <Text
+              style={{
+                color:
+                  themeMode === opt.value ? colors.invertedText : colors.text,
+              }}
+            >
+              {opt.label}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </>
   );
 }

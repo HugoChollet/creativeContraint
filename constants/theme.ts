@@ -20,7 +20,7 @@ export const Themes = {
     tabIconDefault: "#687076",
     tabIconSelected: tintColorLight,
     placeholder: "#979797ff",
-    borderColor: shadeContainerLight,
+    borderColor: hardContainerLight,
   },
   dark: {
     text: textWhite,
@@ -34,7 +34,7 @@ export const Themes = {
     tabIconDefault: "#9BA1A6",
     tabIconSelected: tintColorDark,
     placeholder: "#555555ff",
-    borderColor: shadeContainerDark,
+    borderColor: hardContainerDark,
   },
 } as const;
 export const Colors = {
