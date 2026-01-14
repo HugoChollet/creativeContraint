@@ -1,5 +1,5 @@
+import { useTranslation } from "react-i18next";
 import { Text, TouchableOpacity, View } from "react-native";
-import { useTranslation } from 'react-i18next';
 import { useStyles } from "../../hooks/use-styles";
 
 export function ThemeSwitcher() {
@@ -7,14 +7,16 @@ export function ThemeSwitcher() {
   const { t } = useTranslation();
 
   const options: { label: string; value: "light" | "dark" | "system" }[] = [
-    { label: "☀️ Light", value: "light" },
-    { label: "🌙 Dark", value: "dark" },
-    { label: "⚙️ System", value: "system" },
+    { label: "☀️ " + t("component:theme-switcher.light"), value: "light" },
+    { label: "🌙 " + t("component:theme-switcher.dark"), value: "dark" },
+    { label: "⚙️ " + t("component:theme-switcher.system"), value: "system" },
   ];
 
   return (
     <>
-      <Text style={globalStyles.title}>Appearance</Text>
+      <Text style={globalStyles.title}>
+        {t("component:theme-switcher.title")}
+      </Text>
       <View style={globalStyles.shadeContainer}>
         {options.map((opt) => (
           <TouchableOpacity

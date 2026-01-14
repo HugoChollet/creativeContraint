@@ -16,5 +16,11 @@
         "update_profile": "Update Profile",
         "saving": "Saving...",
         "sign_out": "Sign out"
+    },
+    "theme-switcher": {
+        "title": "Appearance",
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
     }
 }
