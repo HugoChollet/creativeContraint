@@ -1,9 +1,15 @@
-import { Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Category, Option, SelectedState, SubCategory } from '../types/constraints';
-import { ConstraintOption } from './constraint-option';
-import { PresetMode, StatusSelector } from './status-selector';
+import {
+  Category,
+  Option,
+  SelectedState,
+  SubCategory,
+} from "@/types/constraints";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ConstraintOption } from "./constraint-option";
+import { PresetMode, StatusSelector } from "./status-selector";
 
 interface CategoryProps {
   category: Category;
@@ -15,78 +21,104 @@ interface CategoryProps {
   onExpand: () => void;
 }
 
-export default function CategorySelector({ category, selectedItems, onToggleCategory, onToggleOption, onBulkUpdate, isExpanded, onExpand }: CategoryProps) {
+export default function CategorySelector({
+  category,
+  selectedItems,
+  onToggleCategory,
+  onToggleOption,
+  onBulkUpdate,
+  isExpanded,
+  onExpand,
+}: CategoryProps) {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const [mode, setMode] = useState<PresetMode>('all');
+  const [mode, setMode] = useState<PresetMode>("all");
+  const { t } = useTranslation();
 
   const isEnabled = !!selectedItems.activeCategories[category.category];
-  const hasSubCategories = category.sub_categories && category.sub_categories.length > 0;
+  const hasSubCategories =
+    category.sub_categories && category.sub_categories.length > 0;
 
   const handleToggleExpand = () => {
     if (!isEnabled) return;
-    onExpand(); 
+    onExpand();
   };
 
-  const currentSubCategory: SubCategory | null = hasSubCategories 
-    ? category.sub_categories![activeTabIndex] 
+  const currentSubCategory: SubCategory | null = hasSubCategories
+    ? category.sub_categories![activeTabIndex]
     : null;
 
-  const currentOptions = hasSubCategories 
-    ? currentSubCategory?.options || [] 
+  const currentOptions = hasSubCategories
+    ? currentSubCategory?.options || []
     : category.options || [];
 
   return (
-    <View style={[
-      styles.card, 
-      !isEnabled && styles.cardDisabled,
-      isExpanded && { height: 500 } // Increased height to accommodate tabs
-    ]}>
-      <Pressable onPress={handleToggleExpand}  style={styles.headerRow}>
-        
-        <Pressable onPress={() => {
-          onToggleCategory(category.category)
-          if (isExpanded) handleToggleExpand();
-        }}>
-          <Ionicons 
-            name={isEnabled ? "checkbox" : "square-outline"} 
-            size={24} 
-            color={isEnabled ? "#007AFF" : "#999"} 
+    <View
+      style={[
+        styles.card,
+        !isEnabled && styles.cardDisabled,
+        isExpanded && { height: 500 }, // Increased height to accommodate tabs
+      ]}
+    >
+      <Pressable onPress={handleToggleExpand} style={styles.headerRow}>
+        <Pressable
+          onPress={() => {
+            onToggleCategory(category.category);
+            if (isExpanded) handleToggleExpand();
+          }}
+        >
+          <Ionicons
+            name={isEnabled ? "checkbox" : "square-outline"}
+            size={24}
+            color={isEnabled ? "#007AFF" : "#999"}
           />
         </Pressable>
 
-        <View style={styles.titleArea} >
+        <View style={styles.titleArea}>
           <Text style={[styles.headerText, !isEnabled && styles.textDisabled]}>
             {category.label || category.category}
           </Text>
-          <Text style={[styles.subHeaderText, !isEnabled && styles.textDisabled]}>
-            {mode}
+          <Text
+            style={[styles.subHeaderText, !isEnabled && styles.textDisabled]}
+          >
+            {t("component:status." + mode)}
           </Text>
         </View>
-        <Ionicons name={isExpanded ? "chevron-up" : "chevron-down"} size={20} color={isEnabled ? "#666" : "#ddd"} />
-
+        <Ionicons
+          name={isExpanded ? "chevron-up" : "chevron-down"}
+          size={20}
+          color={isEnabled ? "#666" : "#ddd"}
+        />
       </Pressable>
 
       {isExpanded && isEnabled && (
         <View style={styles.expandedContent}>
           <View style={styles.fixedSelectorWrapper}>
-            <StatusSelector 
-              currentMode={mode} 
+            <StatusSelector
+              currentMode={mode}
               onSelect={(newMode) => {
                 setMode(newMode);
                 onBulkUpdate(category.category, currentOptions, newMode);
-              }} 
+              }}
             />
           </View>
 
           {hasSubCategories && (
             <View style={styles.tabContainer}>
               {category.sub_categories!.map((sub, index) => (
-                <Pressable 
+                <Pressable
                   key={sub.name}
                   onPress={() => setActiveTabIndex(index)}
-                  style={[styles.tab, activeTabIndex === index && styles.activeTab]}
+                  style={[
+                    styles.tab,
+                    activeTabIndex === index && styles.activeTab,
+                  ]}
                 >
-                  <Text style={[styles.tabText, activeTabIndex === index && styles.activeTabText]}>
+                  <Text
+                    style={[
+                      styles.tabText,
+                      activeTabIndex === index && styles.activeTabText,
+                    ]}
+                  >
                     {sub.name}
                   </Text>
                 </Pressable>
@@ -94,26 +126,28 @@ export default function CategorySelector({ category, selectedItems, onToggleCate
             </View>
           )}
 
-          <ScrollView 
+          <ScrollView
             style={styles.optionsScrollView}
             nestedScrollEnabled={true}
           >
             {currentOptions.map((opt: Option) => {
               // Create a unique key for selection state: "Category-SubName-ID" or "Category-ID"
-              const selectionKey = hasSubCategories 
+              const selectionKey = hasSubCategories
                 ? `${category.category}-${currentSubCategory?.name}-${opt.id}`
                 : `${category.category}-${opt.id}`;
 
               return (
-                <ConstraintOption 
+                <ConstraintOption
                   key={opt.id}
                   option={opt}
                   isParentEnabled={isEnabled}
                   isSelected={!!selectedItems.selectedOptions[selectionKey]}
                   onToggle={(id) => {
-                    setMode('custom');
+                    setMode("custom");
                     // Pass the specialized key to the parent handler
-                    const fullKey = hasSubCategories ? `${category.category}-${currentSubCategory?.name}` : category.category;
+                    const fullKey = hasSubCategories
+                      ? `${category.category}-${currentSubCategory?.name}`
+                      : category.category;
                     onToggleOption(fullKey, id);
                   }}
                 />
@@ -127,34 +161,45 @@ export default function CategorySelector({ category, selectedItems, onToggleCate
 }
 
 const styles = StyleSheet.create({
-  card: { 
-    backgroundColor: '#fff', 
-    borderRadius: 12, 
-    marginBottom: 12, 
-    overflow: 'hidden', 
-    borderColor: '#eee',
-    borderWidth: 1 
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    marginBottom: 12,
+    overflow: "hidden",
+    borderColor: "#eee",
+    borderWidth: 1,
   },
-  cardDisabled: { backgroundColor: '#f9f9f9', opacity: 0.8 },
-  headerRow: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
+  cardDisabled: { backgroundColor: "#f9f9f9", opacity: 0.8 },
+  headerRow: {
+    flexDirection: "row",
+    alignItems: "center",
     padding: 16,
     zIndex: 10,
-    backgroundColor: '#fff'
+    backgroundColor: "#fff",
   },
-  titleArea: { flex: 1, marginLeft: 12, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  headerText: { fontSize: 17, fontWeight: '700' },
-  subHeaderText: { fontSize: 11, color: '#8E8E93', fontWeight: '700', marginRight: 8 },
-  textDisabled: { color: '#bbb' },
+  titleArea: {
+    flex: 1,
+    marginLeft: 12,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  headerText: { fontSize: 17, fontWeight: "700" },
+  subHeaderText: {
+    fontSize: 11,
+    color: "#8E8E93",
+    fontWeight: "700",
+    marginRight: 8,
+  },
+  textDisabled: { color: "#bbb" },
   expandedContent: { flex: 1 },
   fixedSelectorWrapper: {
     paddingHorizontal: 16,
     paddingBottom: 12,
   },
   tabContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#F2F2F7',
+    flexDirection: "row",
+    backgroundColor: "#F2F2F7",
     marginHorizontal: 16,
     marginBottom: 12,
     borderRadius: 8,
@@ -163,18 +208,18 @@ const styles = StyleSheet.create({
   tab: {
     flex: 1,
     paddingVertical: 8,
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 6,
   },
   activeTab: {
-    backgroundColor: '#fff',
-    shadowColor: '#000',
+    backgroundColor: "#fff",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 1,
     elevation: 2,
   },
-  tabText: { fontSize: 13, fontWeight: '600', color: '#8E8E93' },
-  activeTabText: { color: '#007AFF' },
+  tabText: { fontSize: 13, fontWeight: "600", color: "#8E8E93" },
+  activeTabText: { color: "#007AFF" },
   optionsScrollView: { flex: 1 },
 });

@@ -22,5 +22,15 @@
         "light": "Clair",
         "dark": "Sombre",
         "system": "Système"
+    },
+    "status": {
+        "none": "aucun",
+        "easy": "facile",
+        "custom": "perso",
+        "hard": "difficile",
+        "all": "tous"
+    },
+    "constraint-option": {
+        "difficulty": "Difficulté : "
     }
 }

@@ -22,5 +22,15 @@
         "light": "Light",
         "dark": "Dark",
         "system": "System"
+    },
+    "status": {
+        "none": "aucqsdqsd",
+        "easy": "easy",
+        "custom": "custom",
+        "hard": "hard",
+        "all": "all"
+    },
+    "constraint-option": {
+        "difficulty": "Difficulty : "
     }
 }

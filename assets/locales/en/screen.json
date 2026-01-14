@@ -10,7 +10,8 @@
         "constraints_title": "{{type}} Constraints",
         "back_button": "Back to Lab",
         "empty_result": "-",
-        "generate_symbol": "G"
+        "generate_symbol": "G",
+        "constraints": "{{type}} constraints"
     },
     "home": {
         "book_button": "Write a Fiction Book 📖",
@@ -23,5 +24,5 @@
     "settings": {
         "settings_title": "Settings",
         "language_selection": "Application Language"
-    },
+    }
 }
