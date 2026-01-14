@@ -1,4 +1,3 @@
-// hooks/useStyles.ts
 import { getGlobalStyles } from '../constants/styles';
 import { useTheme } from '../contexts/theme-context';
 

@@ -1,8 +1,10 @@
 import { Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from 'react-i18next';
 import { useStyles } from "../../hooks/use-styles";
 
 export function ThemeSwitcher() {
   const { globalStyles, colors, setThemeMode, themeMode } = useStyles();
+  const { t } = useTranslation();
 
   const options: { label: string; value: "light" | "dark" | "system" }[] = [
     { label: "☀️ Light", value: "light" },

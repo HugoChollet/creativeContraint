@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Category, Option, SelectedState, SubCategory } from '../types/constraints';
 import { ConstraintOption } from './constraint-option';
-import { PresetMode, StatusSelector } from './ui/status-selector';
+import { PresetMode, StatusSelector } from './status-selector';
 
 interface CategoryProps {
   category: Category;

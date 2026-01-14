@@ -19,7 +19,7 @@ export default function HomeScreen() {
           }
         >
           <Text style={globalStyles.transparentButtonText}>
-            {t("common:home.book_button")}
+            {t("screen:home.book_button")}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -32,7 +32,7 @@ export default function HomeScreen() {
           }
         >
           <Text style={globalStyles.transparentButtonText}>
-            {t("common:home.videogame_button")}
+            {t("screen:home.videogame_button")}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -42,7 +42,7 @@ export default function HomeScreen() {
           }
         >
           <Text style={globalStyles.transparentButtonText}>
-            {t("common:home.music_button")}
+            {t("screen:home.music_button")}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -55,7 +55,7 @@ export default function HomeScreen() {
           }
         >
           <Text style={globalStyles.transparentButtonText}>
-            {t("common:home.videointernet_button")}
+            {t("screen:home.videointernet_button")}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -68,7 +68,7 @@ export default function HomeScreen() {
           }
         >
           <Text style={globalStyles.transparentButtonText}>
-            {t("common:home.videofiction_button")}
+            {t("screen:home.videofiction_button")}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -81,7 +81,7 @@ export default function HomeScreen() {
           }
         >
           <Text style={globalStyles.transparentButtonText}>
-            {t("common:home.photography_button")}
+            {t("screen:home.photography_button")}
           </Text>
         </TouchableOpacity>
       </ThemedView>

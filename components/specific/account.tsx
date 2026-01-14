@@ -10,8 +10,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { supabase } from "../lib/supabase";
-import { ThemedText } from "./themed-text";
+import { supabase } from "@/lib/supabase";
+import { ThemedText } from "@/components/themed-text";
 
 export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true);
@@ -90,10 +90,10 @@ export default function Account({ session }: { session: Session }) {
 
   return (
     <>
-      <Text style={globalStyles.title}>{t("common:auth.title")}</Text>
+      <Text style={globalStyles.title}>{t("component:auth.title")}</Text>
       <View style={globalStyles.shadeContainer}>
         <Text style={globalStyles.label}>
-          {t("common:account.email_read_only")}
+          {t("component:account.email_read_only")}
         </Text>
         <View style={styles.verticallySpaced}>
           <TextInput
@@ -103,18 +103,18 @@ export default function Account({ session }: { session: Session }) {
           />
         </View>
 
-        <Text style={globalStyles.label}>{t("common:account.username")}</Text>
+        <Text style={globalStyles.label}>{t("component:account.username")}</Text>
         <View style={styles.verticallySpaced}>
           <TextInput
             value={username || ""}
             onChangeText={setUsername}
-            placeholder={t("common:account.username_placeholder")}
+            placeholder={t("component:account.username_placeholder")}
             placeholderTextColor={colors.placeholder}
             style={globalStyles.input}
           />
         </View>
 
-        <Text style={globalStyles.label}>{t("common:account.portfolio")}</Text>
+        <Text style={globalStyles.label}>{t("component:account.portfolio")}</Text>
         <View style={styles.verticallySpaced}>
           <TextInput
             value={website || ""}
@@ -134,8 +134,8 @@ export default function Account({ session }: { session: Session }) {
         >
           <ThemedText style={globalStyles.secondaryButtonText}>
             {loading
-              ? t("common:account.saving")
-              : t("common:account.update_profile")}
+              ? t("component:account.saving")
+              : t("component:account.update_profile")}
           </ThemedText>
         </TouchableOpacity>
 
@@ -144,7 +144,7 @@ export default function Account({ session }: { session: Session }) {
           onPress={() => supabase.auth.signOut()}
         >
           <Text style={globalStyles.alertText}>
-            {t("common:account.sign_out")}
+            {t("component:account.sign_out")}
           </Text>
         </TouchableOpacity>
       </View>

@@ -1,7 +1,7 @@
-import Account from "@/components/account";
-import Auth from "@/components/auth";
+import Account from "@/components/specific/account";
+import Auth from "@/components/specific/auth";
 import ModalSelector from "@/components/ui/modal-selector";
-import { ThemeSwitcher } from "@/components/ui/theme-switcher";
+import { ThemeSwitcher } from "@/components/specific/theme-switcher";
 import { useStyles } from "@/hooks/use-styles";
 import { supabase } from "@/lib/supabase";
 import { Session } from "@supabase/supabase-js";
@@ -39,7 +39,7 @@ export default function SettingsScreen() {
         {session && session.user ? <Account session={session} /> : <Auth />}
       </View>
       <ModalSelector
-        label={t("common:settings.language_selection")}
+        label={t("screen:settings.language_selection")}
         options={languages}
         selectedValue={i18n.language}
         onValueChange={(val) => i18n.changeLanguage(val)}

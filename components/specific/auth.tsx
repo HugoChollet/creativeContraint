@@ -9,8 +9,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useStyles } from "../hooks/use-styles";
-import { supabase } from "../lib/supabase";
+import { useStyles } from "@/hooks/use-styles";
+import { supabase } from "@/lib/supabase";
 
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
@@ -56,10 +56,10 @@ export default function Auth() {
 
   return (
     <>
-      <Text style={globalStyles.title}>{t("common:auth.title")}</Text>
+      <Text style={globalStyles.title}>{t("component:auth.title")}</Text>
       <View style={globalStyles.shadeContainer}>
         <View style={styles.verticallySpaced}>
-          <Text style={globalStyles.label}>{t("common:auth.email")}</Text>
+          <Text style={globalStyles.label}>{t("component:auth.email")}</Text>
           <TextInput
             style={globalStyles.input}
             onChangeText={(text) => setEmail(text)}
@@ -71,7 +71,7 @@ export default function Auth() {
         </View>
 
         <View style={styles.verticallySpaced}>
-          <Text style={globalStyles.label}>{t("common:auth.password")}</Text>
+          <Text style={globalStyles.label}>{t("component:auth.password")}</Text>
           <TextInput
             style={globalStyles.input}
             onChangeText={(text) => setPassword(text)}
@@ -89,7 +89,7 @@ export default function Auth() {
           onPress={() => signInWithEmail()}
         >
           <Text style={globalStyles.secondaryButtonText}>
-            {t("common:auth.sign_in")}
+            {t("component:auth.sign_in")}
           </Text>
         </TouchableOpacity>
 
@@ -99,7 +99,7 @@ export default function Auth() {
           onPress={() => signUpWithEmail()}
         >
           <Text style={globalStyles.transparentButtonText}>
-            {t("common:auth.register")}
+            {t("component:auth.register")}
           </Text>
         </TouchableOpacity>
       </View>

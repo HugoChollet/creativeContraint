@@ -26,7 +26,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: t("common:layout.Home"),
+          title: t("screen:layout.Home"),
           tabBarIcon: ({ color }) => (
             <Ionicons size={28} name="home" color={color} />
           ),
@@ -35,7 +35,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: t("common:layout.Settings"),
+          title: t("screen:layout.Settings"),
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="paperplane.fill" color={color} />
           ),

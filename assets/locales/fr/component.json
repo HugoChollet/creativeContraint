@@ -1,0 +1,20 @@
+{
+    "auth": {
+        "title": "Compte",
+        "sign_in": "Connexion",
+        "email": "Email",
+        "password": "Mot de Passe",
+        "register": "Créer un compte"
+    },
+    "account": {
+        "account": "Compte",
+        "username": "Nom d'utilisateur",
+        "username_placeholder": "Comment vous voulez vous appeler ?",
+        "portfolio": "Portfolio (Url)",
+        "email_read_only": "Email (Lecture seule)",
+        "avatar_url": "Avatar (Url)",
+        "update_profile": "Mettre à jour le profil",
+        "saving": "Sauvegarde en cours...",
+        "sign_out": "Deconnexion"
+    }
+}

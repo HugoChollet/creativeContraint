@@ -1,7 +1,7 @@
-import CategorySelector from '@/components/category-selector';
+import CategorySelector from '@/components/specific/category-selector';
 import { ThemedText } from '@/components/themed-text';
 import { BottomSheet } from '@/components/ui/bottom-sheet';
-import { PresetMode } from '@/components/ui/status-selector';
+import { PresetMode } from '@/components/specific/status-selector';
 import { useStyles } from '@/hooks/use-styles';
 import i18nInstance from '@/i18n';
 import { ChosenOption, SavedProjectConstraints } from '@/types/data';
@@ -223,7 +223,7 @@ if (!dataSource) return <View><Text>Loading...</Text></View>;
 return (
   <View style={styles.container}>
       <ThemedText style={styles.title} type="title">
-        {t('common:lab.lab_title', { type: dataSource.project_type })}
+        {t('screen:lab.lab_title', { type: dataSource.project_type })}
       </ThemedText>
       
       <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
@@ -247,7 +247,7 @@ return (
       </TouchableOpacity>
       <TouchableOpacity style={globalStyles.secondaryButton} onPress={refreshConstraints}>
         <Text style={globalStyles.secondaryButtonText}>
-          {t('common:lab.generate_button', { type: dataSource.project_type })}
+          {t('screen:lab.generate_button', { type: dataSource.project_type })}
         </Text>
       </TouchableOpacity>
 
@@ -255,7 +255,7 @@ return (
         isVisible={modalVisible} 
         onClose={() => setModalVisible(false)}
         title={`${dataSource.project_type} Constraints`}
-        buttonText={t('common:lab.back_button')}
+        buttonText={t('screen:lab.back_button')}
         difficultyIndicator={getDifficultyGenerated()}
         onSaveConstraints={onSaveConstraints}
         icon={isSaved ? "bookmark" : "bookmark-outline"}
@@ -265,7 +265,7 @@ return (
           return (
             <View key={cat.category} style={styles.modalResultBox}>
               <Text style={styles.modalCategoryLabel}>{cat.label || cat.category}</Text>
-              <Text style={styles.modalValueText}>{randomConstraints[cat.category] ?? t('common:lab.empty_result')}</Text>
+              <Text style={styles.modalValueText}>{randomConstraints[cat.category] ?? t('screen:lab.empty_result')}</Text>
             </View>
           );
         })}

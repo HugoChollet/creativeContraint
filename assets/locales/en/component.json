@@ -1,0 +1,20 @@
+{
+    "auth": {
+        "title": "Account",
+        "sign_in": "Sign in",
+        "email": "Email",
+        "password": "Password",
+        "register": "Create Account"
+    },
+    "account": {
+        "account": "Account",
+        "username": "Artiste Name",
+        "username_placeholder": "How should we call you?",
+        "portfolio": "Portfolio Website",
+        "email_read_only": "Email (Read Only)",
+        "avatar_url": "Avatar URL",
+        "update_profile": "Update Profile",
+        "saving": "Saving...",
+        "sign_out": "Sign out"
+    }
+}
