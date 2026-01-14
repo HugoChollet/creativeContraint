@@ -1,3 +1,4 @@
+import { useStyles } from "@/hooks/use-styles";
 import { Option } from "@/types/constraints";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
@@ -18,6 +19,7 @@ export function ConstraintOption({
   onToggle,
 }: OptionProps) {
   const { t } = useTranslation();
+  const { globalStyles, colors } = useStyles();
 
   return (
     <Pressable
@@ -28,18 +30,32 @@ export function ConstraintOption({
       <Ionicons
         name={isSelected ? "checkmark-circle" : "ellipse-outline"}
         size={22}
-        color={!isParentEnabled ? "#ddd" : isSelected ? "#007AFF" : "#ccc"}
+        color={
+          !isParentEnabled
+            ? colors.text
+            : isSelected
+            ? colors.tint
+            : colors.disable
+        }
       />
       <View style={styles.textContainer}>
         <Text
-          style={[
-            styles.optionValue,
-            (!isSelected || !isParentEnabled) && styles.textDisabled,
-          ]}
+          style={{
+            color:
+              !isSelected || !isParentEnabled ? colors.disable : colors.text,
+          }}
         >
           {option.value}
         </Text>
-        <Text style={styles.rarityLabel}>
+        <Text
+          style={{
+            ...styles.rarityLabel,
+            color:
+              !isSelected || !isParentEnabled
+                ? colors.disable
+                : colors.textDiscreet,
+          }}
+        >
           {t("component:constraint-option.difficulty") + option.rarity}
         </Text>
       </View>
@@ -57,5 +73,5 @@ const styles = StyleSheet.create({
   textContainer: { marginLeft: 12 },
   optionValue: { fontSize: 16, color: "#333" },
   textDisabled: { color: "#aaa" },
-  rarityLabel: { fontSize: 11, color: "#bbb", marginTop: 2 },
+  rarityLabel: { fontSize: 11, marginTop: 2 },
 });

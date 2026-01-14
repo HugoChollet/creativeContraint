@@ -5,10 +5,14 @@ import { AppThemeColors, Colors } from "./theme";
 interface GlobalStyles {
   shadeContainer: ViewStyle;
   hardContainer: ViewStyle;
-  input: ViewStyle & TextStyle;
-  title: TextStyle;
+  shadeScroll: ViewStyle;
+
   text: TextStyle;
   label: TextStyle;
+  title: TextStyle;
+  discreetText: TextStyle;
+
+  input: ViewStyle & TextStyle;
   secondaryButton: ViewStyle;
   secondaryButtonText: TextStyle;
   transparentButton: ViewStyle;
@@ -16,10 +20,13 @@ interface GlobalStyles {
   dropdownButton: ViewStyle;
   alertButton: ViewStyle;
   alertText: TextStyle;
+
   backgroundColor: ViewStyle;
+  headerRow: ViewStyle;
   optionItem: ViewStyle;
   activeOption: ViewStyle;
   activeOptionText: TextStyle;
+  card: ViewStyle;
 }
 
 export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
@@ -43,6 +50,7 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
   };
 
   return StyleSheet.create({
+    // Containers
     shadeContainer: {
       ...baseContainer,
       backgroundColor: themes.shadeContainer,
@@ -51,6 +59,12 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       ...baseContainer,
       backgroundColor: themes.hardContainer,
     },
+    shadeScroll: {
+      flex: 1,
+      backgroundColor: themes.shadeContainer,
+    },
+
+    // Texts
     text: {
       ...baseText,
     },
@@ -66,6 +80,15 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       marginTop: 8,
       textTransform: "uppercase",
     },
+    discreetText: {
+      ...baseText,
+      fontSize: 11,
+      color: "#8E8E93",
+      fontWeight: "700",
+      marginRight: 8,
+    },
+
+    // Buttons
     input: {
       backgroundColor: themes.background === "#fff" ? "#F0F0F0" : "#1A1A1A",
       height: 56,
@@ -113,6 +136,13 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     backgroundColor: {
       backgroundColor: themes.background,
     },
+    headerRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      padding: 16,
+      zIndex: 10,
+      backgroundColor: themes.shadeContainer,
+    },
     optionItem: {
       flexDirection: "row",
       justifyContent: "space-between",
@@ -123,6 +153,13 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     activeOptionText: {
       color: themes.invertedText,
       fontWeight: "bold",
+    },
+
+    card: {
+      backgroundColor: themes.shadeContainer,
+      borderRadius: 12,
+      marginBottom: 12,
+      overflow: "hidden",
     },
   });
 };

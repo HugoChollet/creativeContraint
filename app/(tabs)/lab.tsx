@@ -278,12 +278,14 @@ export default function LabScreen() {
     );
 
   return (
-    <View style={styles.container}>
-      <ThemedText style={styles.title} type="title">
-        {t("screen:lab.lab_title", { type: dataSource.project_type })}
-      </ThemedText>
-
-      <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
+    <View style={[styles.container, globalStyles.backgroundColor]}>
+      <ScrollView
+        style={globalStyles.shadeScroll}
+        contentContainerStyle={styles.content}
+      >
+        <ThemedText style={globalStyles.title} type="title">
+          {t("screen:lab.lab_title", { type: dataSource.project_type })}
+        </ThemedText>
         {dataSource.constraints.map((cat) => (
           <CategorySelector
             key={cat.category}
@@ -352,14 +354,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#121212", // Dark theme to match ThemedText
   },
-  title: {
-    marginBottom: 16,
-    marginTop: 16,
-    paddingHorizontal: 32,
-  },
-  scroll: {
-    flex: 0.6, // Gives the list area most of the space
-  },
   content: {
     padding: 16,
     paddingBottom: 20,
@@ -382,18 +376,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#333",
     paddingBottom: 8,
-  },
-  dimText: {
-    color: "#888",
-    textTransform: "uppercase",
-    fontSize: 12,
-    letterSpacing: 1,
-    marginBottom: 4,
-  },
-  resultValue: {
-    fontSize: 18,
-    color: "#007AFF", // Vibrant blue for the actual constraint
-    fontWeight: "600",
   },
   showResultButton: {
     position: "absolute",

@@ -12,6 +12,7 @@ export const Themes = {
     text: textDark,
     textActive: tintColorLight,
     invertedText: textWhite,
+    textDiscreet: "#8E8E93",
     background: "#fff",
     shadeContainer: shadeContainerLight,
     hardContainer: hardContainerLight,
@@ -21,11 +22,13 @@ export const Themes = {
     tabIconSelected: tintColorLight,
     placeholder: "#979797ff",
     borderColor: shadeContainerLight,
+    disable: "#ccc",
   },
   dark: {
     text: textWhite,
     textActive: tintColorDark,
     invertedText: textDark,
+    textDiscreet: "#bbb",
     background: "#151718",
     shadeContainer: shadeContainerDark,
     hardContainer: hardContainerDark,
@@ -35,6 +38,7 @@ export const Themes = {
     tabIconSelected: tintColorDark,
     placeholder: "#555555ff",
     borderColor: shadeContainerDark,
+    disable: "#6d6c6cff",
   },
 } as const;
 export const Colors = {

@@ -1,3 +1,4 @@
+import { useStyles } from "@/hooks/use-styles";
 import {
   Category,
   Option,
@@ -33,6 +34,7 @@ export default function CategorySelector({
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [mode, setMode] = useState<PresetMode>("all");
   const { t } = useTranslation();
+  const { globalStyles, colors } = useStyles();
 
   const isEnabled = !!selectedItems.activeCategories[category.category];
   const hasSubCategories =
@@ -54,12 +56,12 @@ export default function CategorySelector({
   return (
     <View
       style={[
-        styles.card,
-        !isEnabled && styles.cardDisabled,
+        globalStyles.card,
+        !isEnabled && { borderColor: colors.disable },
         isExpanded && { height: 500 }, // Increased height to accommodate tabs
       ]}
     >
-      <Pressable onPress={handleToggleExpand} style={styles.headerRow}>
+      <Pressable onPress={handleToggleExpand} style={globalStyles.headerRow}>
         <Pressable
           onPress={() => {
             onToggleCategory(category.category);
@@ -69,16 +71,24 @@ export default function CategorySelector({
           <Ionicons
             name={isEnabled ? "checkbox" : "square-outline"}
             size={24}
-            color={isEnabled ? "#007AFF" : "#999"}
+            color={isEnabled ? colors.tint : "#999"}
           />
         </Pressable>
 
         <View style={styles.titleArea}>
-          <Text style={[styles.headerText, !isEnabled && styles.textDisabled]}>
+          <Text
+            style={[
+              globalStyles.text,
+              { color: isEnabled ? colors.text : colors.disable },
+            ]}
+          >
             {category.label || category.category}
           </Text>
           <Text
-            style={[styles.subHeaderText, !isEnabled && styles.textDisabled]}
+            style={[
+              globalStyles.discreetText,
+              { color: isEnabled ? colors.textDiscreet : colors.disable },
+            ]}
           >
             {t("component:status." + mode)}
           </Text>
@@ -86,7 +96,7 @@ export default function CategorySelector({
         <Ionicons
           name={isExpanded ? "chevron-up" : "chevron-down"}
           size={20}
-          color={isEnabled ? "#666" : "#ddd"}
+          color={isEnabled ? colors.textDiscreet : colors.disable}
         />
       </Pressable>
 
@@ -161,22 +171,6 @@ export default function CategorySelector({
 }
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    marginBottom: 12,
-    overflow: "hidden",
-    borderColor: "#eee",
-    borderWidth: 1,
-  },
-  cardDisabled: { backgroundColor: "#f9f9f9", opacity: 0.8 },
-  headerRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 16,
-    zIndex: 10,
-    backgroundColor: "#fff",
-  },
   titleArea: {
     flex: 1,
     marginLeft: 12,
@@ -184,14 +178,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  headerText: { fontSize: 17, fontWeight: "700" },
-  subHeaderText: {
-    fontSize: 11,
-    color: "#8E8E93",
-    fontWeight: "700",
-    marginRight: 8,
-  },
-  textDisabled: { color: "#bbb" },
   expandedContent: { flex: 1 },
   fixedSelectorWrapper: {
     paddingHorizontal: 16,
