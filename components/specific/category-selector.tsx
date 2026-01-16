@@ -71,7 +71,7 @@ export default function CategorySelector({
           <Ionicons
             name={isEnabled ? "checkbox" : "square-outline"}
             size={24}
-            color={isEnabled ? colors.tint : "#999"}
+            color={isEnabled ? colors.tint : colors.disable}
           />
         </Pressable>
 
@@ -113,20 +113,24 @@ export default function CategorySelector({
           </View>
 
           {hasSubCategories && (
-            <View style={styles.tabContainer}>
+            <View style={[globalStyles.tabContainer, { marginHorizontal: 12 }]}>
               {category.sub_categories!.map((sub, index) => (
                 <Pressable
                   key={sub.name}
                   onPress={() => setActiveTabIndex(index)}
                   style={[
-                    styles.tab,
-                    activeTabIndex === index && styles.activeTab,
+                    globalStyles.tabSegment,
+                    activeTabIndex === index && {
+                      backgroundColor: colors.shadeContainer,
+                    },
                   ]}
                 >
                   <Text
                     style={[
-                      styles.tabText,
-                      activeTabIndex === index && styles.activeTabText,
+                      globalStyles.tabText,
+                      activeTabIndex === index
+                        ? { color: colors.text }
+                        : { color: colors.disable },
                     ]}
                   >
                     {sub.name}
@@ -136,10 +140,7 @@ export default function CategorySelector({
             </View>
           )}
 
-          <ScrollView
-            style={styles.optionsScrollView}
-            nestedScrollEnabled={true}
-          >
+          <ScrollView nestedScrollEnabled={true}>
             {currentOptions.map((opt: Option) => {
               // Create a unique key for selection state: "Category-SubName-ID" or "Category-ID"
               const selectionKey = hasSubCategories
@@ -178,34 +179,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  expandedContent: { flex: 1 },
+  expandedContent: { flex: 1, marginTop: 12 },
   fixedSelectorWrapper: {
     paddingHorizontal: 16,
     paddingBottom: 12,
   },
-  tabContainer: {
-    flexDirection: "row",
-    backgroundColor: "#F2F2F7",
-    marginHorizontal: 16,
-    marginBottom: 12,
-    borderRadius: 8,
-    padding: 2,
-  },
-  tab: {
-    flex: 1,
-    paddingVertical: 8,
-    alignItems: "center",
-    borderRadius: 6,
-  },
-  activeTab: {
-    backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 1,
-    elevation: 2,
-  },
-  tabText: { fontSize: 13, fontWeight: "600", color: "#8E8E93" },
-  activeTabText: { color: "#007AFF" },
-  optionsScrollView: { flex: 1 },
 });

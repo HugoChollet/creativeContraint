@@ -1,7 +1,7 @@
+import { useStyles } from "@/hooks/use-styles";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useStyles } from "@/hooks/use-styles";
+import { Pressable, Text, View } from "react-native";
 
 export type PresetMode = "none" | "easy" | "custom" | "hard" | "all";
 
@@ -37,7 +37,7 @@ export function StatusSelector({
             disabled={disabled}
             onPress={() => onSelect(mode.id)}
             style={({ pressed }) => [
-              styles.segment,
+              globalStyles.tabSegment,
               {
                 // Background is full color if active, very pale if not
                 backgroundColor: isActive ? mode.color : `${mode.color}15`,
@@ -47,7 +47,10 @@ export function StatusSelector({
             ]}
           >
             <Text
-              style={[styles.label, { color: isActive ? "#fff" : mode.color }]}
+              style={[
+                globalStyles.tabText,
+                { color: isActive ? "#fff" : mode.color },
+              ]}
             >
               {t("component:status." + mode.id)}
             </Text>
@@ -57,19 +60,3 @@ export function StatusSelector({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  segment: {
-    flex: 1,
-    paddingVertical: 8,
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
-  },
-  label: {
-    fontSize: 11,
-    fontWeight: "700",
-    textTransform: "uppercase",
-  },
-});

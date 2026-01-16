@@ -12,6 +12,7 @@ interface GlobalStyles {
   label: TextStyle;
   title: TextStyle;
   discreetText: TextStyle;
+  tabText: TextStyle;
 
   input: ViewStyle & TextStyle;
   secondaryButton: ViewStyle;
@@ -28,6 +29,7 @@ interface GlobalStyles {
   activeOption: ViewStyle;
   activeOptionText: TextStyle;
   card: ViewStyle;
+  tabSegment: ViewStyle;
 }
 
 export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
@@ -70,7 +72,6 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       borderRadius: 10,
       padding: 4,
       gap: 4,
-      marginTop: 10,
     },
 
     // Texts
@@ -95,6 +96,11 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       color: "#8E8E93",
       fontWeight: "700",
       marginRight: 8,
+    },
+    tabText: {
+      fontSize: 11,
+      fontWeight: "700",
+      textTransform: "uppercase",
     },
 
     // Buttons
@@ -169,6 +175,13 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       borderRadius: 12,
       marginBottom: 12,
       overflow: "hidden",
+    },
+    tabSegment: {
+      flex: 1,
+      paddingVertical: 8,
+      borderRadius: 8,
+      alignItems: "center",
+      justifyContent: "center",
     },
   });
 };
