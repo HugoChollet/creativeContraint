@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useStyles } from "@/hooks/use-styles";
 
 export type PresetMode = "none" | "easy" | "custom" | "hard" | "all";
 
@@ -16,16 +17,17 @@ export function StatusSelector({
   disabled,
 }: StatusSelectorProps) {
   const { t } = useTranslation();
+  const { globalStyles, colors } = useStyles();
 
   const MODES: { id: PresetMode; color: string }[] = [
     { id: "none", color: "#8E8E93" },
-    { id: "easy", color: "#34C759" },
-    { id: "custom", color: "#007AFF" },
-    { id: "hard", color: "#FF3B30" },
+    { id: "easy", color: colors.easy },
+    { id: "custom", color: colors.custom },
+    { id: "hard", color: colors.hard },
     { id: "all", color: "#000000" },
   ];
   return (
-    <View style={[styles.container, disabled && { opacity: 0.5 }]}>
+    <View style={[globalStyles.tabContainer, disabled && { opacity: 0.5 }]}>
       {MODES.map((mode) => {
         const isActive = currentMode === mode.id;
 
@@ -57,14 +59,6 @@ export function StatusSelector({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    backgroundColor: "#F2F2F7",
-    borderRadius: 10,
-    padding: 4,
-    gap: 4,
-    marginTop: 10,
-  },
   segment: {
     flex: 1,
     paddingVertical: 8,

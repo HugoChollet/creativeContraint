@@ -6,6 +6,7 @@ interface GlobalStyles {
   shadeContainer: ViewStyle;
   hardContainer: ViewStyle;
   shadeScroll: ViewStyle;
+  tabContainer: ViewStyle;
 
   text: TextStyle;
   label: TextStyle;
@@ -63,6 +64,14 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       flex: 1,
       backgroundColor: themes.shadeContainer,
     },
+    tabContainer: {
+      flexDirection: "row",
+      backgroundColor: themes.shadeContainer,
+      borderRadius: 10,
+      padding: 4,
+      gap: 4,
+      marginTop: 10,
+    },
 
     // Texts
     text: {
@@ -105,7 +114,7 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     },
     secondaryButtonText: {
       ...baseText,
-      color: themes.background,
+      color: Colors.white,
     },
     transparentButton: {
       ...baseButton,

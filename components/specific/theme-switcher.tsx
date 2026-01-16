@@ -35,7 +35,7 @@ export function ThemeSwitcher() {
             <Text
               style={{
                 color:
-                  themeMode === opt.value ? colors.invertedText : colors.text,
+                  themeMode === "light" && themeMode !== opt.value ? "black" : "white",
               }}
             >
               {opt.label}
