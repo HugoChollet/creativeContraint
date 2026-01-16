@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import { useStyles } from "@/hooks/use-styles";
+import { supabase } from "@/lib/supabase";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
@@ -9,8 +11,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useStyles } from "@/hooks/use-styles";
-import { supabase } from "@/lib/supabase";
 
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
