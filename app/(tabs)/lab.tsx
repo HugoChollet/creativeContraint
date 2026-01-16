@@ -1,7 +1,7 @@
+import { BottomSheet } from "@/components/generic/bottom-sheet";
+import { ThemedText } from "@/components/generic/themed-text";
 import CategorySelector from "@/components/specific/category-selector";
 import { PresetMode } from "@/components/specific/status-selector";
-import { ThemedText } from "@/components/themed-text";
-import { BottomSheet } from "@/components/ui/bottom-sheet";
 import { useStyles } from "@/hooks/use-styles";
 import i18nInstance from "@/i18n";
 import { ChosenOption, SavedProjectConstraints } from "@/types/data";

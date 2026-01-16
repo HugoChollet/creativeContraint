@@ -1,6 +1,6 @@
+import ModalSelector from "@/components/generic/modal-selector";
 import Account from "@/components/specific/account";
 import Auth from "@/components/specific/auth";
-import ModalSelector from "@/components/ui/modal-selector";
 import { ThemeSwitcher } from "@/components/specific/theme-switcher";
 import { useStyles } from "@/hooks/use-styles";
 import { supabase } from "@/lib/supabase";

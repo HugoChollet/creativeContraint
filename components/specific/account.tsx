@@ -1,4 +1,6 @@
+import { ThemedText } from "@/components/generic/themed-text";
 import { useStyles } from "@/hooks/use-styles";
+import { supabase } from "@/lib/supabase";
 import { Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -10,8 +12,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { supabase } from "@/lib/supabase";
-import { ThemedText } from "@/components/themed-text";
 
 export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true);
@@ -103,7 +103,9 @@ export default function Account({ session }: { session: Session }) {
           />
         </View>
 
-        <Text style={globalStyles.label}>{t("component:account.username")}</Text>
+        <Text style={globalStyles.label}>
+          {t("component:account.username")}
+        </Text>
         <View style={styles.verticallySpaced}>
           <TextInput
             value={username || ""}
@@ -114,7 +116,9 @@ export default function Account({ session }: { session: Session }) {
           />
         </View>
 
-        <Text style={globalStyles.label}>{t("component:account.portfolio")}</Text>
+        <Text style={globalStyles.label}>
+          {t("component:account.portfolio")}
+        </Text>
         <View style={styles.verticallySpaced}>
           <TextInput
             value={website || ""}

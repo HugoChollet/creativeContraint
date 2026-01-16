@@ -1,4 +1,4 @@
-import { ThemedView } from "@/components/themed-view";
+import { ThemedView } from "@/components/generic/themed-view";
 import { useStyles } from "@/hooks/use-styles";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
