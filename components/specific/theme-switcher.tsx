@@ -14,7 +14,7 @@ export function ThemeSwitcher() {
 
   return (
     <>
-      <Text style={globalStyles.title}>
+      <Text style={globalStyles.subtitle}>
         {t("component:theme-switcher.title")}
       </Text>
       <View style={globalStyles.shadeContainer}>
@@ -35,7 +35,9 @@ export function ThemeSwitcher() {
             <Text
               style={{
                 color:
-                  themeMode === "light" && themeMode !== opt.value ? "black" : "white",
+                  themeMode === "light" && themeMode !== opt.value
+                    ? "black"
+                    : "white",
               }}
             >
               {opt.label}

@@ -90,7 +90,7 @@ export default function Account({ session }: { session: Session }) {
 
   return (
     <>
-      <Text style={globalStyles.title}>{t("component:auth.title")}</Text>
+      <Text style={globalStyles.subtitle}>{t("component:auth.title")}</Text>
       <View style={globalStyles.shadeContainer}>
         <Text style={globalStyles.label}>
           {t("component:account.email_read_only")}

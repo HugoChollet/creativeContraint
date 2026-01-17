@@ -12,14 +12,16 @@ interface GlobalStyles {
   text: TextStyle;
   label: TextStyle;
   title: TextStyle;
+  subtitle: TextStyle;
   discreetText: TextStyle;
   tabText: TextStyle;
   secondaryButtonText: TextStyle;
-  transparentButtonText: TextStyle;
+  borderButtonText: TextStyle;
   alertText: TextStyle;
 
   input: ViewStyle & TextStyle;
   secondaryButton: ViewStyle;
+  borderButton: ViewStyle;
   transparentButton: ViewStyle;
   dropdownButton: ViewStyle;
   alertButton: ViewStyle;
@@ -40,7 +42,7 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 12,
+    marginTop: 12, // Should probably be in the container and not the button itself
   };
   const baseText: TextStyle = {
     color: themes.text,
@@ -90,6 +92,14 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     },
     title: {
       ...baseText,
+      fontSize: 18,
+      marginBottom: 8,
+      marginTop: 8,
+      fontWeight: "700",
+      textTransform: "uppercase",
+    },
+    subtitle: {
+      ...baseText,
       fontSize: 16,
       marginBottom: 8,
       marginTop: 8,
@@ -110,7 +120,7 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       ...baseText,
       color: Colors.white,
     },
-    transparentButtonText: {
+    borderButtonText: {
       ...baseText,
       color: themes.text,
     },
@@ -134,10 +144,14 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       ...baseButton,
       backgroundColor: themes.tint,
     },
-    transparentButton: {
+    borderButton: {
       ...baseButton,
       borderWidth: 1,
       borderColor: themes.tint,
+      backgroundColor: "transparent",
+    },
+    transparentButton: {
+      ...baseButton,
       backgroundColor: "transparent",
     },
     dropdownButton: {

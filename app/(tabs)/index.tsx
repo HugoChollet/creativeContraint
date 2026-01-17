@@ -13,17 +13,17 @@ export default function HomeScreen() {
     <ScrollView style={{ backgroundColor: colors.background }}>
       <ThemedView style={globalStyles.shadeContainer}>
         <TouchableOpacity
-          style={globalStyles.transparentButton}
+          style={globalStyles.borderButton}
           onPress={() =>
             router.push({ pathname: "/lab", params: { id: 1, type: "book" } })
           }
         >
-          <Text style={globalStyles.transparentButtonText}>
+          <Text style={globalStyles.borderButtonText}>
             {t("screen:home.book_button")}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={globalStyles.transparentButton}
+        {/* <TouchableOpacity
+          style={globalStyles.borderButton}
           onPress={() =>
             router.push({
               pathname: "/lab",
@@ -31,22 +31,22 @@ export default function HomeScreen() {
             })
           }
         >
-          <Text style={globalStyles.transparentButtonText}>
+          <Text style={globalStyles.borderButtonText}>
             {t("screen:home.videogame_button")}
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
-          style={globalStyles.transparentButton}
+          style={globalStyles.borderButton}
           onPress={() =>
             router.push({ pathname: "/lab", params: { id: 3, type: "music" } })
           }
         >
-          <Text style={globalStyles.transparentButtonText}>
+          <Text style={globalStyles.borderButtonText}>
             {t("screen:home.music_button")}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={globalStyles.transparentButton}
+          style={globalStyles.borderButton}
           onPress={() =>
             router.push({
               pathname: "/lab",
@@ -54,12 +54,12 @@ export default function HomeScreen() {
             })
           }
         >
-          <Text style={globalStyles.transparentButtonText}>
+          <Text style={globalStyles.borderButtonText}>
             {t("screen:home.videointernet_button")}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={globalStyles.transparentButton}
+          style={globalStyles.borderButton}
           onPress={() =>
             router.push({
               pathname: "/lab",
@@ -67,12 +67,12 @@ export default function HomeScreen() {
             })
           }
         >
-          <Text style={globalStyles.transparentButtonText}>
+          <Text style={globalStyles.borderButtonText}>
             {t("screen:home.videofiction_button")}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={globalStyles.transparentButton}
+          style={globalStyles.borderButton}
           onPress={() =>
             router.push({
               pathname: "/lab",
@@ -80,7 +80,7 @@ export default function HomeScreen() {
             })
           }
         >
-          <Text style={globalStyles.transparentButtonText}>
+          <Text style={globalStyles.borderButtonText}>
             {t("screen:home.photography_button")}
           </Text>
         </TouchableOpacity>

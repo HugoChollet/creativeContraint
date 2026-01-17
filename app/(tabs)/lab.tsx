@@ -285,7 +285,7 @@ export default function LabScreen() {
         style={globalStyles.shadeScroll}
         contentContainerStyle={styles.content}
       >
-        <ThemedText style={globalStyles.title} type="title">
+        <ThemedText style={globalStyles.subtitle} type="title">
           {t("screen:lab.lab_title", { type: dataSource.project_type })}
         </ThemedText>
         {dataSource.constraints.map((cat) => (
@@ -343,7 +343,7 @@ export default function LabScreen() {
               <Text style={globalStyles.label}>
                 {cat.label || cat.category}
               </Text>
-              <Text style={globalStyles.title}>
+              <Text style={globalStyles.subtitle}>
                 {randomConstraints[cat.category] ??
                   t("screen:lab.empty_result")}
               </Text>

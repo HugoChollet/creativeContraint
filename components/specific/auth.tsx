@@ -56,7 +56,7 @@ export default function Auth() {
 
   return (
     <>
-      <Text style={globalStyles.title}>{t("component:auth.title")}</Text>
+      <Text style={globalStyles.subtitle}>{t("component:auth.title")}</Text>
       <View style={globalStyles.shadeContainer}>
         <View style={styles.verticallySpaced}>
           <Text style={globalStyles.label}>{t("component:auth.email")}</Text>
@@ -94,11 +94,11 @@ export default function Auth() {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[globalStyles.transparentButton]}
+          style={[globalStyles.borderButton]}
           disabled={loading}
           onPress={() => signUpWithEmail()}
         >
-          <Text style={globalStyles.transparentButtonText}>
+          <Text style={globalStyles.borderButtonText}>
             {t("component:auth.register")}
           </Text>
         </TouchableOpacity>

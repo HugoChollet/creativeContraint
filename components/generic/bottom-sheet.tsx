@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { ThemedText } from "../generic/themed-text";
 
 interface BottomSheetProps {
   isVisible: boolean;
@@ -50,14 +49,15 @@ export function BottomSheet({
           <View style={styles.handle} />
 
           <View style={styles.headerContainer}>
-            <ThemedText type="subtitle" style={styles.title}>
-              {difficultyIndicator}
-            </ThemedText>
-            <ThemedText type="subtitle" style={styles.title}>
-              {title}
-            </ThemedText>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
+            >
+              <Text style={globalStyles.title}>{difficultyIndicator}</Text>
+              <Ionicons name="speedometer-outline" size={28} color="white" />
+            </View>
+            <Text style={globalStyles.title}>{title}</Text>
             <TouchableOpacity
-              style={globalStyles.secondaryButton}
+              style={globalStyles.transparentButton}
               onPress={onSaveConstraints}
             >
               <Ionicons size={28} name={icon} color="white" />
@@ -108,10 +108,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: 16,
   },
-  title: {
-    textAlign: "center",
-    marginBottom: 20,
-  },
+
   contentScroll: {
     flex: 1,
     marginBottom: 20,

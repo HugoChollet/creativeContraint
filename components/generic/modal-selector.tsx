@@ -41,13 +41,13 @@ export default function ModalSelector({
 
   return (
     <View style={styles.container}>
-      <Text style={globalStyles.title}>{label}</Text>
+      <Text style={globalStyles.subtitle}>{label}</Text>
 
       <TouchableOpacity
-        style={[globalStyles.transparentButton, globalStyles.dropdownButton]}
+        style={[globalStyles.borderButton, globalStyles.dropdownButton]}
         onPress={() => setVisible(true)}
       >
-        <Text style={globalStyles.transparentButtonText}>
+        <Text style={globalStyles.borderButtonText}>
           {selectedOption?.label}
         </Text>
         <Ionicons name="chevron-down" size={20} color={colors.tint} />
