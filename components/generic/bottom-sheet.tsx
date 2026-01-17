@@ -49,7 +49,7 @@ export function BottomSheet({
         <View style={[globalStyles.backgroundColor, styles.sheet]}>
           <View style={styles.handle} />
 
-          <View style={styles.titleContainer}>
+          <View style={styles.headerContainer}>
             <ThemedText type="subtitle" style={styles.title}>
               {difficultyIndicator}
             </ThemedText>
@@ -96,7 +96,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 28,
     borderTopRightRadius: 28,
     padding: 24,
-    minHeight: "40%",
+    // Change minHeight to maxHeight or a fixed height so it doesn't
+    // grow past the screen boundaries
+    maxHeight: "90%",
   },
   handle: {
     width: 40,
@@ -111,9 +113,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   contentScroll: {
+    flex: 1,
     marginBottom: 20,
   },
-  titleContainer: {
+  headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",

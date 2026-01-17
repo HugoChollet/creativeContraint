@@ -267,7 +267,6 @@ export default function LabScreen() {
     console.log(isSaved);
 
     setIsSaved(!isSaved);
-    //setModalVisible(false);
   };
 
   if (!dataSource)
@@ -278,7 +277,7 @@ export default function LabScreen() {
     );
 
   return (
-    <View style={[styles.container, globalStyles.backgroundColor]}>
+    <View style={[{ flex: 1 }, globalStyles.backgroundColor]}>
       <ScrollView
         style={globalStyles.shadeScroll}
         contentContainerStyle={styles.content}
@@ -334,11 +333,14 @@ export default function LabScreen() {
         {dataSource.constraints.map((cat) => {
           if (!randomConstraints[cat.category]) return null;
           return (
-            <View key={cat.category} style={styles.modalResultBox}>
-              <Text style={styles.modalCategoryLabel}>
+            <View
+              key={cat.category}
+              style={[globalStyles.card, { padding: 16 }]}
+            >
+              <Text style={globalStyles.label}>
                 {cat.label || cat.category}
               </Text>
-              <Text style={styles.modalValueText}>
+              <Text style={globalStyles.title}>
                 {randomConstraints[cat.category] ??
                   t("screen:lab.empty_result")}
               </Text>
@@ -351,52 +353,9 @@ export default function LabScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#121212", // Dark theme to match ThemedText
-  },
   content: {
     padding: 16,
     paddingBottom: 20,
-  },
-  resultsContainer: {
-    flex: 0.4, // Area for the generated output
-    backgroundColor: "#1E1E1E",
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    padding: 20,
-    // Add shadow/elevation for a "floating sheet" look
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: -3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-    elevation: 8,
-  },
-  resultBox: {
-    marginBottom: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#333",
-    paddingBottom: 8,
-  },
-  modalResultBox: {
-    backgroundColor: "#2C2C2E",
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-  },
-  modalCategoryLabel: {
-    color: "#8E8E93",
-    fontSize: 12,
-    fontWeight: "600",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-    marginBottom: 6,
-  },
-  modalValueText: {
-    color: "#0A84FF",
-    fontSize: 20,
-    fontWeight: "700",
-    lineHeight: 26,
   },
   floatingButtonsWrapper: {
     // Container should be floating and not buttons in this case

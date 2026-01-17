@@ -1,5 +1,5 @@
-const tintColorLight = "#0a7ea4";
-const tintColorDark = "#075a75ff";
+const tintColorLight = "#0A84FF";
+const tintColorDark = "#0761bbff";
 const hardContainerLight = "rgba(205, 205, 205, 1)";
 const shadeContainerLight = "rgba(205, 205, 205, 0.3)";
 const hardContainerDark = "#2C2C2E";
@@ -25,7 +25,7 @@ export const Themes = {
     disable: "#ccc",
     easy: "#34C759",
     hard: "#FF3B30",
-    custom: tintColorLight, 
+    custom: tintColorLight,
   },
   dark: {
     text: textWhite,
@@ -44,13 +44,14 @@ export const Themes = {
     disable: "#6d6c6cff",
     easy: "#34C759",
     hard: "#FF3B30",
-    custom: "#007AFF", 
+    custom: "#007AFF",
   },
 } as const;
 export const Colors = {
   alert: "#ff4444",
   white: textWhite,
   black: textDark,
+  grey: "#8E8E93",
 };
 
 // Types for your theme

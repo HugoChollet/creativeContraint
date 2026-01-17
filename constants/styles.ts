@@ -3,6 +3,7 @@ import { AppThemeColors, Colors } from "./theme";
 
 // Define an interface for your shared styles
 interface GlobalStyles {
+  noColorContainer: ViewStyle;
   shadeContainer: ViewStyle;
   hardContainer: ViewStyle;
   shadeScroll: ViewStyle;
@@ -55,6 +56,9 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
 
   return StyleSheet.create({
     // Containers
+    noColorContainer: {
+      ...baseContainer,
+    },
     shadeContainer: {
       ...baseContainer,
       backgroundColor: themes.shadeContainer,
@@ -82,19 +86,18 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     label: {
       ...baseText,
       marginBottom: 8,
-      marginLeft: 4,
+      color: themes.textDiscreet,
     },
     title: {
       ...baseText,
       fontSize: 16,
       marginBottom: 8,
       marginTop: 8,
-      textTransform: "uppercase",
     },
     discreetText: {
       ...baseText,
       fontSize: 11,
-      color: "#8E8E93",
+      color: themes.textDiscreet,
       fontWeight: "700",
       marginRight: 8,
     },
@@ -153,7 +156,6 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       position: "absolute",
       borderRadius: 32,
       shadowColor: themes.tint,
-      shadowOffset: { width: 0, height: 4 },
       shadowOpacity: 0.3,
       shadowRadius: 4.65,
       elevation: 8,
