@@ -63,10 +63,12 @@ export default function LabScreen() {
     console.log(dataSource);
 
     dataSource.constraints.forEach((cat) => {
-      if (cat.disabled) return;
-
-      // Enable the category by default
-      activeCats[cat.category] = true;
+      if (cat.disabled) {
+        activeCats[cat.category] = false;
+      } else {
+        // Enable the category by default
+        activeCats[cat.category] = true;
+      }
 
       if (cat.options) {
         // Enable every option by default
@@ -105,6 +107,7 @@ export default function LabScreen() {
         [name]: !prev.activeCategories[name],
       },
     }));
+    console.log(selectedItems);
   };
 
   const toggleOption = (catName: string, id: number) => {

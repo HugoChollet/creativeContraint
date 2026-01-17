@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -20,11 +21,11 @@ export function StatusSelector({
   const { globalStyles, colors } = useStyles();
 
   const MODES: { id: PresetMode; color: string }[] = [
-    { id: "none", color: "#8E8E93" },
+    { id: "none", color: Colors.grey },
     { id: "easy", color: colors.easy },
     { id: "custom", color: colors.custom },
     { id: "hard", color: colors.hard },
-    { id: "all", color: "#000000" },
+    { id: "all", color: Colors.black },
   ];
   return (
     <View style={[globalStyles.tabContainer, disabled && { opacity: 0.5 }]}>
