@@ -1,6 +1,6 @@
 import { useStyles } from "@/hooks/use-styles";
+import { IoniconsName } from "@/types/Icons";
 import { Ionicons } from "@expo/vector-icons";
-import React, { ComponentProps } from "react";
 import {
   Modal,
   Pressable,
@@ -11,8 +11,6 @@ import {
   View,
 } from "react-native";
 import { ThemedText } from "../generic/themed-text";
-
-type IoniconsName = ComponentProps<typeof Ionicons>["name"];
 
 interface BottomSheetProps {
   isVisible: boolean;

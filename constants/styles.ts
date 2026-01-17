@@ -13,15 +13,16 @@ interface GlobalStyles {
   title: TextStyle;
   discreetText: TextStyle;
   tabText: TextStyle;
+  secondaryButtonText: TextStyle;
+  transparentButtonText: TextStyle;
+  alertText: TextStyle;
 
   input: ViewStyle & TextStyle;
   secondaryButton: ViewStyle;
-  secondaryButtonText: TextStyle;
   transparentButton: ViewStyle;
-  transparentButtonText: TextStyle;
   dropdownButton: ViewStyle;
   alertButton: ViewStyle;
-  alertText: TextStyle;
+  floatingButton: ViewStyle;
 
   backgroundColor: ViewStyle;
   headerRow: ViewStyle;
@@ -102,6 +103,18 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       fontWeight: "700",
       textTransform: "uppercase",
     },
+    secondaryButtonText: {
+      ...baseText,
+      color: Colors.white,
+    },
+    transparentButtonText: {
+      ...baseText,
+      color: themes.text,
+    },
+    alertText: {
+      ...baseText,
+      color: Colors.alert,
+    },
 
     // Buttons
     input: {
@@ -118,19 +131,11 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       ...baseButton,
       backgroundColor: themes.tint,
     },
-    secondaryButtonText: {
-      ...baseText,
-      color: Colors.white,
-    },
     transparentButton: {
       ...baseButton,
       borderWidth: 1,
       borderColor: themes.tint,
       backgroundColor: "transparent",
-    },
-    transparentButtonText: {
-      ...baseText,
-      color: themes.text,
     },
     dropdownButton: {
       flexDirection: "row",
@@ -144,10 +149,17 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       borderColor: Colors.alert,
       backgroundColor: "transparent",
     },
-    alertText: {
-      ...baseText,
-      color: Colors.alert,
+    floatingButton: {
+      position: "absolute",
+      borderRadius: 32,
+      shadowColor: themes.tint,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.3,
+      shadowRadius: 4.65,
+      elevation: 8,
+      overflow: "hidden",
     },
+
     backgroundColor: {
       backgroundColor: themes.background,
     },

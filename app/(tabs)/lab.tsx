@@ -1,4 +1,5 @@
 import { BottomSheet } from "@/components/generic/bottom-sheet";
+import { FloatingButton } from "@/components/generic/floating-button";
 import { ThemedText } from "@/components/generic/themed-text";
 import CategorySelector from "@/components/specific/category-selector";
 import { PresetMode } from "@/components/specific/status-selector";
@@ -13,7 +14,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import {
@@ -300,24 +300,25 @@ export default function LabScreen() {
         ))}
       </ScrollView>
 
-      <TouchableOpacity
-        style={styles.showResultButton}
-        onPress={() => {
-          console.log(randomConstraints);
-          setModalVisible(true);
-        }}
-        disabled={Object.keys(randomConstraints).length === 0}
-      >
-        <Text style={globalStyles.secondaryButtonText}>A</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={globalStyles.secondaryButton}
-        onPress={refreshConstraints}
-      >
-        <Text style={globalStyles.secondaryButtonText}>
-          {t("screen:lab.generate_button", { type: dataSource.project_type })}
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.floatingButtonsWrapper} pointerEvents="box-none">
+        <FloatingButton
+          onPress={() => {
+            setModalVisible(true);
+          }}
+          disabled={Object.keys(randomConstraints).length === 0}
+          icon="arrow-up-outline"
+          bottom={-24}
+          right={24}
+        />
+        <FloatingButton
+          onPress={refreshConstraints}
+          bottom={-24}
+          right={120}
+          label={t("screen:lab.generate_button", {
+            type: dataSource.project_type,
+          })}
+        />
+      </View>
 
       <BottomSheet
         isVisible={modalVisible}
@@ -377,22 +378,6 @@ const styles = StyleSheet.create({
     borderBottomColor: "#333",
     paddingBottom: 8,
   },
-  showResultButton: {
-    position: "absolute",
-    bottom: 64,
-    alignSelf: "center",
-    backgroundColor: "#767676ff",
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 4,
-    paddingHorizontal: 32,
-    borderRadius: 32,
-    shadowColor: "#007AFF",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.4,
-    shadowRadius: 12,
-    elevation: 10,
-  },
   modalResultBox: {
     backgroundColor: "#2C2C2E",
     borderRadius: 12,
@@ -408,9 +393,18 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   modalValueText: {
-    color: "#0A84FF", // Brighter blue for high contrast
+    color: "#0A84FF",
     fontSize: 20,
     fontWeight: "700",
     lineHeight: 26,
+  },
+  floatingButtonsWrapper: {
+    // Container should be floating and not buttons in this case
+    position: "absolute",
+    bottom: 30,
+    left: 0,
+    right: 0,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
