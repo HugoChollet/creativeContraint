@@ -39,7 +39,7 @@ export default function LabScreen() {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const { t } = useTranslation();
   const [isSaved, setIsSaved] = useState(false);
-  const { globalStyles } = useStyles();
+  const { globalStyles, colors } = useStyles();
 
   const rawType = (
     Array.isArray(type) ? type[0] : type ?? "book"
@@ -343,7 +343,7 @@ export default function LabScreen() {
               <Text style={globalStyles.label}>
                 {cat.label || cat.category}
               </Text>
-              <Text style={globalStyles.subtitle}>
+              <Text style={[globalStyles.subtitle, { color: colors.tint }]}>
                 {randomConstraints[cat.category] ??
                   t("screen:lab.empty_result")}
               </Text>

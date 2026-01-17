@@ -32,7 +32,7 @@ export function BottomSheet({
   onSaveConstraints,
   icon,
 }: BottomSheetProps) {
-  const { globalStyles } = useStyles();
+  const { globalStyles, colors } = useStyles();
 
   return (
     <Modal
@@ -60,7 +60,7 @@ export function BottomSheet({
               style={globalStyles.transparentButton}
               onPress={onSaveConstraints}
             >
-              <Ionicons size={28} name={icon} color="white" />
+              <Ionicons size={28} name={icon} color={colors.tint} />
             </TouchableOpacity>
           </View>
 
