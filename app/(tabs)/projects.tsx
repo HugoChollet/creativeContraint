@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   FlatList,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -59,20 +60,9 @@ export default function ProjectLibraryScreen() {
         </View>
 
         {/* Constraints Tags Section */}
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+        <View style={styles.tagContainer}>
           {constraintKeys.map((key) => (
-            <View
-              key={key}
-              style={{
-                backgroundColor: colors.shadeContainer,
-                paddingHorizontal: 8,
-                paddingVertical: 4,
-                borderRadius: 6,
-                borderWidth: 1,
-                borderColor: colors.borderColor,
-                maxWidth: "100%",
-              }}
-            >
+            <View key={key} style={globalStyles.tag}>
               <Text style={{ fontSize: 12, color: colors.textDiscreet }}>
                 {key}:{" "}
                 <Text style={{ color: colors.text, fontWeight: "600" }}>
@@ -126,3 +116,7 @@ export default function ProjectLibraryScreen() {
     </View>
   );
 }
+
+export const styles = StyleSheet.create({
+  tagContainer: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
+});

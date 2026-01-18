@@ -35,6 +35,7 @@ interface GlobalStyles {
   activeOptionText: TextStyle;
   card: ViewStyle;
   tabSegment: ViewStyle;
+  tag: ViewStyle;
 }
 
 export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
@@ -218,6 +219,15 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       borderRadius: 8,
       alignItems: "center",
       justifyContent: "center",
+    },
+    tag: {
+      backgroundColor: themes.shadeContainer,
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      borderRadius: 6,
+      borderWidth: 1,
+      borderColor: themes.borderColor,
+      maxWidth: "100%",
     },
   });
 };
