@@ -1,6 +1,6 @@
 import { useAuth } from "@/contexts/auth-context";
 import { supabase } from "@/lib/supabase";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 export function useCollection<T>(tableName: string) {
   const { session } = useAuth();
   const [data, setData] = useState<T[]>([]);
@@ -68,6 +68,12 @@ export function useCollection<T>(tableName: string) {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (session?.user?.id) {
+      fetchCollection();
+    }
+  }, [session?.user?.id, fetchCollection]);
 
   return {
     data,

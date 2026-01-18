@@ -1,7 +1,8 @@
   {
     "layout": {
         "Home": "Home",
-        "Settings": "Settings"
+        "Settings": "Settings",
+        "Projects": "Projects"
     },
     "lab": 
     {
@@ -24,5 +25,15 @@
     "settings": {
         "settings_title": "Settings",
         "language_selection": "Application Language"
+    },
+    "projects": {
+        "title": "My Projects",
+        "no_projects": "You have no projects yet. Start by creating one!",
+        "create_button": "Create New Project",
+        "delete_button": "Delete Project",
+        "confirm_delete": "Are you sure you want to delete this project? This action cannot be undone.",
+        "cancel_button": "Cancel",
+        "confirm_button": "Confirm",
+        "difficulty": "Difficulty"
     }
 }

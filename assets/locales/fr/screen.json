@@ -2,7 +2,8 @@
 {
     "layout": {
         "Home": "Accueil",
-        "Settings": "Paramètres"
+        "Settings": "Paramètres",
+        "Projects": "Projets"
     },
     "lab":
     {
@@ -24,5 +25,15 @@
     "settings": {
         "settings_title": "Paramètres",
         "language_selection": "Langue de l'application"
+    },
+    "projects": {
+        "title": "Mes Projets",
+        "no_projects": "Vous n'avez pas encore de projets. Commencez par en créer un !",
+        "create_button": "Créer un nouveau projet",
+        "delete_button": "Supprimer le projet",
+        "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce projet ? Cette action est irréversible.",
+        "cancel_button": "Annuler",
+        "confirm_button": "Confirmer",
+        "difficulty": "Difficulté"
     }
 }

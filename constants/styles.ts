@@ -6,6 +6,7 @@ interface GlobalStyles {
   noColorContainer: ViewStyle;
   shadeContainer: ViewStyle;
   hardContainer: ViewStyle;
+  backgroundContainer: ViewStyle;
   shadeScroll: ViewStyle;
   tabContainer: ViewStyle;
 
@@ -53,21 +54,27 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     flex: 1,
     justifyContent: "center",
     padding: 24,
-    borderRadius: 12,
   };
 
   return StyleSheet.create({
     // Containers
     noColorContainer: {
       ...baseContainer,
+      borderRadius: 12,
     },
     shadeContainer: {
       ...baseContainer,
+      borderRadius: 12,
       backgroundColor: themes.shadeContainer,
     },
     hardContainer: {
       ...baseContainer,
+      borderRadius: 12,
       backgroundColor: themes.hardContainer,
+    },
+    backgroundContainer: {
+      ...baseContainer,
+      backgroundColor: themes.background,
     },
     shadeScroll: {
       flex: 1,
