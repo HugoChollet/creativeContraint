@@ -12,15 +12,11 @@ export default function Account({ session }: { session: Session }) {
   const { globalStyles, colors } = useStyles();
 
   // Define the shape of your profile
-  const { data, setData, loading, updateData } = useProfile(
-    session,
-    "profiles",
-    {
-      username: "",
-      website: "",
-      avatar_url: "",
-    }
-  );
+  const { data, setData, loading, updateData } = useProfile("profiles", {
+    username: "",
+    website: "",
+    avatar_url: "",
+  });
 
   return (
     <>
@@ -46,6 +42,7 @@ export default function Account({ session }: { session: Session }) {
           onChangeText={(text) => setData({ ...data, username: text })}
           placeholder={t("component:account.username_placeholder")}
           style={globalStyles.input}
+          placeholderTextColor={colors.textDiscreet}
         />
         <Spacer height={20} />
 

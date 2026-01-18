@@ -1,39 +1,34 @@
+import { useAuth } from "@/contexts/auth-context";
 import { supabase } from "@/lib/supabase";
-import { Session } from "@supabase/supabase-js";
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
 
-export function useProfile<T>(
-  session: Session,
-  tableName: string,
-  initialData: T
-) {
-  const [loading, setLoading] = useState(true);
+export function useProfile<T>(tableName: string, initialData: T) {
+  const { session } = useAuth(); // Get session automatically from Context
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState<T>(initialData);
 
+  console.log(session);
+
   const fetchData = useCallback(async () => {
+    if (!session?.user) return; // Silent return if not logged in
+
     try {
       setLoading(true);
-      if (!session?.user) throw new Error("No user on the session!");
-
-      const {
-        data: result,
-        error,
-        status,
-      } = await supabase
+      const { data: result, error } = await supabase
         .from(tableName)
         .select("*")
         .eq("id", session.user.id)
         .single();
 
-      if (error && status !== 406) throw error;
+      if (error) throw error;
       if (result) setData(result);
     } catch (error) {
-      if (error instanceof Error) Alert.alert(error.message);
+      console.error(error);
     } finally {
       setLoading(false);
     }
-  }, [session, tableName]);
+  }, [session?.user?.id, tableName]);
 
   const updateData = async (updates: Partial<T>) => {
     try {
@@ -62,5 +57,10 @@ export function useProfile<T>(
     fetchData();
   }, [fetchData]);
 
-  return { loading, data, setData, updateData, refresh: fetchData };
+  return {
+    data,
+    setData,
+    loading,
+    updateData: (updates: Partial<T>) => updateData(updates),
+  };
 }
