@@ -1,4 +1,6 @@
 import { BottomSheet } from "@/components/generic/bottom-sheet";
+import { useAuth } from "@/contexts/auth-context";
+import { useProfile } from "@/hooks/use-profile";
 import { useStyles } from "@/hooks/use-styles";
 import { ProjectData } from "@/types/constraints";
 import { ChosenOption, SavedProjectConstraints } from "@/types/data";
@@ -23,6 +25,15 @@ export default function GeneratedConstraintsModal({
   const { t } = useTranslation();
   const { globalStyles } = useStyles();
   const [isSaved, setIsSaved] = useState(false);
+  const { session } = useAuth();
+
+  const { data, setData, loading, updateData } =
+    useProfile<SavedProjectConstraints>("projects", {
+      owner_id: "",
+      project_type: dataSource.project_type,
+      constraints: {},
+      difficulty: 0,
+    });
 
   const getDifficultyGenerated = () => {
     let count = 0;
@@ -75,7 +86,7 @@ export default function GeneratedConstraintsModal({
     return selectedData;
   };
 
-  const onSaveConstraints = () => {
+  const onSaveConstraints = async () => {
     const constraints = getConstraintData();
 
     // Ensure we have generated something before saving
@@ -83,16 +94,15 @@ export default function GeneratedConstraintsModal({
       console.warn("No constraints generated yet.");
       return;
     }
-    if (!isSaved) {
+    if (!isSaved && session?.user.id) {
       const saving: SavedProjectConstraints = {
-        id: Date.now(),
+        owner_id: session?.user.id,
         project_type: dataSource.project_type,
         constraints: constraints,
         difficulty: getDifficultyGenerated(),
-        createdAt: new Date(),
       };
       console.log("Saving project:", saving);
-      // Here you would typically call an API, use AsyncStorage, or dispatch to Redux/Zustand
+      await updateData(saving);
     } else {
       console.log("unsaving ?");
     }
