@@ -1,0 +1,79 @@
+import { useAuth } from "@/contexts/auth-context";
+import { supabase } from "@/lib/supabase";
+import { useCallback, useState } from "react";
+export function useCollection<T>(tableName: string) {
+  const { session } = useAuth();
+  const [data, setData] = useState<T[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchCollection = useCallback(async () => {
+    if (!session?.user) return;
+    try {
+      setLoading(true);
+      const { data: result, error } = await supabase
+        .from(tableName)
+        .select("*")
+        .eq("owner_id", session.user.id)
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setData(result || []);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }, [session?.user?.id, tableName]);
+
+  const addRecord = async (newRecord: Partial<T>) => {
+    try {
+      setLoading(true);
+      const { data: inserted, error } = await supabase
+        .from(tableName)
+        .insert([{ ...newRecord, owner_id: session?.user.id }])
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      setData((prev) => [inserted, ...prev]);
+      return inserted as T;
+    } catch (error) {
+      console.error(error);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteRecord = async (id: string | number) => {
+    try {
+      setLoading(true);
+
+      const { error } = await supabase
+        .from(tableName)
+        .delete()
+        .eq("id", id)
+        .eq("owner_id", session?.user.id);
+
+      if (error) throw error;
+
+      setData((prev) => prev.filter((item) => item.id !== id));
+
+      return true;
+    } catch (error) {
+      console.error("Delete error:", error);
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    data,
+    loading,
+    addRecord,
+    deleteRecord,
+    refresh: fetchCollection,
+  };
+}
