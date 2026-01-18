@@ -43,8 +43,8 @@ export const Themes = {
     borderColor: shadeContainerDark,
     disable: "#6d6c6cff",
     easy: "#34C759",
-    hard: "#FF3B30",
     custom: "#007AFF",
+    hard: "#FF3B30",
   },
 } as const;
 export const Colors = {
@@ -52,6 +52,13 @@ export const Colors = {
   white: textWhite,
   black: textDark,
   grey: "#8E8E93",
+  easy: "#34C759",
+  easyMedium: "#d1ff3bff",
+  medium: "#FFEB3B",
+  aboveMedium: "#ffb73bff",
+  hardMedium: "#ff863bff",
+  hard: "#FF3B30",
+  veryHard: "#a22c24ff",
 };
 
 // Types for your theme
