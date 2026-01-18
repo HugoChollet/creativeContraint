@@ -4,7 +4,8 @@ import { ProjectData } from "@/types/constraints";
 import { ChosenOption, SavedProjectConstraints } from "@/types/data";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
+import ResultModalHeader from "./result-modal-header";
 
 type GeneratedConstraintsModalProps = {
   modalVisible: boolean;
@@ -104,25 +105,32 @@ export default function GeneratedConstraintsModal({
     <BottomSheet
       isVisible={modalVisible}
       onClose={() => setModalVisible(false)}
-      title={t("screen:lab.constraints_title", {
-        type: dataSource.project_type,
-      })}
       buttonText={t("screen:lab.back_button")}
-      difficultyIndicator={getDifficultyGenerated()}
-      onSaveConstraints={onSaveConstraints}
-      icon={isSaved ? "bookmark" : "bookmark-outline"}
     >
-      {dataSource.constraints.map((cat) => {
-        if (!randomConstraints[cat.category]) return null;
-        return (
-          <View key={cat.category} style={[globalStyles.card, { padding: 16 }]}>
-            <Text style={globalStyles.label}>{cat.label || cat.category}</Text>
-            <Text style={[globalStyles.subtitle]}>
-              {randomConstraints[cat.category] ?? t("screen:lab.empty_result")}
-            </Text>
-          </View>
-        );
-      })}
+      <ResultModalHeader
+        difficultyIndicator={getDifficultyGenerated()}
+        onSaveConstraints={onSaveConstraints}
+        isSaved={isSaved}
+      />
+      <ScrollView>
+        {dataSource.constraints.map((cat) => {
+          if (!randomConstraints[cat.category]) return null;
+          return (
+            <View
+              key={cat.category}
+              style={[globalStyles.card, { padding: 16 }]}
+            >
+              <Text style={globalStyles.label}>
+                {cat.label || cat.category}
+              </Text>
+              <Text style={[globalStyles.subtitle]}>
+                {randomConstraints[cat.category] ??
+                  t("screen:lab.empty_result")}
+              </Text>
+            </View>
+          );
+        })}
+      </ScrollView>
     </BottomSheet>
   );
 }

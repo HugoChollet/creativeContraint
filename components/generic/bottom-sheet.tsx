@@ -1,11 +1,7 @@
-import { Colors } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
-import { IoniconsName } from "@/types/Icons";
-import { Ionicons } from "@expo/vector-icons";
 import {
   Modal,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -15,36 +11,17 @@ import {
 interface BottomSheetProps {
   isVisible: boolean;
   onClose: () => void;
-  title: string;
   children: React.ReactNode; // This allows any result content
   buttonText?: string;
-  difficultyIndicator?: number;
-  onSaveConstraints: () => void;
-  icon: IoniconsName;
 }
 
 export function BottomSheet({
   isVisible,
   onClose,
-  title,
   children,
   buttonText = "Close",
-  difficultyIndicator,
-  onSaveConstraints,
-  icon,
 }: BottomSheetProps) {
-  const { globalStyles, colors } = useStyles();
-
-  const getColorByValue = (value: number) => {
-    if (value < 9) return Colors.easy;
-    if (value < 12) return Colors.easyMedium;
-    if (value < 15) return Colors.medium;
-    if (value < 18) return Colors.aboveMedium;
-    if (value < 21) return Colors.hardMedium;
-    if (value < 24) return Colors.hard;
-    if (value < 30) return Colors.veryHard;
-    return Colors.black;
-  };
+  const { globalStyles } = useStyles();
 
   return (
     <Modal
@@ -58,34 +35,7 @@ export function BottomSheet({
         <Pressable style={styles.backdrop} onPress={onClose} />
 
         <View style={[globalStyles.backgroundColor, styles.sheet]}>
-          <View style={styles.handle} />
-
-          <View style={styles.headerContainer}>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
-            >
-              <Text style={globalStyles.title}>{difficultyIndicator}</Text>
-              <Ionicons
-                name="speedometer-outline"
-                size={28}
-                color={getColorByValue(difficultyIndicator || 0)}
-              />
-            </View>
-            <Text style={globalStyles.title}>{title}</Text>
-            <TouchableOpacity
-              style={globalStyles.transparentButton}
-              onPress={onSaveConstraints}
-            >
-              <Ionicons size={28} name={icon} color={colors.tint} />
-            </TouchableOpacity>
-          </View>
-
-          <ScrollView
-            style={styles.contentScroll}
-            showsVerticalScrollIndicator={false}
-          >
-            {children}
-          </ScrollView>
+          {children}
 
           <TouchableOpacity
             style={globalStyles.secondaryButton}
@@ -99,7 +49,7 @@ export function BottomSheet({
   );
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.6)",
@@ -115,24 +65,5 @@ const styles = StyleSheet.create({
     // Change minHeight to maxHeight or a fixed height so it doesn't
     // grow past the screen boundaries
     maxHeight: "90%",
-  },
-  handle: {
-    width: 40,
-    height: 4,
-    backgroundColor: "#444",
-    borderRadius: 2,
-    alignSelf: "center",
-    marginBottom: 16,
-  },
-
-  contentScroll: {
-    marginBottom: 20,
-  },
-  headerContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-end",
-    paddingBottom: 8,
-    gap: 12,
   },
 });
