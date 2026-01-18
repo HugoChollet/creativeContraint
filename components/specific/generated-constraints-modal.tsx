@@ -1,10 +1,9 @@
 import { BottomSheet } from "@/components/generic/bottom-sheet";
-import { useAuth } from "@/contexts/auth-context";
-import { useProfile } from "@/hooks/use-profile";
+import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { ProjectData } from "@/types/constraints";
 import { ChosenOption, SavedProjectConstraints } from "@/types/data";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
 import ResultModalHeader from "./result-modal-header";
@@ -24,16 +23,18 @@ export default function GeneratedConstraintsModal({
 }: GeneratedConstraintsModalProps) {
   const { t } = useTranslation();
   const { globalStyles } = useStyles();
-  const [isSaved, setIsSaved] = useState(false);
-  const { session } = useAuth();
 
-  const { data, setData, loading, updateData } =
-    useProfile<SavedProjectConstraints>("projects", {
-      owner_id: "",
-      project_type: dataSource.project_type,
-      constraints: {},
-      difficulty: 0,
-    });
+  const { addRecord, deleteRecord } =
+    useCollection<SavedProjectConstraints>("projects");
+
+  const [savedId, setSavedId] = useState<string | number | null>(null);
+  const [isSaved, setIsSaved] = useState(false);
+
+  useEffect(() => {
+    setIsSaved(false);
+  }, [randomConstraints]);
+
+  console.log(isSaved);
 
   const getDifficultyGenerated = () => {
     let count = 0;
@@ -89,26 +90,27 @@ export default function GeneratedConstraintsModal({
   const onSaveConstraints = async () => {
     const constraints = getConstraintData();
 
-    // Ensure we have generated something before saving
-    if (Object.keys(constraints).length === 0) {
-      console.warn("No constraints generated yet.");
-      return;
-    }
-    if (!isSaved && session?.user.id) {
-      const saving: SavedProjectConstraints = {
-        owner_id: session?.user.id,
+    if (isSaved && savedId) {
+      // Delete using the ID we got back from the first save
+      await deleteRecord(savedId);
+      setSavedId(null);
+      setIsSaved(false);
+    } else {
+      setIsSaved(true);
+      // Create a new record
+      const newProject = {
         project_type: dataSource.project_type,
         constraints: constraints,
         difficulty: getDifficultyGenerated(),
       };
-      console.log("Saving project:", saving);
-      await updateData(saving);
-    } else {
-      console.log("unsaving ?");
-    }
-    console.log(isSaved);
 
-    setIsSaved(!isSaved);
+      const savedData = await addRecord(newProject);
+
+      // If successful, Supabase returns the record including the new ID
+      if (savedData?.id) {
+        setSavedId(savedData.id);
+      }
+    }
   };
 
   return (

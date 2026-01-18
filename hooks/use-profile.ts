@@ -53,6 +53,28 @@ export function useProfile<T>(tableName: string, initialData: T) {
     }
   };
 
+  const deleteData = async (id: string | number) => {
+    try {
+      setLoading(true);
+      const { error } = await supabase
+        .from(tableName)
+        .delete()
+        .eq("id", id)
+        .eq("owner_id", session?.user.id); // Extra safety: ensure user owns it
+
+      if (error) throw error;
+
+      // Reset local state after deletion
+      setData(initialData);
+    } catch (error) {
+      if (error instanceof Error) Alert.alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Return it at the bottom
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -60,6 +82,7 @@ export function useProfile<T>(tableName: string, initialData: T) {
   return {
     data,
     setData,
+    deleteData,
     loading,
     updateData: (updates: Partial<T>) => updateData(updates),
   };
