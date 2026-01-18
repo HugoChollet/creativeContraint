@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
   },
 
   contentScroll: {
-    flex: 1,
     marginBottom: 20,
   },
   headerContainer: {
@@ -118,5 +117,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-end",
     paddingBottom: 8,
+    gap: 12,
   },
 });

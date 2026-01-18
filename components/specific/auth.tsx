@@ -25,7 +25,7 @@ export default function Auth() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
-  const { globalStyles, colors } = useStyles();
+  const { globalStyles } = useStyles();
 
   async function signInWithEmail() {
     setLoading(true);

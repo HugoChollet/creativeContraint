@@ -60,8 +60,6 @@ export default function LabScreen() {
     const activeCats: Record<string, boolean> = {};
     const selOpts: Record<string, boolean> = {};
 
-    console.log(dataSource);
-
     dataSource.constraints.forEach((cat) => {
       if (cat.disabled) {
         activeCats[cat.category] = false;
@@ -107,7 +105,6 @@ export default function LabScreen() {
         [name]: !prev.activeCategories[name],
       },
     }));
-    console.log(selectedItems);
   };
 
   const toggleOption = (catName: string, id: number) => {
@@ -343,7 +340,7 @@ export default function LabScreen() {
               <Text style={globalStyles.label}>
                 {cat.label || cat.category}
               </Text>
-              <Text style={[globalStyles.subtitle, { color: colors.tint }]}>
+              <Text style={[globalStyles.subtitle]}>
                 {randomConstraints[cat.category] ??
                   t("screen:lab.empty_result")}
               </Text>
