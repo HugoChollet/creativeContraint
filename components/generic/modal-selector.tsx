@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import { Ionicons } from "@expo/vector-icons"; // Built into Expo
 import React, { useState } from "react";
@@ -85,7 +86,7 @@ export default function ModalSelector({
                     {item.label}
                   </Text>
                   {item.value === selectedValue && (
-                    <Ionicons name="checkmark" size={20} color="#FFF" />
+                    <Ionicons name="checkmark" size={20} color={Colors.white} />
                   )}
                 </TouchableOpacity>
               )}
