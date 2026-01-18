@@ -1,4 +1,5 @@
 import ModalSelector from "@/components/generic/modal-selector";
+import { Spacer } from "@/components/generic/spacer";
 import Account from "@/components/specific/account";
 import Auth from "@/components/specific/auth";
 import { ThemeSwitcher } from "@/components/specific/theme-switcher";
@@ -38,6 +39,8 @@ export default function SettingsScreen() {
       <View>
         {session && session.user ? <Account session={session} /> : <Auth />}
       </View>
+      <Spacer height={20} />
+
       <ModalSelector
         label={t("screen:settings.language_selection")}
         options={languages}
