@@ -1,4 +1,4 @@
-import { DifficultyIndicator } from "@/components/generic/difficulty-indicator";
+import { DifficultyIndicator } from "@/components/specific/difficulty-indicator";
 import { Colors } from "@/constants/theme";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";

@@ -1,4 +1,4 @@
-import { DifficultyIndicator } from "@/components/generic/difficulty-indicator";
+import { DifficultyIndicator } from "@/components/specific/difficulty-indicator";
 import { useStyles } from "@/hooks/use-styles";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
