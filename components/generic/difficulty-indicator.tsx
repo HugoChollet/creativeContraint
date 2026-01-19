@@ -21,7 +21,7 @@ export function DifficultyIndicator({
     if (value < 21) return Colors.hardMedium;
     if (value < 24) return Colors.hard;
     if (value < 30) return Colors.veryHard;
-    return Colors.black;
+    return Colors.impossible;
   };
 
   return (

@@ -59,6 +59,7 @@ export const Colors = {
   hardMedium: "#ff863bff",
   hard: "#FF3B30",
   veryHard: "#a22c24ff",
+  impossible: "#681c16ff",
 };
 
 // Types for your theme
