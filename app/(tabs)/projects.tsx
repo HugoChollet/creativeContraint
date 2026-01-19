@@ -4,7 +4,8 @@ import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { SavedProjectConstraints } from "@/types/data";
 import { Ionicons } from "@expo/vector-icons"; // Or your preferred icon set
-import React, { useEffect } from "react";
+import { useFocusEffect } from "expo-router";
+import React, { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
@@ -29,7 +30,11 @@ export default function ProjectLibraryScreen() {
     refresh();
   }, []);
 
-  console.log(projects);
+  useFocusEffect(
+    useCallback(() => {
+      refresh(); // This calls the fetch function from your useCollection hook
+    }, [refresh])
+  );
 
   const renderProjectItem = ({ item }: { item: SavedProjectConstraints }) => {
     // Extract constraint keys (Instruments, Emotion, etc.)
