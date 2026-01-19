@@ -1,4 +1,4 @@
-import { Colors } from "@/constants/theme";
+import { DifficultyIndicator } from "@/components/generic/difficulty-indicator";
 import { useStyles } from "@/hooks/use-styles";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
@@ -19,30 +19,11 @@ export default function ResultModalHeader({
   const { globalStyles, colors } = useStyles();
   const { t } = useTranslation();
 
-  const getColorByValue = (value: number) => {
-    if (value < 9) return Colors.easy;
-    if (value < 12) return Colors.easyMedium;
-    if (value < 15) return Colors.medium;
-    if (value < 18) return Colors.aboveMedium;
-    if (value < 21) return Colors.hardMedium;
-    if (value < 24) return Colors.hard;
-    if (value < 30) return Colors.veryHard;
-    return Colors.black;
-  };
-
   return (
     <>
       <View style={styles.handle} />
-
+      <DifficultyIndicator difficultyIndicator={difficultyIndicator} />
       <View style={styles.headerContainer}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <Text style={globalStyles.title}>{difficultyIndicator}</Text>
-          <Ionicons
-            name="speedometer-outline"
-            size={28}
-            color={getColorByValue(difficultyIndicator || 0)}
-          />
-        </View>
         <Text style={globalStyles.title}>
           {t("screen:lab.constraints_title", {
             type: "Project",

@@ -1,3 +1,4 @@
+import { DifficultyIndicator } from "@/components/generic/difficulty-indicator";
 import { Colors } from "@/constants/theme";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
@@ -45,14 +46,10 @@ export default function ProjectLibraryScreen() {
             marginBottom: 12,
           }}
         >
-          <View>
-            <Text style={[globalStyles.label, { color: colors.text }]}>
-              {item.project_type.toUpperCase()}
-            </Text>
-            <Text style={globalStyles.subtitle}>
-              {t("screen:projects.difficulty")}: {item.difficulty}
-            </Text>
-          </View>
+          <DifficultyIndicator difficultyIndicator={item.difficulty} />
+          <Text style={[globalStyles.title, { color: colors.text }]}>
+            {item.project_type.toUpperCase()}
+          </Text>
 
           <TouchableOpacity onPress={() => deleteRecord(item.id)}>
             <Ionicons name="trash-outline" size={20} color={Colors.alert} />
