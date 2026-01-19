@@ -1,7 +1,6 @@
 import { Tabs } from "expo-router";
 import React from "react";
 
-import { IconSymbol } from "@/components/generic/icon-symbol";
 import { HapticTab } from "@/components/haptic-tab";
 import { useStyles } from "@/hooks/use-styles";
 import { Ionicons } from "@expo/vector-icons";
@@ -26,9 +25,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: t("screen:layout.Home"),
+          title: t("screen:layout.Lab"),
           tabBarIcon: ({ color }) => (
-            <Ionicons size={28} name="home" color={color} />
+            <Ionicons size={28} name="flask" color={color} />
           ),
         }}
       />
@@ -37,7 +36,7 @@ export default function TabLayout() {
         options={{
           title: t("screen:layout.Projects"),
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
+            <Ionicons size={28} name="folder-open" color={color} />
           ),
         }}
       />
@@ -46,11 +45,7 @@ export default function TabLayout() {
         options={{
           title: t("screen:layout.Settings"),
           tabBarIcon: ({ color }) => (
-            <IconSymbol
-              size={28}
-              name="chevron.left.forwardslash.chevron.right"
-              color={color}
-            />
+            <Ionicons size={28} name="cog" color={color} />
           ),
         }}
       />

@@ -1,6 +1,7 @@
   {
     "layout": {
         "Home": "Home",
+        "Lab": "Lab",
         "Settings": "Settings",
         "Projects": "Projects"
     },

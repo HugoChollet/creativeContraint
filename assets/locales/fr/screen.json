@@ -2,6 +2,7 @@
 {
     "layout": {
         "Home": "Accueil",
+        "Lab": "Lab",
         "Settings": "Paramètres",
         "Projects": "Projets"
     },
