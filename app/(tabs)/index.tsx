@@ -84,6 +84,19 @@ export default function HomeScreen() {
             {t("screen:home.photography_button")}
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={globalStyles.borderButton}
+          onPress={() =>
+            router.push({
+              pathname: "/lab",
+              params: { id: 3, type: "cooking" },
+            })
+          }
+        >
+          <Text style={globalStyles.borderButtonText}>
+            {t("screen:home.cooking_button")}
+          </Text>
+        </TouchableOpacity>
       </ThemedView>
     </ScrollView>
   );

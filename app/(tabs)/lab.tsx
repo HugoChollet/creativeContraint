@@ -28,6 +28,7 @@ const typeMapping: Record<string, string> = {
   photography: "photo",
   videofiction: "videoFiction",
   videointernet: "videoInternet",
+  cooking: "cooking",
 };
 
 export default function LabScreen() {

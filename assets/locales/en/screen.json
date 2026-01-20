@@ -20,7 +20,8 @@
         "videointernet_button": "Create Video Content 🌐",
         "videofiction_button": "Film a Fiction 🎞️",
         "photography_button": "Take a Photography 📷",
-        "videogame_button": "Develop a Video Game 🎮"
+        "videogame_button": "Develop a Video Game 🎮",
+        "cooking_button": "Cook a Meal"
     },
     "settings": {
         "settings_title": "Settings",

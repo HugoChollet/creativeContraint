@@ -1,0 +1,433 @@
+{
+    "project_type": "Cooking",
+    "constraints": [
+      {
+        "category": "Base / Carb",
+        "options": [
+          { "id": 1, "value": "Rice", "rarity": 1 },
+          { "id": 2, "value": "Pasta", "rarity": 1 },
+          { "id": 3, "value": "Noodles", "rarity": 1 },
+          { "id": 4, "value": "Bread", "rarity": 1 },
+          { "id": 5, "value": "Potatoes", "rarity": 1 },
+          { "id": 6, "value": "Quinoa", "rarity": 2 },
+          { "id": 7, "value": "Couscous", "rarity": 2 },
+          { "id": 8, "value": "Bulgur", "rarity": 2 },
+          { "id": 9, "value": "Barley", "rarity": 2 },
+          { "id": 10, "value": "Farro", "rarity": 3 },
+  
+          { "id": 11, "value": "Polenta", "rarity": 2 },
+          { "id": 12, "value": "Gnocchi", "rarity": 2 },
+          { "id": 13, "value": "Ramen Noodles", "rarity": 2 },
+          { "id": 14, "value": "Udon Noodles", "rarity": 3 },
+          { "id": 15, "value": "Soba Noodles", "rarity": 3 },
+  
+          { "id": 16, "value": "Spaghetti", "rarity": 1 },
+          { "id": 17, "value": "Fettuccine", "rarity": 2 },
+          { "id": 18, "value": "Penne", "rarity": 1 },
+          { "id": 19, "value": "Lasagna Sheets", "rarity": 2 },
+          { "id": 20, "value": "Macaroni", "rarity": 1 },
+  
+          { "id": 21, "value": "White Rice", "rarity": 1 },
+          { "id": 22, "value": "Brown Rice", "rarity": 1 },
+          { "id": 23, "value": "Basmati Rice", "rarity": 1 },
+          { "id": 24, "value": "Jasmine Rice", "rarity": 2 },
+          { "id": 25, "value": "Sticky Rice", "rarity": 2 },
+  
+          { "id": 26, "value": "Mashed Potatoes", "rarity": 1 },
+          { "id": 27, "value": "Sweet Potatoes", "rarity": 1 },
+          { "id": 28, "value": "Roasted Potatoes", "rarity": 1 },
+          { "id": 29, "value": "Potato Wedges", "rarity": 2 },
+          { "id": 30, "value": "French Fries", "rarity": 1 },
+  
+          { "id": 31, "value": "Tortillas", "rarity": 1 },
+          { "id": 32, "value": "Wrap Bread", "rarity": 1 },
+          { "id": 33, "value": "Pita Bread", "rarity": 2 },
+          { "id": 34, "value": "Naan Bread", "rarity": 2 },
+          { "id": 35, "value": "Flatbread", "rarity": 2 },
+  
+          { "id": 36, "value": "Baguette", "rarity": 1 },
+          { "id": 37, "value": "Sourdough Bread", "rarity": 2 },
+          { "id": 38, "value": "Whole Wheat Bread", "rarity": 1 },
+          { "id": 39, "value": "Burger Bun", "rarity": 1 },
+          { "id": 40, "value": "Hot Dog Bun", "rarity": 2 },
+  
+          { "id": 41, "value": "Risotto Rice", "rarity": 2 },
+          { "id": 42, "value": "Paella Rice", "rarity": 3 },
+          { "id": 43, "value": "Fried Rice Base", "rarity": 1 },
+          { "id": 44, "value": "Rice Noodles", "rarity": 2 },
+          { "id": 45, "value": "Glass Noodles", "rarity": 3 },
+  
+          { "id": 46, "value": "Cornmeal", "rarity": 3 },
+          { "id": 47, "value": "Corn Tortilla", "rarity": 2 },
+          { "id": 48, "value": "Grits", "rarity": 4 },
+          { "id": 49, "value": "Hominy", "rarity": 4 },
+          { "id": 50, "value": "Cornbread", "rarity": 2 },
+  
+          { "id": 51, "value": "Oats", "rarity": 2 },
+          { "id": 52, "value": "Oatmeal", "rarity": 1 },
+          { "id": 53, "value": "Millet", "rarity": 4 },
+          { "id": 54, "value": "Sorghum", "rarity": 4 },
+          { "id": 55, "value": "Buckwheat", "rarity": 3 },
+  
+          { "id": 56, "value": "Ravioli", "rarity": 2 },
+          { "id": 57, "value": "Tortellini", "rarity": 2 },
+          { "id": 58, "value": "Dumpling Wrappers", "rarity": 3 },
+          { "id": 59, "value": "Gyoza Wrappers", "rarity": 3 },
+          { "id": 60, "value": "Wonton Wrappers", "rarity": 3 },
+  
+          { "id": 61, "value": "Pizza Dough", "rarity": 1 },
+          { "id": 62, "value": "Focaccia", "rarity": 2 },
+          { "id": 63, "value": "Bagel", "rarity": 2 },
+          { "id": 64, "value": "English Muffin", "rarity": 2 },
+          { "id": 65, "value": "Croissant", "rarity": 3 },
+  
+          { "id": 66, "value": "Rice Paper", "rarity": 3 },
+          { "id": 67, "value": "Vermicelli", "rarity": 2 },
+          { "id": 68, "value": "Chow Mein Noodles", "rarity": 2 },
+          { "id": 69, "value": "Egg Noodles", "rarity": 2 },
+          { "id": 70, "value": "Cellophane Noodles", "rarity": 3 },
+  
+          { "id": 71, "value": "Crackers", "rarity": 1 },
+          { "id": 72, "value": "Breadcrumbs", "rarity": 1 },
+          { "id": 73, "value": "Matzo", "rarity": 4 },
+          { "id": 74, "value": "Lavash Bread", "rarity": 4 },
+          { "id": 75, "value": "Roti", "rarity": 3 },
+  
+          { "id": 76, "value": "Pumpkin Gnocchi", "rarity": 4 },
+          { "id": 77, "value": "Chestnut Flour Base", "rarity": 4 },
+          { "id": 78, "value": "Cauliflower Rice", "rarity": 2 },
+          { "id": 79, "value": "Zucchini Noodles", "rarity": 2 },
+          { "id": 80, "value": "Shirataki Noodles", "rarity": 3 },
+  
+          { "id": 81, "value": "Fried Dough", "rarity": 3 },
+          { "id": 82, "value": "Steamed Buns", "rarity": 3 },
+          { "id": 83, "value": "Bao Buns", "rarity": 3 },
+          { "id": 84, "value": "Arepas", "rarity": 3 },
+          { "id": 85, "value": "Empanada Dough", "rarity": 3 },
+  
+          { "id": 86, "value": "Rice Cakes", "rarity": 2 },
+          { "id": 87, "value": "Onigiri Rice", "rarity": 3 },
+          { "id": 88, "value": "Sushi Rice", "rarity": 2 },
+          { "id": 89, "value": "Porridge Base", "rarity": 1 },
+          { "id": 90, "value": "Congee", "rarity": 3 },
+  
+          { "id": 91, "value": "Fried Rice Noodles", "rarity": 2 },
+          { "id": 92, "value": "Stuffing Bread Base", "rarity": 2 },
+          { "id": 93, "value": "Rice Pilaf", "rarity": 2 },
+          { "id": 94, "value": "Grain Mix", "rarity": 2 },
+          { "id": 95, "value": "Mixed Whole Grains", "rarity": 3 },
+  
+          { "id": 96, "value": "Cassava", "rarity": 4 },
+          { "id": 97, "value": "Yams", "rarity": 3 },
+          { "id": 98, "value": "Plantain", "rarity": 3 },
+          { "id": 99, "value": "Taro Root", "rarity": 4 },
+          { "id": 100, "value": "Bread Dumplings", "rarity": 4 }
+        ]
+      },
+      {
+        "category": "Protein / Vegetable",
+        "options": [
+          { "id": 1, "value": "Chicken", "rarity": 1 },
+          { "id": 2, "value": "Beef", "rarity": 1 },
+          { "id": 3, "value": "Pork", "rarity": 1 },
+          { "id": 4, "value": "Eggs", "rarity": 1 },
+          { "id": 5, "value": "White Fish", "rarity": 1 },
+  
+          { "id": 6, "value": "Salmon", "rarity": 2 },
+          { "id": 7, "value": "Tuna", "rarity": 2 },
+          { "id": 8, "value": "Shrimp", "rarity": 2 },
+          { "id": 9, "value": "Turkey", "rarity": 2 },
+          { "id": 10, "value": "Sausage", "rarity": 2 },
+  
+          { "id": 11, "value": "Lamb", "rarity": 3 },
+          { "id": 12, "value": "Duck", "rarity": 4 },
+          { "id": 13, "value": "Pork Belly", "rarity": 3 },
+          { "id": 14, "value": "Meatballs", "rarity": 2 },
+          { "id": 15, "value": "Bacon", "rarity": 3 },
+  
+          { "id": 16, "value": "Tofu", "rarity": 1 },
+          { "id": 17, "value": "Tempeh", "rarity": 3 },
+          { "id": 18, "value": "Seitan", "rarity": 4 },
+          { "id": 19, "value": "Paneer", "rarity": 4 },
+          { "id": 20, "value": "Halloumi", "rarity": 3 },
+  
+          { "id": 21, "value": "Mushrooms", "rarity": 1 },
+          { "id": 22, "value": "Eggplant", "rarity": 2 },
+          { "id": 23, "value": "Zucchini", "rarity": 1 },
+          { "id": 24, "value": "Bell Peppers", "rarity": 1 },
+          { "id": 25, "value": "Tomatoes", "rarity": 1 },
+  
+          { "id": 26, "value": "Spinach", "rarity": 1 },
+          { "id": 27, "value": "Broccoli", "rarity": 1 },
+          { "id": 28, "value": "Cauliflower", "rarity": 1 },
+          { "id": 29, "value": "Green Beans", "rarity": 1 },
+          { "id": 30, "value": "Carrots", "rarity": 1 },
+  
+          { "id": 31, "value": "Onions", "rarity": 1 },
+          { "id": 32, "value": "Garlic", "rarity": 1 },
+          { "id": 33, "value": "Ginger", "rarity": 2 },
+          { "id": 34, "value": "Chili Peppers", "rarity": 2 },
+          { "id": 35, "value": "Leeks", "rarity": 2 },
+  
+          { "id": 36, "value": "Asparagus", "rarity": 2 },
+          { "id": 37, "value": "Brussels Sprouts", "rarity": 2 },
+          { "id": 38, "value": "Cabbage", "rarity": 1 },
+          { "id": 39, "value": "Bok Choy", "rarity": 3 },
+          { "id": 40, "value": "Kimchi", "rarity": 4 },
+  
+          { "id": 41, "value": "Chickpeas", "rarity": 2 },
+          { "id": 42, "value": "Lentils", "rarity": 2 },
+          { "id": 43, "value": "Black Beans", "rarity": 2 },
+          { "id": 44, "value": "White Beans", "rarity": 2 },
+          { "id": 45, "value": "Edamame", "rarity": 3 },
+  
+          { "id": 46, "value": "Peas", "rarity": 1 },
+          { "id": 47, "value": "Corn Kernels", "rarity": 2 },
+          { "id": 48, "value": "Artichoke", "rarity": 3 },
+          { "id": 49, "value": "Avocado", "rarity": 2 },
+          { "id": 50, "value": "Olives", "rarity": 3 },
+  
+          { "id": 51, "value": "Anchovies", "rarity": 4 },
+          { "id": 52, "value": "Sardines", "rarity": 3 },
+          { "id": 53, "value": "Smoked Salmon", "rarity": 3 },
+          { "id": 54, "value": "Canned Tuna", "rarity": 1 },
+          { "id": 55, "value": "Clams", "rarity": 4 },
+  
+          { "id": 56, "value": "Mussels", "rarity": 4 },
+          { "id": 57, "value": "Squid", "rarity": 4 },
+          { "id": 58, "value": "Octopus", "rarity": 5 },
+          { "id": 59, "value": "Crab", "rarity": 4 },
+          { "id": 60, "value": "Lobster", "rarity": 5 },
+  
+          { "id": 61, "value": "Roasted Vegetables", "rarity": 2 },
+          { "id": 62, "value": "Grilled Vegetables", "rarity": 2 },
+          { "id": 63, "value": "Steamed Vegetables", "rarity": 1 },
+          { "id": 64, "value": "Caramelized Onions", "rarity": 3 },
+          { "id": 65, "value": "Roasted Eggplant", "rarity": 5 },
+  
+          { "id": 66, "value": "Marinated Tofu", "rarity": 3 },
+          { "id": 67, "value": "Grilled Halloumi", "rarity": 4 },
+          { "id": 68, "value": "Falafel", "rarity": 3 },
+          { "id": 69, "value": "Veggie Patties", "rarity": 3 },
+          { "id": 70, "value": "Stuffed Vegetables", "rarity": 4 },
+  
+          { "id": 71, "value": "Roasted Chicken", "rarity": 2 },
+          { "id": 72, "value": "Pulled Pork", "rarity": 3 },
+          { "id": 73, "value": "Shredded Beef", "rarity": 3 },
+          { "id": 74, "value": "Braised Lamb", "rarity": 4 },
+          { "id": 75, "value": "Stewed Vegetables", "rarity": 2 },
+  
+          { "id": 76, "value": "Wild Mushrooms", "rarity": 3 },
+          { "id": 77, "value": "Truffle Mushrooms", "rarity": 5 },
+          { "id": 78, "value": "Pickled Vegetables", "rarity": 4 },
+          { "id": 79, "value": "Fermented Vegetables", "rarity": 4 },
+          { "id": 80, "value": "Mixed Proteins", "rarity": 2 }
+        ]
+      },
+      {
+        "category": "Fat / Sauce",
+        "options": [
+          { "id": 1, "value": "Olive Oil", "rarity": 1 },
+          { "id": 2, "value": "Vegetable Oil", "rarity": 1 },
+          { "id": 3, "value": "Butter", "rarity": 1 },
+          { "id": 4, "value": "Cream", "rarity": 1 },
+          { "id": 5, "value": "Milk", "rarity": 1 },
+  
+          { "id": 6, "value": "Soy Sauce", "rarity": 1 },
+          { "id": 7, "value": "Tomato Sauce", "rarity": 1 },
+          { "id": 8, "value": "Yogurt Sauce", "rarity": 1 },
+          { "id": 9, "value": "Cheese Sauce", "rarity": 2 },
+          { "id": 10, "value": "Mayonnaise", "rarity": 2 },
+  
+          { "id": 11, "value": "Creamy Garlic Sauce", "rarity": 2 },
+          { "id": 12, "value": "Pesto", "rarity": 2 },
+          { "id": 13, "value": "Vinaigrette", "rarity": 1 },
+          { "id": 14, "value": "Mustard Sauce", "rarity": 2 },
+          { "id": 15, "value": "Honey Mustard", "rarity": 2 },
+  
+          { "id": 16, "value": "Coconut Milk", "rarity": 2 },
+          { "id": 17, "value": "Curry Sauce", "rarity": 3 },
+          { "id": 18, "value": "Peanut Sauce", "rarity": 3 },
+          { "id": 19, "value": "Teriyaki Sauce", "rarity": 2 },
+          { "id": 20, "value": "Sweet and Sour Sauce", "rarity": 3 },
+  
+          { "id": 21, "value": "Béchamel Sauce", "rarity": 3 },
+          { "id": 22, "value": "Hollandaise Sauce", "rarity": 4 },
+          { "id": 23, "value": "Bearnaise Sauce", "rarity": 4 },
+          { "id": 24, "value": "Brown Butter", "rarity": 3 },
+          { "id": 25, "value": "Infused Oil", "rarity": 3 },
+  
+          { "id": 26, "value": "Chili Oil", "rarity": 3 },
+          { "id": 27, "value": "Sesame Oil", "rarity": 2 },
+          { "id": 28, "value": "Ghee", "rarity": 3 },
+          { "id": 29, "value": "Duck Fat", "rarity": 4 },
+          { "id": 30, "value": "Beef Tallow", "rarity": 4 },
+  
+          { "id": 31, "value": "Tahini Sauce", "rarity": 3 },
+          { "id": 32, "value": "Miso Butter", "rarity": 4 },
+          { "id": 33, "value": "Fish Sauce Base", "rarity": 3 },
+          { "id": 34, "value": "Wine Reduction Sauce", "rarity": 4 },
+          { "id": 35, "value": "Pan Sauce", "rarity": 2 },
+  
+          { "id": 36, "value": "BBQ Sauce", "rarity": 2 },
+          { "id": 37, "value": "Hot Sauce", "rarity": 1 },
+          { "id": 38, "value": "Aioli", "rarity": 3 },
+          { "id": 39, "value": "Gravy", "rarity": 2 },
+          { "id": 40, "value": "Stock Reduction", "rarity": 3 },
+  
+          { "id": 41, "value": "Cheese Fondue Base", "rarity": 4 },
+          { "id": 42, "value": "Blue Cheese Sauce", "rarity": 4 },
+          { "id": 43, "value": "Truffle Oil", "rarity": 5 },
+          { "id": 44, "value": "Foam Sauce", "rarity": 5 },
+          { "id": 45, "value": "Emulsified Sauce", "rarity": 4 },
+  
+          { "id": 46, "value": "Raw Olive Oil Finish", "rarity": 2 },
+          { "id": 47, "value": "Herb Butter", "rarity": 2 },
+          { "id": 48, "value": "Spiced Oil", "rarity": 3 },
+          { "id": 49, "value": "Glaze", "rarity": 3 },
+          { "id": 50, "value": "Fermented Sauce", "rarity": 5 }
+        ]
+      },
+      {
+        "category": "Seasoning / Flavoring / Topping",
+        "options": [
+          { "id": 1, "value": "Salt", "rarity": 1 },
+          { "id": 2, "value": "Black Pepper", "rarity": 1 },
+          { "id": 3, "value": "White Pepper", "rarity": 2 },
+          { "id": 4, "value": "Chili Flakes", "rarity": 1 },
+          { "id": 5, "value": "Paprika", "rarity": 1 },
+  
+          { "id": 6, "value": "Smoked Paprika", "rarity": 2 },
+          { "id": 7, "value": "Cumin", "rarity": 2 },
+          { "id": 8, "value": "Coriander", "rarity": 2 },
+          { "id": 9, "value": "Curry Powder", "rarity": 2 },
+          { "id": 10, "value": "Garam Masala", "rarity": 3 },
+  
+          { "id": 11, "value": "Herbes de Provence", "rarity": 2 },
+          { "id": 12, "value": "Italian Herbs", "rarity": 1 },
+          { "id": 13, "value": "Fresh Basil", "rarity": 1 },
+          { "id": 14, "value": "Fresh Parsley", "rarity": 1 },
+          { "id": 15, "value": "Fresh Cilantro", "rarity": 2 },
+  
+          { "id": 16, "value": "Fresh Thyme", "rarity": 2 },
+          { "id": 17, "value": "Rosemary", "rarity": 2 },
+          { "id": 18, "value": "Bay Leaf", "rarity": 2 },
+          { "id": 19, "value": "Garlic Powder", "rarity": 1 },
+          { "id": 20, "value": "Onion Powder", "rarity": 1 },
+  
+          { "id": 21, "value": "Sesame Seeds", "rarity": 2 },
+          { "id": 22, "value": "Toasted Nuts", "rarity": 2 },
+          { "id": 23, "value": "Croutons", "rarity": 2 },
+          { "id": 24, "value": "Grated Cheese", "rarity": 1 },
+          { "id": 25, "value": "Fresh Lemon Zest", "rarity": 2 },
+  
+          { "id": 26, "value": "Lime Juice Finish", "rarity": 2 },
+          { "id": 27, "value": "Pickled Onions", "rarity": 3 },
+          { "id": 28, "value": "Capers", "rarity": 3 },
+          { "id": 29, "value": "Olives", "rarity": 2 },
+          { "id": 30, "value": "Sun-dried Tomatoes", "rarity": 3 },
+  
+          { "id": 31, "value": "Chopped Chives", "rarity": 1 },
+          { "id": 32, "value": "Fried Shallots", "rarity": 3 },
+          { "id": 33, "value": "Fried Garlic Chips", "rarity": 3 },
+          { "id": 34, "value": "Fresh Ginger", "rarity": 2 },
+          { "id": 35, "value": "Wasabi", "rarity": 4 },
+  
+          { "id": 36, "value": "Gochugaru", "rarity": 4 },
+          { "id": 37, "value": "Za'atar", "rarity": 4 },
+          { "id": 38, "value": "Dukkah", "rarity": 4 },
+          { "id": 39, "value": "Furikake", "rarity": 4 },
+          { "id": 40, "value": "Truffle Shavings", "rarity": 5 },
+  
+          { "id": 41, "value": "Microgreens", "rarity": 3 },
+          { "id": 42, "value": "Edible Flowers", "rarity": 5 },
+          { "id": 43, "value": "Crispy Onions", "rarity": 2 },
+          { "id": 44, "value": "Seeds Mix", "rarity": 2 },
+          { "id": 45, "value": "Spice Blend", "rarity": 3 },
+  
+          { "id": 46, "value": "Fermented Chili Paste", "rarity": 4 },
+          { "id": 47, "value": "Anchovy Crumbs", "rarity": 4 },
+          { "id": 48, "value": "Nori Flakes", "rarity": 4 },
+          { "id": 49, "value": "Citrus Powder", "rarity": 4 },
+          { "id": 50, "value": "Umami Powder", "rarity": 5 }
+        ]
+      },
+      
+      {
+        "category": "Cooking Method / Heat",
+        "options": [
+          {"id": 1, "value": "Baking", "rarity": 1},
+          {"id": 2, "value": "Boiling", "rarity": 1},
+          {"id": 3, "value": "Steaming", "rarity": 2},
+          {"id": 4, "value": "Frying", "rarity": 2},
+          {"id": 5, "value": "Grilling", "rarity": 2},
+          {"id": 6, "value": "Sautéing", "rarity": 2},
+          {"id": 7, "value": "Roasting", "rarity": 2},
+          {"id": 8, "value": "Slow Cooking", "rarity": 3},
+          {"id": 9, "value": "Sous Vide", "rarity": 4},
+          {"id": 10, "value": "Smoking", "rarity": 4},
+          {"id": 11, "value": "Poaching", "rarity": 3},
+          {"id": 12, "value": "Blanching", "rarity": 4},
+          {"id": 13, "value": "Pressure Cooking", "rarity": 5},
+          {"id": 14, "value": "Stir-frying", "rarity": 2},
+          {"id": 15, "value": "Microwaving", "rarity": 1},
+          {"id": 16, "value": "Broiling", "rarity": 2},
+          {"id": 17, "value": "Deep Frying", "rarity": 2},
+          {"id": 18, "value": "Pan Frying", "rarity": 2},
+          {"id": 19, "value": "Griddling", "rarity": 3},
+          {"id": 20, "value": "Braising", "rarity": 3}
+        ]
+      },
+      {
+        "category": "Cuisine / Style / Origin",
+        "options": [
+          {"id": 1, "value": "French", "rarity": 2},
+          {"id": 2, "value": "Italian", "rarity": 1},
+          {"id": 3, "value": "Chinese", "rarity": 2},
+          {"id": 4, "value": "Japanese", "rarity": 2},
+          {"id": 5, "value": "Thai", "rarity": 3},
+          {"id": 6, "value": "Indian", "rarity": 3},
+          {"id": 7, "value": "Mexican", "rarity": 2},
+          {"id": 8, "value": "Mediterranean", "rarity": 2},
+          {"id": 9, "value": "Middle Eastern", "rarity": 3},
+          {"id": 10, "value": "American", "rarity": 1},
+          {"id": 11, "value": "Korean", "rarity": 3},
+          {"id": 12, "value": "Vietnamese", "rarity": 3},
+          {"id": 13, "value": "Spanish", "rarity": 2},
+          {"id": 14, "value": "Greek", "rarity": 2},
+          {"id": 15, "value": "Fusion", "rarity": 4},
+          {"id": 16, "value": "Nordic", "rarity": 4},
+          {"id": 17, "value": "Caribbean", "rarity": 3},
+          {"id": 18, "value": "Brazilian", "rarity": 3},
+          {"id": 19, "value": "African", "rarity": 4},
+          {"id": 20, "value": "Russian", "rarity": 3}
+        ]
+      },
+      {
+        "category": "Dish Type / Texture / Occasion",
+        "options": [
+          {"id": 1, "value": "Soup", "rarity": 1},
+          {"id": 2, "value": "Salad", "rarity": 1},
+          {"id": 3, "value": "Stew", "rarity": 2},
+          {"id": 4, "value": "Casserole", "rarity": 3},
+          {"id": 5, "value": "Sandwich", "rarity": 1},
+          {"id": 6, "value": "Snack", "rarity": 2},
+          {"id": 7, "value": "Breakfast", "rarity": 1},
+          {"id": 8, "value": "Lunch", "rarity": 1},
+          {"id": 9, "value": "Dinner", "rarity": 1},
+          {"id": 10, "value": "Dessert", "rarity": 1},
+          {"id": 11, "value": "Festive Dish", "rarity": 3},
+          {"id": 12, "value": "Finger Food", "rarity": 2},
+          {"id": 13, "value": "Appetizer", "rarity": 2},
+          {"id": 14, "value": "Main Course", "rarity": 1},
+          {"id": 15, "value": "Side Dish", "rarity": 1},
+          {"id": 16, "value": "Sweet", "rarity": 2},
+          {"id": 17, "value": "Savory", "rarity": 1},
+          {"id": 18, "value": "Crispy", "rarity": 3},
+          {"id": 19, "value": "Creamy", "rarity": 2},
+          {"id": 20, "value": "Chewy", "rarity": 3}
+        ]
+      }
+    ]
+  }
+  
