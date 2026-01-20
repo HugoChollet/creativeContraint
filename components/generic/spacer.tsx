@@ -1,3 +1,5 @@
+import { View } from "react-native";
+
 export function Spacer({ height, width }: { height?: number; width?: number }) {
-  return <div style={{ height, width }} />;
+  return <View style={{ height, width }} />;
 }

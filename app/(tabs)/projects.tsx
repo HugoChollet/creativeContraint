@@ -1,9 +1,11 @@
+import { DifficultyIndicator } from "@/components/specific/difficulty-indicator";
 import { Colors } from "@/constants/theme";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { SavedProjectConstraints } from "@/types/data";
 import { Ionicons } from "@expo/vector-icons"; // Or your preferred icon set
-import React, { useEffect } from "react";
+import { useFocusEffect } from "expo-router";
+import React, { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
@@ -28,7 +30,11 @@ export default function ProjectLibraryScreen() {
     refresh();
   }, []);
 
-  console.log(projects);
+  useFocusEffect(
+    useCallback(() => {
+      refresh(); // This calls the fetch function from your useCollection hook
+    }, [refresh])
+  );
 
   const renderProjectItem = ({ item }: { item: SavedProjectConstraints }) => {
     // Extract constraint keys (Instruments, Emotion, etc.)
@@ -45,14 +51,10 @@ export default function ProjectLibraryScreen() {
             marginBottom: 12,
           }}
         >
-          <View>
-            <Text style={[globalStyles.label, { color: colors.text }]}>
-              {item.project_type.toUpperCase()}
-            </Text>
-            <Text style={globalStyles.subtitle}>
-              {t("screen:projects.difficulty")}: {item.difficulty}
-            </Text>
-          </View>
+          <DifficultyIndicator difficultyIndicator={item.difficulty} />
+          <Text style={[globalStyles.title, { color: colors.text }]}>
+            {item.project_type.toUpperCase()}
+          </Text>
 
           <TouchableOpacity onPress={() => deleteRecord(item.id)}>
             <Ionicons name="trash-outline" size={20} color={Colors.alert} />
