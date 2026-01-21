@@ -253,7 +253,7 @@ export default function LabScreen() {
 export const styles = StyleSheet.create({
   content: {
     padding: 16,
-    paddingBottom: 20,
+    paddingBottom: 64,
   },
   floatingButtonsWrapper: {
     // Container should be floating and not buttons in this case
