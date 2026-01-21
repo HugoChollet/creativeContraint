@@ -1,4 +1,5 @@
 import { BottomSheet } from "@/components/generic/bottom-sheet";
+import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { ProjectData } from "@/types/constraints";
@@ -6,23 +7,27 @@ import { ChosenOption, SavedProjectConstraints } from "@/types/data";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
+import { ModalGeneric } from "../generic/modal-generic";
+import Auth from "./auth";
 import ResultModalHeader from "./result-modal-header";
 
-type GeneratedConstraintsModalProps = {
+type GeneratedConstraintsSheetProps = {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
   randomConstraints: Record<string, string | string[]>;
   dataSource: ProjectData;
 };
 
-export default function GeneratedConstraintsModal({
+export default function GeneratedConstraintsSheet({
   modalVisible,
   setModalVisible,
   randomConstraints,
   dataSource,
-}: GeneratedConstraintsModalProps) {
+}: GeneratedConstraintsSheetProps) {
   const { t } = useTranslation();
   const { globalStyles } = useStyles();
+  const { session } = useAuth();
+  const [visibleLogin, setVisibleLogin] = useState(false);
 
   const { addRecord, deleteRecord } =
     useCollection<SavedProjectConstraints>("projects");
@@ -34,6 +39,13 @@ export default function GeneratedConstraintsModal({
     setIsSaved(false);
   }, [randomConstraints]);
 
+  useEffect(() => {
+    if (session?.user) {
+      setVisibleLogin(false);
+      setModalVisible(false);
+    }
+  });
+
   console.log(isSaved);
 
   const getDifficultyGenerated = () => {
@@ -44,13 +56,13 @@ export default function GeneratedConstraintsModal({
       if (cat.options) {
         count +=
           cat.options.find(
-            (opt) => opt.value === randomConstraints[cat.category]
+            (opt) => opt.value === randomConstraints[cat.category],
           )?.rarity || 0;
       } else if (cat.sub_categories) {
         cat.sub_categories.map((subCat) => {
           count +=
             subCat.options.find((opt) =>
-              randomConstraints[cat.category].includes(opt.value)
+              randomConstraints[cat.category].includes(opt.value),
             )?.rarity || 0;
         });
       }
@@ -67,7 +79,7 @@ export default function GeneratedConstraintsModal({
 
       if (cat.options) {
         const foundOption = cat.options.find(
-          (opt) => opt.value === generatedValue
+          (opt) => opt.value === generatedValue,
         );
         if (foundOption) {
           selectedData[cat.category] = foundOption;
@@ -75,7 +87,7 @@ export default function GeneratedConstraintsModal({
       } else if (cat.sub_categories) {
         cat.sub_categories.forEach((subCat) => {
           const foundSubOption = subCat.options.find((opt) =>
-            generatedValue.includes(opt.value)
+            generatedValue.includes(opt.value),
           );
           if (foundSubOption) {
             selectedData[`${cat.category}-${subCat.name}`] = foundSubOption;
@@ -90,6 +102,11 @@ export default function GeneratedConstraintsModal({
   const onSaveConstraints = async () => {
     const constraints = getConstraintData();
 
+    if (!session?.user) {
+      setModalVisible(false);
+      setVisibleLogin(true);
+      return;
+    }
     if (isSaved && savedId) {
       // Delete using the ID we got back from the first save
       await deleteRecord(savedId);
@@ -114,35 +131,47 @@ export default function GeneratedConstraintsModal({
   };
 
   return (
-    <BottomSheet
-      isVisible={modalVisible}
-      onClose={() => setModalVisible(false)}
-      buttonText={t("screen:lab.back_button")}
-    >
-      <ResultModalHeader
-        difficultyIndicator={getDifficultyGenerated()}
-        onSaveConstraints={onSaveConstraints}
-        isSaved={isSaved}
-      />
-      <ScrollView>
-        {dataSource.constraints.map((cat) => {
-          if (!randomConstraints[cat.category]) return null;
-          return (
-            <View
-              key={cat.category}
-              style={[globalStyles.card, { padding: 16 }]}
-            >
-              <Text style={globalStyles.label}>
-                {cat.label || cat.category}
-              </Text>
-              <Text style={[globalStyles.subtitle]}>
-                {randomConstraints[cat.category] ??
-                  t("screen:lab.empty_result")}
-              </Text>
-            </View>
-          );
-        })}
-      </ScrollView>
-    </BottomSheet>
+    <>
+      <BottomSheet
+        isVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        buttonText={t("screen:lab.back_button")}
+      >
+        <ResultModalHeader
+          difficultyIndicator={getDifficultyGenerated()}
+          onSaveConstraints={onSaveConstraints}
+          isSaved={isSaved}
+        />
+
+        <ScrollView>
+          {dataSource.constraints.map((cat) => {
+            if (!randomConstraints[cat.category]) return null;
+            return (
+              <View
+                key={cat.category}
+                style={[globalStyles.card, { padding: 16 }]}
+              >
+                <Text style={globalStyles.label}>
+                  {cat.label || cat.category}
+                </Text>
+                <Text style={[globalStyles.subtitle]}>
+                  {randomConstraints[cat.category] ??
+                    t("screen:lab.empty_result")}
+                </Text>
+              </View>
+            );
+          })}
+        </ScrollView>
+      </BottomSheet>
+      <ModalGeneric
+        visible={visibleLogin}
+        setVisible={(value) => {
+          setVisibleLogin(value);
+          setModalVisible(!value);
+        }}
+      >
+        <Auth />
+      </ModalGeneric>
+    </>
   );
 }

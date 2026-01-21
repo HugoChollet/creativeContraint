@@ -55,7 +55,8 @@ export default function Auth() {
   }
 
   return (
-    <>
+    <View style={{ height: 420 }}>
+      {/* TODO Not good practice but buggy otherwise on Mobile */}
       <Text style={globalStyles.subtitle}>{t("component:auth.title")}</Text>
       <View style={globalStyles.shadeContainer}>
         <View style={styles.verticallySpaced}>
@@ -103,7 +104,7 @@ export default function Auth() {
           </Text>
         </TouchableOpacity>
       </View>
-    </>
+    </View>
   );
 }
 

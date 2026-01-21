@@ -1,7 +1,7 @@
 import { FloatingButton } from "@/components/generic/floating-button";
 import { ThemedText } from "@/components/generic/themed-text";
 import CategorySelector from "@/components/specific/category-selector";
-import GeneratedConstraintsModal from "@/components/specific/generated-constraints-modal";
+import GeneratedConstraintsSheet from "@/components/specific/generated-constraints-sheet";
 import { PresetMode } from "@/components/specific/status-selector";
 import { useStyles } from "@/hooks/use-styles";
 import i18nInstance from "@/i18n";
@@ -41,7 +41,7 @@ export default function LabScreen() {
   const { globalStyles, colors } = useStyles();
 
   const rawType = (
-    Array.isArray(type) ? type[0] : type ?? "book"
+    Array.isArray(type) ? type[0] : (type ?? "book")
   ).toLowerCase();
   const typeKey = typeMapping[rawType] || "book";
 
@@ -49,7 +49,7 @@ export default function LabScreen() {
     const data = i18nInstance.getResourceBundle(i18nInstance.language, typeKey);
     if (!data)
       console.error(
-        `Namespace "${typeKey}" does not exist for "${i18nInstance.language}"`
+        `Namespace "${typeKey}" does not exist for "${i18nInstance.language}"`,
       );
     return data as ProjectData;
   }, [i18nInstance.language, typeKey]);
@@ -120,7 +120,7 @@ export default function LabScreen() {
   const handleToggleExpand = (categoryName: string) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setExpandedCategory((prev) =>
-      prev === categoryName ? null : categoryName
+      prev === categoryName ? null : categoryName,
     );
   };
 
@@ -132,31 +132,31 @@ export default function LabScreen() {
         const availableOptions = cat.options
           ? cat.options.filter(
               (opt) =>
-                selectedItems.selectedOptions[`${cat.category}-${opt.id}`]
+                selectedItems.selectedOptions[`${cat.category}-${opt.id}`],
             )
           : cat.sub_categories
-          ? cat.sub_categories.flatMap((subCat) =>
-              subCat.options.filter(
-                (opt) =>
-                  selectedItems.selectedOptions[
-                    `${cat.category}-${subCat.name}-${opt.id}`
-                  ]
+            ? cat.sub_categories.flatMap((subCat) =>
+                subCat.options.filter(
+                  (opt) =>
+                    selectedItems.selectedOptions[
+                      `${cat.category}-${subCat.name}-${opt.id}`
+                    ],
+                ),
               )
-            )
-          : [];
+            : [];
 
         if (availableOptions.length > 0) {
           results[cat.category] = "";
           if (cat.options) {
             const randomIndex = Math.floor(
-              Math.random() * availableOptions.length
+              Math.random() * availableOptions.length,
             );
             results[cat.category] = availableOptions[randomIndex].value;
           } else if (cat.sub_categories) {
             // Concat all subCat result to result
             for (const subCat of cat.sub_categories) {
               const randomIndex = Math.floor(
-                Math.random() * subCat.options.length
+                Math.random() * subCat.options.length,
               );
               results[cat.category] += " " + subCat.options[randomIndex].value;
             }
@@ -172,7 +172,7 @@ export default function LabScreen() {
   const bulkUpdateOptions = (
     categoryName: string,
     options: Option[],
-    mode: PresetMode
+    mode: PresetMode,
   ) => {
     setSelectedItems((prev) => {
       const newOptions = { ...prev.selectedOptions };
@@ -240,7 +240,7 @@ export default function LabScreen() {
         />
       </View>
 
-      <GeneratedConstraintsModal
+      <GeneratedConstraintsSheet
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         randomConstraints={randomConstraints}
