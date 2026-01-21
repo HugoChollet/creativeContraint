@@ -26,6 +26,7 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   const { globalStyles } = useStyles();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function signInWithEmail() {
     setLoading(true);
@@ -34,7 +35,11 @@ export default function Auth() {
       password: password,
     });
 
-    if (error) Alert.alert(error.message);
+    if (error) {
+      setErrorMessage(error.message); // On stocke l'erreur au lieu de l'alerte
+    } else {
+      setErrorMessage(null); // On reset si ça réussit
+    }
     setLoading(false);
   }
 
@@ -48,7 +53,11 @@ export default function Auth() {
       password: password,
     });
 
-    if (error) Alert.alert(error.message);
+    if (error) {
+      setErrorMessage(error.message); // On stocke l'erreur au lieu de l'alerte
+    } else {
+      setErrorMessage(null); // On reset si ça réussit
+    }
     if (!session)
       Alert.alert("Please check your inbox for email verification!");
     setLoading(false);
@@ -68,6 +77,7 @@ export default function Auth() {
             placeholder="email@address.com"
             placeholderTextColor="#666"
             autoCapitalize={"none"}
+            keyboardType="email-address"
           />
         </View>
 
@@ -84,6 +94,11 @@ export default function Auth() {
           />
         </View>
 
+        {errorMessage && (
+          <View>
+            <Text style={globalStyles.alertText}>{errorMessage}</Text>
+          </View>
+        )}
         <TouchableOpacity
           style={[globalStyles.secondaryButton, loading && { opacity: 0.7 }]}
           disabled={loading}
