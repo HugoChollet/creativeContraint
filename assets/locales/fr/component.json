@@ -1,36 +1,36 @@
 {
-    "auth": {
-        "title": "Compte",
-        "sign_in": "Connexion",
-        "email": "Email",
-        "password": "Mot de Passe",
-        "register": "Créer un compte"
-    },
-    "account": {
-        "account": "Compte",
-        "username": "Nom d'utilisateur",
-        "username_placeholder": "Comment vous voulez vous appeler ?",
-        "portfolio": "Portfolio (Url)",
-        "email_read_only": "Email (Lecture seule)",
-        "avatar_url": "Avatar (Url)",
-        "update_profile": "Mettre à jour le profil",
-        "saving": "Sauvegarde en cours...",
-        "sign_out": "Deconnexion"
-    },
-    "theme-switcher": {
-        "title": "Apparence",
-        "light": "Clair",
-        "dark": "Sombre",
-        "system": "Système"
-    },
-    "status": {
-        "none": "aucun",
-        "easy": "facile",
-        "custom": "perso",
-        "hard": "difficile",
-        "all": "tous"
-    },
-    "constraint-option": {
-        "difficulty": "Difficulté : "
-    }
+  "auth": {
+    "title": "Compte",
+    "sign_in": "Connexion",
+    "email": "Email",
+    "password": "Mot de Passe",
+    "register": "Créer un compte"
+  },
+  "account": {
+    "account": "Compte",
+    "username": "Nom d'utilisateur",
+    "username_placeholder": "Comment vous voulez vous appeler ?",
+    "portfolio": "Portfolio (Url)",
+    "email_read_only": "Email (Lecture seule)",
+    "avatar_url": "Avatar (Url)",
+    "update_profile": "Sauvegarder",
+    "saving": "Sauvegarde en cours...",
+    "sign_out": "Deconnexion"
+  },
+  "theme-switcher": {
+    "title": "Apparence",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système"
+  },
+  "status": {
+    "none": "aucun",
+    "easy": "facile",
+    "custom": "perso",
+    "hard": "difficile",
+    "all": "tous"
+  },
+  "constraint-option": {
+    "difficulty": "Difficulté : "
+  }
 }
