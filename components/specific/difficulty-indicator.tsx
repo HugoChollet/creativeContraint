@@ -1,4 +1,3 @@
-import { Colors } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
@@ -11,17 +10,17 @@ interface DifficultyIndicatorProps {
 export function DifficultyIndicator({
   difficultyIndicator,
 }: DifficultyIndicatorProps) {
-  const { globalStyles } = useStyles();
+  const { globalStyles, colors } = useStyles();
 
   const getColorByValue = (value: number) => {
-    if (value < 9) return Colors.easy;
-    if (value < 12) return Colors.easyMedium;
-    if (value < 15) return Colors.medium;
-    if (value < 18) return Colors.aboveMedium;
-    if (value < 21) return Colors.hardMedium;
-    if (value < 24) return Colors.hard;
-    if (value < 30) return Colors.veryHard;
-    return Colors.impossible;
+    if (value < 9) return colors.easy;
+    if (value < 12) return colors.easyMedium;
+    if (value < 15) return colors.medium;
+    if (value < 18) return colors.aboveMedium;
+    if (value < 21) return colors.hardMedium;
+    if (value < 24) return colors.hard;
+    if (value < 30) return colors.veryHard;
+    return colors.impossible;
   };
 
   return (

@@ -23,9 +23,16 @@ export const Themes = {
     placeholder: "#979797ff",
     borderColor: shadeContainerLight,
     disable: "#ccc",
-    easy: "#34C759",
-    hard: "#FF3B30",
     custom: tintColorLight,
+
+    easy: "#34C759",
+    easyMedium: "#8aa829ff",
+    medium: "#e9d418ff",
+    aboveMedium: "#ee9f17ff",
+    hardMedium: "#e36415ff",
+    hard: "#e31d13ff",
+    veryHard: "#a22c24ff",
+    impossible: "#381668ff",
   },
   dark: {
     text: textWhite,
@@ -42,24 +49,24 @@ export const Themes = {
     placeholder: "#555555ff",
     borderColor: shadeContainerDark,
     disable: "#6d6c6cff",
-    easy: "#34C759",
     custom: "#007AFF",
+
+    easy: "#34C759",
+    easyMedium: "#d1ff3bff",
+    medium: "#FFEB3B",
+    aboveMedium: "#ffb73bff",
+    hardMedium: "#ff863bff",
     hard: "#FF3B30",
+    veryHard: "#a22c24ff",
+    impossible: "#1c025bff",
   },
 } as const;
+
 export const Colors = {
   alert: "#ff4444",
   white: textWhite,
   black: textDark,
   grey: "#8E8E93",
-  easy: "#34C759",
-  easyMedium: "#d1ff3bff",
-  medium: "#FFEB3B",
-  aboveMedium: "#ffb73bff",
-  hardMedium: "#ff863bff",
-  hard: "#FF3B30",
-  veryHard: "#a22c24ff",
-  impossible: "#681c16ff",
 };
 
 // Types for your theme
