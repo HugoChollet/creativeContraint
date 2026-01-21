@@ -4,13 +4,12 @@ import { Ionicons } from "@expo/vector-icons"; // Built into Expo
 import React, { useState } from "react";
 import {
   FlatList,
-  Modal,
-  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import { ModalGeneric } from "./modal-generic";
 
 interface Option {
   label: string;
@@ -54,46 +53,33 @@ export default function ModalSelector({
         <Ionicons name="chevron-down" size={20} color={colors.tint} />
       </TouchableOpacity>
 
-      <Modal transparent visible={visible} animationType="fade">
-        <Pressable
-          style={styles.modalOverlay}
-          onPress={() => setVisible(false)}
-        >
-          <View
-            style={{
-              ...styles.modalContent,
-              backgroundColor: colors.hardContainer,
-            }}
-          >
-            <FlatList
-              data={options}
-              keyExtractor={(item) => item.value}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={[
-                    globalStyles.optionItem,
-                    item.value === selectedValue && globalStyles.activeOption,
-                  ]}
-                  onPress={() => handleSelect(item.value)}
-                >
-                  <Text
-                    style={[
-                      globalStyles.text,
-                      item.value === selectedValue &&
-                        globalStyles.activeOptionText,
-                    ]}
-                  >
-                    {item.label}
-                  </Text>
-                  {item.value === selectedValue && (
-                    <Ionicons name="checkmark" size={20} color={Colors.white} />
-                  )}
-                </TouchableOpacity>
+      <ModalGeneric visible={visible} setVisible={setVisible}>
+        <FlatList
+          data={options}
+          keyExtractor={(item) => item.value}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={[
+                globalStyles.optionItem,
+                item.value === selectedValue && globalStyles.activeOption,
+              ]}
+              onPress={() => handleSelect(item.value)}
+            >
+              <Text
+                style={[
+                  globalStyles.text,
+                  item.value === selectedValue && globalStyles.activeOptionText,
+                ]}
+              >
+                {item.label}
+              </Text>
+              {item.value === selectedValue && (
+                <Ionicons name="checkmark" size={20} color={Colors.white} />
               )}
-            />
-          </View>
-        </Pressable>
-      </Modal>
+            </TouchableOpacity>
+          )}
+        />
+      </ModalGeneric>
     </View>
   );
 }
