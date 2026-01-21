@@ -40,9 +40,9 @@ export default function GeneratedConstraintsSheet({
   }, [randomConstraints]);
 
   useEffect(() => {
-    if (session?.user) {
+    if (session?.user && visibleLogin) {
       setVisibleLogin(false);
-      setModalVisible(false);
+      setModalVisible(true);
     }
   });
 
