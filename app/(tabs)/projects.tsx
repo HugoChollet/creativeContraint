@@ -35,7 +35,7 @@ export default function ProjectLibraryScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      refresh(); // This calls the fetch function from your useCollection hook
+      refresh();
     }, [refresh]),
   );
 

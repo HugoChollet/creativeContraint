@@ -2,7 +2,11 @@ import { useTranslation } from "react-i18next";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useStyles } from "../../hooks/use-styles";
 
-export function ThemeSwitcher() {
+export function ThemeSwitcher({
+  onChange: onChange,
+}: {
+  onChange: (mode: "light" | "dark" | "system") => void;
+}) {
   const { globalStyles, colors, setThemeMode, themeMode } = useStyles();
   const { t } = useTranslation();
 
@@ -17,11 +21,14 @@ export function ThemeSwitcher() {
       <Text style={globalStyles.subtitle}>
         {t("component:theme-switcher.title")}
       </Text>
-      <View style={globalStyles.shadeContainer}>
+      <View style={[{ flexDirection: "row", gap: 12 }]}>
         {options.map((opt) => (
           <TouchableOpacity
             key={opt.value}
-            onPress={() => setThemeMode(opt.value)}
+            onPress={() => {
+              setThemeMode(opt.value);
+              onChange(opt.value);
+            }}
             style={[
               globalStyles.secondaryButton,
               {
@@ -29,6 +36,7 @@ export function ThemeSwitcher() {
                   themeMode === opt.value ? colors.tint : "transparent",
                 borderWidth: 1,
                 borderColor: colors.tint,
+                flex: 1,
               },
             ]}
           >

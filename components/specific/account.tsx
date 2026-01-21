@@ -5,10 +5,18 @@ import { supabase } from "@/lib/supabase";
 import { Session } from "@supabase/supabase-js";
 import { useTranslation } from "react-i18next";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import ModalSelector from "../generic/modal-selector";
 import { Spacer } from "../generic/spacer";
+import { ThemeSwitcher } from "./theme-switcher";
+
+const languages = [
+  { label: "Français", value: "fr" },
+  { label: "English", value: "en" },
+  { label: "Español", value: "es" },
+];
 
 export default function Account({ session }: { session: Session }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { globalStyles, colors } = useStyles();
 
   // Define the shape of your profile
@@ -16,6 +24,8 @@ export default function Account({ session }: { session: Session }) {
     username: "",
     website: "",
     avatar_url: "",
+    language: "",
+    theme: "",
   });
 
   return (
@@ -57,6 +67,24 @@ export default function Account({ session }: { session: Session }) {
           placeholderTextColor={colors.textDiscreet}
           style={globalStyles.input}
         />
+
+        <Spacer height={20} />
+
+        <ModalSelector
+          label={t("screen:settings.language_selection")}
+          options={languages}
+          selectedValue={data.language}
+          onValueChange={(val) => {
+            i18n.changeLanguage(val);
+            setData({ ...data, language: val });
+          }}
+        />
+        <ThemeSwitcher
+          onChange={(mode) => {
+            setData({ ...data, theme: mode });
+          }}
+        />
+
         <Spacer height={20} />
 
         <TouchableOpacity
@@ -70,7 +98,6 @@ export default function Account({ session }: { session: Session }) {
               : t("component:account.update_profile")}
           </ThemedText>
         </TouchableOpacity>
-
         <TouchableOpacity
           onPress={() => supabase.auth.signOut()}
           style={[globalStyles.secondaryButton, globalStyles.alertButton]}

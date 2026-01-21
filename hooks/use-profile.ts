@@ -8,8 +8,6 @@ export function useProfile<T>(tableName: string, initialData: T) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<T>(initialData);
 
-  console.log(session);
-
   const fetchData = useCallback(async () => {
     if (!session?.user) return; // Silent return if not logged in
 

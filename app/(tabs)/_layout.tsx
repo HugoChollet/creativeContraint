@@ -1,14 +1,29 @@
 import { Tabs } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { HapticTab } from "@/components/haptic-tab";
+import { ThemeMode } from "@/contexts/theme-context";
+import { useProfile } from "@/hooks/use-profile";
 import { useStyles } from "@/hooks/use-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 
 export default function TabLayout() {
-  const { colors } = useStyles();
+  const { colors, setThemeMode } = useStyles();
   const { t, i18n } = useTranslation();
+
+  const { data } = useProfile("profiles", {
+    language: "",
+    theme: "",
+  });
+
+  useEffect(() => {
+    // Update language based on saved user preference
+    i18n.changeLanguage(data.language ?? "en");
+    console.log(data.theme);
+
+    setThemeMode((data.theme as ThemeMode) || "light");
+  }, [data]);
 
   return (
     <Tabs

@@ -11,7 +11,7 @@ import {
 interface BottomSheetProps {
   isVisible: boolean;
   onClose: () => void;
-  children: React.ReactNode; // This allows any result content
+  children: React.ReactNode;
   buttonText?: string;
 }
 
