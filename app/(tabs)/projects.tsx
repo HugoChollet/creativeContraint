@@ -1,5 +1,7 @@
+import Auth from "@/components/specific/auth";
 import { DifficultyIndicator } from "@/components/specific/difficulty-indicator";
 import { Colors } from "@/constants/theme";
+import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { SavedProjectConstraints } from "@/types/data";
@@ -25,6 +27,7 @@ export default function ProjectLibraryScreen() {
     deleteRecord,
     refresh,
   } = useCollection<SavedProjectConstraints>("projects");
+  const { session } = useAuth();
 
   useEffect(() => {
     refresh();
@@ -33,7 +36,7 @@ export default function ProjectLibraryScreen() {
   useFocusEffect(
     useCallback(() => {
       refresh(); // This calls the fetch function from your useCollection hook
-    }, [refresh])
+    }, [refresh]),
   );
 
   const renderProjectItem = ({ item }: { item: SavedProjectConstraints }) => {
@@ -94,27 +97,40 @@ export default function ProjectLibraryScreen() {
         {t("screen:projects.title")}
       </Text>
 
-      <FlatList
-        data={projects}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={renderProjectItem}
-        onRefresh={refresh}
-        refreshing={loading}
-        ListEmptyComponent={
-          <View style={{ marginTop: 50, alignItems: "center" }}>
-            <Text style={globalStyles.subtitle}>
-              {t("screen:projects.no_projects")}
-            </Text>
-            <TouchableOpacity
-              style={[globalStyles.secondaryButton]}
-              onPress={refresh}
-            >
-              Refresh
-            </TouchableOpacity>
-          </View>
-        }
-        contentContainerStyle={{ paddingBottom: 100 }}
-      />
+      {session?.user ? (
+        <FlatList
+          data={projects}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderProjectItem}
+          onRefresh={refresh}
+          refreshing={loading}
+          ListEmptyComponent={
+            <View style={{ marginTop: 50, alignItems: "center" }}>
+              <Text style={globalStyles.subtitle}>
+                {t("screen:projects.no_projects")}
+              </Text>
+              <TouchableOpacity
+                style={globalStyles.secondaryButton}
+                onPress={refresh}
+              >
+                <Text
+                  style={[globalStyles.secondaryButtonText, { padding: 16 }]}
+                >
+                  {t("screen:projects.refresh")}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          }
+          contentContainerStyle={{ paddingBottom: 100 }}
+        />
+      ) : (
+        <View>
+          <Text style={globalStyles.subtitle}>
+            {t("screen:projects.auth_required")}
+          </Text>
+          <Auth />
+        </View>
+      )}
     </View>
   );
 }

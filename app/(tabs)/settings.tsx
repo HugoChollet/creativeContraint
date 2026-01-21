@@ -36,9 +36,6 @@ export default function SettingsScreen() {
     <ScrollView
       style={[globalStyles.backgroundColor, { flex: 1, padding: 20 }]}
     >
-      <View>
-        {session && session.user ? <Account session={session} /> : <Auth />}
-      </View>
       <Spacer height={20} />
 
       <ModalSelector
@@ -48,6 +45,10 @@ export default function SettingsScreen() {
         onValueChange={(val) => i18n.changeLanguage(val)}
       />
       <ThemeSwitcher />
+
+      <View>
+        {session && session.user ? <Account session={session} /> : <Auth />}
+      </View>
     </ScrollView>
   );
 }

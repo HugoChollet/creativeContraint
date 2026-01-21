@@ -1,41 +1,42 @@
-  {
-    "layout": {
-        "Home": "Home",
-        "Lab": "Lab",
-        "Settings": "Settings",
-        "Projects": "Projects"
-    },
-    "lab": 
-    {
-        "lab_title": "{{type}} Lab",
-        "generate_button": "Generate {{type}} Idea",
-        "constraints_title": "{{type}} Constraints",
-        "back_button": "Back to Lab",
-        "empty_result": "-",
-        "generate_symbol": "G",
-        "constraints": "{{type}} constraints"
-    },
-    "home": {
-        "book_button": "Write a Fiction Book 📖",
-        "music_button": "Compose a song 🎵",
-        "videointernet_button": "Create Video Content 🌐",
-        "videofiction_button": "Film a Fiction 🎞️",
-        "photography_button": "Take a Photography 📷",
-        "videogame_button": "Develop a Video Game 🎮",
-        "cooking_button": "Cook a Meal"
-    },
-    "settings": {
-        "settings_title": "Settings",
-        "language_selection": "Application Language"
-    },
-    "projects": {
-        "title": "My Projects",
-        "no_projects": "You have no projects yet. Start by creating one!",
-        "create_button": "Create New Project",
-        "delete_button": "Delete Project",
-        "confirm_delete": "Are you sure you want to delete this project? This action cannot be undone.",
-        "cancel_button": "Cancel",
-        "confirm_button": "Confirm",
-        "difficulty": "Difficulty"
-    }
+{
+  "layout": {
+    "Home": "Home",
+    "Lab": "Lab",
+    "Settings": "Settings",
+    "Projects": "Projects"
+  },
+  "lab": {
+    "lab_title": "{{type}} Lab",
+    "generate_button": "Generate {{type}} Idea",
+    "constraints_title": "{{type}} Constraints",
+    "back_button": "Back to Lab",
+    "empty_result": "-",
+    "generate_symbol": "G",
+    "constraints": "{{type}} constraints"
+  },
+  "home": {
+    "book_button": "Write a Fiction Book 📖",
+    "music_button": "Compose a song 🎵",
+    "videointernet_button": "Create Video Content 🌐",
+    "videofiction_button": "Film a Fiction 🎞️",
+    "photography_button": "Take a Photography 📷",
+    "videogame_button": "Develop a Video Game 🎮",
+    "cooking_button": "Cook a Meal"
+  },
+  "settings": {
+    "settings_title": "Settings",
+    "language_selection": "Application Language"
+  },
+  "projects": {
+    "title": "My Projects",
+    "no_projects": "You have no projects yet. Start by creating one!",
+    "create_button": "Create New Project",
+    "delete_button": "Delete Project",
+    "confirm_delete": "Are you sure you want to delete this project? This action cannot be undone.",
+    "cancel_button": "Cancel",
+    "confirm_button": "Confirm",
+    "difficulty": "Difficulty",
+    "refresh": "Refresh",
+    "auth_required": "Please sign in to view your projects"
+  }
 }

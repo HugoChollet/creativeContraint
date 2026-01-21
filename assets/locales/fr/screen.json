@@ -1,41 +1,41 @@
-
 {
-    "layout": {
-        "Home": "Accueil",
-        "Lab": "Lab",
-        "Settings": "Paramètres",
-        "Projects": "Projets"
-    },
-    "lab":
-    {
-        "lab_title": "Lab pour {{type}}",
-        "generate_button": "Générer une idée de {{type}}",
-        "constraints_title": "Contraintes de {{type}}",
-        "back_button": "Retour au Lab",
-        "empty_result": "-",
-        "generate_symbol": "G"
-    },
-    "home": {
-        "book_button": "Ecrire une fiction 📖",
-        "music_button": "Composer une musique 🎵",
-        "videointernet_button": "Créer un contenu Video 🌐",
-        "videofiction_button": "Filmer une fiction 🎞️",
-        "photography_button": "Prendre une photographie 📷",
-        "videogame_button": "Développer un jeu Video 🎮",
-        "cooking_button": "Cuisine un repas"
-    },
-    "settings": {
-        "settings_title": "Paramètres",
-        "language_selection": "Langue de l'application"
-    },
-    "projects": {
-        "title": "Mes Projets",
-        "no_projects": "Vous n'avez pas encore de projets. Commencez par en créer un !",
-        "create_button": "Créer un nouveau projet",
-        "delete_button": "Supprimer le projet",
-        "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce projet ? Cette action est irréversible.",
-        "cancel_button": "Annuler",
-        "confirm_button": "Confirmer",
-        "difficulty": "Difficulté"
-    }
+  "layout": {
+    "Home": "Accueil",
+    "Lab": "Lab",
+    "Settings": "Paramètres",
+    "Projects": "Projets"
+  },
+  "lab": {
+    "lab_title": "Lab pour {{type}}",
+    "generate_button": "Générer une idée de {{type}}",
+    "constraints_title": "Contraintes de {{type}}",
+    "back_button": "Retour au Lab",
+    "empty_result": "-",
+    "generate_symbol": "G"
+  },
+  "home": {
+    "book_button": "Ecrire une fiction 📖",
+    "music_button": "Composer une musique 🎵",
+    "videointernet_button": "Créer un contenu Video 🌐",
+    "videofiction_button": "Filmer une fiction 🎞️",
+    "photography_button": "Prendre une photographie 📷",
+    "videogame_button": "Développer un jeu Video 🎮",
+    "cooking_button": "Cuisine un repas"
+  },
+  "settings": {
+    "settings_title": "Paramètres",
+    "language_selection": "Langue de l'application"
+  },
+  "projects": {
+    "title": "Mes Projets",
+    "no_projects": "Vous n'avez pas encore de projets. Commencez par en créer un !",
+    "create_button": "Créer un nouveau projet",
+    "delete_button": "Supprimer le projet",
+    "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce projet ? Cette action est irréversible.",
+    "cancel_button": "Annuler",
+    "confirm_button": "Confirmer",
+    "difficulty": "Difficulté",
+    "refresh": "Actualiser",
+    "auth_required": "Vous devez vous connecter pour voir vos projets."
+  }
 }
