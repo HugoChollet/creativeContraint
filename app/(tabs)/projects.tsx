@@ -1,18 +1,15 @@
 import Auth from "@/components/specific/auth";
-import { DifficultyIndicator } from "@/components/specific/difficulty-indicator";
-import { Colors } from "@/constants/theme";
+import { ConstraintsSetCard } from "@/components/specific/constraints-set-card";
 import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { SavedProjectConstraints } from "@/types/data";
-import { Ionicons } from "@expo/vector-icons"; // Or your preferred icon set
 import { useFocusEffect } from "expo-router";
 import React, { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   FlatList,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -36,50 +33,8 @@ export default function ProjectLibraryScreen() {
   useFocusEffect(
     useCallback(() => {
       refresh();
-    }, [refresh]),
+    }, [refresh])
   );
-
-  const renderProjectItem = ({ item }: { item: SavedProjectConstraints }) => {
-    // Extract constraint keys (Instruments, Emotion, etc.)
-    const constraintKeys = Object.keys(item.constraints);
-
-    return (
-      <View style={[globalStyles.shadeContainer, { marginBottom: 16 }]}>
-        {/* Header: Project Type & Difficulty */}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: 12,
-          }}
-        >
-          <DifficultyIndicator difficultyIndicator={item.difficulty} />
-          <Text style={[globalStyles.title, { color: colors.text }]}>
-            {item.project_type.toUpperCase()}
-          </Text>
-
-          <TouchableOpacity onPress={() => deleteRecord(item.id)}>
-            <Ionicons name="trash-outline" size={20} color={Colors.alert} />
-          </TouchableOpacity>
-        </View>
-
-        {/* Constraints Tags Section */}
-        <View style={styles.tagContainer}>
-          {constraintKeys.map((key) => (
-            <View key={key} style={globalStyles.tag}>
-              <Text style={{ fontSize: 12, color: colors.textDiscreet }}>
-                {key}:{" "}
-                <Text style={{ color: colors.text, fontWeight: "600" }}>
-                  {item.constraints[key].value}
-                </Text>
-              </Text>
-            </View>
-          ))}
-        </View>
-      </View>
-    );
-  };
 
   if (loading && projects.length === 0) {
     return (
@@ -101,7 +56,9 @@ export default function ProjectLibraryScreen() {
         <FlatList
           data={projects}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={renderProjectItem}
+          renderItem={({ item }) => (
+            <ConstraintsSetCard item={item} deleteRecord={deleteRecord} />
+          )}
           onRefresh={refresh}
           refreshing={loading}
           ListEmptyComponent={
@@ -134,7 +91,3 @@ export default function ProjectLibraryScreen() {
     </View>
   );
 }
-
-export const styles = StyleSheet.create({
-  tagContainer: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
-});
