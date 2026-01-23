@@ -25,6 +25,13 @@ export const Themes = {
     disable: "#ccc",
     custom: tintColorLight,
 
+    book: "#7e2cb4ff",
+    music: "#17B8A6",
+    photography: "#B81680",
+    videoFiction: "#FFC100",
+    videoInternet: "#82C868",
+    cooking: "#FF725E",
+
     easy: "#34C759",
     easyMedium: "#8aa829ff",
     medium: "#e9d418ff",
@@ -50,6 +57,13 @@ export const Themes = {
     borderColor: shadeContainerDark,
     disable: "#6d6c6cff",
     custom: "#007AFF",
+
+    book: "#7e2cb4ff",
+    music: "#17B8A6",
+    photography: "#B81680",
+    videoFiction: "#FFC100",
+    videoInternet: "#82C868",
+    cooking: "#FF725E",
 
     easy: "#34C759",
     easyMedium: "#d1ff3bff",

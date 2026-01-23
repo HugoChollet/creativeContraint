@@ -15,13 +15,13 @@
   },
   "home": {
     "project_choice": "Choisissez un projet pour commencer",
-    "book_button": "Ecrire une fiction 📖",
-    "music_button": "Composer une musique 🎵",
-    "videointernet_button": "Créer un contenu Video 🌐",
-    "videofiction_button": "Filmer une fiction 🎞️",
-    "photography_button": "Prendre une photographie 📷",
-    "videogame_button": "Développer un jeu Video 🎮",
-    "cooking_button": "Cuisine un repas 🍳"
+    "book_button": "Ecrire une fiction",
+    "music_button": "Composer une musique",
+    "videointernet_button": "Créer un contenu Video",
+    "videofiction_button": "Filmer une fiction",
+    "photography_button": "Prendre une photographie",
+    "videogame_button": "Développer un jeu Video",
+    "cooking_button": "Cuisiner un repas"
   },
   "settings": {
     "settings_title": "Paramètres",
