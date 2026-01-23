@@ -47,7 +47,7 @@ export default function ProjectLibraryScreen() {
   }
 
   return (
-    <View style={globalStyles.backgroundContainer}>
+    <View style={[globalStyles.screenContainer]}>
       <Text style={[globalStyles.title, { marginBottom: 20 }]}>
         {t("screen:projects.title")}
       </Text>
@@ -61,6 +61,7 @@ export default function ProjectLibraryScreen() {
           )}
           onRefresh={refresh}
           refreshing={loading}
+          contentContainerStyle={{ paddingBottom: 24 }}
           ListEmptyComponent={
             <View style={{ marginTop: 50, alignItems: "center" }}>
               <Text style={globalStyles.subtitle}>
@@ -78,7 +79,6 @@ export default function ProjectLibraryScreen() {
               </TouchableOpacity>
             </View>
           }
-          contentContainerStyle={{ paddingBottom: 100 }}
         />
       ) : (
         <View>

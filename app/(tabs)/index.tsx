@@ -1,8 +1,7 @@
-import { ThemedView } from "@/components/generic/themed-view";
 import { useStyles } from "@/hooks/use-styles";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { ScrollView, Text, TouchableOpacity } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -10,8 +9,11 @@ export default function HomeScreen() {
   const { globalStyles, colors } = useStyles();
 
   return (
-    <ScrollView style={{ backgroundColor: colors.background }}>
-      <ThemedView style={globalStyles.shadeContainer}>
+    <View style={globalStyles.screenContainer}>
+      <Text style={[globalStyles.title, { marginBottom: 20 }]}>
+        {t("screen:home.project_choice")}
+      </Text>
+      <ScrollView>
         <TouchableOpacity
           style={globalStyles.borderButton}
           onPress={() =>
@@ -22,23 +24,13 @@ export default function HomeScreen() {
             {t("screen:home.book_button")}
           </Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity
+        <TouchableOpacity
           style={globalStyles.borderButton}
           onPress={() =>
             router.push({
               pathname: "/lab",
-              params: { id: 2, type: "videoGame" },
+              params: { id: 3, type: "music" },
             })
-          }
-        >
-          <Text style={globalStyles.borderButtonText}>
-            {t("screen:home.videogame_button")}
-          </Text>
-        </TouchableOpacity> */}
-        <TouchableOpacity
-          style={globalStyles.borderButton}
-          onPress={() =>
-            router.push({ pathname: "/lab", params: { id: 3, type: "music" } })
           }
         >
           <Text style={globalStyles.borderButtonText}>
@@ -97,7 +89,7 @@ export default function HomeScreen() {
             {t("screen:home.cooking_button")}
           </Text>
         </TouchableOpacity>
-      </ThemedView>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }

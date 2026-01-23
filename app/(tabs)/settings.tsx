@@ -23,13 +23,13 @@ export default function SettingsScreen() {
   }, []);
 
   return (
-    <ScrollView
-      style={[globalStyles.backgroundColor, { flex: 1, padding: 20 }]}
-    >
-      <Spacer height={20} />
-      <View>
-        {session && session.user ? <Account session={session} /> : <Auth />}
-      </View>
-    </ScrollView>
+    <View style={globalStyles.screenContainer}>
+      <ScrollView style={globalStyles.backgroundColor}>
+        <View>
+          {session && session.user ? <Account session={session} /> : <Auth />}
+        </View>
+        <Spacer height={24} />
+      </ScrollView>
+    </View>
   );
 }

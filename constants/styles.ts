@@ -9,6 +9,7 @@ interface GlobalStyles {
   backgroundContainer: ViewStyle;
   shadeScroll: ViewStyle;
   tabContainer: ViewStyle;
+  screenContainer: ViewStyle;
 
   text: TextStyle;
   label: TextStyle;
@@ -52,7 +53,6 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     fontWeight: "600",
   };
   const baseContainer: ViewStyle = {
-    flex: 1,
     justifyContent: "center",
     padding: 24,
   };
@@ -78,7 +78,6 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       backgroundColor: themes.background,
     },
     shadeScroll: {
-      flex: 1,
       backgroundColor: themes.shadeContainer,
     },
     tabContainer: {
@@ -87,6 +86,11 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       borderRadius: 10,
       padding: 4,
       gap: 4,
+    },
+    screenContainer: {
+      backgroundColor: themes.background,
+      flex: 1,
+      paddingHorizontal: 24,
     },
 
     // Texts
