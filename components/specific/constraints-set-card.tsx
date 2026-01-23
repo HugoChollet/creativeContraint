@@ -16,11 +16,18 @@ export function ConstraintsSetCard({
 }) {
   const { t } = useTranslation();
   const { globalStyles, colors } = useStyles();
-  // Extract constraint keys (Instruments, Emotion, etc.)
   const constraintKeys = Object.keys(item.constraints);
 
   return (
-    <View style={[globalStyles.shadeContainer, { marginBottom: 16 }]}>
+    <View
+      style={[
+        globalStyles.shadeContainer,
+        {
+          marginBottom: 16,
+          overflow: "hidden",
+        },
+      ]}
+    >
       {/* Header: Project Type & Difficulty */}
       <View style={styles.headerContainer}>
         <DifficultyIndicator difficultyIndicator={item.difficulty} />
@@ -32,6 +39,15 @@ export function ConstraintsSetCard({
           <Ionicons name="trash-outline" size={20} color={Colors.alert} />
         </TouchableOpacity>
       </View>
+
+      <View
+        style={[
+          styles.circleDecorator,
+          {
+            backgroundColor: colors.cookingShade,
+          },
+        ]}
+      />
 
       {/* Constraints Tags Section */}
       <View style={styles.tagContainer}>
@@ -57,5 +73,13 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 12,
+  },
+  circleDecorator: {
+    position: "absolute",
+    right: -40,
+    top: 120,
+    width: 250,
+    height: 250,
+    borderRadius: "50%",
   },
 });

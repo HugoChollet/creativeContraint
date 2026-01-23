@@ -1,8 +1,10 @@
 const tintColorLight = "#0A84FF";
 const tintColorDark = "#0761bbff";
+const softContainerLight = "rgba(225, 225, 225, 1)";
 const hardContainerLight = "rgba(205, 205, 205, 1)";
 const shadeContainerLight = "rgba(205, 205, 205, 0.3)";
-const hardContainerDark = "#2C2C2E";
+const softContainerDark = "rgba(30, 30, 30, 1)";
+const hardContainerDark = "rgba(47, 47, 47, 1)";
 const shadeContainerDark = "rgba(105, 105, 105, 0.3)";
 const textWhite = "#ECEDEE";
 const textDark = "#11181C";
@@ -15,6 +17,7 @@ export const Themes = {
     textDiscreet: "#8E8E93",
     background: "#fff",
     shadeContainer: shadeContainerLight,
+    softContainer: softContainerLight,
     hardContainer: hardContainerLight,
     tint: tintColorLight,
     icon: "#687076",
@@ -29,8 +32,10 @@ export const Themes = {
     music: "#17B8A6",
     photography: "#B81680",
     videoFiction: "#FFC100",
-    videoInternet: "#82C868",
     cooking: "#FF725E",
+    videoInternet: "#82C868",
+
+    cookingShade: "#ff715e37",
 
     easy: "#34C759",
     easyMedium: "#8aa829ff",
@@ -48,6 +53,7 @@ export const Themes = {
     textDiscreet: "#bbb",
     background: "#151718",
     shadeContainer: shadeContainerDark,
+    softContainer: softContainerDark,
     hardContainer: hardContainerDark,
     tint: tintColorDark,
     icon: "#9BA1A6",
@@ -64,6 +70,7 @@ export const Themes = {
     videoFiction: "#FFC100",
     videoInternet: "#82C868",
     cooking: "#FF725E",
+    cookingShade: "#ff715e79",
 
     easy: "#34C759",
     easyMedium: "#d1ff3bff",

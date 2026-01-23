@@ -225,7 +225,7 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       justifyContent: "center",
     },
     tag: {
-      backgroundColor: themes.shadeContainer,
+      backgroundColor: themes.softContainer,
       paddingHorizontal: 8,
       paddingVertical: 4,
       borderRadius: 6,
