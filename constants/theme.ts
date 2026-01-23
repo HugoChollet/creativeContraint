@@ -89,7 +89,6 @@ export const getProjectColor = (label: string, opacity: number = 1): string => {
 
   const key = map[label] || "book";
   const baseColor = ProjectsColors[key];
-  console.log(key);
 
   return baseColor.replace(/[\d.]+\)$/g, `${opacity})`);
 };

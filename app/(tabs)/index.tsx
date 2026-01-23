@@ -20,7 +20,7 @@ export default function HomeScreen() {
         <MainButton
           title={t("screen:home.book_button")}
           color={ProjectsColors.book}
-          image={require("@/assets/images/projects/book.svg")}
+          image={require("@/assets/images/projects/png/book.png")}
           onPress={() =>
             router.push({ pathname: "/lab", params: { id: 1, type: "book" } })
           }
@@ -28,7 +28,7 @@ export default function HomeScreen() {
         <MainButton
           title={t("screen:home.music_button")}
           color={ProjectsColors.music}
-          image={require("@/assets/images/projects/music.svg")}
+          image={require("@/assets/images/projects/png/music.png")}
           onPress={() =>
             router.push({ pathname: "/lab", params: { id: 1, type: "music" } })
           }
@@ -36,7 +36,7 @@ export default function HomeScreen() {
         <MainButton
           title={t("screen:home.photography_button")}
           color={ProjectsColors.photography}
-          image={require("@/assets/images/projects/photography.svg")}
+          image={require("@/assets/images/projects/png/photography.png")}
           onPress={() =>
             router.push({
               pathname: "/lab",
@@ -47,7 +47,7 @@ export default function HomeScreen() {
         <MainButton
           title={t("screen:home.videofiction_button")}
           color={ProjectsColors.videoFiction}
-          image={require("@/assets/images/projects/videoFiction.svg")}
+          image={require("@/assets/images/projects/png/videoFiction.png")}
           onPress={() =>
             router.push({
               pathname: "/lab",
@@ -58,7 +58,7 @@ export default function HomeScreen() {
         <MainButton
           title={t("screen:home.videointernet_button")}
           color={ProjectsColors.videoInternet}
-          image={require("@/assets/images/projects/videoInternet.svg")}
+          image={require("@/assets/images/projects/png/videoInternet.png")}
           onPress={() =>
             router.push({
               pathname: "/lab",
@@ -69,7 +69,7 @@ export default function HomeScreen() {
         <MainButton
           title={t("screen:home.cooking_button")}
           color={ProjectsColors.cooking}
-          image={require("@/assets/images/projects/cooking.svg")}
+          image={require("@/assets/images/projects/png/cooking.png")}
           onPress={() =>
             router.push({
               pathname: "/lab",

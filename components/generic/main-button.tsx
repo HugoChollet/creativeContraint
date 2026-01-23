@@ -79,8 +79,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    width: 90,
-    height: 90,
+    width: 120,
+    height: 120,
   },
 });
 
