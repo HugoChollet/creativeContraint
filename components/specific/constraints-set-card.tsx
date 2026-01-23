@@ -1,4 +1,4 @@
-import { Colors } from "@/constants/theme";
+import { Colors, getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import { SavedProjectConstraints } from "@/types/data";
 import { Ionicons } from "@expo/vector-icons";
@@ -44,7 +44,7 @@ export function ConstraintsSetCard({
         style={[
           styles.circleDecorator,
           {
-            backgroundColor: colors.cookingShade,
+            backgroundColor: getProjectColor(item.project_type, 0.2),
           },
         ]}
       />

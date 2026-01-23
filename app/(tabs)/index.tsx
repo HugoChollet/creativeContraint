@@ -1,4 +1,5 @@
 import MainButton from "@/components/generic/main-button";
+import { ProjectsColors } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
@@ -7,7 +8,7 @@ import { ScrollView, Text, View } from "react-native";
 export default function HomeScreen() {
   const router = useRouter();
   const { t } = useTranslation();
-  const { globalStyles, colors } = useStyles();
+  const { globalStyles } = useStyles();
 
   return (
     <View style={globalStyles.screenContainer}>
@@ -18,7 +19,7 @@ export default function HomeScreen() {
       <ScrollView>
         <MainButton
           title={t("screen:home.book_button")}
-          color={colors.book}
+          color={ProjectsColors.book}
           image={require("@/assets/images/projects/book.svg")}
           onPress={() =>
             router.push({ pathname: "/lab", params: { id: 1, type: "book" } })
@@ -26,7 +27,7 @@ export default function HomeScreen() {
         />
         <MainButton
           title={t("screen:home.music_button")}
-          color={colors.music}
+          color={ProjectsColors.music}
           image={require("@/assets/images/projects/music.svg")}
           onPress={() =>
             router.push({ pathname: "/lab", params: { id: 1, type: "music" } })
@@ -34,7 +35,7 @@ export default function HomeScreen() {
         />
         <MainButton
           title={t("screen:home.photography_button")}
-          color={colors.photography}
+          color={ProjectsColors.photography}
           image={require("@/assets/images/projects/photography.svg")}
           onPress={() =>
             router.push({
@@ -45,7 +46,7 @@ export default function HomeScreen() {
         />
         <MainButton
           title={t("screen:home.videofiction_button")}
-          color={colors.videoFiction}
+          color={ProjectsColors.videoFiction}
           image={require("@/assets/images/projects/videoFiction.svg")}
           onPress={() =>
             router.push({
@@ -56,7 +57,7 @@ export default function HomeScreen() {
         />
         <MainButton
           title={t("screen:home.videointernet_button")}
-          color={colors.videoInternet}
+          color={ProjectsColors.videoInternet}
           image={require("@/assets/images/projects/videoInternet.svg")}
           onPress={() =>
             router.push({
@@ -67,7 +68,7 @@ export default function HomeScreen() {
         />
         <MainButton
           title={t("screen:home.cooking_button")}
-          color={colors.cooking}
+          color={ProjectsColors.cooking}
           image={require("@/assets/images/projects/cooking.svg")}
           onPress={() =>
             router.push({

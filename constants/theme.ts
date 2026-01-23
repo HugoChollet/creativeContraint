@@ -28,15 +28,6 @@ export const Themes = {
     disable: "#ccc",
     custom: tintColorLight,
 
-    book: "#7e2cb4ff",
-    music: "#17B8A6",
-    photography: "#B81680",
-    videoFiction: "#FFC100",
-    cooking: "#FF725E",
-    videoInternet: "#82C868",
-
-    cookingShade: "#ff715e37",
-
     easy: "#34C759",
     easyMedium: "#8aa829ff",
     medium: "#e9d418ff",
@@ -64,14 +55,6 @@ export const Themes = {
     disable: "#6d6c6cff",
     custom: "#007AFF",
 
-    book: "#7e2cb4ff",
-    music: "#17B8A6",
-    photography: "#B81680",
-    videoFiction: "#FFC100",
-    videoInternet: "#82C868",
-    cooking: "#FF725E",
-    cookingShade: "#ff715e79",
-
     easy: "#34C759",
     easyMedium: "#d1ff3bff",
     medium: "#FFEB3B",
@@ -83,6 +66,34 @@ export const Themes = {
   },
 } as const;
 
+export const ProjectsColors = {
+  book: "rgba(126, 44, 180, 1)",
+  music: "rgba(23, 184, 166, 1)",
+  photography: "rgba(184, 22, 128, 1)",
+  videoFiction: "rgba(255, 193, 0, 1)",
+  cooking: "rgba(255, 114, 94, 1)",
+  videoInternet: "rgba(130, 200, 104, 1)",
+} as const;
+
+export type ProjectKey = keyof typeof ProjectsColors;
+
+export const getProjectColor = (label: string, opacity: number = 1): string => {
+  const map: Record<string, ProjectKey> = {
+    Book: "book",
+    Music: "music",
+    Photography: "photography",
+    "Fiction Video": "videoFiction",
+    Cooking: "cooking",
+    "Internet Video": "videoInternet",
+  };
+
+  const key = map[label] || "book";
+  const baseColor = ProjectsColors[key];
+  console.log(key);
+
+  return baseColor.replace(/[\d.]+\)$/g, `${opacity})`);
+};
+
 export const Colors = {
   alert: "#ff4444",
   white: textWhite,
@@ -90,6 +101,5 @@ export const Colors = {
   grey: "#8E8E93",
 };
 
-// Types for your theme
 export type AppTheme = keyof typeof Themes; // 'light' | 'dark'
 export type AppThemeColors = typeof Themes.light | typeof Themes.dark; // The structure of the color object
