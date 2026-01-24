@@ -143,30 +143,32 @@ export default function CategorySelector({
           )}
 
           <ScrollView nestedScrollEnabled={true}>
-            {currentOptions.map((opt: Option) => {
-              // Create a unique key for selection state: "Category-SubName-ID" or "Category-ID"
-              const selectionKey = hasSubCategories
-                ? `${category.category}-${currentSubCategory?.name}-${opt.id}`
-                : `${category.category}-${opt.id}`;
+            {currentOptions
+              .sort((a, b) => a.value.localeCompare(b.value))
+              .map((opt: Option) => {
+                // Create a unique key for selection state: "Category-SubName-ID" or "Category-ID"
+                const selectionKey = hasSubCategories
+                  ? `${category.category}-${currentSubCategory?.name}-${opt.id}`
+                  : `${category.category}-${opt.id}`;
 
-              return (
-                <ConstraintOption
-                  key={opt.id}
-                  option={opt}
-                  isParentEnabled={isEnabled}
-                  isSelected={!!selectedItems.selectedOptions[selectionKey]}
-                  color={color}
-                  onToggle={(id) => {
-                    setMode("custom");
-                    // Pass the specialized key to the parent handler
-                    const fullKey = hasSubCategories
-                      ? `${category.category}-${currentSubCategory?.name}`
-                      : category.category;
-                    onToggleOption(fullKey, id);
-                  }}
-                />
-              );
-            })}
+                return (
+                  <ConstraintOption
+                    key={opt.id}
+                    option={opt}
+                    isParentEnabled={isEnabled}
+                    isSelected={!!selectedItems.selectedOptions[selectionKey]}
+                    color={color}
+                    onToggle={(id) => {
+                      setMode("custom");
+                      // Pass the specialized key to the parent handler
+                      const fullKey = hasSubCategories
+                        ? `${category.category}-${currentSubCategory?.name}`
+                        : category.category;
+                      onToggleOption(fullKey, id);
+                    }}
+                  />
+                );
+              })}
           </ScrollView>
         </View>
       )}
