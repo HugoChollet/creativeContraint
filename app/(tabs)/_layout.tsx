@@ -20,8 +20,6 @@ export default function TabLayout() {
   useEffect(() => {
     // Update language based on saved user preference
     i18n.changeLanguage(data.language ?? "en");
-    console.log(data.theme);
-
     setThemeMode((data.theme as ThemeMode) || "light");
   }, [data]);
 

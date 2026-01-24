@@ -20,8 +20,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
-  console.log("calling Auth hook");
-
   useEffect(() => {
     // 1. Check active sessions on mount
     supabase.auth.getSession().then(({ data: { session } }) => {

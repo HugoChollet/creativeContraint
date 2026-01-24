@@ -48,8 +48,6 @@ export default function GeneratedConstraintsSheet({
     }
   });
 
-  console.log(isSaved);
-
   const getDifficultyGenerated = () => {
     let count = 0;
 

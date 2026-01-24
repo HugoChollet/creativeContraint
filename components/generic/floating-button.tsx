@@ -24,7 +24,6 @@ export function FloatingButton({
   right,
 }: FloatingButtonProps) {
   const { globalStyles, colors } = useStyles();
-  console.log("color ::", color);
 
   return (
     <TouchableOpacity
