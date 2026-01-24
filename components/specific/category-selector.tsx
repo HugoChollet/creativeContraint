@@ -118,7 +118,7 @@ export default function CategorySelector({
             <View style={[globalStyles.tabContainer, { marginHorizontal: 12 }]}>
               {category.sub_categories!.map((sub, index) => (
                 <Pressable
-                  key={sub.name}
+                  key={sub.label ?? sub.name}
                   onPress={() => setActiveTabIndex(index)}
                   style={[
                     globalStyles.tabSegment,
@@ -135,7 +135,7 @@ export default function CategorySelector({
                         : { color: colors.disable },
                     ]}
                   >
-                    {sub.name}
+                    {sub.label ?? sub.name}
                   </Text>
                 </Pressable>
               ))}

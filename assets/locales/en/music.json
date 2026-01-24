@@ -376,7 +376,7 @@
     },
     {
       "category": "Lyric Subject Components",
-      "Tabs": ["Subject", "Action", "Context"],
+      "tabs": ["Subject", "Action", "Context"],
       "sub_categories": [
         {
           "name": "Subject",

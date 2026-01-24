@@ -322,10 +322,12 @@
     {
         "category": "Scene",
         "label": "Scène",
-        "Tabs": ["Sujet", "Action", "Contexte"],
+        "tabs": ["Sujet", "Action", "Contexte"],
+        "tabs_label": ["Subject", "Action", "Context"],
         "sub_categories": [
             {
-                "name": "Sujet",
+                "name": "Subject",
+                "label": "Sujet",
                 "options": [
                     {"id": 1, "value": "Une fée bannie", "rarity": 4},
                     {"id": 2, "value": "Un samouraï aveugle", "rarity": 5},
@@ -424,6 +426,7 @@
             },
             {
                 "name": "Action",
+                "label": "Action",
                 "options": [
                     {"id": 1, "value": "accepte un pot-de-vin", "rarity": 3},
                     {"id": 2, "value": "attaque un garde", "rarity": 4},
@@ -524,7 +527,8 @@
                 ]
             },
             {
-                "name": "Contexte",
+                "name": "Context",
+                "label": "Contexte",
                 "options": [
                     {"id": 1, "value": "dans un salon de beauté", "rarity": 2},
                     {"id": 2, "value": "dans une salle de boxe", "rarity": 3},

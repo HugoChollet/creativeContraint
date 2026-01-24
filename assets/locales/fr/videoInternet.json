@@ -144,10 +144,12 @@
     {
       "category": "Video Content",
       "label": "Contenu de la Vidéo",
-      "Tabs": ["Sujet", "Action", "Contexte"],
+      "tabs": ["Subject", "Action", "Context"],
+      "tabs_label": ["Sujet", "Action", "Contexte"],
       "sub_categories": [
         {
-          "name": "Sujet",
+          "name": "Subject",
+          "label": "Sujet",
           "options": [
             {"id": 1, "value": "Un colis Amazon mystérieux", "rarity": 1},
             {"id": 2, "value": "Une trouvaille 'maudite' en friperie", "rarity": 3},
@@ -203,6 +205,7 @@
         },
         {
           "name": "Action",
+          "label": "Action",
           "options": [
             {"id": 1, "value": "Le tester avec une honnêteté brutale", "rarity": 1},
             {"id": 2, "value": "Tenter de le réparer avec une astuce de grand-mère", "rarity": 2},
@@ -258,6 +261,7 @@
         },
         {
           "name": "Contexte",
+          "label": "Context",
           "options": [
             {"id": 1, "value": "Dans un défi de 24 heures", "rarity": 3},
             {"id": 2, "value": "En chuchotant (style ASMR)", "rarity": 4},

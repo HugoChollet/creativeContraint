@@ -3,7 +3,7 @@
   "constraints": [
     {
       "category": "Location",
-      "Tabs": ["Element", "World"],
+      "tabs": ["Element", "World"],
       "sub_categories": [
         {
           "name": "Location Element",
@@ -212,7 +212,7 @@
             {"id": 97, "value": "Antwerp, Belgium", "rarity": 4},
             {"id": 98, "value": "Galway, Ireland", "rarity": 3},
             {"id": 99, "value": "Baku, Azerbaijan", "rarity": 4},
-            {"id": 100, "value": "The Moon (Green Screen Required)", "rarity": 5}
+            {"id": 100, "value": "The Moon (Green Screen Required ?)", "rarity": 5}
           ]
         }
       ]

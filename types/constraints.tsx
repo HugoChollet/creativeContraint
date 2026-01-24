@@ -6,6 +6,7 @@ export interface Option {
 
 export interface SubCategory {
   name: string;
+  label?: string;
   options: Option[];
 }
 
@@ -24,7 +25,7 @@ export interface ProjectData {
 
 export type SelectedState = {
   activeCategories: Record<string, boolean>; // e.g., { "Core Theme": true }
-  selectedOptions: Record<string, boolean>;  // e.g., { "Core Theme-5": true }
+  selectedOptions: Record<string, boolean>; // e.g., { "Core Theme-5": true }
 };
 
 export type GeneratedConstraints = Record<string, string>;

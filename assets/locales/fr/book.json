@@ -1,5 +1,6 @@
 {
-  "project_type": "Livre",
+  "project_type": "Book",
+  "project_label": "Livre",
   "constraints": [
     {
       "category": "Genre & Setting",

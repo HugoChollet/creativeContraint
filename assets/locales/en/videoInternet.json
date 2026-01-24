@@ -139,7 +139,7 @@
     },
     {
       "category": "Video Content",
-      "Tabs": ["Subject", "Action", "Context"],
+      "tabs": ["Subject", "Action", "Context"],
       "sub_categories": [
         {
           "name": "Subject",

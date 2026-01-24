@@ -1,5 +1,6 @@
 {
-  "project_type": "Cuisine",
+  "project_type": "Cooking",
+  "project_label": "Plat",
   "constraints": [
     {
       "category": "Base / Carb",

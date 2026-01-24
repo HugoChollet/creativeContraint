@@ -389,10 +389,12 @@
       "category": "Lyric Subject Components",
       "label": "Composants de Sujet de Paroles",
       "description": "Éléments narratifs pour construire l'histoire ou le thème des paroles.",
-      "Tabs": ["Sujet", "Action", "Contexte"],
+      "tabs": ["Subject", "Action", "Context"],
+      "tabs_label": ["Sujet", "Action", "Contexte"],
       "sub_categories": [
         {
-          "name": "Sujet",
+          "name": "Subject",
+          "label": "Sujet",
           "options": [
             {"id": 1, "value": "Un chœur de statues", "rarity": 5},
             {"id": 2, "value": "Un astronaute en disgrâce", "rarity": 4},
@@ -502,7 +504,8 @@
           ]
         },
         {
-          "name": "Contextes",
+          "name": "Context",
+          "label": "Contexte",
           "options":[
             {"id": 1, "value": "à travers une pièce bondée", "rarity": 2},
             {"id": 2, "value": "après le rideau final", "rarity": 4},
