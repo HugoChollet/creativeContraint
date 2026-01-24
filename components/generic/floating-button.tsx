@@ -44,6 +44,7 @@ export function FloatingButton({
         intensity={20}
         tint={colors.background === "#fff" ? "light" : "dark"}
         style={styles.blurWrapper}
+        experimentalBlurMethod="dimezisBlurView"
       >
         {label && (
           <Text style={[globalStyles.text, disabled && { opacity: 0.5 }]}>

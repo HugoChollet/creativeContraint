@@ -1,4 +1,5 @@
 import { FloatingButton } from "@/components/generic/floating-button";
+import { Spacer } from "@/components/generic/spacer";
 import { ThemedText } from "@/components/generic/themed-text";
 import CategorySelector from "@/components/specific/category-selector";
 import GeneratedConstraintsSheet from "@/components/specific/generated-constraints-sheet";
@@ -218,6 +219,7 @@ export default function LabScreen() {
             color={getProjectColor(dataSource.project_type)}
           />
         ))}
+        <Spacer height={60} />
       </ScrollView>
 
       <View style={styles.floatingButtonsWrapper} pointerEvents="box-none">
