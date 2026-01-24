@@ -82,7 +82,7 @@ export const getProjectColor = (label: string, opacity: number = 1): string => {
     Book: "book",
     Music: "music",
     Photography: "photography",
-    "Fiction Video": "videoFiction",
+    "Video Fiction": "videoFiction",
     Cooking: "cooking",
     "Internet Video": "videoInternet",
   };

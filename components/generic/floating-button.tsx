@@ -6,6 +6,7 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 interface FloatingButtonProps {
   onPress: () => void;
+  color?: string;
   disabled?: boolean;
   icon?: IoniconsName;
   label?: string;
@@ -15,6 +16,7 @@ interface FloatingButtonProps {
 
 export function FloatingButton({
   onPress,
+  color,
   disabled = false,
   icon,
   label,
@@ -22,12 +24,17 @@ export function FloatingButton({
   right,
 }: FloatingButtonProps) {
   const { globalStyles, colors } = useStyles();
+  console.log("color ::", color);
 
   return (
     <TouchableOpacity
       style={[
-        globalStyles.floatingButton,
-        { bottom: bottom ?? "50%", right: right },
+        styles.button,
+        {
+          bottom: bottom ?? "50%",
+          right: right,
+          boxShadow: `${color} 0px 0px 4.65px`,
+        },
         disabled && { opacity: 0.7 },
       ]}
       onPress={onPress}
@@ -63,5 +70,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(255, 255, 255, 0.2)",
+  },
+  button: {
+    position: "absolute",
+    borderRadius: 32,
+    elevation: 8,
+    overflow: "hidden",
   },
 });

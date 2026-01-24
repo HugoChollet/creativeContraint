@@ -3,6 +3,7 @@ import { ThemedText } from "@/components/generic/themed-text";
 import CategorySelector from "@/components/specific/category-selector";
 import GeneratedConstraintsSheet from "@/components/specific/generated-constraints-sheet";
 import { PresetMode } from "@/components/specific/status-selector";
+import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import i18nInstance from "@/i18n";
 import { useLocalSearchParams } from "expo-router";
@@ -214,6 +215,7 @@ export default function LabScreen() {
             onBulkUpdate={bulkUpdateOptions}
             isExpanded={expandedCategory === cat.category}
             onExpand={() => handleToggleExpand(cat.category)}
+            color={getProjectColor(dataSource.project_type)}
           />
         ))}
       </ScrollView>
@@ -223,6 +225,7 @@ export default function LabScreen() {
           onPress={() => {
             setModalVisible(true);
           }}
+          color={getProjectColor(dataSource.project_type)}
           disabled={Object.keys(randomConstraints).length === 0}
           icon="arrow-up-outline"
           bottom={-24}
@@ -230,6 +233,7 @@ export default function LabScreen() {
         />
         <FloatingButton
           onPress={refreshConstraints}
+          color={getProjectColor(dataSource.project_type)}
           bottom={-24}
           right={120}
           label={t("screen:lab.generate_button", {
@@ -243,6 +247,7 @@ export default function LabScreen() {
         setModalVisible={setModalVisible}
         randomConstraints={randomConstraints}
         dataSource={dataSource}
+        color={getProjectColor(dataSource.project_type)}
       />
     </View>
   );

@@ -179,15 +179,6 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       borderColor: Colors.alert,
       backgroundColor: "transparent",
     },
-    floatingButton: {
-      position: "absolute",
-      borderRadius: 32,
-      shadowColor: themes.tint,
-      shadowOpacity: 0.3,
-      shadowRadius: 4.65,
-      elevation: 8,
-      overflow: "hidden",
-    },
 
     backgroundColor: {
       backgroundColor: themes.background,

@@ -16,6 +16,7 @@ type GeneratedConstraintsSheetProps = {
   setModalVisible: (visible: boolean) => void;
   randomConstraints: Record<string, string | string[]>;
   dataSource: ProjectData;
+  color: string;
 };
 
 export default function GeneratedConstraintsSheet({
@@ -23,6 +24,7 @@ export default function GeneratedConstraintsSheet({
   setModalVisible,
   randomConstraints,
   dataSource,
+  color,
 }: GeneratedConstraintsSheetProps) {
   const { t } = useTranslation();
   const { globalStyles } = useStyles();
@@ -56,13 +58,13 @@ export default function GeneratedConstraintsSheet({
       if (cat.options) {
         count +=
           cat.options.find(
-            (opt) => opt.value === randomConstraints[cat.category],
+            (opt) => opt.value === randomConstraints[cat.category]
           )?.rarity || 0;
       } else if (cat.sub_categories) {
         cat.sub_categories.map((subCat) => {
           count +=
             subCat.options.find((opt) =>
-              randomConstraints[cat.category].includes(opt.value),
+              randomConstraints[cat.category].includes(opt.value)
             )?.rarity || 0;
         });
       }
@@ -79,7 +81,7 @@ export default function GeneratedConstraintsSheet({
 
       if (cat.options) {
         const foundOption = cat.options.find(
-          (opt) => opt.value === generatedValue,
+          (opt) => opt.value === generatedValue
         );
         if (foundOption) {
           selectedData[cat.category] = foundOption;
@@ -87,7 +89,7 @@ export default function GeneratedConstraintsSheet({
       } else if (cat.sub_categories) {
         cat.sub_categories.forEach((subCat) => {
           const foundSubOption = subCat.options.find((opt) =>
-            generatedValue.includes(opt.value),
+            generatedValue.includes(opt.value)
           );
           if (foundSubOption) {
             selectedData[`${cat.category}-${subCat.name}`] = foundSubOption;
@@ -136,11 +138,13 @@ export default function GeneratedConstraintsSheet({
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
         buttonText={t("screen:lab.back_button")}
+        color={color}
       >
         <ResultModalHeader
           difficultyIndicator={getDifficultyGenerated()}
           onSaveConstraints={onSaveConstraints}
           isSaved={isSaved}
+          color={color}
         />
 
         <ScrollView>

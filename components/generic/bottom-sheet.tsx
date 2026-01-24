@@ -13,6 +13,7 @@ interface BottomSheetProps {
   onClose: () => void;
   children: React.ReactNode;
   buttonText?: string;
+  color: string;
 }
 
 export function BottomSheet({
@@ -20,6 +21,7 @@ export function BottomSheet({
   onClose,
   children,
   buttonText = "Close",
+  color,
 }: BottomSheetProps) {
   const { globalStyles } = useStyles();
 
@@ -38,7 +40,7 @@ export function BottomSheet({
           {children}
 
           <TouchableOpacity
-            style={globalStyles.secondaryButton}
+            style={[globalStyles.secondaryButton, { backgroundColor: color }]}
             onPress={onClose}
           >
             <Text style={globalStyles.secondaryButtonText}>{buttonText}</Text>

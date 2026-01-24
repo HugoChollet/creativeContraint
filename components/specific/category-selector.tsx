@@ -20,6 +20,7 @@ interface CategoryProps {
   onBulkUpdate: (catName: string, options: Option[], mode: PresetMode) => void;
   isExpanded: boolean;
   onExpand: () => void;
+  color?: string;
 }
 
 export default function CategorySelector({
@@ -30,6 +31,7 @@ export default function CategorySelector({
   onBulkUpdate,
   isExpanded,
   onExpand,
+  color,
 }: CategoryProps) {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [mode, setMode] = useState<PresetMode>("all");
@@ -71,7 +73,7 @@ export default function CategorySelector({
           <Ionicons
             name={isEnabled ? "checkbox" : "square-outline"}
             size={24}
-            color={isEnabled ? colors.tint : colors.disable}
+            color={isEnabled ? color : colors.disable}
           />
         </Pressable>
 
@@ -129,7 +131,7 @@ export default function CategorySelector({
                     style={[
                       globalStyles.tabText,
                       activeTabIndex === index
-                        ? { color: colors.text }
+                        ? { color: color }
                         : { color: colors.disable },
                     ]}
                   >
@@ -153,6 +155,7 @@ export default function CategorySelector({
                   option={opt}
                   isParentEnabled={isEnabled}
                   isSelected={!!selectedItems.selectedOptions[selectionKey]}
+                  color={color}
                   onToggle={(id) => {
                     setMode("custom");
                     // Pass the specialized key to the parent handler

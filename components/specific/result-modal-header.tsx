@@ -9,12 +9,14 @@ interface ResultModalHeaderProps {
   difficultyIndicator?: number;
   onSaveConstraints: () => void;
   isSaved: boolean;
+  color: string;
 }
 
 export default function ResultModalHeader({
   difficultyIndicator,
   onSaveConstraints,
   isSaved,
+  color,
 }: ResultModalHeaderProps) {
   const { globalStyles, colors } = useStyles();
   const { t } = useTranslation();
@@ -36,7 +38,7 @@ export default function ResultModalHeader({
           <Ionicons
             size={28}
             name={isSaved ? "bookmark" : "bookmark-outline"}
-            color={colors.tint}
+            color={color}
           />
         </TouchableOpacity>
       </View>
