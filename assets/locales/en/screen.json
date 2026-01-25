@@ -22,7 +22,8 @@
     "videofiction_button": "Film a Fiction",
     "photography_button": "Take a Photography",
     "videogame_button": "Develop a Video Game",
-    "cooking_button": "Cook a Meal"
+    "cooking_button": "Cook a Meal",
+    "boardgame_button": "Design a Board Game"
   },
   "settings": {
     "settings_title": "Settings",

@@ -21,7 +21,8 @@
     "videofiction_button": "Filmer une fiction",
     "photography_button": "Prendre une photographie",
     "videogame_button": "Développer un jeu Video",
-    "cooking_button": "Cuisiner un repas"
+    "cooking_button": "Cuisiner un repas",
+    "boardgame_button": "Definir un jeu de plateau"
   },
   "settings": {
     "settings_title": "Paramètres",

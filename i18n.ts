@@ -1,6 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
+import boardGameEN from "./assets/locales/en/boardgame.json";
 import bookEN from "./assets/locales/en/book.json";
 import componentEN from "./assets/locales/en/component.json";
 import cookingEN from "./assets/locales/en/cooking.json";
@@ -10,6 +11,7 @@ import screenEN from "./assets/locales/en/screen.json";
 import videoFictionEN from "./assets/locales/en/videoFiction.json";
 import videoInternetEN from "./assets/locales/en/videoInternet.json";
 
+import boardGameFR from "./assets/locales/fr/boardgame.json";
 import bookFR from "./assets/locales/fr/book.json";
 import componentFR from "./assets/locales/fr/component.json";
 import cookingFR from "./assets/locales/fr/cooking.json";
@@ -30,6 +32,7 @@ i18n.use(initReactI18next).init({
       videoFiction: videoFictionEN,
       videoInternet: videoInternetEN,
       cooking: cookingEN,
+      boardGame: boardGameEN,
     },
     fr: {
       screen: screenFR,
@@ -40,6 +43,7 @@ i18n.use(initReactI18next).init({
       videoFiction: videoFictionFR,
       videoInternet: videoInternetFR,
       cooking: cookingFR,
+      boardGame: boardGameFR,
     },
   },
   lng: "fr", // or use react-native-localize to detect automatically

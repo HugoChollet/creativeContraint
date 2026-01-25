@@ -77,6 +77,17 @@ export default function HomeScreen() {
             })
           }
         />
+        <MainButton
+          title={t("screen:home.boardgame_button")}
+          color={ProjectsColors.cooking}
+          image={require("@/assets/images/projects/cooking.svg")}
+          onPress={() =>
+            router.push({
+              pathname: "/lab",
+              params: { id: 1, type: "boardgame" },
+            })
+          }
+        />
       </ScrollView>
     </View>
   );
