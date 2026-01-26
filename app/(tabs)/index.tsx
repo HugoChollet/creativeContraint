@@ -79,8 +79,8 @@ export default function HomeScreen() {
         />
         <MainButton
           title={t("screen:home.boardgame_button")}
-          color={ProjectsColors.cooking}
-          image={require("@/assets/images/projects/cooking.svg")}
+          color={ProjectsColors.boardgame}
+          image={require("@/assets/images/projects/png/boardgame.png")}
           onPress={() =>
             router.push({
               pathname: "/lab",

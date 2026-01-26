@@ -73,6 +73,7 @@ export const ProjectsColors = {
   videoFiction: "rgba(255, 193, 0, 1)",
   cooking: "rgba(255, 114, 94, 1)",
   videoInternet: "rgba(130, 200, 104, 1)",
+  boardgame: "rgba(197, 63, 63, 1)",
 } as const;
 
 export type ProjectKey = keyof typeof ProjectsColors;
@@ -85,6 +86,7 @@ export const getProjectColor = (label: string, opacity: number = 1): string => {
     "Video Fiction": "videoFiction",
     Cooking: "cooking",
     "Internet Video": "videoInternet",
+    "Board Game": "boardgame",
   };
 
   const key = map[label] || "book";
