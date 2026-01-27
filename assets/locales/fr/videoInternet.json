@@ -1,6 +1,6 @@
 {
   "project_type": "Internet Video",
-  "label_project": "Vidéo pour plateforme",
+  "project_label": "Vidéo pour plateforme",
   "constraints": [
     {
       "category": "Type",

@@ -3,6 +3,7 @@
   "constraints": [
     {
       "category": "Material & Gear",
+      "disabled": true,
       "description": "Constraints related to the physical camera, lenses, and hardware limitations.",
       "options": [
         {"id": 1, "value": "Action Cam (GoPro style rugged wide-angle)", "rarity": 2},

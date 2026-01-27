@@ -1,6 +1,6 @@
 {
   "project_type": "Music",
-  "label_project": "Musique",
+  "project_label": "Musique",
   "constraints": [
     {
       "category": "Instruments",

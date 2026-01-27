@@ -27,7 +27,6 @@ interface GlobalStyles {
   transparentButton: ViewStyle;
   dropdownButton: ViewStyle;
   alertButton: ViewStyle;
-  floatingButton: ViewStyle;
 
   backgroundColor: ViewStyle;
   headerRow: ViewStyle;
@@ -216,7 +215,7 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       justifyContent: "center",
     },
     tag: {
-      backgroundColor: themes.softContainer,
+      backgroundColor: themes.shadeContainer,
       paddingHorizontal: 8,
       paddingVertical: 4,
       borderRadius: 6,

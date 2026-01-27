@@ -1,6 +1,6 @@
 {
   "project_type": "Video Fiction",
-  "label_project": "Vidéo de fiction",
+  "project_label": "Vidéo de fiction",
   "constraints": [
     {
         "category": "Genre",
@@ -322,8 +322,8 @@
     {
         "category": "Scene",
         "label": "Scène",
-        "tabs": ["Sujet", "Action", "Contexte"],
-        "tabs_label": ["Subject", "Action", "Context"],
+        "tabs": ["Subject", "Action", "Context"],
+        "tabs_label": ["Sujet", "Action", "Contexte"],
         "sub_categories": [
             {
                 "name": "Subject",

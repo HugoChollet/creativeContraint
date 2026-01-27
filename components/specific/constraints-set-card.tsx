@@ -1,11 +1,21 @@
 import { Colors, getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
+import { useTranslationTool } from "@/hooks/use-translation";
 import { SavedProjectConstraints } from "@/types/data";
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DifficultyIndicator } from "./difficulty-indicator";
+
+const typeMapping: Record<string, string> = {
+  music: "music",
+  book: "book",
+  photography: "photo",
+  "video fiction": "videoFiction",
+  "video internet": "videoInternet",
+  cooking: "cooking",
+};
 
 export function ConstraintsSetCard({
   item,
@@ -14,9 +24,35 @@ export function ConstraintsSetCard({
   item: SavedProjectConstraints;
   deleteRecord: (id: number) => void;
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { globalStyles, colors } = useStyles();
-  const constraintKeys = Object.keys(item.constraints);
+
+  const typeKey = typeMapping[item.project_type.toLowerCase()] || "book";
+
+  const dataSource = useMemo(() => {
+    // Accessing i18n.language here ensures this useMemo triggers on change
+    const data = i18n.getResourceBundle(i18n.language, typeKey);
+    return data || { constraints: [] };
+  }, [i18n.language, typeKey]);
+
+  const { getTranslation } = useTranslationTool(dataSource.constraints);
+
+  const translatedConstraints = useMemo(() => {
+    const result: { label: string; value: string }[] = [];
+
+    Object.entries(item.constraints).forEach(([key, info]: [string, any]) => {
+      // key can be "Genre" or "Scene-Action"
+      const label = getTranslation("Category", key, "");
+      const value = getTranslation("Option", key, info.id);
+
+      result.push({ label, value });
+    });
+
+    return result;
+  }, [item.constraints, getTranslation]);
+
+  console.log(item);
+  console.log("trasnlated :", translatedConstraints);
 
   return (
     <View
@@ -32,7 +68,7 @@ export function ConstraintsSetCard({
       <View style={styles.headerContainer}>
         <DifficultyIndicator difficultyIndicator={item.difficulty} />
         <Text style={[globalStyles.title, { color: colors.text }]}>
-          {item.project_type.toUpperCase()}
+          {(dataSource.project_label ?? dataSource.project_type).toUpperCase()}
         </Text>
 
         <TouchableOpacity onPress={() => deleteRecord(item.id)}>
@@ -51,13 +87,13 @@ export function ConstraintsSetCard({
 
       {/* Constraints Tags Section */}
       <View style={styles.tagContainer}>
-        {constraintKeys.map((key) => (
-          <View key={key} style={globalStyles.tag}>
+        {translatedConstraints.map(({ label, value }) => (
+          <View key={label} style={globalStyles.tag}>
             <Text style={{ fontSize: 12, color: colors.textDiscreet }}>
-              {key}:{" "}
-              <Text style={{ color: colors.text, fontWeight: "600" }}>
-                {item.constraints[key].value}
-              </Text>
+              {label}
+            </Text>
+            <Text style={{ color: colors.text, fontWeight: "600" }}>
+              {value}
             </Text>
           </View>
         ))}

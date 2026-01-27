@@ -1,10 +1,11 @@
 {
   "project_type": "Photography",
-  "label_project": "Photographie",
+  "project_label": "Photographie",
   "constraints": [
     {
         "category": "Material & Gear",
         "label": "Matériel et Équipement",
+      "disabled": true,
         "description": "Contraintes liées à l'appareil photo physique, aux objectifs et aux limitations matérielles.",
         "options": [
             {"id": 1, "value": "Action Cam (Style GoPro, grand-angle robuste)", "rarity": 2},

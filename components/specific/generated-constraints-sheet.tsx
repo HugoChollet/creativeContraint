@@ -90,8 +90,7 @@ export default function GeneratedConstraintsSheet({
             generatedValue.includes(opt.value)
           );
           if (foundSubOption) {
-            selectedData[`${cat.category}-${subCat.label ?? subCat.name}`] =
-              foundSubOption;
+            selectedData[`${cat.category}-${subCat.name}`] = foundSubOption;
           }
         });
       }

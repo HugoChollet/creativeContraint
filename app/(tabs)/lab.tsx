@@ -24,7 +24,7 @@ import {
   SelectedState,
 } from "../../types/constraints";
 
-const typeMapping: Record<string, string> = {
+export const typeMapping: Record<string, string> = {
   music: "music",
   book: "book",
   photography: "photo",
