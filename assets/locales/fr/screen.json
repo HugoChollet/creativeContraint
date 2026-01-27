@@ -6,7 +6,7 @@
     "Projects": "Projets"
   },
   "lab": {
-    "lab_title": "Lab pour {{type}}",
+    "lab_title": "Labo pour {{type}}",
     "generate_button": "Générer une idée de {{type}}",
     "constraints_title": "Contraintes de {{type}}",
     "back_button": "Retour au Lab",

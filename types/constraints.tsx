@@ -20,6 +20,7 @@ export interface Category {
 
 export interface ProjectData {
   project_type: string;
+  project_label?: string;
   constraints: Category[];
 }
 
