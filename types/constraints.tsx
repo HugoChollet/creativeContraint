@@ -16,6 +16,8 @@ export interface Category {
   label?: string;
   options?: Option[];
   sub_categories?: SubCategory[];
+  tabs?: string[];
+  tabs_labels?: string[];
 }
 
 export interface ProjectData {

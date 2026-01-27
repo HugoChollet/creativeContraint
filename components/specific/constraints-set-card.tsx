@@ -1,6 +1,7 @@
 import { Colors, getProjectColor } from "@/constants/theme";
+import { useProjectTranslations } from "@/hooks/use-project-translations";
 import { useStyles } from "@/hooks/use-styles";
-import { useTranslationTool } from "@/hooks/use-translation";
+import { ProjectData } from "@/types/constraints";
 import { SavedProjectConstraints } from "@/types/data";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useMemo } from "react";
@@ -9,6 +10,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DifficultyIndicator } from "./difficulty-indicator";
 
 const typeMapping: Record<string, string> = {
+  // TODO unify with lab.tsx and json files project_type keys
   music: "music",
   book: "book",
   photography: "photo",
@@ -24,35 +26,20 @@ export function ConstraintsSetCard({
   item: SavedProjectConstraints;
   deleteRecord: (id: number) => void;
 }) {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const { globalStyles, colors } = useStyles();
 
   const typeKey = typeMapping[item.project_type.toLowerCase()] || "book";
 
   const dataSource = useMemo(() => {
-    // Accessing i18n.language here ensures this useMemo triggers on change
-    const data = i18n.getResourceBundle(i18n.language, typeKey);
+    const data = i18n.getResourceBundle(i18n.language, typeKey) as ProjectData;
     return data || { constraints: [] };
   }, [i18n.language, typeKey]);
 
-  const { getTranslation } = useTranslationTool(dataSource.constraints);
-
-  const translatedConstraints = useMemo(() => {
-    const result: { label: string; value: string }[] = [];
-
-    Object.entries(item.constraints).forEach(([key, info]: [string, any]) => {
-      // key can be "Genre" or "Scene-Action"
-      const label = getTranslation("Category", key, "");
-      const value = getTranslation("Option", key, info.id);
-
-      result.push({ label, value });
-    });
-
-    return result;
-  }, [item.constraints, getTranslation]);
-
-  console.log(item);
-  console.log("trasnlated :", translatedConstraints);
+  const { translatedConstraints } = useProjectTranslations(
+    item.constraints,
+    dataSource.constraints
+  );
 
   return (
     <View
@@ -87,13 +74,13 @@ export function ConstraintsSetCard({
 
       {/* Constraints Tags Section */}
       <View style={styles.tagContainer}>
-        {translatedConstraints.map(({ label, value }) => (
+        {translatedConstraints.map(({ label, displayValue }) => (
           <View key={label} style={globalStyles.tag}>
             <Text style={{ fontSize: 12, color: colors.textDiscreet }}>
               {label}
             </Text>
             <Text style={{ color: colors.text, fontWeight: "600" }}>
-              {value}
+              {displayValue}
             </Text>
           </View>
         ))}
