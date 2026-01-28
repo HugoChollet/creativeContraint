@@ -52,11 +52,7 @@ const styles = StyleSheet.create({
     // Sur Android, maxHeight peut bugger si le contenu n'est pas scrollable.
     // On utilise minHeight pour s'assurer qu'il ne s'écrase pas.
     minHeight: 300,
-    elevation: 5, // Ombre pour Android
-    shadowColor: "#000", // Ombre pour iOS
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    elevation: 5,
   },
   innerContainer: {
     // Force les enfants à se disposer verticalement avec de l'espace

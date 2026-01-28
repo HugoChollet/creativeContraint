@@ -50,10 +50,6 @@ const styles = StyleSheet.create({
     padding: 20,
     overflow: "hidden", // Keeps the decorator inside
     // Shadow for iOS
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
     // Elevation for Android
     elevation: 8,
   },
