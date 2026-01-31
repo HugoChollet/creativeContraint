@@ -38,7 +38,7 @@ export function ConstraintsSetCard({
 
   const { translatedConstraints } = useProjectTranslations(
     item.constraints,
-    dataSource.constraints
+    dataSource.constraints,
   );
 
   return (
@@ -48,6 +48,7 @@ export function ConstraintsSetCard({
         {
           marginBottom: 16,
           overflow: "hidden",
+          backgroundColor: getProjectColor(item.project_type, 0.1),
         },
       ]}
     >
@@ -67,7 +68,7 @@ export function ConstraintsSetCard({
         style={[
           styles.circleDecorator,
           {
-            backgroundColor: getProjectColor(item.project_type, 0.2),
+            backgroundColor: getProjectColor(item.project_type, 0.1),
           },
         ]}
       />
