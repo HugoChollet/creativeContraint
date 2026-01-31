@@ -1,4 +1,4 @@
-import { Colors, getProjectColor } from "@/constants/theme";
+import { getProjectColor } from "@/constants/theme";
 import { useProjectTranslations } from "@/hooks/use-project-translations";
 import { useStyles } from "@/hooks/use-styles";
 import { ProjectData } from "@/types/constraints";
@@ -8,6 +8,7 @@ import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DifficultyIndicator } from "./difficulty-indicator";
+import ShareConstraintButton from "./share-constraint-set";
 
 const typeMapping: Record<string, string> = {
   // TODO unify with lab.tsx and json files project_type keys
@@ -59,9 +60,22 @@ export function ConstraintsSetCard({
           {(dataSource.project_label ?? dataSource.project_type).toUpperCase()}
         </Text>
 
-        <TouchableOpacity onPress={() => deleteRecord(item.id)}>
-          <Ionicons name="trash-outline" size={20} color={Colors.alert} />
-        </TouchableOpacity>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <ShareConstraintButton
+            project_type={dataSource.project_label ?? item.project_type}
+            contraints={translatedConstraints}
+            difficulty={item.difficulty}
+            color={getProjectColor(item.project_type, 1)}
+          />
+
+          <TouchableOpacity onPress={() => deleteRecord(item.id)}>
+            <Ionicons
+              name="trash-outline"
+              size={20}
+              color={getProjectColor(item.project_type, 1)}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View

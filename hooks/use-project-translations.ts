@@ -2,14 +2,14 @@ import { Category } from "@/types/constraints";
 import { useMemo } from "react";
 import { useTranslationTool } from "./use-translation";
 
-interface TranslatedRow {
+export interface TranslatedRow {
   label: string;
   displayValue: string;
 }
 
 export const useProjectTranslations = (
   constraintsData: Record<string, any>,
-  dataSheet: Category[]
+  dataSheet: Category[],
 ) => {
   console.log("useProjectTranslation");
 

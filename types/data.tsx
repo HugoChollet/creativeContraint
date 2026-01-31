@@ -4,7 +4,7 @@ export type ChosenOption = Record<string, Option>;
 
 export type SavedProjectConstraints = {
   id: number;
-  owner_id: string; // Ensure this matches the DB column
+  owner_id: string;
   project_type: string;
   constraints: ChosenOption;
   difficulty: number;
