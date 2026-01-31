@@ -11,8 +11,6 @@ export const useProjectTranslations = (
   constraintsData: Record<string, any>,
   dataSheet: Category[],
 ) => {
-  console.log("useProjectTranslation");
-
   const { getTranslation } = useTranslationTool(dataSheet);
 
   const translatedConstraints = useMemo((): TranslatedRow[] => {
@@ -28,8 +26,6 @@ export const useProjectTranslations = (
       const subKey = subCat || "default";
       groups[baseCat][subKey] = getTranslation("Option", key, info.id);
     });
-
-    console.log(groups);
 
     // 2. Build ordered array based on the DataSheet's 'tabs' configuration
     return Object.entries(groups).map(([baseCatKey, subValues]) => {

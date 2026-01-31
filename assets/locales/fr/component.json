@@ -38,5 +38,8 @@
     "error_title": "Erreur",
     "error": "Le partage n'est pas supporté sur cet appareil.",
     "card": "🎨 Défi de {{type}}\n\nType: \nDifficulté: {{difficulty}}\n\nContraintes à respecter :\n{{constraints}}\n\nPrêt à relever le défi ?\nVenez le prouver sur Creative Constraint !"
+  },
+  "tooltip": {
+    "ok": "Compris"
   }
 }

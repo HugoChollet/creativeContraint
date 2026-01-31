@@ -86,13 +86,6 @@ export default function ModalSelector({
 
 const styles = StyleSheet.create({
   container: { marginBottom: 20 },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.7)",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
   modalContent: {
     width: "100%",
     borderRadius: 16,

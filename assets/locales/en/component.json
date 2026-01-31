@@ -38,5 +38,8 @@
     "error_title": "Error",
     "error": "Sharing is not supported on this device.",
     "card": "🎨 {{type}} Challenge\n\nType: \nDifficulty: {{difficulty}}\n\nConstraints to follow :\n{{constraints}}\n\nReady to take up the challenge?"
+  },
+  "tooltip": {
+    "ok": "Got it"
   }
 }

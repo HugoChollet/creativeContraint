@@ -30,12 +30,14 @@ interface GlobalStyles {
 
   backgroundColor: ViewStyle;
   headerRow: ViewStyle;
+  titleArea: ViewStyle;
   optionItem: ViewStyle;
   activeOption: ViewStyle;
   activeOptionText: TextStyle;
   card: ViewStyle;
   tabSegment: ViewStyle;
   tag: ViewStyle;
+  modalOverlay: ViewStyle;
 }
 
 export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
@@ -189,6 +191,13 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       zIndex: 10,
       backgroundColor: themes.shadeContainer,
     },
+    titleArea: {
+      flex: 1,
+      marginLeft: 12,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
     optionItem: {
       flexDirection: "row",
       justifyContent: "space-between",
@@ -222,6 +231,13 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       borderWidth: 1,
       borderColor: themes.borderColor,
       maxWidth: "100%",
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: "rgba(0,0,0,0.7)",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 20,
     },
   });
 };

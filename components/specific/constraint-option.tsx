@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import Tooltip from "../generic/tooltip";
 
 interface OptionProps {
   option: Option;
@@ -57,6 +58,13 @@ export function ConstraintOption({
           {t("component:constraint-option.difficulty") + option.rarity}
         </Text>
       </View>
+      {option.description && (
+        <Tooltip
+          title={option.value}
+          description={option.description}
+          color={color}
+        />
+      )}
     </Pressable>
   );
 }

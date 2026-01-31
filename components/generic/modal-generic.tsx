@@ -17,7 +17,7 @@ export function ModalGeneric({ children, visible, setVisible }: Props) {
       animationType="fade"
       onRequestClose={() => setVisible(false)}
     >
-      <View style={styles.modalOverlay}>
+      <View style={globalStyles.modalOverlay}>
         <Pressable
           style={StyleSheet.absoluteFill}
           onPress={() => setVisible(false)}
@@ -38,20 +38,13 @@ export function ModalGeneric({ children, visible, setVisible }: Props) {
 }
 
 const styles = StyleSheet.create({
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.7)",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 24, // Espace sur les côtés
-  },
   modalContent: {
     width: "100%", // Prend toute la largeur moins le padding de l'overlay
     borderRadius: 20,
     padding: 20,
     // Sur Android, maxHeight peut bugger si le contenu n'est pas scrollable.
     // On utilise minHeight pour s'assurer qu'il ne s'écrase pas.
-    minHeight: 300,
+    minHeight: 100,
     elevation: 5,
   },
   innerContainer: {

@@ -9,6 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import Tooltip from "../generic/tooltip";
 import { ConstraintOption } from "./constraint-option";
 import { PresetMode, StatusSelector } from "./status-selector";
 
@@ -77,15 +78,24 @@ export default function CategorySelector({
           />
         </Pressable>
 
-        <View style={styles.titleArea}>
-          <Text
-            style={[
-              globalStyles.text,
-              { color: isEnabled ? colors.text : colors.disable },
-            ]}
-          >
-            {category.label || category.category}
-          </Text>
+        <View style={globalStyles.titleArea}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text
+              style={[
+                globalStyles.text,
+                { color: isEnabled ? colors.text : colors.disable },
+              ]}
+            >
+              {category.label || category.category}
+            </Text>
+            {category.description && (
+              <Tooltip
+                title={category.label || category.category}
+                description={category.description}
+                color={color}
+              />
+            )}
+          </View>
           <Text
             style={[
               globalStyles.discreetText,
@@ -177,13 +187,6 @@ export default function CategorySelector({
 }
 
 const styles = StyleSheet.create({
-  titleArea: {
-    flex: 1,
-    marginLeft: 12,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
   expandedContent: { flex: 1, marginTop: 12 },
   fixedSelectorWrapper: {
     paddingHorizontal: 16,

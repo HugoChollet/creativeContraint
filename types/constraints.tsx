@@ -2,12 +2,14 @@ export interface Option {
   id: number;
   value: string;
   rarity: number;
+  description?: string;
 }
 
 export interface SubCategory {
   name: string;
   label?: string;
   options: Option[];
+  description?: string;
 }
 
 export interface Category {
@@ -18,6 +20,7 @@ export interface Category {
   sub_categories?: SubCategory[];
   tabs?: string[];
   tabs_labels?: string[];
+  description?: string;
 }
 
 export interface ProjectData {
@@ -31,4 +34,4 @@ export type SelectedState = {
   selectedOptions: Record<string, boolean>; // e.g., { "Core Theme-5": true }
 };
 
-export type GeneratedConstraints = Record<string, string>;
+export type GeneratedConstraints = Record<string, Option>;
