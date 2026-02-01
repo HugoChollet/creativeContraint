@@ -6,6 +6,6 @@ export type SavedProjectConstraints = {
   id: number;
   owner_id: string;
   project_type: string;
-  constraints: ChosenOption;
+  constraints: Record<string, { id: number }>;
   difficulty: number;
 };

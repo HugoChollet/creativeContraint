@@ -149,19 +149,32 @@ export default function LabScreen() {
             : [];
 
         if (availableOptions.length > 0) {
-          results[cat.category] = "";
+          results[cat.category] = {
+            id: -1,
+            value: "",
+            rarity: 0,
+            description: "",
+          };
           if (cat.options) {
             const randomIndex = Math.floor(
               Math.random() * availableOptions.length,
             );
-            results[cat.category] = availableOptions[randomIndex].value;
+            results[cat.category].value = availableOptions[randomIndex].value;
+            results[cat.category].id = availableOptions[randomIndex].id;
+            results[cat.category].rarity = availableOptions[randomIndex].rarity;
+            results[cat.category].description =
+              availableOptions[randomIndex].description;
           } else if (cat.sub_categories) {
             // Concat all subCat result to result
             for (const subCat of cat.sub_categories) {
+              // TODO Change to have ids and not values here so we can save the ids
               const randomIndex = Math.floor(
                 Math.random() * subCat.options.length,
               );
-              results[cat.category] += " " + subCat.options[randomIndex].value;
+              results[cat.category].value +=
+                " " + subCat.options[randomIndex].value;
+              results[cat.category].rarity +=
+                subCat.options[randomIndex].rarity;
             }
           }
         }

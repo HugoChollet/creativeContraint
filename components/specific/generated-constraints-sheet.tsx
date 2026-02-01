@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { Option, ProjectData } from "@/types/constraints";
-import { ChosenOption, SavedProjectConstraints } from "@/types/data";
+import { SavedProjectConstraints } from "@/types/data";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
@@ -58,29 +58,77 @@ export default function GeneratedConstraintsSheet({
     return count;
   };
 
-  const getConstraintData = (): ChosenOption => {
-    const selectedData: ChosenOption = {};
+  // const getConstraintData = (): ChosenOption => {
+  //   const selectedData: ChosenOption = {};
+
+  //   dataSource.constraints.forEach((cat) => {
+  //     if (!randomConstraints[cat.category]) return;
+  //     const generatedValue = randomConstraints[cat.category].value;
+  //     if (!generatedValue) return;
+
+  //     console.log("saving ", generatedValue);
+
+  //     if (cat.options) {
+  //       // TODO refacto this is not useful for non-subCategory
+  //       const foundOption = cat.options.find(
+  //         (opt) => opt.value === generatedValue,
+  //       );
+  //       if (foundOption) {
+  //         selectedData[cat.category] = foundOption;
+  //       }
+  //     } else if (cat.sub_categories) {
+  //       cat.sub_categories.forEach((subCat) => {
+  //         const foundSubOption = subCat.options.find((opt) =>
+  //           generatedValue.includes(opt.value),
+  //         );
+  //         if (foundSubOption) {
+  //           selectedData[`${cat.category}-${subCat.name}`] = foundSubOption;
+  //         }
+  //       });
+  //     }
+  //   });
+
+  //   return selectedData;
+  // };
+
+  /**
+   * Transforms the current generated state into a lean object for Supabase.
+   * Only categories name and id of option selected
+   */
+  const getConstraintData = (): Record<string, { id: number }> => {
+    const selectedData: Record<string, { id: number }> = {};
 
     dataSource.constraints.forEach((cat) => {
-      if (!randomConstraints[cat.category]) return;
-      const generatedValue = randomConstraints[cat.category].value;
-      if (!generatedValue) return;
+      // Check if this category was even generated
+      const generated = randomConstraints[cat.category];
+      if (!generated) return;
 
       if (cat.options) {
-        // TODO refacto this is not useful for non-subCategory
+        // FLAT CATEGORY
+        // We look for the option that matches the generated value
         const foundOption = cat.options.find(
-          (opt) => opt.value === generatedValue,
+          (opt) => opt.value === generated.value,
         );
         if (foundOption) {
-          selectedData[cat.category] = foundOption;
+          selectedData[cat.category] = { id: foundOption.id };
         }
       } else if (cat.sub_categories) {
-        cat.sub_categories.forEach((subCat) => {
-          const foundSubOption = subCat.options.find((opt) =>
-            generatedValue.includes(opt.value),
+        debugger;
+        // SUB-CATEGORY (e.g., Scene)
+        // The 'generated.value' for a Scene is likely "Hero : saves : the town"
+        // We split it to find which part belongs to which sub-category
+        const valueParts = generated.value.split(" : ");
+
+        cat.sub_categories.forEach((subCat, index) => {
+          const partValue = valueParts[index];
+          const foundSubOption = subCat.options.find(
+            (opt) => opt.value === partValue,
           );
+
           if (foundSubOption) {
-            selectedData[`${cat.category}-${subCat.name}`] = foundSubOption;
+            selectedData[`${cat.category}-${subCat.name}`] = {
+              id: foundSubOption.id,
+            };
           }
         });
       }
