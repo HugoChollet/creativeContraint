@@ -1,10 +1,10 @@
 import { Category } from "@/types/constraints";
 import { useMemo } from "react";
 import { useTranslationTool } from "./use-translation";
-
 export interface TranslatedRow {
   label: string;
   displayValue: string;
+  description?: string;
 }
 
 export const useProjectTranslations = (
@@ -13,45 +13,62 @@ export const useProjectTranslations = (
 ) => {
   const { getTranslation } = useTranslationTool(dataSheet);
 
-  const translatedConstraints = useMemo((): TranslatedRow[] => {
+  return useMemo((): TranslatedRow[] => {
     if (!constraintsData || !dataSheet) return [];
 
-    // 1. Group raw data by base category (e.g., 'Scene')
-    const groups: Record<string, Record<string, string>> = {};
+    const groups: Record<
+      string,
+      {
+        values: Record<string, string>;
+        descriptions: Record<string, string>;
+      }
+    > = {};
 
     Object.entries(constraintsData).forEach(([key, info]: [string, any]) => {
       const [baseCat, subCat] = key.split("-");
-      if (!groups[baseCat]) groups[baseCat] = {};
+      if (!groups[baseCat]) groups[baseCat] = { values: {}, descriptions: {} };
 
       const subKey = subCat || "default";
-      groups[baseCat][subKey] = getTranslation("Option", key, info.id);
+      groups[baseCat].values[subKey] = getTranslation("Option", key, info.id);
+      groups[baseCat].descriptions[subKey] = getTranslation(
+        "Description",
+        key,
+        info.id,
+      );
     });
 
-    // 2. Build ordered array based on the DataSheet's 'tabs' configuration
-    return Object.entries(groups).map(([baseCatKey, subValues]) => {
+    return Object.entries(groups).map(([baseCatKey, groupData]) => {
       const masterCat = dataSheet.find((c) => c.category === baseCatKey);
       const categoryLabel =
         masterCat?.label || masterCat?.category || baseCatKey;
 
       let displayValue = "";
+      let description = "";
 
       if (masterCat?.tabs && masterCat.tabs.length > 0) {
-        // Enforce order based on tabs array
         displayValue = masterCat.tabs
-          .map((tabName) => subValues[tabName])
+          .map((tab) => groupData.values[tab])
           .filter(Boolean)
           .join(" : ");
+
+        // Join non-empty descriptions with a bullet or newline
+        description = masterCat.tabs
+          .map((tab) => groupData.descriptions[tab])
+          .filter((desc) => desc && desc.length > 0)
+          .join("\n• ");
+        if (description) description = "• " + description;
       } else {
-        // Single category value
-        displayValue = subValues["default"] || "";
+        displayValue = groupData.values["default"] || "";
+        // If flat category, prioritize option description, fallback to category description
+        description =
+          groupData.descriptions["default"] || masterCat?.description || "";
       }
 
       return {
         label: categoryLabel,
         displayValue,
+        description: description || undefined,
       };
     });
   }, [constraintsData, dataSheet, getTranslation]);
-
-  return { translatedConstraints };
 };
