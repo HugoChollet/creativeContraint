@@ -10,6 +10,7 @@ interface GlobalStyles {
   shadeScroll: ViewStyle;
   tabContainer: ViewStyle;
   screenContainer: ViewStyle;
+  elementAndDescriptorContainer: ViewStyle;
 
   text: TextStyle;
   label: TextStyle;
@@ -92,6 +93,10 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       backgroundColor: themes.background,
       flex: 1,
       paddingHorizontal: 24,
+    },
+    elementAndDescriptorContainer: {
+      flexDirection: "row",
+      alignItems: "center",
     },
 
     // Texts

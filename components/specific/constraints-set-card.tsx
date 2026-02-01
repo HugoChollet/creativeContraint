@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Tooltip from "../generic/tooltip";
 import { DifficultyIndicator } from "./difficulty-indicator";
 import ShareConstraintButton from "./share-constraint-set";
 
@@ -37,7 +38,7 @@ export function ConstraintsSetCard({
     return data || { constraints: [] };
   }, [i18n.language, typeKey]);
 
-  const { translatedConstraints } = useProjectTranslations(
+  const translatedConstraints = useProjectTranslations(
     item.constraints,
     dataSource.constraints,
   );
@@ -63,7 +64,7 @@ export function ConstraintsSetCard({
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
           <ShareConstraintButton
             project_type={dataSource.project_label ?? item.project_type}
-            contraints={translatedConstraints}
+            constraints={translatedConstraints}
             difficulty={item.difficulty}
             color={getProjectColor(item.project_type, 1)}
           />
@@ -89,14 +90,23 @@ export function ConstraintsSetCard({
 
       {/* Constraints Tags Section */}
       <View style={styles.tagContainer}>
-        {translatedConstraints.map(({ label, displayValue }) => (
+        {translatedConstraints.map(({ label, displayValue, description }) => (
           <View key={label} style={globalStyles.tag}>
             <Text style={{ fontSize: 12, color: colors.textDiscreet }}>
               {label}
             </Text>
-            <Text style={{ color: colors.text, fontWeight: "600" }}>
-              {displayValue}
-            </Text>
+            <View style={globalStyles.elementAndDescriptorContainer}>
+              <Text style={{ color: colors.text, fontWeight: "600" }}>
+                {displayValue}
+              </Text>
+              {description && (
+                <Tooltip
+                  title={label}
+                  description={description}
+                  color={getProjectColor(item.project_type, 1)}
+                />
+              )}
+            </View>
           </View>
         ))}
       </View>

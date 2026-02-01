@@ -79,7 +79,7 @@ export default function CategorySelector({
         </Pressable>
 
         <View style={globalStyles.titleArea}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View style={globalStyles.elementAndDescriptorContainer}>
             <Text
               style={[
                 globalStyles.text,

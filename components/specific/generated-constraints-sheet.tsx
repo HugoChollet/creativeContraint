@@ -2,19 +2,20 @@ import { BottomSheet } from "@/components/generic/bottom-sheet";
 import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
-import { ProjectData } from "@/types/constraints";
+import { Option, ProjectData } from "@/types/constraints";
 import { ChosenOption, SavedProjectConstraints } from "@/types/data";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
 import { ModalGeneric } from "../generic/modal-generic";
+import Tooltip from "../generic/tooltip";
 import Auth from "./auth";
 import ResultModalHeader from "./result-modal-header";
 
 type GeneratedConstraintsSheetProps = {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
-  randomConstraints: Record<string, string | string[]>;
+  randomConstraints: Record<string, Option>;
   dataSource: ProjectData;
   color: string;
 };
@@ -51,21 +52,8 @@ export default function GeneratedConstraintsSheet({
   const getDifficultyGenerated = () => {
     let count = 0;
 
-    dataSource.constraints.map((cat) => {
-      if (cat.disabled || !randomConstraints[cat.category]) return;
-      if (cat.options) {
-        count +=
-          cat.options.find(
-            (opt) => opt.value === randomConstraints[cat.category]
-          )?.rarity || 0;
-      } else if (cat.sub_categories) {
-        cat.sub_categories.map((subCat) => {
-          count +=
-            subCat.options.find((opt) =>
-              randomConstraints[cat.category].includes(opt.value)
-            )?.rarity || 0;
-        });
-      }
+    Object.values(randomConstraints).forEach((option) => {
+      count += option.rarity;
     });
     return count;
   };
@@ -74,12 +62,14 @@ export default function GeneratedConstraintsSheet({
     const selectedData: ChosenOption = {};
 
     dataSource.constraints.forEach((cat) => {
-      const generatedValue = randomConstraints[cat.category];
+      if (!randomConstraints[cat.category]) return;
+      const generatedValue = randomConstraints[cat.category].value;
       if (!generatedValue) return;
 
       if (cat.options) {
+        // TODO refacto this is not useful for non-subCategory
         const foundOption = cat.options.find(
-          (opt) => opt.value === generatedValue
+          (opt) => opt.value === generatedValue,
         );
         if (foundOption) {
           selectedData[cat.category] = foundOption;
@@ -87,7 +77,7 @@ export default function GeneratedConstraintsSheet({
       } else if (cat.sub_categories) {
         cat.sub_categories.forEach((subCat) => {
           const foundSubOption = subCat.options.find((opt) =>
-            generatedValue.includes(opt.value)
+            generatedValue.includes(opt.value),
           );
           if (foundSubOption) {
             selectedData[`${cat.category}-${subCat.name}`] = foundSubOption;
@@ -100,8 +90,6 @@ export default function GeneratedConstraintsSheet({
   };
 
   const onSaveConstraints = async () => {
-    const constraints = getConstraintData();
-
     if (!session?.user) {
       setModalVisible(false);
       setVisibleLogin(true);
@@ -117,7 +105,7 @@ export default function GeneratedConstraintsSheet({
       // Create a new record
       const newProject = {
         project_type: dataSource.project_type,
-        constraints: constraints,
+        constraints: getConstraintData(),
         difficulty: getDifficultyGenerated(),
       };
 
@@ -156,10 +144,22 @@ export default function GeneratedConstraintsSheet({
                 <Text style={globalStyles.label}>
                   {cat.label || cat.category}
                 </Text>
-                <Text style={[globalStyles.subtitle]}>
-                  {randomConstraints[cat.category] ??
-                    t("screen:lab.empty_result")}
-                </Text>
+                <View style={globalStyles.elementAndDescriptorContainer}>
+                  <Text style={[globalStyles.subtitle]}>
+                    {randomConstraints[cat.category].value ??
+                      t("screen:lab.empty_result")}
+                  </Text>
+                  {randomConstraints[cat.category].description && (
+                    <Tooltip
+                      title={cat.label || cat.category}
+                      description={
+                        randomConstraints[cat.category].description ??
+                        t("screen:lab.empty_result")
+                      }
+                      color={color}
+                    />
+                  )}
+                </View>
               </View>
             );
           })}

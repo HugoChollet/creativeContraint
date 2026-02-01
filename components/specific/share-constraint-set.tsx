@@ -1,5 +1,4 @@
 import { TranslatedRow } from "@/hooks/use-project-translations";
-import { useStyles } from "@/hooks/use-styles";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -7,22 +6,21 @@ import { Alert, Share, TouchableOpacity } from "react-native";
 
 interface ShareProps {
   project_type: string;
-  contraints: TranslatedRow[];
+  constraints: TranslatedRow[];
   difficulty: number;
   color: string;
 }
 
 function ShareConstraintButton({
   project_type,
-  contraints,
+  constraints,
   difficulty,
   color,
 }: ShareProps) {
   const { t } = useTranslation();
-  const { globalStyles } = useStyles();
 
   const formatConstraints = () => {
-    const constraintList = contraints
+    const constraintList = constraints
       .map((c) => `- ${c.label}: ${c.displayValue}`)
       .join("\n");
 
@@ -57,7 +55,7 @@ function ShareConstraintButton({
   };
 
   return (
-    <TouchableOpacity style={globalStyles.transparentButton} onPress={onShare}>
+    <TouchableOpacity onPress={onShare}>
       <Ionicons name="share-social-outline" size={24} color={color} />
     </TouchableOpacity>
   );
