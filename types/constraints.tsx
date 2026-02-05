@@ -35,3 +35,4 @@ export type SelectedState = {
 };
 
 export type GeneratedConstraints = Record<string, Option>;
+export type IdSetConstraint = Record<string, number>;

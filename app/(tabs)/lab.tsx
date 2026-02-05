@@ -19,6 +19,7 @@ import {
 } from "react-native";
 import {
   GeneratedConstraints,
+  IdSetConstraint,
   Option,
   ProjectData,
   SelectedState,
@@ -39,6 +40,7 @@ export default function LabScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [randomConstraints, setRandomConstraints] =
     useState<GeneratedConstraints>({});
+  const [idSetConstraint, setIdSetConstraint] = useState<IdSetConstraint>();
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const { t } = useTranslation();
   const { globalStyles, colors } = useStyles();
@@ -129,6 +131,7 @@ export default function LabScreen() {
 
   function refreshConstraints() {
     const results: GeneratedConstraints = {};
+    const ids: IdSetConstraint = {};
 
     dataSource.constraints.forEach((cat) => {
       if (selectedItems.activeCategories[cat.category]) {
@@ -164,10 +167,9 @@ export default function LabScreen() {
             results[cat.category].rarity = availableOptions[randomIndex].rarity;
             results[cat.category].description =
               availableOptions[randomIndex].description;
+            ids[cat.category] = availableOptions[randomIndex].id;
           } else if (cat.sub_categories) {
-            // Concat all subCat result to result
             for (const subCat of cat.sub_categories) {
-              // TODO Change to have ids and not values here so we can save the ids
               const randomIndex = Math.floor(
                 Math.random() * subCat.options.length,
               );
@@ -175,12 +177,16 @@ export default function LabScreen() {
                 " " + subCat.options[randomIndex].value;
               results[cat.category].rarity +=
                 subCat.options[randomIndex].rarity;
+
+              ids[cat.category + "_" + subCat.name] =
+                subCat.options[randomIndex].id;
             }
           }
         }
       }
     });
 
+    setIdSetConstraint(ids);
     setRandomConstraints(results);
     setModalVisible(true);
   }
@@ -259,13 +265,19 @@ export default function LabScreen() {
         />
       </View>
 
-      <GeneratedConstraintsSheet
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        randomConstraints={randomConstraints}
-        dataSource={dataSource}
-        color={getProjectColor(dataSource.project_type)}
-      />
+      {idSetConstraint && (
+        <GeneratedConstraintsSheet
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          randomConstraints={randomConstraints}
+          color={getProjectColor(dataSource.project_type)}
+          dataSource={dataSource}
+          project={{
+            project_type: dataSource.project_type,
+            constraints: idSetConstraint,
+          }}
+        />
+      )}
     </View>
   );
 }
