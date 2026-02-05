@@ -12,12 +12,11 @@ import { DifficultyIndicator } from "./difficulty-indicator";
 import ShareConstraintButton from "./share-constraint-set";
 
 const typeMapping: Record<string, string> = {
-  // TODO unify with lab.tsx and json files project_type keys
   music: "music",
   book: "book",
   photography: "photo",
   "video fiction": "videoFiction",
-  "video internet": "videoInternet",
+  "internet video": "videoInternet", // Match your Supabase sample "Internet Video"
   cooking: "cooking",
 };
 
@@ -26,7 +25,7 @@ export function ConstraintsSetCard({
   deleteRecord,
 }: {
   item: SavedProjectConstraints;
-  deleteRecord: (id: number) => void;
+  deleteRecord: (id: number | string) => void;
 }) {
   const { i18n } = useTranslation();
   const { globalStyles, colors } = useStyles();

@@ -15,7 +15,7 @@ import {
   View,
 } from "react-native";
 
-export default function ProjectLibraryScreen() {
+export default function ConstraintSetScreen() {
   const { t } = useTranslation();
   const { globalStyles, colors } = useStyles();
   const {
@@ -33,7 +33,7 @@ export default function ProjectLibraryScreen() {
   useFocusEffect(
     useCallback(() => {
       refresh();
-    }, [refresh])
+    }, [refresh]),
   );
 
   if (loading && projects.length === 0) {

@@ -8,7 +8,7 @@ export interface TranslatedRow {
 }
 
 export const useProjectTranslations = (
-  constraintsData: Record<string, any>,
+  constraintsData: Record<string, number>, // Now expects Record<string, number>
   dataSheet: Category[],
 ) => {
   const { getTranslation } = useTranslationTool(dataSheet);
@@ -24,16 +24,28 @@ export const useProjectTranslations = (
       }
     > = {};
 
-    Object.entries(constraintsData).forEach(([key, info]: [string, any]) => {
-      const [baseCat, subCat] = key.split("-");
+    Object.entries(constraintsData).forEach(([key, id]) => {
+      // Handle both '-' and '_' as separators for sub-categories
+      const separator = key.includes("_") ? "_" : "-";
+      const [baseCat, subCat] = key.split(separator);
+
       if (!groups[baseCat]) groups[baseCat] = { values: {}, descriptions: {} };
 
       const subKey = subCat || "default";
-      groups[baseCat].values[subKey] = getTranslation("Option", key, info.id);
+
+      // IMPORTANT: Since key might have '_', we normalize it back to '-'
+      // if your getTranslation logic expects hyphenated parents
+      const translationKey = subCat ? `${baseCat}-${subCat}` : baseCat;
+
+      groups[baseCat].values[subKey] = getTranslation(
+        "Option",
+        translationKey,
+        id,
+      );
       groups[baseCat].descriptions[subKey] = getTranslation(
         "Description",
-        key,
-        info.id,
+        translationKey,
+        id,
       );
     });
 
@@ -51,7 +63,6 @@ export const useProjectTranslations = (
           .filter(Boolean)
           .join(" : ");
 
-        // Join non-empty descriptions with a bullet or newline
         description = masterCat.tabs
           .map((tab) => groupData.descriptions[tab])
           .filter((desc) => desc && desc.length > 0)
@@ -59,7 +70,6 @@ export const useProjectTranslations = (
         if (description) description = "• " + description;
       } else {
         displayValue = groupData.values["default"] || "";
-        // If flat category, prioritize option description, fallback to category description
         description =
           groupData.descriptions["default"] || masterCat?.description || "";
       }
