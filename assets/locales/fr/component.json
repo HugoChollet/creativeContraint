@@ -41,5 +41,8 @@
   },
   "tooltip": {
     "ok": "Compris"
+  },
+  "constraint-set-card": {
+    "upload": "Soumettre un projet"
   }
 }

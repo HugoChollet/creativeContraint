@@ -40,5 +40,13 @@
     "difficulty": "Difficulty",
     "refresh": "Refresh",
     "auth_required": "Please sign in to view your Constraints Sets"
+  },
+  "submit": {
+    "publish": "publish : ",
+    "title_label": "Title oh the creation",
+    "title_placeholder": "Give a name to your creation",
+    "description_label": "Description",
+    "description_placeholder": "Explain your process",
+    "publish_button": "Publish"
   }
 }

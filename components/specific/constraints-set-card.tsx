@@ -23,12 +23,15 @@ const typeMapping: Record<string, string> = {
 export function ConstraintsSetCard({
   item,
   deleteRecord,
+  submit,
 }: {
   item: SavedProjectConstraints;
   deleteRecord: (id: number | string) => void;
+  submit: () => void;
 }) {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const { globalStyles, colors } = useStyles();
+  const solidColor = getProjectColor(item.project_type, 1);
 
   const typeKey = typeMapping[item.project_type.toLowerCase()] || "book";
 
@@ -56,7 +59,7 @@ export function ConstraintsSetCard({
       {/* Header: Project Type & Difficulty */}
       <View style={styles.headerContainer}>
         <DifficultyIndicator difficultyIndicator={item.difficulty} />
-        <Text style={[globalStyles.title, { color: colors.text }]}>
+        <Text style={[globalStyles.title, { color: solidColor }]}>
           {(dataSource.project_label ?? dataSource.project_type).toUpperCase()}
         </Text>
 
@@ -65,15 +68,11 @@ export function ConstraintsSetCard({
             project_type={dataSource.project_label ?? item.project_type}
             constraints={translatedConstraints}
             difficulty={item.difficulty}
-            color={getProjectColor(item.project_type, 1)}
+            color={solidColor}
           />
 
           <TouchableOpacity onPress={() => deleteRecord(item.id)}>
-            <Ionicons
-              name="trash-outline"
-              size={20}
-              color={getProjectColor(item.project_type, 1)}
-            />
+            <Ionicons name="trash-outline" size={20} color={solidColor} />
           </TouchableOpacity>
         </View>
       </View>
@@ -102,13 +101,22 @@ export function ConstraintsSetCard({
                 <Tooltip
                   title={label}
                   description={description}
-                  color={getProjectColor(item.project_type, 1)}
+                  color={solidColor}
                 />
               )}
             </View>
           </View>
         ))}
       </View>
+
+      <TouchableOpacity
+        style={[globalStyles.borderButton, { borderColor: solidColor }]}
+        onPress={submit}
+      >
+        <Text style={{ color: solidColor }}>
+          {t("component:constraint-set-card.upload")}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }

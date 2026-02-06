@@ -39,5 +39,13 @@
     "difficulty": "Difficulté",
     "refresh": "Actualiser",
     "auth_required": "Vous devez vous connecter pour voir vos Sets de Contraintes."
+  },
+  "submit": {
+    "publish": "publier : ",
+    "title_label": "Titre de la création",
+    "title_placeholder": "Donnez un nom à votre œuvre...",
+    "description_label": "Description",
+    "description_placeholder": "Expliquez votre démarche ou le contexte...",
+    "publish_button": "Publier"
   }
 }

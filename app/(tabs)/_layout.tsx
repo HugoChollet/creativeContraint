@@ -69,6 +69,13 @@ export default function TabLayout() {
           title: "Lab",
         }}
       />
+      <Tabs.Screen
+        name="submit-form"
+        options={{
+          href: null, // This hides the tab button from the bottom bar!
+          title: "Submit",
+        }}
+      />
     </Tabs>
   );
 }

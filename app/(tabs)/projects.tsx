@@ -4,7 +4,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { SavedProjectConstraints } from "@/types/data";
-import { useFocusEffect } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import React, { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -57,7 +57,16 @@ export default function ConstraintSetScreen() {
           data={projects}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <ConstraintsSetCard item={item} deleteRecord={deleteRecord} />
+            <ConstraintsSetCard
+              item={item}
+              deleteRecord={deleteRecord}
+              submit={() =>
+                router.push({
+                  pathname: "/submit-form",
+                  params: { id: item.id.toString(), type: item.project_type },
+                })
+              }
+            />
           )}
           onRefresh={refresh}
           refreshing={loading}
