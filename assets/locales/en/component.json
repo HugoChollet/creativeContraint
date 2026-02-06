@@ -41,5 +41,8 @@
   },
   "tooltip": {
     "ok": "Got it"
+  },
+  "constraint-set-card": {
+    "upload": "Upload a project"
   }
 }

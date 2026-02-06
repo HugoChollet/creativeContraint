@@ -30,8 +30,8 @@
     "language_selection": "Application Language"
   },
   "projects": {
-    "title": "My Projects",
-    "no_projects": "You have no projects yet. Start by creating one!",
+    "title": "My Constraints Sets",
+    "no_projects": "You have no Constraints Sets yet. Start by creating one!",
     "create_button": "Create New Project",
     "delete_button": "Delete Project",
     "confirm_delete": "Are you sure you want to delete this project? This action cannot be undone.",
@@ -39,6 +39,6 @@
     "confirm_button": "Confirm",
     "difficulty": "Difficulty",
     "refresh": "Refresh",
-    "auth_required": "Please sign in to view your projects"
+    "auth_required": "Please sign in to view your Constraints Sets"
   }
 }
