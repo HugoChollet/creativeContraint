@@ -1,8 +1,9 @@
 # Creative Constraint
 
-App/Website to help Content Creator find inspiration, from Music to Books creation passing through Video Games, Board Games, and Video.
+Creative Constraint is a Social Network with a twist: Constraints ! Published projects must respect generated constraints.
+This Hybrid App/Website can help Content Creator find inspiration, from Music to Books creation passing through Video Games, Board Games, and Video, Cooking...
 
-The idea is simple, something having constraint to respect can help bring creativity !
+The idea is simple, sometimes having constraint to respect can help bring creativity !
 For example for Music if I give the following constraints :
 Instruments : Banjo
 Style : Hard Rock
@@ -12,7 +13,8 @@ Lyrics Word : "Spear", "Tomato", "Invisible"
 
 You might start imagining what you could do from there and start creating right away !
 
-All Constraint are customizable, meaning if you only wants to have constraint on lyrics and have 10 words to put in your lyrics with word from your choice you can !
+Constraint are of course different depending on the type of project you want to create.
+All Generation Constraint are customizable, meaning if you only wants to have constraint on lyrics and have 10 words to put in your lyrics with word from your choice you can !
 
 ## Get started
 
@@ -34,5 +36,3 @@ In the output, you'll find options to open the app in a
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
