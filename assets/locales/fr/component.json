@@ -44,5 +44,27 @@
   },
   "constraint-set-card": {
     "upload": "Soumettre un projet"
+  },
+  "image-picker": {
+    "label": "Contenu visuel",
+    "placeholder": "Ajouter une photo",
+    "hint": "JPG, PNG acceptés",
+    "permission_error_title": "Permission refusée",
+    "permission_error_msg": "Nous avons besoin de votre accès aux photos pour publier."
+  },
+  "music-picker": {
+    "label": "Fichier Audio",
+    "placeholder": "Choisir un MP3",
+    "hint": "Format MP3 uniquement",
+    "ready": "Prêt à être publié",
+    "error": "Erreur",
+    "error_msg": "Impossible de sélectionner le fichier audio."
+  },
+  "youtube-picker": {
+    "label": "Lien de la vidéo",
+    "title": "Intégration YouTube",
+    "placeholder": "https://www.youtube.com/watch?v=...",
+    "invalid_error": "Veuillez entrer un lien YouTube valide.",
+    "note": "Note : Votre vidéo doit être en mode 'Publique' ou 'Non répertoriée' pour être visible sur CreativeConstraint."
   }
 }
