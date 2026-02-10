@@ -44,5 +44,27 @@
   },
   "constraint-set-card": {
     "upload": "Upload a project"
+  },
+  "image-picker": {
+    "label": "Visual Content",
+    "placeholder": "Add a photo",
+    "hint": "JPG, PNG accepted",
+    "permission_error_title": "Permission denied",
+    "permission_error_msg": "We need access to your photos to publish."
+  },
+  "music-picker": {
+    "label": "Audio File",
+    "placeholder": "Choose a MP3",
+    "hint": "MP3 format only",
+    "ready": "Ready to be published",
+    "error": "Error",
+    "error_msg": "Impossible to select the audio file."
+  },
+  "youtube-picker": {
+    "label": "Video Link",
+    "title": "YouTube Integration",
+    "placeholder": "https://www.youtube.com/watch?v=...",
+    "invalid_error": "Please enter a valid YouTube link.",
+    "note": "Note: Your video must be 'Public' or 'Unlisted' to be visible on CreativeConstraint."
   }
 }

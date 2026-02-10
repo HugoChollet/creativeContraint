@@ -11,6 +11,7 @@ interface GlobalStyles {
   tabContainer: ViewStyle;
   screenContainer: ViewStyle;
   elementAndDescriptorContainer: ViewStyle;
+  mediaIntegrationContainer: ViewStyle;
 
   text: TextStyle;
   label: TextStyle;
@@ -28,6 +29,7 @@ interface GlobalStyles {
   transparentButton: ViewStyle;
   dropdownButton: ViewStyle;
   alertButton: ViewStyle;
+  shadeButton: ViewStyle;
 
   backgroundColor: ViewStyle;
   headerRow: ViewStyle;
@@ -96,6 +98,14 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     },
     elementAndDescriptorContainer: {
       flexDirection: "row",
+      alignItems: "center",
+    },
+    mediaIntegrationContainer: {
+      ...baseContainer,
+      borderRadius: 12,
+      backgroundColor: themes.hardContainer,
+      borderStyle: "dashed",
+      borderWidth: 2,
       alignItems: "center",
     },
 
@@ -184,6 +194,14 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       borderWidth: 1,
       borderColor: Colors.alert,
       backgroundColor: "transparent",
+    },
+    shadeButton: {
+      position: "absolute",
+      top: 8,
+      right: 8,
+      backgroundColor: "rgba(0,0,0,0.6)",
+      padding: 8,
+      borderRadius: 20,
     },
 
     backgroundColor: {
