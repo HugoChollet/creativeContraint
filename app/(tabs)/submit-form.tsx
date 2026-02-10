@@ -1,3 +1,4 @@
+import { BookMediaPicker } from "@/components/specific/book-picker";
 import { ImageMediaPicker } from "@/components/specific/image-picker";
 import { MusicMediaPicker } from "@/components/specific/music-picker";
 import { YoutubeLinkPicker } from "@/components/specific/youtube-picker";
@@ -35,6 +36,13 @@ export default function SubmitFormScreen() {
     useState<DocumentPicker.DocumentPickerResult | null>(null);
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [isUrlValid, setIsUrlValid] = useState(false);
+  const [bookData, setBookData] = useState<{
+    type: "text" | "file";
+    value: any;
+  }>({
+    type: "text",
+    value: "",
+  });
 
   return (
     <ScrollView
@@ -103,6 +111,12 @@ export default function SubmitFormScreen() {
             setYoutubeUrl(url);
             setIsUrlValid(valid);
           }}
+        />
+      )}
+      {projectLabel === "Book" && (
+        <BookMediaPicker
+          projectColor={projectColor}
+          onContentChange={(data) => setBookData(data)}
         />
       )}
       {/* BOUTON PUBLIER */}

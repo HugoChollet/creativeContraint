@@ -66,5 +66,15 @@
     "placeholder": "https://www.youtube.com/watch?v=...",
     "invalid_error": "Veuillez entrer un lien YouTube valide.",
     "note": "Note : Votre vidéo doit être en mode 'Publique' ou 'Non répertoriée' pour être visible sur CreativeConstraint."
+  },
+  "book-picker": {
+    "label": "Contenu du livre",
+    "tab_write": "Écrire",
+    "tab_upload": "Fichier",
+    "input_label": "Votre histoire",
+    "input_placeholder": "Il était une fois...",
+    "file_placeholder": "Choisir un PDF ou Word",
+    "file_hint": "PDF, DOCX acceptés",
+    "file_ready": "Document prêt"
   }
 }

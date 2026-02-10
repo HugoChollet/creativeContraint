@@ -66,5 +66,15 @@
     "placeholder": "https://www.youtube.com/watch?v=...",
     "invalid_error": "Please enter a valid YouTube link.",
     "note": "Note: Your video must be 'Public' or 'Unlisted' to be visible on CreativeConstraint."
+  },
+  "book-picker": {
+    "label": "Book Content",
+    "tab_write": "Write",
+    "tab_upload": "Upload File",
+    "input_label": "Your story",
+    "input_placeholder": "Once upon a time...",
+    "file_placeholder": "Select a PDF or Word file",
+    "file_hint": "PDF, DOCX accepted",
+    "file_ready": "Document ready"
   }
 }
