@@ -5,11 +5,11 @@ This Hybrid App/Website can help Content Creator find inspiration, from Music to
 
 The idea is simple, sometimes having constraint to respect can help bring creativity !
 For example for Music if I give the following constraints :
-Instruments : Banjo
-Style : Hard Rock
-Sound Effect : Reverb
-Lyrics topics : "A weary soldier" + "finding a hidden map" + "in a city of glass"
-Lyrics Word : "Spear", "Tomato", "Invisible"
+- Instruments : Banjo
+- Style : Hard Rock
+- Sound Effect : Reverb
+- Lyrics topics : "A weary soldier" + "finding a hidden map" + "in a city of glass"
+- Lyrics Word : "Spear", "Tomato", "Invisible"
 
 You might start imagining what you could do from there and start creating right away !
 
