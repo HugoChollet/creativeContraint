@@ -1,5 +1,9 @@
+import { ImageMediaPicker } from "@/components/specific/image-picker";
+import { MusicMediaPicker } from "@/components/specific/music-picker";
+import { YoutubeLinkPicker } from "@/components/specific/youtube-picker";
 import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
+import * as DocumentPicker from "expo-document-picker";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -25,6 +29,12 @@ export default function SubmitFormScreen() {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [audioFile, setAudioFile] =
+    useState<DocumentPicker.DocumentPickerResult | null>(null);
+  const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [isUrlValid, setIsUrlValid] = useState(false);
 
   return (
     <ScrollView
@@ -72,31 +82,29 @@ export default function SubmitFormScreen() {
       </View>
 
       {/* SECTION MÉDIA (On la remplira dynamiquement après) */}
-      <View
-        style={[
-          globalStyles.hardContainer,
-          { borderColor: projectColor, borderWidth: 0.5 },
-        ]}
-      >
-        <Text style={[globalStyles.subtitle, { marginTop: 0 }]}>Contenu</Text>
-        {/* Ici viendra le sélecteur de fichier spécifique */}
-        <View
-          style={{
-            height: 100,
-            borderStyle: "dashed",
-            borderWidth: 1,
-            borderColor: colors.textDiscreet,
-            borderRadius: 12,
-            justifyContent: "center",
-            alignItems: "center",
+      {/* Ici viendra le sélecteur de fichier spécifique */}
+      {["Photography", "Cooking", "Board Game"].includes(projectLabel) && (
+        <ImageMediaPicker
+          projectColor={projectColor}
+          onImageSelected={setSelectedImage}
+        />
+      )}
+      {projectLabel === "Music" && (
+        <MusicMediaPicker
+          projectColor={projectColor}
+          onFileSelected={setAudioFile}
+        />
+      )}
+      {(projectLabel === "Video Fiction" ||
+        projectLabel === "Internet Video") && (
+        <YoutubeLinkPicker
+          projectColor={projectColor}
+          onUrlChange={(url, valid) => {
+            setYoutubeUrl(url);
+            setIsUrlValid(valid);
           }}
-        >
-          <Text style={globalStyles.discreetText}>
-            Espace pour le futur sélecteur de média
-          </Text>
-        </View>
-      </View>
-
+        />
+      )}
       {/* BOUTON PUBLIER */}
       <TouchableOpacity
         style={[
