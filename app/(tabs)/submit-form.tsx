@@ -1,10 +1,9 @@
-import { BookMediaPicker } from "@/components/specific/book-picker";
-import { ImageMediaPicker } from "@/components/specific/image-picker";
-import { MusicMediaPicker } from "@/components/specific/music-picker";
-import { YoutubeLinkPicker } from "@/components/specific/youtube-picker";
+import {
+  MediaPicker,
+  MediaPickerResult,
+} from "@/components/specific/media-pickers";
 import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
-import * as DocumentPicker from "expo-document-picker";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -30,19 +29,20 @@ export default function SubmitFormScreen() {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [audioFile, setAudioFile] =
-    useState<DocumentPicker.DocumentPickerResult | null>(null);
-  const [youtubeUrl, setYoutubeUrl] = useState("");
-  const [isUrlValid, setIsUrlValid] = useState(false);
-  const [bookData, setBookData] = useState<{
-    type: "text" | "file";
-    value: any;
-  }>({
-    type: "text",
-    value: "",
+  const [media, setMedia] = useState<MediaPickerResult>({
+    type: null,
+    value: null,
+    isValid: false,
   });
+
+  const isFormValid = title.length > 2 && media.isValid;
+
+  const handlePublish = async () => {
+    if (!isFormValid) return;
+
+    // C'est ici qu'on appellera nos fonctions Supabase
+    console.log("Publishing:", { title, description, media });
+  };
 
   return (
     <ScrollView
@@ -53,7 +53,6 @@ export default function SubmitFormScreen() {
         {t("screen:submit.publish") + projectLabel}
       </Text>
 
-      {/* CHAMP TITRE */}
       <View style={{ marginBottom: 20 }}>
         <Text style={globalStyles.label}>{t("screen:submit.title_label")}</Text>
         <TextInput
@@ -65,7 +64,6 @@ export default function SubmitFormScreen() {
         />
       </View>
 
-      {/* CHAMP DESCRIPTION */}
       <View style={{ marginBottom: 20 }}>
         <Text style={globalStyles.label}>
           {t("screen:submit.description_label")}
@@ -89,37 +87,11 @@ export default function SubmitFormScreen() {
         />
       </View>
 
-      {/* SECTION MÉDIA (On la remplira dynamiquement après) */}
-      {/* Ici viendra le sélecteur de fichier spécifique */}
-      {["Photography", "Cooking", "Board Game"].includes(projectLabel) && (
-        <ImageMediaPicker
-          projectColor={projectColor}
-          onImageSelected={setSelectedImage}
-        />
-      )}
-      {projectLabel === "Music" && (
-        <MusicMediaPicker
-          projectColor={projectColor}
-          onFileSelected={setAudioFile}
-        />
-      )}
-      {(projectLabel === "Video Fiction" ||
-        projectLabel === "Internet Video") && (
-        <YoutubeLinkPicker
-          projectColor={projectColor}
-          onUrlChange={(url, valid) => {
-            setYoutubeUrl(url);
-            setIsUrlValid(valid);
-          }}
-        />
-      )}
-      {projectLabel === "Book" && (
-        <BookMediaPicker
-          projectColor={projectColor}
-          onContentChange={(data) => setBookData(data)}
-        />
-      )}
-      {/* BOUTON PUBLIER */}
+      <MediaPicker
+        projectLabel={projectLabel}
+        projectColor={projectColor}
+        onChange={setMedia}
+      />
       <TouchableOpacity
         style={[
           globalStyles.secondaryButton,
