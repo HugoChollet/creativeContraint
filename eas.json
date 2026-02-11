@@ -11,8 +11,12 @@
     "preview": {
       "distribution": "internal",
       "developmentClient": false,
+      "node": "22.22.0",
       "android": {
         "buildType": "apk"
+      },
+      "ios": {
+        "simulator": true
       }
     },
     "production": {
