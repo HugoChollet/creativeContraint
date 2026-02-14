@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Spacer } from "../generic/spacer";
 
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
@@ -108,6 +109,8 @@ export default function Auth() {
             {t("component:auth.sign_in")}
           </Text>
         </TouchableOpacity>
+
+        <Spacer height={8} />
 
         <TouchableOpacity
           style={[globalStyles.borderButton]}

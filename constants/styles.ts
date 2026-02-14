@@ -49,7 +49,6 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 12, // Should probably be in the container and not the button itself
   };
   const baseText: TextStyle = {
     color: themes.text,

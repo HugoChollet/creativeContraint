@@ -56,7 +56,6 @@ export function ConstraintsSetCard({
         },
       ]}
     >
-      {/* Header: Project Type & Difficulty */}
       <View style={styles.headerContainer}>
         <DifficultyIndicator difficultyIndicator={item.difficulty} />
         <Text style={[globalStyles.title, { color: solidColor }]}>
@@ -86,7 +85,6 @@ export function ConstraintsSetCard({
         ]}
       />
 
-      {/* Constraints Tags Section */}
       <View style={styles.tagContainer}>
         {translatedConstraints.map(({ label, displayValue, description }) => (
           <View key={label} style={globalStyles.tag}>
@@ -110,7 +108,10 @@ export function ConstraintsSetCard({
       </View>
 
       <TouchableOpacity
-        style={[globalStyles.borderButton, { borderColor: solidColor }]}
+        style={[
+          globalStyles.borderButton,
+          { borderColor: solidColor, marginTop: 12 },
+        ]}
         onPress={submit}
       >
         <Text style={{ color: solidColor }}>
@@ -128,6 +129,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 12,
+    gap: 8,
   },
   circleDecorator: {
     position: "absolute",

@@ -98,6 +98,7 @@ export default function Account({ session }: { session: Session }) {
               : t("component:account.update_profile")}
           </ThemedText>
         </TouchableOpacity>
+        <Spacer height={8} />
         <TouchableOpacity
           onPress={() => supabase.auth.signOut()}
           style={[globalStyles.secondaryButton, globalStyles.alertButton]}
