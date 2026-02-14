@@ -2,8 +2,12 @@ import { BottomSheet } from "@/components/generic/bottom-sheet";
 import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
-import { IdSetConstraint, Option, ProjectData } from "@/types/constraints";
-import { SavedProjectConstraints } from "@/types/data";
+import {
+  ConstraintSetData,
+  ConstraintSetIds,
+  Option,
+} from "@/types/constraints";
+import { SavedConstraintSet } from "@/types/data";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
@@ -16,9 +20,9 @@ type GeneratedConstraintsSheetProps = {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
   randomConstraints: Record<string, Option>;
-  project: { project_type: string; constraints: IdSetConstraint };
   color: string;
-  dataSource: ProjectData;
+  dataSource: ConstraintSetData;
+  constraintSetIds: ConstraintSetIds;
 };
 
 export default function GeneratedConstraintsSheet({
@@ -27,7 +31,7 @@ export default function GeneratedConstraintsSheet({
   randomConstraints,
   dataSource,
   color,
-  project,
+  constraintSetIds,
 }: GeneratedConstraintsSheetProps) {
   const { t } = useTranslation();
   const { globalStyles } = useStyles();
@@ -35,7 +39,7 @@ export default function GeneratedConstraintsSheet({
   const [visibleLogin, setVisibleLogin] = useState(false);
 
   const { addRecord, deleteRecord } =
-    useCollection<SavedProjectConstraints>("projects");
+    useCollection<SavedConstraintSet>("projects");
 
   const [savedId, setSavedId] = useState<string | number | null>(null);
   const [isSaved, setIsSaved] = useState(false);
@@ -74,13 +78,13 @@ export default function GeneratedConstraintsSheet({
     } else {
       setIsSaved(true);
       // Create a new record
-      const newProject = {
-        project_type: project.project_type,
-        constraints: project.constraints,
+      const newConstraintSet = {
+        project_type: constraintSetIds.project_type,
+        constraints: constraintSetIds.constraints,
         difficulty: getDifficultyGenerated(),
       };
 
-      const savedData = await addRecord(newProject);
+      const savedData = await addRecord(newConstraintSet);
 
       // If successful, Supabase returns the record including the new ID
       if (savedData?.id) {

@@ -3,7 +3,7 @@
     "Home": "Home",
     "Lab": "Lab",
     "Settings": "Settings",
-    "Projects": "Projects"
+    "constraint_sets": "Constraint Sets"
   },
   "lab": {
     "lab_title": "{{type}} Lab",
@@ -29,9 +29,9 @@
     "settings_title": "Settings",
     "language_selection": "Application Language"
   },
-  "projects": {
+  "constraint_sets": {
     "title": "My Constraints Sets",
-    "no_projects": "You have no Constraints Sets yet. Start by creating one!",
+    "no_constraint_sets": "You have no Constraints Sets yet. Start by creating one!",
     "create_button": "Create New Project",
     "delete_button": "Delete Project",
     "confirm_delete": "Are you sure you want to delete this project? This action cannot be undone.",

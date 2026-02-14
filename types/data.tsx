@@ -2,7 +2,7 @@ import { IdSetConstraint, Option } from "@/types/constraints";
 
 export type ChosenOption = Record<string, Option>;
 
-export type SavedProjectConstraints = {
+export type SavedConstraintSet = {
   id: number;
   owner_id: string;
   project_type: string;

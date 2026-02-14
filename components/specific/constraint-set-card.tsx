@@ -1,8 +1,8 @@
 import { getProjectColor } from "@/constants/theme";
 import { useProjectTranslations } from "@/hooks/use-project-translations";
 import { useStyles } from "@/hooks/use-styles";
-import { ProjectData } from "@/types/constraints";
-import { SavedProjectConstraints } from "@/types/data";
+import { ConstraintSetData } from "@/types/constraints";
+import { SavedConstraintSet } from "@/types/data";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -25,7 +25,7 @@ export function ConstraintsSetCard({
   deleteRecord,
   submit,
 }: {
-  item: SavedProjectConstraints;
+  item: SavedConstraintSet;
   deleteRecord: (id: number | string) => void;
   submit: () => void;
 }) {
@@ -36,7 +36,10 @@ export function ConstraintsSetCard({
   const typeKey = typeMapping[item.project_type.toLowerCase()] || "book";
 
   const dataSource = useMemo(() => {
-    const data = i18n.getResourceBundle(i18n.language, typeKey) as ProjectData;
+    const data = i18n.getResourceBundle(
+      i18n.language,
+      typeKey,
+    ) as ConstraintSetData;
     return data || { constraints: [] };
   }, [i18n.language, typeKey]);
 

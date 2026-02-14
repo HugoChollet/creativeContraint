@@ -28,9 +28,9 @@
     "settings_title": "Paramètres",
     "language_selection": "Langue de l'application"
   },
-  "projects": {
+  "constraint_sets": {
     "title": "Mes Sets de Contraintes",
-    "no_projects": "Vous n'avez pas encore de Sets de Contraintes. Commencez par en créer un !",
+    "no_constraint_sets": "Vous n'avez pas encore de Sets de Contraintes. Commencez par en créer un !",
     "create_button": "Créer un nouveau projet",
     "delete_button": "Supprimer le projet",
     "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce projet ? Cette action est irréversible.",

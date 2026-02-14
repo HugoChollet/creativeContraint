@@ -45,9 +45,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="projects"
+        name="constraint-sets"
         options={{
-          title: t("screen:layout.Projects"),
+          title: t("screen:layout.constraint_sets"),
           tabBarIcon: ({ color }) => (
             <Ionicons size={28} name="folder-open" color={color} />
           ),

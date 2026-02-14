@@ -8,10 +8,10 @@ import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import i18nInstance from "@/i18n";
 import {
+  ConstraintSetData,
   GeneratedConstraints,
   IdSetConstraint,
   Option,
-  ProjectData,
   SelectedState,
 } from "@/types/constraints";
 import { useLocalSearchParams } from "expo-router";
@@ -56,7 +56,7 @@ export default function LabScreen() {
       console.error(
         `Namespace "${typeKey}" does not exist for "${i18nInstance.language}"`,
       );
-    return data as ProjectData;
+    return data as ConstraintSetData;
   }, [i18nInstance.language, typeKey]);
 
   const projectColor = getProjectColor(dataSource.project_type);
@@ -276,7 +276,7 @@ export default function LabScreen() {
             randomConstraints={randomConstraints}
             color={projectColor}
             dataSource={dataSource}
-            project={{
+            constraintSetIds={{
               project_type: dataSource.project_type,
               constraints: idSetConstraint,
             }}

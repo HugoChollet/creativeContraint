@@ -23,7 +23,7 @@ export interface Category {
   description?: string;
 }
 
-export interface ProjectData {
+export interface ConstraintSetData {
   project_type: string;
   project_label?: string;
   constraints: Category[];
@@ -36,3 +36,8 @@ export type SelectedState = {
 
 export type GeneratedConstraints = Record<string, Option>;
 export type IdSetConstraint = Record<string, number>;
+
+export type ConstraintSetIds = {
+  project_type: string;
+  constraints: IdSetConstraint;
+};

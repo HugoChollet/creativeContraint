@@ -1,9 +1,9 @@
 import Auth from "@/components/specific/auth";
-import { ConstraintsSetCard } from "@/components/specific/constraints-set-card";
+import { ConstraintsSetCard } from "@/components/specific/constraint-set-card";
 import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
-import { SavedProjectConstraints } from "@/types/data";
+import { SavedConstraintSet } from "@/types/data";
 import { router, useFocusEffect } from "expo-router";
 import React, { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -15,15 +15,15 @@ import {
   View,
 } from "react-native";
 
-export default function ConstraintSetScreen() {
+export default function ConstraintSetsScreen() {
   const { t } = useTranslation();
   const { globalStyles, colors } = useStyles();
   const {
-    data: projects,
+    data: constraintSets,
     loading,
     deleteRecord,
     refresh,
-  } = useCollection<SavedProjectConstraints>("projects");
+  } = useCollection<SavedConstraintSet>("projects");
   const { session } = useAuth();
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function ConstraintSetScreen() {
     }, [refresh]),
   );
 
-  if (loading && projects.length === 0) {
+  if (loading && constraintSets.length === 0) {
     return (
       <View
         style={[globalStyles.backgroundColor, { justifyContent: "center" }]}
@@ -49,12 +49,12 @@ export default function ConstraintSetScreen() {
   return (
     <View style={[globalStyles.screenContainer]}>
       <Text style={[globalStyles.title, { marginBottom: 20 }]}>
-        {t("screen:projects.title")}
+        {t("screen:constraint_sets.title")}
       </Text>
 
       {session?.user ? (
         <FlatList
-          data={projects}
+          data={constraintSets}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <ConstraintsSetCard
@@ -74,7 +74,7 @@ export default function ConstraintSetScreen() {
           ListEmptyComponent={
             <View style={{ marginTop: 50, alignItems: "center" }}>
               <Text style={globalStyles.subtitle}>
-                {t("screen:projects.no_projects")}
+                {t("screen:constraint_sets.no_constraintSets")}
               </Text>
               <TouchableOpacity
                 style={globalStyles.secondaryButton}
@@ -83,7 +83,7 @@ export default function ConstraintSetScreen() {
                 <Text
                   style={[globalStyles.secondaryButtonText, { padding: 16 }]}
                 >
-                  {t("screen:projects.refresh")}
+                  {t("screen:constraint_sets.refresh")}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -92,7 +92,7 @@ export default function ConstraintSetScreen() {
       ) : (
         <View>
           <Text style={globalStyles.subtitle}>
-            {t("screen:projects.auth_required")}
+            {t("screen:constraint_sets.auth_required")}
           </Text>
           <Auth />
         </View>
