@@ -1,12 +1,19 @@
 import { FloatingButton } from "@/components/generic/floating-button";
+import { Header } from "@/components/generic/header";
 import { Spacer } from "@/components/generic/spacer";
-import { ThemedText } from "@/components/generic/themed-text";
 import CategorySelector from "@/components/specific/category-selector";
 import GeneratedConstraintsSheet from "@/components/specific/generated-constraints-sheet";
 import { PresetMode } from "@/components/specific/status-selector";
 import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import i18nInstance from "@/i18n";
+import {
+  GeneratedConstraints,
+  IdSetConstraint,
+  Option,
+  ProjectData,
+  SelectedState,
+} from "@/types/constraints";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -17,13 +24,6 @@ import {
   Text,
   View,
 } from "react-native";
-import {
-  GeneratedConstraints,
-  IdSetConstraint,
-  Option,
-  ProjectData,
-  SelectedState,
-} from "../../types/constraints";
 
 export const typeMapping: Record<string, string> = {
   music: "music",
@@ -58,6 +58,8 @@ export default function LabScreen() {
       );
     return data as ProjectData;
   }, [i18nInstance.language, typeKey]);
+
+  const projectColor = getProjectColor(dataSource.project_type);
 
   // Helper to build initial state where everything is ON
   const getInitialState = (): SelectedState => {
@@ -220,65 +222,68 @@ export default function LabScreen() {
     );
 
   return (
-    <View style={[globalStyles.screenContainer]}>
-      <ScrollView>
-        <ThemedText style={globalStyles.subtitle} type="title">
-          {t("screen:lab.lab_title", {
-            type: dataSource.project_label ?? dataSource.project_type,
-          })}
-        </ThemedText>
-        {dataSource.constraints.map((cat) => (
-          <CategorySelector
-            key={cat.category}
-            category={cat}
-            selectedItems={selectedItems}
-            onToggleCategory={toggleCategory}
-            onToggleOption={toggleOption}
-            onBulkUpdate={bulkUpdateOptions}
-            isExpanded={expandedCategory === cat.category}
-            onExpand={() => handleToggleExpand(cat.category)}
-            color={getProjectColor(dataSource.project_type)}
+    <>
+      <Header
+        title={t("screen:lab.lab_title", {
+          type: dataSource.project_label ?? dataSource.project_type,
+        })}
+        color={projectColor}
+      />
+      <View style={[globalStyles.screenContainer]}>
+        <ScrollView>
+          {dataSource.constraints.map((cat) => (
+            <CategorySelector
+              key={cat.category}
+              category={cat}
+              selectedItems={selectedItems}
+              onToggleCategory={toggleCategory}
+              onToggleOption={toggleOption}
+              onBulkUpdate={bulkUpdateOptions}
+              isExpanded={expandedCategory === cat.category}
+              onExpand={() => handleToggleExpand(cat.category)}
+              color={projectColor}
+            />
+          ))}
+          <Spacer height={60} />
+        </ScrollView>
+
+        <View style={[styles.floatingButtonsWrapper]}>
+          <FloatingButton
+            onPress={() => {
+              setModalVisible(true);
+            }}
+            color={projectColor}
+            disabled={Object.keys(randomConstraints).length === 0}
+            icon="arrow-up-outline"
+            bottom={-24}
+            right={24}
           />
-        ))}
-        <Spacer height={60} />
-      </ScrollView>
+          <FloatingButton
+            onPress={refreshConstraints}
+            color={projectColor}
+            bottom={-24}
+            right={120}
+            label={t("screen:lab.generate_button", {
+              type: dataSource.project_type,
+            })}
+          />
+        </View>
 
-      <View style={[styles.floatingButtonsWrapper]}>
-        <FloatingButton
-          onPress={() => {
-            setModalVisible(true);
-          }}
-          color={getProjectColor(dataSource.project_type)}
-          disabled={Object.keys(randomConstraints).length === 0}
-          icon="arrow-up-outline"
-          bottom={-24}
-          right={24}
-        />
-        <FloatingButton
-          onPress={refreshConstraints}
-          color={getProjectColor(dataSource.project_type)}
-          bottom={-24}
-          right={120}
-          label={t("screen:lab.generate_button", {
-            type: dataSource.project_type,
-          })}
-        />
+        {idSetConstraint && (
+          <GeneratedConstraintsSheet
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            randomConstraints={randomConstraints}
+            color={projectColor}
+            dataSource={dataSource}
+            project={{
+              project_type: dataSource.project_type,
+              constraints: idSetConstraint,
+            }}
+          />
+        )}
       </View>
-
-      {idSetConstraint && (
-        <GeneratedConstraintsSheet
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          randomConstraints={randomConstraints}
-          color={getProjectColor(dataSource.project_type)}
-          dataSource={dataSource}
-          project={{
-            project_type: dataSource.project_type,
-            constraints: idSetConstraint,
-          }}
-        />
-      )}
-    </View>
+    </>
   );
 }
 
