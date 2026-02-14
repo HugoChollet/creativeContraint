@@ -1,7 +1,7 @@
 import { useStyles } from "@/hooks/use-styles";
 import { Ionicons } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 

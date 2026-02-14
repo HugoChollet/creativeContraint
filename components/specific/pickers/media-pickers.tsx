@@ -1,4 +1,3 @@
-import { useStyles } from "@/hooks/use-styles";
 import React from "react";
 import { View } from "react-native";
 import { BookMediaPicker } from "./book-picker";
@@ -23,8 +22,6 @@ export const MediaPicker = ({
   projectColor,
   onChange,
 }: MediaPickerProps) => {
-  const { colors } = useStyles();
-
   const handleImage = (uri: string | null) => {
     onChange({ type: "image", value: uri, isValid: !!uri });
   };
