@@ -23,7 +23,7 @@ export default function ConstraintSetsScreen() {
     loading,
     deleteRecord,
     refresh,
-  } = useCollection<SavedConstraintSet>("projects");
+  } = useCollection<SavedConstraintSet>("constraint_sets");
   const { session } = useAuth();
 
   useEffect(() => {

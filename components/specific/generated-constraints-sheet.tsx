@@ -39,7 +39,7 @@ export default function GeneratedConstraintsSheet({
   const [visibleLogin, setVisibleLogin] = useState(false);
 
   const { addRecord, deleteRecord } =
-    useCollection<SavedConstraintSet>("projects");
+    useCollection<SavedConstraintSet>("constraint_sets");
 
   const [savedId, setSavedId] = useState<string | number | null>(null);
   const [isSaved, setIsSaved] = useState(false);
