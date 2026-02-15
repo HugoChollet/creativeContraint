@@ -25,16 +25,16 @@ export const ImageMediaPicker = ({
     if (status !== "granted") {
       Alert.alert(
         t("component:image-picker.permission_error_title"),
-        t("component:image-picker.permission_error_content")
+        t("component:image-picker.permission_error_content"),
       );
       return;
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ["images"], // Correction pour les versions récentes d'Expo
+      mediaTypes: ["images"],
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 0.8,
+      quality: 0.5,
     });
 
     if (!result.canceled) {

@@ -47,6 +47,12 @@
     "title_placeholder": "Give a name to your creation",
     "description_label": "Description",
     "description_placeholder": "Explain your process",
-    "publish_button": "Publish"
+    "publish_button": "Publish",
+    "success_title": "Published!",
+    "success_msg": "Your creation is now live for the community.",
+    "errors": {
+      "no_user": "You must be logged in to publish.",
+      "publish_failed": "An error occurred during publication. Please try again."
+    }
   }
 }

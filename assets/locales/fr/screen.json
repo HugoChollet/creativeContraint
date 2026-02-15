@@ -46,6 +46,12 @@
     "title_placeholder": "Donnez un nom à votre œuvre...",
     "description_label": "Description",
     "description_placeholder": "Expliquez votre démarche ou le contexte...",
-    "publish_button": "Publier"
+    "publish_button": "Publier",
+    "success_title": "Publié !",
+    "success_msg": "Votre création est maintenant visible par la communauté.",
+    "errors": {
+      "no_user": "Vous devez être connecté pour publier.",
+      "publish_failed": "Une erreur est survenue lors de la publication. Veuillez réessayer."
+    }
   }
 }
