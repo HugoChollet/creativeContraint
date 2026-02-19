@@ -3,7 +3,9 @@
     "Home": "Accueil",
     "Lab": "Lab",
     "Settings": "Paramètres",
-    "Projects": "Projets"
+    "Projects": "Projets",
+    "constraint_sets": "Sets de Contraintes",
+    "Publication_Feed": "Fil de Publications"
   },
   "lab": {
     "lab_title": "Labo pour {{type}}",

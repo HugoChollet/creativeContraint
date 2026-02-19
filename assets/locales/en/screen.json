@@ -3,7 +3,8 @@
     "Home": "Home",
     "Lab": "Lab",
     "Settings": "Settings",
-    "constraint_sets": "Constraint Sets"
+    "constraint_sets": "Constraint Sets",
+    "Publication_Feed": "Publication Feed"
   },
   "lab": {
     "lab_title": "{{type}} Lab",

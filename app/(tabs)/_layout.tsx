@@ -54,6 +54,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="publications"
+        options={{
+          title: t("screen:layout.Publication_Feed"),
+          tabBarIcon: ({ color }) => (
+            <Ionicons size={28} name="newspaper-outline" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="settings"
         options={{
           title: t("screen:layout.Settings"),
@@ -62,6 +71,7 @@ export default function TabLayout() {
           ),
         }}
       />
+
       <Tabs.Screen
         name="lab"
         options={{
