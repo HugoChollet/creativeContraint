@@ -41,3 +41,10 @@ export type ConstraintSetIds = {
   project_type: string;
   constraints: IdSetConstraint;
 };
+
+export type SavedConstraintSet = {
+  id: number | string;
+  project_type: string;
+  difficulty: number;
+  constraints: IdSetConstraint;
+};
