@@ -6,8 +6,8 @@ import {
   ConstraintSetData,
   ConstraintSetIds,
   Option,
+  SavedConstraintSet,
 } from "@/types/constraints";
-import { SavedConstraintSet } from "@/types/data";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";

@@ -3,7 +3,7 @@ import { ConstraintsSetCard } from "@/components/specific/constraint-set-card";
 import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
-import { SavedConstraintSet } from "@/types/data";
+import { SavedConstraintSet } from "@/types/constraints";
 import { router, useFocusEffect } from "expo-router";
 import React, { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";

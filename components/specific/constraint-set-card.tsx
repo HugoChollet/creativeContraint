@@ -1,8 +1,7 @@
 import { getProjectColor } from "@/constants/theme";
 import { useProjectTranslations } from "@/hooks/use-project-translations";
 import { useStyles } from "@/hooks/use-styles";
-import { ConstraintSetData } from "@/types/constraints";
-import { SavedConstraintSet } from "@/types/data";
+import { ConstraintSetData, SavedConstraintSet } from "@/types/constraints";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,7 +15,7 @@ const typeMapping: Record<string, string> = {
   book: "book",
   photography: "photo",
   "video fiction": "videoFiction",
-  "internet video": "videoInternet", // Match your Supabase sample "Internet Video"
+  "internet video": "videoInternet",
   cooking: "cooking",
 };
 

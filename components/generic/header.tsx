@@ -1,7 +1,14 @@
+import { Colors } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import { Stack } from "expo-router";
 
-export function Header({ title, color }: { title: string; color: string }) {
+export function Header({
+  title,
+  color = Colors.grey,
+}: {
+  title: string;
+  color?: string;
+}) {
   const { globalStyles, colors } = useStyles();
 
   return (
