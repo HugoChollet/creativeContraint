@@ -20,7 +20,6 @@ function AppLayout() {
         styles.root,
         {
           backgroundColor: colors.background,
-          paddingTop: Platform.OS === "web" ? 0 : 48,
         },
       ]}
     >
