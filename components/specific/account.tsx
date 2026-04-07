@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import ModalSelector from "../generic/modal-selector";
 import { Spacer } from "../generic/spacer";
+import { ProfileImagePicker } from "./pickers/image-profile-picker";
 import { ThemeSwitcher } from "./theme-switcher";
 
 const languages = [
@@ -32,7 +33,12 @@ export default function Account({ session }: { session: Session }) {
     <>
       <Text style={globalStyles.subtitle}>{t("component:auth.title")}</Text>
       <View style={globalStyles.shadeContainer}>
-        {/* Email Field (Read Only) */}
+        <ProfileImagePicker
+          initialImage={data.avatar_url}
+          onImageSelected={(image) =>
+            setData({ ...data, avatar_url: image ?? "none" })
+          }
+        />
         <Text style={globalStyles.label}>
           {t("component:account.email_read_only")}
         </Text>
@@ -43,7 +49,6 @@ export default function Account({ session }: { session: Session }) {
         />
         <Spacer height={20} />
 
-        {/* Username Field */}
         <Text style={globalStyles.label}>
           {t("component:account.username")}
         </Text>
@@ -56,7 +61,6 @@ export default function Account({ session }: { session: Session }) {
         />
         <Spacer height={20} />
 
-        {/* Website Field */}
         <Text style={globalStyles.label}>
           {t("component:account.portfolio")}
         </Text>
