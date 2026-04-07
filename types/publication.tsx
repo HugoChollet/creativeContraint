@@ -19,7 +19,12 @@ export interface Publication {
   media_type: MediaType;
   constraint_set_id: string | null;
 
+  // Relations
   generated_constraints?: SavedConstraintSet | null;
+  profile?: {
+    username: string;
+    avatar_url: string;
+  } | null;
 }
 
 // Type pour la création d'une publication (sans les champs auto-générés)

@@ -87,7 +87,11 @@ export const publicationService = {
       .select(
         `
         *,
-        generated_constraints:constraint_set_id (*) 
+        generated_constraints:constraint_set_id (*),
+        profile:profiles!fk_publications_profile (
+          username,
+          avatar_url
+        )
       `,
       ) // On précise l'alias si nécessaire pour matcher le type
       .order("created_at", { ascending: false });

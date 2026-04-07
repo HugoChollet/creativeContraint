@@ -10,19 +10,33 @@ interface PublicationCardProps {
 }
 
 export const PublicationCard = ({ publication }: PublicationCardProps) => {
-  const { globalStyles } = useStyles();
+  const { globalStyles, colors } = useStyles();
   const projectColor = getProjectColor(publication.project_type);
-
-  console.log(publication.generated_constraints);
 
   return (
     <View style={[globalStyles.card]}>
       <View
         style={[
           globalStyles.headerRow,
-          { backgroundColor: getProjectColor(publication.project_type, 0.1) },
+          {
+            backgroundColor: getProjectColor(publication.project_type, 0.1),
+            justifyContent: "space-between",
+          },
         ]}
       >
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Image
+            source={
+              publication.profile?.avatar_url
+                ? { uri: publication.profile.avatar_url }
+                : require("@/assets/images/blank-avatar.jpg")
+            }
+            style={{ width: 40, height: 40, borderRadius: 20, marginRight: 10 }}
+          />
+          <Text style={{ color: colors.text, fontWeight: "bold" }}>
+            {publication.profile?.username}
+          </Text>
+        </View>
         <Text style={{ color: projectColor, fontWeight: "bold" }}>
           {publication.title}
         </Text>
