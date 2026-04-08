@@ -1,9 +1,11 @@
 import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import { Publication } from "@/types/publication";
-import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useState } from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ConstraintsTags } from "./constraint-tags";
+import { DifficultyIndicator } from "./difficulty-indicator";
 
 interface PublicationCardProps {
   publication: Publication;
@@ -12,6 +14,7 @@ interface PublicationCardProps {
 export const PublicationCard = ({ publication }: PublicationCardProps) => {
   const { globalStyles, colors } = useStyles();
   const projectColor = getProjectColor(publication.project_type);
+  const [isConstraintsVisible, setIsConstraintsVisible] = useState(false);
 
   return (
     <View style={[globalStyles.card]}>
@@ -21,6 +24,7 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
           {
             backgroundColor: getProjectColor(publication.project_type, 0.1),
             justifyContent: "space-between",
+            gap: 8,
           },
         ]}
       >
@@ -33,16 +37,40 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
             }
             style={{ width: 40, height: 40, borderRadius: 20, marginRight: 10 }}
           />
-          <Text style={{ color: colors.text, fontWeight: "bold" }}>
+          <Text style={{ color: colors.text, fontSize: 12 }}>
             {publication.profile?.username}
           </Text>
         </View>
         <Text style={{ color: projectColor, fontWeight: "bold" }}>
           {publication.title}
         </Text>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            flex: 1,
+            justifyContent: "flex-end",
+            gap: 8,
+          }}
+        >
+          <DifficultyIndicator
+            difficultyIndicator={
+              publication.generated_constraints?.difficulty ?? 0
+            }
+          />
+          <TouchableOpacity
+            onPress={() => setIsConstraintsVisible((prev) => !prev)}
+          >
+            <Ionicons
+              name={isConstraintsVisible ? "chevron-up" : "chevron-down"}
+              size={24}
+              color={projectColor}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
-      {publication.generated_constraints && (
+      {publication.generated_constraints && isConstraintsVisible && (
         <ConstraintsTags item={publication.generated_constraints} />
       )}
 

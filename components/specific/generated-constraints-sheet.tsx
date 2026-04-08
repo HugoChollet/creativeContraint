@@ -55,7 +55,7 @@ export default function GeneratedConstraintsSheet({
     }
   });
 
-  const getDifficultyGenerated = () => {
+  const getDifficultyGenerated = (): number => {
     let count = 0;
 
     Object.values(randomConstraints).forEach((option) => {
