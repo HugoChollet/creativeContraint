@@ -37,7 +37,15 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
             }
             style={{ width: 40, height: 40, borderRadius: 20, marginRight: 10 }}
           />
-          <Text style={{ color: colors.text, fontSize: 12 }}>
+          <Text
+            numberOfLines={1}
+            style={[
+              styles.userText,
+              {
+                color: colors.text,
+              },
+            ]}
+          >
             {publication.profile?.username}
           </Text>
         </View>
@@ -90,19 +98,10 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
 };
 
 const styles = StyleSheet.create({
-  container: { marginBottom: 20, padding: 15 },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 12,
-  },
-  badge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 6 },
-  mainImage: { width: "100%", height: 250, borderRadius: 12, marginBottom: 12 },
-  description: { marginBottom: 15, opacity: 0.8 },
-  constraintWrapper: {
-    borderTopWidth: 1,
-    borderTopColor: "#eee",
-    paddingTop: 12,
+  userText: {
+    fontSize: 10,
+    bottom: -14,
+    left: -5,
+    maxWidth: 70,
   },
 });
