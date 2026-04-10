@@ -5,10 +5,12 @@ import { Text, View } from "react-native";
 
 interface DifficultyIndicatorProps {
   difficultyIndicator?: number;
+  isLabel?: boolean;
 }
 
 export function DifficultyIndicator({
   difficultyIndicator,
+  isLabel = true,
 }: DifficultyIndicatorProps) {
   const { globalStyles, colors } = useStyles();
 
@@ -25,7 +27,7 @@ export function DifficultyIndicator({
 
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-      <Text style={globalStyles.title}>{difficultyIndicator}</Text>
+      {isLabel && <Text style={globalStyles.title}>{difficultyIndicator}</Text>}
       <Ionicons
         name="speedometer-outline"
         size={28}

@@ -25,17 +25,18 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
             backgroundColor: getProjectColor(publication.project_type, 0.1),
             justifyContent: "space-between",
             gap: 8,
+            height: 72,
           },
         ]}
       >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={{ flexDirection: "column", alignItems: "center" }}>
           <Image
             source={
               publication.profile?.avatar_url
                 ? { uri: publication.profile.avatar_url }
                 : require("@/assets/images/blank-avatar.jpg")
             }
-            style={{ width: 40, height: 40, borderRadius: 20, marginRight: 10 }}
+            style={styles.image}
           />
           <Text
             numberOfLines={1}
@@ -49,19 +50,12 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
             {publication.profile?.username}
           </Text>
         </View>
-        <Text style={{ color: projectColor, fontWeight: "bold" }}>
+        <Text style={{ color: projectColor, fontWeight: "bold", fontSize: 16 }}>
           {publication.title}
         </Text>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            flex: 1,
-            justifyContent: "flex-end",
-            gap: 8,
-          }}
-        >
+        <View style={styles.headerLeft}>
           <DifficultyIndicator
+            isLabel={isConstraintsVisible}
             difficultyIndicator={
               publication.generated_constraints?.difficulty ?? 0
             }
@@ -71,7 +65,7 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
           >
             <Ionicons
               name={isConstraintsVisible ? "chevron-up" : "chevron-down"}
-              size={24}
+              size={20}
               color={projectColor}
             />
           </TouchableOpacity>
@@ -100,8 +94,15 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
 const styles = StyleSheet.create({
   userText: {
     fontSize: 10,
-    bottom: -14,
-    left: -5,
     maxWidth: 70,
   },
+  headerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "flex-end",
+    maxWidth: 70,
+    gap: 8,
+  },
+  image: { width: 24, height: 24, borderRadius: 20 },
 });
