@@ -1,6 +1,8 @@
 import Description from "@/components/generic/description";
 import { Header } from "@/components/generic/header";
-import ConstraintOptionForm from "@/components/specific/constraint-option-form";
+import { Spacer } from "@/components/generic/spacer";
+import Tooltip from "@/components/generic/tooltip";
+import ConstraintForm from "@/components/specific/constraint-form";
 import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import { Option } from "@/types/constraints";
@@ -10,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -80,19 +83,48 @@ export default function CategoryFormScreen() {
           {options
             .sort((a, b) => a.value.localeCompare(b.value))
             .map((opt: Option) => {
-              // Create a unique key for selection state: "Category-SubName-ID" or "Category-ID"
-
               return (
-                <View style={globalStyles.optionItem} key={opt.id}>
-                  <Text>
-                    {opt.value} (Rarity: {opt.rarity})
-                  </Text>
+                <View key={opt.id}>
+                  <View
+                    style={[
+                      globalStyles.optionItem,
+                      { justifyContent: "flex-start" },
+                    ]}
+                  >
+                    <View>
+                      <Text
+                        style={{
+                          color: colors.text,
+                        }}
+                      >
+                        {opt.value}
+                      </Text>
+                      <Text
+                        style={{
+                          ...styles.rarityLabel,
+                          color: colors.textDiscreet,
+                        }}
+                      >
+                        {t("component:constraint-selector.difficulty") +
+                          opt.rarity}
+                      </Text>
+                    </View>
+                    {opt.description && (
+                      <Tooltip
+                        title={opt.value}
+                        description={opt.description}
+                        color={projectColor}
+                      />
+                    )}
+                  </View>
+                  <Spacer divider={true} />
+                  <Spacer height={8} />
                 </View>
               );
             })}
         </ScrollView>
 
-        <ConstraintOptionForm
+        <ConstraintForm
           submit={(option) => {
             setOptions([...options, option]);
             setModalVisible(false);
@@ -123,3 +155,7 @@ export default function CategoryFormScreen() {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  rarityLabel: { fontSize: 11, marginTop: 2 },
+});

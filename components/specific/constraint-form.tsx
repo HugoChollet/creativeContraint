@@ -6,15 +6,15 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import Description from "../generic/description";
 
-interface ConstraintOptionFormProps {
+interface ConstraintSelectorFormProps {
   submit: (option: Option) => void;
   projectColor: string;
 }
 
-export default function ConstraintOptionForm({
+export default function ConstraintSelectorForm({
   submit,
   projectColor,
-}: ConstraintOptionFormProps) {
+}: ConstraintSelectorFormProps) {
   const { globalStyles, colors } = useStyles();
   const projectColorSoft = projectColor.replace(/[\d.]+\)$/g, `0.2)`);
   const { t } = useTranslation();
