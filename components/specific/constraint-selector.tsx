@@ -14,7 +14,7 @@ interface OptionProps {
   onToggle: (id: number) => void;
 }
 
-export function ConstraintOption({
+export function ConstraintSelector({
   option,
   isSelected,
   isParentEnabled,
@@ -49,7 +49,7 @@ export function ConstraintOption({
             color: colors.textDiscreet,
           }}
         >
-          {t("component:constraint-option.difficulty") + option.rarity}
+          {t("component:constraint-selector.difficulty") + option.rarity}
         </Text>
       </View>
       {option.description && (

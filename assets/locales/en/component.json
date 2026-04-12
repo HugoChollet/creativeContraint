@@ -30,7 +30,7 @@
     "hard": "hard",
     "all": "all"
   },
-  "constraint-option": {
+  "constraint-selector": {
     "difficulty": "Difficulty : "
   },
   "share": {
