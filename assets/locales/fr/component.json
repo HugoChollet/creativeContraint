@@ -45,6 +45,12 @@
   "constraint-set-card": {
     "upload": "Soumettre un projet"
   },
+  "add-button": {
+    "label-category": "Créer une catégorie",
+    "label-constraint": "Ajouter une contrainte",
+    "placeholder-category": "Nom de la catégorie",
+    "placeholder-constraint": "Description de la contrainte"
+  },
   "image-picker": {
     "label": "Contenu visuel",
     "placeholder": "Ajouter une photo",

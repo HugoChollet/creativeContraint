@@ -1,3 +1,4 @@
+import { AddButton } from "@/components/generic/add-button";
 import { FloatingButton } from "@/components/generic/floating-button";
 import { Header } from "@/components/generic/header";
 import { Spacer } from "@/components/generic/spacer";
@@ -244,6 +245,11 @@ export default function LabScreen() {
               color={projectColor}
             />
           ))}
+          <AddButton
+            projectColor={projectColor}
+            label={t("component:add-button.label-category")}
+            onClick={() => {}}
+          />
           <Spacer height={60} />
         </ScrollView>
 
