@@ -33,15 +33,12 @@ export function ConstraintOption({
       <Ionicons
         name={isSelected ? "checkmark-circle" : "ellipse-outline"}
         size={22}
-        color={
-          !isParentEnabled ? colors.text : isSelected ? color : colors.disable
-        }
+        color={isSelected ? color : colors.textDiscreet}
       />
       <View style={styles.textContainer}>
         <Text
           style={{
-            color:
-              !isSelected || !isParentEnabled ? colors.disable : colors.text,
+            color: colors.text,
           }}
         >
           {option.value}
@@ -49,10 +46,7 @@ export function ConstraintOption({
         <Text
           style={{
             ...styles.rarityLabel,
-            color:
-              !isSelected || !isParentEnabled
-                ? colors.disable
-                : colors.textDiscreet,
+            color: colors.textDiscreet,
           }}
         >
           {t("component:constraint-option.difficulty") + option.rarity}

@@ -74,7 +74,7 @@ export default function CategorySelector({
           <Ionicons
             name={isEnabled ? "checkbox" : "square-outline"}
             size={24}
-            color={isEnabled ? color : colors.disable}
+            color={isEnabled ? color : colors.textDiscreet}
           />
         </Pressable>
 
@@ -83,7 +83,7 @@ export default function CategorySelector({
             <Text
               style={[
                 globalStyles.text,
-                { color: isEnabled ? colors.text : colors.disable },
+                { color: isEnabled ? colors.text : colors.textDiscreet },
               ]}
             >
               {category.label || category.category}
