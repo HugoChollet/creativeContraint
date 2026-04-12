@@ -45,6 +45,12 @@
   "constraint-set-card": {
     "upload": "Upload a project"
   },
+  "add-button": {
+    "label-category": "Create Category",
+    "label-constraint": "Add Constraint",
+    "placeholder-category": "Category Name",
+    "placeholder-constraint": "Constraint Description"
+  },
   "image-picker": {
     "label": "Visual Content",
     "placeholder": "Add a photo",
