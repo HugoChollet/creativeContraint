@@ -15,7 +15,7 @@ import {
   Option,
   SelectedState,
 } from "@/types/constraints";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -45,6 +45,7 @@ export default function LabScreen() {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const { t } = useTranslation();
   const { globalStyles, colors } = useStyles();
+  const router = useRouter();
 
   const rawType = (
     Array.isArray(type) ? type[0] : (type ?? "book")
@@ -248,7 +249,12 @@ export default function LabScreen() {
           <AddButton
             projectColor={projectColor}
             label={t("component:add-button.label-category")}
-            onClick={() => {}}
+            onClick={() =>
+              router.push({
+                pathname: "/new-category-form",
+                params: { id: 1, type: dataSource.project_type },
+              })
+            }
           />
           <Spacer height={60} />
         </ScrollView>

@@ -86,6 +86,13 @@ export default function TabLayout() {
           title: "Submit",
         }}
       />
+      <Tabs.Screen
+        name="new-category-form"
+        options={{
+          href: null,
+          title: "New Category",
+        }}
+      />
     </Tabs>
   );
 }
