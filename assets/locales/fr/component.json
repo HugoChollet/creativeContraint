@@ -51,6 +51,13 @@
     "placeholder-category": "Nom de la catégorie",
     "placeholder-constraint": "Description de la contrainte"
   },
+  "constraint_option_form": {
+    "name_label": "Nom de la contrainte",
+    "name_placeholder": "Nouvelle contrainte",
+    "description_label": "Description de la contrainte",
+    "description_placeholder": "Décrivez la contrainte à suivre",
+    "submit_button": "Ajouter cette contrainte"
+  },
   "image-picker": {
     "label": "Contenu visuel",
     "placeholder": "Ajouter une photo",

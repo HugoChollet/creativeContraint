@@ -51,6 +51,13 @@
     "placeholder-category": "Category Name",
     "placeholder-constraint": "Constraint Description"
   },
+  "constraint_option_form": {
+    "name_label": "Constraint Name",
+    "name_placeholder": "New constraint",
+    "description_label": "Constraint description",
+    "description_placeholder": "Describe the constraint to follow",
+    "submit_button": "Add this constraint"
+  },
   "image-picker": {
     "label": "Visual Content",
     "placeholder": "Add a photo",
