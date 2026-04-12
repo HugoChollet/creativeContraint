@@ -7,6 +7,7 @@ interface DescriptionProps {
   isLoading?: boolean;
   projectColor?: string;
   placeholder?: string;
+  height?: number;
 }
 
 export default function Description({
@@ -15,6 +16,7 @@ export default function Description({
   isLoading,
   projectColor = "#000000",
   placeholder,
+  height = 120,
 }: DescriptionProps) {
   const { globalStyles, colors } = useStyles();
   const projectColorSoft = projectColor.replace(/[\d.]+\)$/g, `0.2)`);
@@ -24,7 +26,7 @@ export default function Description({
       style={[
         globalStyles.input,
         {
-          height: 120,
+          height: height,
           textAlignVertical: "top",
           paddingTop: 12,
           borderColor: projectColorSoft,

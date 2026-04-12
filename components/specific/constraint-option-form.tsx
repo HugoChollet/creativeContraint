@@ -1,8 +1,9 @@
 import { useStyles } from "@/hooks/use-styles";
 import { Option } from "@/types/constraints";
+import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import Description from "../generic/description";
 
 interface ConstraintOptionFormProps {
@@ -17,6 +18,7 @@ export default function ConstraintOptionForm({
   const { globalStyles, colors } = useStyles();
   const projectColorSoft = projectColor.replace(/[\d.]+\)$/g, `0.2)`);
   const { t } = useTranslation();
+  const [isDescExpanded, setIsDescExpanded] = useState(false);
 
   const [option, setOption] = useState<Option>({
     id: Math.random() * 1000000,
@@ -26,24 +28,42 @@ export default function ConstraintOptionForm({
   });
 
   return (
-    <>
-      <View style={{ marginBottom: 20 }}>
-        <Text style={globalStyles.label}>
-          {t("component:constraint_option_form.name_label")}
-        </Text>
-        <TextInput
-          style={[globalStyles.input, { borderColor: projectColorSoft }]}
-          placeholder={t("component:constraint_option_form.name_placeholder")}
-          placeholderTextColor={colors.placeholder}
-          value={option.value}
-          onChangeText={(text) => setOption({ ...option, value: text })}
-        />
-      </View>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.headerLeft}>
+          <TextInput
+            style={[globalStyles.input, { borderColor: projectColorSoft }]}
+            placeholder={t("component:constraint_option_form.name_placeholder")}
+            placeholderTextColor={colors.placeholder}
+            value={option.value}
+            onChangeText={(text) => setOption({ ...option, value: text })}
+          />
 
-      <View style={{ marginBottom: 20 }}>
-        <Text style={globalStyles.label}>
-          {t("component:constraint_option_form.description_label")}
-        </Text>
+          <TouchableOpacity
+            style={globalStyles.transparentButton}
+            onPress={() => setIsDescExpanded(!isDescExpanded)}
+          >
+            <Ionicons
+              name={isDescExpanded ? "chevron-up" : "chevron-down"}
+              size={32}
+              color={projectColor}
+            />
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity
+          style={globalStyles.transparentButton}
+          onPress={() => submit(option)}
+          disabled={option.value === ""}
+        >
+          <Ionicons
+            name="add"
+            size={32}
+            color={option.value === "" ? colors.disable : projectColor}
+          />
+        </TouchableOpacity>
+      </View>
+      {isDescExpanded && (
         <Description
           description={option.description ?? ""}
           setDescription={(text) => setOption({ ...option, description: text })}
@@ -51,24 +71,26 @@ export default function ConstraintOptionForm({
             "component:constraint_option_form.description_placeholder",
           )}
           projectColor={projectColor}
+          height={86}
         />
-      </View>
-      <TouchableOpacity
-        style={[
-          globalStyles.secondaryButton,
-          {
-            backgroundColor:
-              option.value !== "" ? projectColor : colors.disable,
-            marginTop: 10,
-          },
-        ]}
-        onPress={() => submit(option)}
-        disabled={option.value === ""}
-      >
-        <Text style={globalStyles.secondaryButtonText}>
-          {t("component:constraint_option_form.submit_button")}
-        </Text>
-      </TouchableOpacity>
-    </>
+      )}
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    gap: 12,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 8,
+  },
+  headerLeft: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 8,
+  },
+});

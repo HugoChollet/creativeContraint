@@ -1,7 +1,5 @@
-import { AddButton } from "@/components/generic/add-button";
 import Description from "@/components/generic/description";
 import { Header } from "@/components/generic/header";
-import { ModalGeneric } from "@/components/generic/modal-generic";
 import ConstraintOptionForm from "@/components/specific/constraint-option-form";
 import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
@@ -92,45 +90,36 @@ export default function CategoryFormScreen() {
                 </View>
               );
             })}
-          <AddButton
-            projectColor={projectColor}
-            label={t("screen:category_form.add_button")}
-            onClick={() => setModalVisible(true)}
-          />
         </ScrollView>
 
-        <ModalGeneric visible={modalVisible} setVisible={setModalVisible}>
-          <ConstraintOptionForm
-            submit={(option) => {
-              setOptions([...options, option]);
-              setModalVisible(false);
-            }}
-            projectColor={projectColor}
-          />
-        </ModalGeneric>
-        <TouchableOpacity
-          style={[
-            globalStyles.secondaryButton,
-            {
-              backgroundColor: isFormValid ? projectColor : colors.disable,
-              marginTop: 10,
-            },
-          ]}
-          onPress={() => {}}
-          disabled={!isFormValid}
-        >
-          {isLoading ? (
-            <ActivityIndicator color={colors.invertedText} />
-          ) : (
-            <Text style={globalStyles.secondaryButtonText}>
-              {t("screen:category_form.submit_button")}
-            </Text>
-          )}
-        </TouchableOpacity>
-
-        {/* Petit padding en bas pour éviter que le clavier cache le bouton */}
-        <View style={{ height: 40 }} />
+        <ConstraintOptionForm
+          submit={(option) => {
+            setOptions([...options, option]);
+            setModalVisible(false);
+          }}
+          projectColor={projectColor}
+        />
       </ScrollView>
+      <TouchableOpacity
+        style={[
+          globalStyles.secondaryButton,
+          {
+            backgroundColor: isFormValid ? projectColor : colors.disable,
+            bottom: 10,
+            marginHorizontal: 20,
+          },
+        ]}
+        onPress={() => {}}
+        disabled={!isFormValid}
+      >
+        {isLoading ? (
+          <ActivityIndicator color={colors.invertedText} />
+        ) : (
+          <Text style={globalStyles.secondaryButtonText}>
+            {t("screen:category_form.submit_button")}
+          </Text>
+        )}
+      </TouchableOpacity>
     </>
   );
 }
