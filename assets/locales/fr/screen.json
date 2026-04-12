@@ -55,5 +55,14 @@
       "no_user": "Vous devez être connecté pour publier.",
       "publish_failed": "Une erreur est survenue lors de la publication. Veuillez réessayer."
     }
+  },
+  "category_form": {
+    "title": "Nouvelle catégorie pour {{type}}",
+    "name_label": "Nom de la catégorie",
+    "name_placeholder": "Entrez le nom de la catégorie",
+    "description_label": "Description",
+    "description_placeholder": "Décrivez la catégorie",
+    "add_button": "Ajouter une nouvelle contrainte",
+    "submit_button": "Soumettre la catégorie"
   }
 }
