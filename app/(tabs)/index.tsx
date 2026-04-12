@@ -18,11 +18,14 @@ export default function HomeScreen() {
 
       <ScrollView>
         <MainButton
-          title={t("screen:home.book_button")}
-          color={ProjectsColors.book}
-          image={require("@/assets/images/projects/png/book.png")}
+          title={t("screen:home.videointernet_button")}
+          color={ProjectsColors.videoInternet}
+          image={require("@/assets/images/projects/png/videoInternet.png")}
           onPress={() =>
-            router.push({ pathname: "/lab", params: { id: 1, type: "book" } })
+            router.push({
+              pathname: "/lab",
+              params: { id: 1, type: "videoInternet" },
+            })
           }
         />
         <MainButton
@@ -31,6 +34,25 @@ export default function HomeScreen() {
           image={require("@/assets/images/projects/png/music.png")}
           onPress={() =>
             router.push({ pathname: "/lab", params: { id: 1, type: "music" } })
+          }
+        />
+        <MainButton
+          title={t("screen:home.book_button")}
+          color={ProjectsColors.book}
+          image={require("@/assets/images/projects/png/book.png")}
+          onPress={() =>
+            router.push({ pathname: "/lab", params: { id: 1, type: "book" } })
+          }
+        />
+        <MainButton
+          title={t("screen:home.videogame_button")}
+          color={ProjectsColors.videogame}
+          image={require("@/assets/images/projects/png/videoGame.png")}
+          onPress={() =>
+            router.push({
+              pathname: "/lab",
+              params: { id: 1, type: "music" },
+            })
           }
         />
         <MainButton
@@ -45,24 +67,13 @@ export default function HomeScreen() {
           }
         />
         <MainButton
-          title={t("screen:home.videofiction_button")}
-          color={ProjectsColors.videoFiction}
-          image={require("@/assets/images/projects/png/videoFiction.png")}
+          title={t("screen:home.boardgame_button")}
+          color={ProjectsColors.boardgame}
+          image={require("@/assets/images/projects/png/boardgame.png")}
           onPress={() =>
             router.push({
               pathname: "/lab",
-              params: { id: 1, type: "videoFiction" },
-            })
-          }
-        />
-        <MainButton
-          title={t("screen:home.videointernet_button")}
-          color={ProjectsColors.videoInternet}
-          image={require("@/assets/images/projects/png/videoInternet.png")}
-          onPress={() =>
-            router.push({
-              pathname: "/lab",
-              params: { id: 1, type: "videoInternet" },
+              params: { id: 1, type: "boardgame" },
             })
           }
         />
@@ -78,13 +89,13 @@ export default function HomeScreen() {
           }
         />
         <MainButton
-          title={t("screen:home.boardgame_button")}
-          color={ProjectsColors.boardgame}
-          image={require("@/assets/images/projects/png/boardgame.png")}
+          title={t("screen:home.videofiction_button")}
+          color={ProjectsColors.videoFiction}
+          image={require("@/assets/images/projects/png/videoFiction.png")}
           onPress={() =>
             router.push({
               pathname: "/lab",
-              params: { id: 1, type: "boardgame" },
+              params: { id: 1, type: "videoFiction" },
             })
           }
         />
