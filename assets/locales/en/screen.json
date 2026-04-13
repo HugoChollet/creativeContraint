@@ -63,6 +63,7 @@
     "description_label": "Description",
     "description_placeholder": "Describe the category",
     "add_button": "Add new constraint",
-    "submit_button": "Submit Category"
+    "submit_button": "Submit Category",
+    "constraint_list_label": "Constraints of this category (minimum {{min}})"
   }
 }

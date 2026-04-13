@@ -18,6 +18,8 @@ import {
   View,
 } from "react-native";
 
+const ConstraintRequire = { MIN_OPTIONS: 2, NAME_LENGTH_MIN: 6 };
+
 export default function CategoryFormScreen() {
   const { id: categoryId, type: projectLabel } = useLocalSearchParams<{
     id: string;
@@ -38,7 +40,10 @@ export default function CategoryFormScreen() {
   const projectColor = getProjectColor(projectLabel);
   const projectColorSoft = getProjectColor(projectLabel, 0.2);
 
-  const isFormValid = name.length > 2 && options.length > 0 && !isLoading;
+  const isFormValid =
+    name.length > ConstraintRequire.NAME_LENGTH_MIN &&
+    options.length >= ConstraintRequire.MIN_OPTIONS &&
+    !isLoading;
 
   return (
     <>
@@ -53,7 +58,7 @@ export default function CategoryFormScreen() {
       >
         <View style={{ marginBottom: 20 }}>
           <Text style={globalStyles.label}>
-            {t("screen:category_form.name_label")}
+            {t("screen:category_form.name_label") + " *"}
           </Text>
           <TextInput
             style={[globalStyles.input, { borderColor: projectColorSoft }]}
@@ -78,6 +83,11 @@ export default function CategoryFormScreen() {
           />
         </View>
 
+        <Text style={globalStyles.label}>
+          {t("screen:category_form.constraint_list_label", {
+            min: ConstraintRequire.MIN_OPTIONS,
+          })}
+        </Text>
         <ScrollView nestedScrollEnabled={true}>
           {options
             .sort((a, b) => a.value.localeCompare(b.value))

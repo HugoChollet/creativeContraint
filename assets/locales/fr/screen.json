@@ -63,6 +63,7 @@
     "description_label": "Description",
     "description_placeholder": "Décrivez la catégorie",
     "add_button": "Ajouter une nouvelle contrainte",
-    "submit_button": "Soumettre la catégorie"
+    "submit_button": "Soumettre la catégorie",
+    "constraint_list_label": "Contraintes de cette catégorie (minimum {{min}})"
   }
 }
