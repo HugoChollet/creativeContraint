@@ -1,7 +1,6 @@
 import Description from "@/components/generic/description";
 import { Header } from "@/components/generic/header";
-import { Spacer } from "@/components/generic/spacer";
-import Tooltip from "@/components/generic/tooltip";
+import ConstraintCrud from "@/components/specific/constraint-crud";
 import ConstraintForm from "@/components/specific/constraint-form";
 import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
@@ -84,48 +83,19 @@ export default function CategoryFormScreen() {
             .sort((a, b) => a.value.localeCompare(b.value))
             .map((opt: Option) => {
               return (
-                <View key={opt.id}>
-                  <View
-                    style={[
-                      globalStyles.optionItem,
-                      { justifyContent: "flex-start" },
-                    ]}
-                  >
-                    <View>
-                      <Text
-                        style={{
-                          color: colors.text,
-                        }}
-                      >
-                        {opt.value}
-                      </Text>
-                      <Text
-                        style={{
-                          ...styles.rarityLabel,
-                          color: colors.textDiscreet,
-                        }}
-                      >
-                        {t("component:constraint-selector.difficulty") +
-                          opt.rarity}
-                      </Text>
-                    </View>
-                    {opt.description && (
-                      <Tooltip
-                        title={opt.value}
-                        description={opt.description}
-                        color={projectColor}
-                      />
-                    )}
-                  </View>
-                  <Spacer divider={true} />
-                  <Spacer height={8} />
-                </View>
+                <ConstraintCrud
+                  key={opt.id}
+                  option={opt}
+                  onDelete={() => {}}
+                  onEdit={() => {}}
+                  projectColor={projectColor}
+                />
               );
             })}
         </ScrollView>
 
         <ConstraintForm
-          submit={(option) => {
+          submit={(option: Option) => {
             setOptions([...options, option]);
             setModalVisible(false);
           }}
@@ -156,6 +126,4 @@ export default function CategoryFormScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  rarityLabel: { fontSize: 11, marginTop: 2 },
-});
+const styles = StyleSheet.create({});
