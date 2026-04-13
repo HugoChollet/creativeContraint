@@ -251,7 +251,7 @@ export default function LabScreen() {
             label={t("component:add-button.label-category")}
             onClick={() =>
               router.push({
-                pathname: "/new-category-form",
+                pathname: "/category-form",
                 params: { id: 1, type: dataSource.project_type },
               })
             }
