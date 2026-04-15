@@ -54,12 +54,7 @@ export default function ConstraintSelectorForm({
             min={1}
             max={5}
             initialValue={option.rarity}
-            onValueChange={(value) =>
-              setOption(() => {
-                console.log(value);
-                return { ...option, rarity: value };
-              })
-            }
+            onValueChange={(value) => setOption({ ...option, rarity: value })}
           />
         </View>
 
