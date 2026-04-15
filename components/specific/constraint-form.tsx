@@ -29,10 +29,14 @@ export default function ConstraintSelectorForm({
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <TextInput
-            style={[globalStyles.input, { borderColor: projectColorSoft }]}
+        <View style={styles.header}>
+          <View style={styles.headerLeft}>
+            <TextInput
+              style={[
+                globalStyles.input,
+                styles.nameInput,
+                { borderColor: projectColorSoft },
+              ]}
             placeholder={t("component:constraint_option_form.name_placeholder")}
             placeholderTextColor={colors.placeholder}
             value={option.value}
@@ -96,8 +100,15 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   headerLeft: {
+    flex: 1,
+    minWidth: 0,
     flexDirection: "row",
     alignItems: "flex-start",
     gap: 8,
+  },
+  nameInput: {
+    flex: 1,
+    minWidth: 0,
+    flexShrink: 1,
   },
 });
