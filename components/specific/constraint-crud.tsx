@@ -2,7 +2,6 @@ import { useStyles } from "@/hooks/use-styles";
 import { Option } from "@/types/constraints";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
-import { Spacer } from "../generic/spacer";
 import Tooltip from "../generic/tooltip";
 
 interface ConstraintSelectorFormProps {
@@ -50,8 +49,6 @@ export default function ConstraintCrud({
           />
         )}
       </View>
-      <Spacer divider={true} />
-      <Spacer height={8} />
     </>
   );
 }

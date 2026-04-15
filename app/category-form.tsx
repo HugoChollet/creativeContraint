@@ -1,5 +1,6 @@
 import Description from "@/components/generic/description";
 import { Header } from "@/components/generic/header";
+import { Spacer } from "@/components/generic/spacer";
 import ConstraintCrud from "@/components/specific/constraint-crud";
 import ConstraintForm from "@/components/specific/constraint-form";
 import { getProjectColor } from "@/constants/theme";
@@ -108,13 +109,20 @@ export default function CategoryFormScreen() {
                 .sort((a, b) => a.value.localeCompare(b.value))
                 .map((opt: Option) => {
                   return (
-                    <ConstraintCrud
-                      key={opt.id}
-                      option={opt}
-                      onDelete={() => {}}
-                      onEdit={() => {}}
-                      projectColor={projectColor}
-                    />
+                    <View key={opt.id}>
+                      <ConstraintCrud
+                        option={opt}
+                        onDelete={() => {}}
+                        onEdit={() => {}}
+                        projectColor={projectColor}
+                      />
+                      {opt.id !== options[options.length - 1].id && (
+                        <>
+                          <Spacer divider={true} color={projectColorSoft} />
+                          <Spacer height={8} />
+                        </>
+                      )}
+                    </View>
                   );
                 })}
             </View>

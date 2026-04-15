@@ -5,10 +5,12 @@ export function Spacer({
   height,
   width,
   divider,
+  color,
 }: {
   height?: number;
   width?: number;
   divider?: boolean;
+  color?: string;
 }) {
   const { colors } = useStyles();
 
@@ -18,7 +20,7 @@ export function Spacer({
         <View
           style={{
             height: 1,
-            backgroundColor: colors.disable,
+            backgroundColor: color || colors.disable,
           }}
         />
       )}
