@@ -4,6 +4,7 @@
     "slug": "creativeContraint",
     "version": "1.0.0",
     "orientation": "portrait",
+    "softwareKeyboardLayoutMode": "pan",
     "icon": "./assets/images/icon.png",
     "scheme": "creativecontraint",
     "userInterfaceStyle": "automatic",

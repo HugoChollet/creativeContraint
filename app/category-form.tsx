@@ -112,7 +112,9 @@ export default function CategoryFormScreen() {
                     <View key={opt.id}>
                       <ConstraintCrud
                         option={opt}
-                        onDelete={() => {}}
+                        onDelete={() =>
+                          setOptions(options.filter((o) => o.id !== opt.id))
+                        }
                         onEdit={() => {}}
                         projectColor={projectColor}
                       />
