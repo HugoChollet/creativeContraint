@@ -11,7 +11,6 @@ import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -51,11 +50,7 @@ export default function CategoryFormScreen() {
         title={t("screen:category_form.title", { type: projectLabel })}
         color={projectColor}
       />
-      <ScrollView
-        style={globalStyles.screenContainer}
-        contentContainerStyle={{ paddingVertical: 20 }}
-        keyboardShouldPersistTaps="handled"
-      >
+      <View style={globalStyles.screenContainer}>
         <View style={{ marginBottom: 20 }}>
           <Text style={globalStyles.label}>
             {t("screen:category_form.name_label") + " *"}
@@ -88,6 +83,13 @@ export default function CategoryFormScreen() {
             min: ConstraintRequire.MIN_OPTIONS,
           })}
         </Text>
+        <ConstraintForm
+          submit={(option: Option) => {
+            setOptions([...options, option]);
+            setModalVisible(false);
+          }}
+          projectColor={projectColor}
+        />
         <ScrollView nestedScrollEnabled={true}>
           {options
             .sort((a, b) => a.value.localeCompare(b.value))
@@ -103,15 +105,7 @@ export default function CategoryFormScreen() {
               );
             })}
         </ScrollView>
-
-        <ConstraintForm
-          submit={(option: Option) => {
-            setOptions([...options, option]);
-            setModalVisible(false);
-          }}
-          projectColor={projectColor}
-        />
-      </ScrollView>
+      </View>
       <TouchableOpacity
         style={[
           globalStyles.secondaryButton,
@@ -135,5 +129,3 @@ export default function CategoryFormScreen() {
     </>
   );
 }
-
-const styles = StyleSheet.create({});

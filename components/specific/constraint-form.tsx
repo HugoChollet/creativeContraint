@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import Description from "../generic/description";
-
+import { NumberPicker } from "../generic/number-picker";
 interface ConstraintSelectorFormProps {
   submit: (option: Option) => void;
   projectColor: string;
@@ -49,11 +49,23 @@ export default function ConstraintSelectorForm({
               color={projectColor}
             />
           </TouchableOpacity>
+
+          <NumberPicker
+            min={1}
+            max={5}
+            initialValue={option.rarity}
+            onValueChange={(value) =>
+              setOption(() => {
+                console.log(value);
+                return { ...option, rarity: value };
+              })
+            }
+          />
         </View>
 
         <TouchableOpacity
           style={globalStyles.transparentButton}
-          onPress={() => submit(option)}
+          onPress={() => submit({ ...option, id: Math.random() * 1000000 })}
           disabled={option.value === ""}
         >
           <Ionicons
