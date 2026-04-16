@@ -44,7 +44,7 @@ export function ConstraintsSetCard({
 
   const translatedConstraints = useProjectTranslations(
     item.constraints,
-    dataSource.constraints,
+    dataSource.categories,
   );
 
   return (

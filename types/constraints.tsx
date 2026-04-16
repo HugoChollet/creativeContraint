@@ -13,7 +13,7 @@ export interface SubCategory {
 }
 
 export interface Category {
-  category: string;
+  name: string;
   disabled?: boolean;
   label?: string;
   options?: Option[];
@@ -26,7 +26,7 @@ export interface Category {
 export interface ConstraintSetData {
   project_type: string;
   project_label?: string;
-  constraints: Category[];
+  categories: Category[];
 }
 
 export type SelectedState = {

@@ -1,8 +1,8 @@
 {
   "project_type": "Board Game",
-  "constraints": [
+  "categories": [
     {
-      "category": "Game Style & Mechanics",
+      "name": "Game Style & Mechanics",
       "options": [
         { "id": 1, "value": "Worker Placement", "rarity": 2 },
         { "id": 2, "value": "Deck-building", "rarity": 2 },
@@ -41,7 +41,7 @@
       ]
     },
     {
-      "category": "Physical Support",
+      "name": "Physical Support",
       "options": [
         { "id": 1, "value": "Modular Board (Tiles)", "rarity": 2 },
         { "id": 2, "value": "Cards Only", "rarity": 1 },
@@ -84,7 +84,7 @@
       ]
     },
     {
-      "category": "Player Action",
+      "name": "Player Action",
       "options": [
         { "id": 1, "value": "Dice Rolling", "rarity": 1 },
         { "id": 2, "value": "Freehand Drawing", "rarity": 2 },
@@ -119,7 +119,7 @@
       ]
     },
     {
-      "category": "Information Flow",
+      "name": "Information Flow",
       "options": [
         { "id": 1, "value": "Perfect Information (Chess)", "rarity": 1 },
         { "id": 2, "value": "Hidden Roles", "rarity": 2 },
@@ -158,7 +158,7 @@
       ]
     },
     {
-      "category": "Turn Structure",
+      "name": "Turn Structure",
       "options": [
         { "id": 1, "value": "Sequential (Clockwise)", "rarity": 1 },
         { "id": 2, "value": "Real-Time (Simultaneous)", "rarity": 3 },
@@ -193,7 +193,7 @@
       ]
     },
     {
-      "category": "Victory Conditions",
+      "name": "Victory Conditions",
       "options": [
         { "id": 1, "value": "High Score (Points)", "rarity": 1 },
         { "id": 2, "value": "Race (First to Arrive)", "rarity": 2 },
@@ -228,7 +228,7 @@
       ]
     },
     {
-      "category": "Player Relationship",
+      "name": "Player Relationship",
       "options": [
         { "id": 1, "value": "Free-for-All (Competitive)", "rarity": 1 },
         { "id": 2, "value": "All-Together (Cooperative)", "rarity": 2 },
@@ -279,7 +279,7 @@
       ]
     },
     {
-      "category": "Setting & Universe",
+      "name": "Setting & Universe",
       "options": [
         { "id": 1, "value": "Greek Mythology", "rarity": 1 },
         { "id": 2, "value": "World War II (WW2)", "rarity": 1 },

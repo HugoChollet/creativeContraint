@@ -13,7 +13,7 @@
     "back_button": "Back to Lab",
     "empty_result": "-",
     "generate_symbol": "G",
-    "constraints": "{{type}} constraints"
+    "categories": "{{type}} constraints"
   },
   "home": {
     "project_choice": "Choose a project to start",

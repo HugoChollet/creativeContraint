@@ -1,9 +1,9 @@
 {
   "project_type": "Book",
   "project_label": "Livre",
-  "constraints": [
+  "categories": [
     {
-      "category": "Genre & Setting",
+      "name": "Genre & Setting",
       "label": "Genre & Univers",
       "options": [
         { "id": 1, "value": "Fiction absurdiste", "rarity": 5 },
@@ -126,7 +126,7 @@
       ]
     },
     {
-      "category": "Core Theme",
+      "name": "Core Theme",
       "label": "Thème central",
       "options": [
         {
@@ -202,7 +202,7 @@
       ]
     },
     {
-      "category": "Narrative Format",
+      "name": "Narrative Format",
       "label": "Format narratif",
       "options": [
         { "id": 1, "value": "Manuscrit annoté", "rarity": 5 },
@@ -258,7 +258,7 @@
       ]
     },
     {
-      "category": "Linguistic Constraint",
+      "name": "Linguistic Constraint",
       "label": "Contrainte Linguistique",
       "description": "Règles qui restreignent ou imposent des usages spécifiques de la langue pour briser les habitudes d'écriture classiques.",
       "options": [
@@ -505,7 +505,7 @@
       ]
     },
     {
-      "category": "Character Perspective",
+      "name": "Character Perspective",
       "label": "Perspective & Voix",
       "description": "Définit le 'filtre' à travers lequel l'histoire est racontée et la fiabilité du narrateur.",
       "options": [
@@ -752,7 +752,7 @@
       ]
     },
     {
-      "category": "Structural Hurdle",
+      "name": "Structural Hurdle",
       "label": "Structure & Chronologie",
       "description": "Contraintes concernant la ligne temporelle et les limites physiques du récit.",
       "options": [
@@ -999,7 +999,7 @@
       ]
     },
     {
-      "category": "Emotional Tone",
+      "name": "Emotional Tone",
       "label": "Ton & Ambiance",
       "description": "La fréquence émotionnelle sous-jacente ou l'ambiance que l'écrivain doit maintenir.",
       "options": [

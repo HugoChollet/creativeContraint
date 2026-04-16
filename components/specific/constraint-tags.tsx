@@ -32,8 +32,8 @@ export function ConstraintsTags({ item }: { item: SavedConstraintSet }) {
   }, [i18n.language, typeKey]);
 
   const translatedConstraints = useProjectTranslations(
-    item.constraints,
-    dataSource.constraints,
+    item.categories,
+    dataSource.categories,
   );
 
   return (

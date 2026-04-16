@@ -1,8 +1,8 @@
 {
   "project_type": "Board Game",
-  "constraints": [
+  "categories": [
     {
-      "category": "Game Style & Mechanics",
+      "name": "Game Style & Mechanics",
       "label": "Style de jeu & Mécaniques",
       "options": [
         { "id": 1, "value": "Placement d'ouvriers", "rarity": 2 },
@@ -54,7 +54,7 @@
       ]
     },
     {
-      "category": "Physical Support",
+      "name": "Physical Support",
       "label": "Support physique",
       "options": [
         { "id": 1, "value": "Plateau modulaire (tuiles)", "rarity": 2 },
@@ -90,7 +90,7 @@
       ]
     },
     {
-      "category": "Player Action",
+      "name": "Player Action",
       "label": "Action du joueur",
       "options": [
         { "id": 1, "value": "Lancer de dés", "rarity": 1 },
@@ -126,7 +126,7 @@
       ]
     },
     {
-      "category": "Information Flow",
+      "name": "Information Flow",
       "label": "Flux d'information",
       "options": [
         { "id": 1, "value": "Information complète (échecs)", "rarity": 1 },
@@ -174,7 +174,7 @@
       ]
     },
     {
-      "category": "Turn Structure",
+      "name": "Turn Structure",
       "label": "Structure du tour",
       "options": [
         { "id": 1, "value": "Chacun son tour (sens horaire)", "rarity": 1 },
@@ -226,7 +226,7 @@
       ]
     },
     {
-      "category": "Victory Conditions",
+      "name": "Victory Conditions",
       "label": "Conditions de victoire",
       "options": [
         { "id": 1, "value": "Plus haut score (Points)", "rarity": 1 },
@@ -274,7 +274,7 @@
       ]
     },
     {
-      "category": "Player Relationship",
+      "name": "Player Relationship",
       "label": "Relation entre joueurs",
       "options": [
         { "id": 1, "value": "Chacun pour soi (Compétitif)", "rarity": 1 },
@@ -346,7 +346,7 @@
       ]
     },
     {
-      "category": "Setting & Universe",
+      "name": "Setting & Universe",
       "label": "Univers & Ambiance",
       "options": [
         { "id": 1, "value": "Mythologie Grecque", "rarity": 1 },

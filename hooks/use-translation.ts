@@ -4,20 +4,18 @@ import { useCallback } from "react";
 export const useTranslationTool = (dataSheet: Category[]) => {
   const getTranslation = useCallback(
     (
-      type: "Category" | "SubCategory" | "Option" | "Description",
+      type: "name" | "SubCategory" | "Option" | "Description",
       parent: string,
       searched: string | number,
     ): string => {
       if (!dataSheet) return "";
 
-      const mainCat = dataSheet.find(
-        (c) => c.category === parent.split("-")[0],
-      );
+      const mainCat = dataSheet.find((c) => c.name === parent.split("-")[0]);
       if (!mainCat) return "";
 
       switch (type) {
-        case "Category":
-          return mainCat.label || mainCat.category;
+        case "name":
+          return mainCat.label || mainCat.name;
 
         case "Description": {
           // If it's a subcategory key (Scene-Action), we might want the option description

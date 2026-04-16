@@ -80,7 +80,7 @@ export default function GeneratedConstraintsSheet({
       // Create a new record
       const newConstraintSet = {
         project_type: constraintSetIds.project_type,
-        constraints: constraintSetIds.constraints,
+        constraints: constraintSetIds.categories,
         difficulty: getDifficultyGenerated(),
       };
 
@@ -109,26 +109,21 @@ export default function GeneratedConstraintsSheet({
         />
 
         <ScrollView>
-          {dataSource.constraints.map((cat) => {
-            if (!randomConstraints[cat.category]) return null;
+          {dataSource.categories.map((cat) => {
+            if (!randomConstraints[cat.name]) return null;
             return (
-              <View
-                key={cat.category}
-                style={[globalStyles.card, { padding: 16 }]}
-              >
-                <Text style={globalStyles.label}>
-                  {cat.label || cat.category}
-                </Text>
+              <View key={cat.name} style={[globalStyles.card, { padding: 16 }]}>
+                <Text style={globalStyles.label}>{cat.label || cat.name}</Text>
                 <View style={globalStyles.elementAndDescriptorContainer}>
                   <Text style={[globalStyles.subtitle]}>
-                    {randomConstraints[cat.category].value ??
+                    {randomConstraints[cat.name].value ??
                       t("screen:lab.empty_result")}
                   </Text>
-                  {randomConstraints[cat.category].description && (
+                  {randomConstraints[cat.name].description && (
                     <Tooltip
-                      title={cat.label || cat.category}
+                      title={cat.label || cat.name}
                       description={
-                        randomConstraints[cat.category].description ??
+                        randomConstraints[cat.name].description ??
                         t("screen:lab.empty_result")
                       }
                       color={color}

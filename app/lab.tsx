@@ -68,24 +68,24 @@ export default function LabScreen() {
     const activeCats: Record<string, boolean> = {};
     const selOpts: Record<string, boolean> = {};
 
-    dataSource.constraints.forEach((cat) => {
+    dataSource.categories.forEach((cat) => {
       if (cat.disabled) {
-        activeCats[cat.category] = false;
+        activeCats[cat.name] = false;
       } else {
         // Enable the category by default
-        activeCats[cat.category] = true;
+        activeCats[cat.name] = true;
       }
 
       if (cat.options) {
         // Enable every option by default
         cat.options.forEach((opt) => {
-          selOpts[`${cat.category}-${opt.id}`] = true;
+          selOpts[`${cat.name}-${opt.id}`] = true;
         });
       } else if (cat.sub_categories) {
         // Enable every subcategory by default
         cat.sub_categories.forEach((subCat) => {
           subCat.options.forEach((opt) => {
-            selOpts[`${cat.category}-${subCat.name}-${opt.id}`] = true;
+            selOpts[`${cat.name}-${subCat.name}-${opt.id}`] = true;
           });
         });
       }
@@ -137,26 +137,25 @@ export default function LabScreen() {
     const results: GeneratedConstraints = {};
     const ids: IdSetConstraint = {};
 
-    dataSource.constraints.forEach((cat) => {
-      if (selectedItems.activeCategories[cat.category]) {
+    dataSource.categories.forEach((cat) => {
+      if (selectedItems.activeCategories[cat.name]) {
         const availableOptions = cat.options
           ? cat.options.filter(
-              (opt) =>
-                selectedItems.selectedOptions[`${cat.category}-${opt.id}`],
+              (opt) => selectedItems.selectedOptions[`${cat.name}-${opt.id}`],
             )
           : cat.sub_categories
             ? cat.sub_categories.flatMap((subCat) =>
                 subCat.options.filter(
                   (opt) =>
                     selectedItems.selectedOptions[
-                      `${cat.category}-${subCat.name}-${opt.id}`
+                      `${cat.name}-${subCat.name}-${opt.id}`
                     ],
                 ),
               )
             : [];
 
         if (availableOptions.length > 0) {
-          results[cat.category] = {
+          results[cat.name] = {
             id: -1,
             value: "",
             rarity: 0,
@@ -166,23 +165,22 @@ export default function LabScreen() {
             const randomIndex = Math.floor(
               Math.random() * availableOptions.length,
             );
-            results[cat.category].value = availableOptions[randomIndex].value;
-            results[cat.category].id = availableOptions[randomIndex].id;
-            results[cat.category].rarity = availableOptions[randomIndex].rarity;
-            results[cat.category].description =
+            results[cat.name].value = availableOptions[randomIndex].value;
+            results[cat.name].id = availableOptions[randomIndex].id;
+            results[cat.name].rarity = availableOptions[randomIndex].rarity;
+            results[cat.name].description =
               availableOptions[randomIndex].description;
-            ids[cat.category] = availableOptions[randomIndex].id;
+            ids[cat.name] = availableOptions[randomIndex].id;
           } else if (cat.sub_categories) {
             for (const subCat of cat.sub_categories) {
               const randomIndex = Math.floor(
                 Math.random() * subCat.options.length,
               );
-              results[cat.category].value +=
+              results[cat.name].value +=
                 " " + subCat.options[randomIndex].value;
-              results[cat.category].rarity +=
-                subCat.options[randomIndex].rarity;
+              results[cat.name].rarity += subCat.options[randomIndex].rarity;
 
-              ids[cat.category + "_" + subCat.name] =
+              ids[cat.name + "_" + subCat.name] =
                 subCat.options[randomIndex].id;
             }
           }
@@ -233,16 +231,16 @@ export default function LabScreen() {
       />
       <View style={[globalStyles.screenContainer]}>
         <ScrollView>
-          {dataSource.constraints.map((cat) => (
+          {dataSource.categories.map((cat) => (
             <CategorySelector
-              key={cat.category}
+              key={cat.name}
               category={cat}
               selectedItems={selectedItems}
               onToggleCategory={toggleCategory}
               onToggleOption={toggleOption}
               onBulkUpdate={bulkUpdateOptions}
-              isExpanded={expandedCategory === cat.category}
-              onExpand={() => handleToggleExpand(cat.category)}
+              isExpanded={expandedCategory === cat.name}
+              onExpand={() => handleToggleExpand(cat.name)}
               color={projectColor}
             />
           ))}

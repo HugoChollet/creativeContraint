@@ -1,9 +1,9 @@
 {
   "project_type": "Cooking",
   "project_label": "Plat",
-  "constraints": [
+  "categories": [
     {
-      "category": "Base / Carb",
+      "name": "Base / Carb",
       "label": "Base / Féculents",
       "options": [
         { "id": 1, "value": "Riz", "rarity": 1 },
@@ -109,7 +109,7 @@
       ]
     },
     {
-      "category": "Protein / Vegetable",
+      "name": "Protein / Vegetable",
       "label": "Protéines / Légumes",
       "options": [
         { "id": 1, "value": "Poulet", "rarity": 1 },
@@ -195,7 +195,7 @@
       ]
     },
     {
-      "category": "Fat / Sauce",
+      "name": "Fat / Sauce",
       "label": "Matière Grasse / Sauce",
       "options": [
         { "id": 1, "value": "Huile d'olive", "rarity": 1 },
@@ -251,7 +251,7 @@
       ]
     },
     {
-      "category": "Seasoning / Flavoring / Topping",
+      "name": "Seasoning / Flavoring / Topping",
       "label": "Assaisonnement / Arômes / Garniture",
       "options": [
         { "id": 1, "value": "Sel", "rarity": 1 },
@@ -307,7 +307,7 @@
       ]
     },
     {
-      "category": "Cooking Method / Heat",
+      "name": "Cooking Method / Heat",
       "label": "Mode de cuisson / Chaleur",
       "options": [
         { "id": 1, "value": "Cuisson au four", "rarity": 1 },
@@ -333,7 +333,7 @@
       ]
     },
     {
-      "category": "Cuisine / Style / Origin",
+      "name": "Cuisine / Style / Origin",
       "label": "Cuisine / Style / Origine",
       "options": [
         { "id": 1, "value": "Française", "rarity": 2 },
@@ -359,7 +359,7 @@
       ]
     },
     {
-      "category": "Dish Type / Texture / Occasion",
+      "name": "Dish Type / Texture / Occasion",
       "label": "Type de plat / Texture / Occasion",
       "options": [
         { "id": 1, "value": "Soupe", "rarity": 1 },

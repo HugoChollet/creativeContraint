@@ -27,7 +27,7 @@ export default function ResultModalHeader({
       <DifficultyIndicator difficultyIndicator={difficultyIndicator} />
       <View style={styles.headerContainer}>
         <Text style={globalStyles.title}>
-          {t("screen:lab.constraints_title", {
+          {t("screen:lab.categories_title", {
             type: "Project",
           })}
         </Text>

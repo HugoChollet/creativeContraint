@@ -50,9 +50,8 @@ export const useProjectTranslations = (
     });
 
     return Object.entries(groups).map(([baseCatKey, groupData]) => {
-      const masterCat = dataSheet.find((c) => c.category === baseCatKey);
-      const categoryLabel =
-        masterCat?.label || masterCat?.category || baseCatKey;
+      const masterCat = dataSheet.find((c) => c.name === baseCatKey);
+      const categoryLabel = masterCat?.label || masterCat?.name || baseCatKey;
 
       let displayValue = "";
       let description = "";

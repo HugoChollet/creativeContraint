@@ -1,9 +1,9 @@
 {
   "project_type": "Music",
   "project_label": "Musique",
-  "constraints": [
+  "categories": [
     {
-      "category": "Instruments",
+      "name": "Instruments",
       "label": "Instruments",
       "description": "Contraintes liées aux sources sonores, instruments acoustiques ou électroniques à utiliser.",
       "options": [
@@ -67,7 +67,7 @@
       ]
     },
     {
-      "category": "Effects & Processing",
+      "name": "Effects & Processing",
       "label": "Effets et Traitement",
       "description": "Modulations et traitements audio pour sculpter la texture sonore.",
       "options": [
@@ -113,7 +113,7 @@
       ]
     },
     {
-      "category": "Rhythm & Tempo",
+      "name": "Rhythm & Tempo",
       "label": "Rythme et Tempo",
       "description": "Paramètres de vitesse, de métrique et de structure rythmique.",
       "options": [
@@ -162,7 +162,7 @@
       ]
     },
     {
-      "category": "Genre & Aesthetic",
+      "name": "Genre & Aesthetic",
       "label": "Genre et Esthétique",
       "description": "Styles musicaux et influences culturelles globales.",
       "options": [
@@ -273,7 +273,7 @@
       ]
     },
     {
-      "category": "Atmosphere Tags",
+      "name": "Atmosphere Tags",
       "label": "Tags d'Ambiance",
       "description": "Descripteurs émotionnels et texturaux pour définir l'atmosphère du morceau.",
       "selection_logic": "multi-pick",
@@ -406,7 +406,7 @@
       ]
     },
     {
-      "category": "Lyrics",
+      "name": "Lyrics",
       "label": "Paroles",
       "description": "Éléments narratifs pour construire l'histoire ou le thème des paroles.",
       "tabs": ["Subject", "Action", "Context"],

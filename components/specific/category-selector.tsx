@@ -39,7 +39,7 @@ export default function CategorySelector({
   const { t } = useTranslation();
   const { globalStyles, colors } = useStyles();
 
-  const isEnabled = !!selectedItems.activeCategories[category.category];
+  const isEnabled = !!selectedItems.activeCategories[category.name];
   const hasSubCategories =
     category.sub_categories && category.sub_categories.length > 0;
 
@@ -67,7 +67,7 @@ export default function CategorySelector({
       <Pressable onPress={handleToggleExpand} style={globalStyles.headerRow}>
         <Pressable
           onPress={() => {
-            onToggleCategory(category.category);
+            onToggleCategory(category.name);
             if (isExpanded) handleToggleExpand();
           }}
         >
@@ -86,11 +86,11 @@ export default function CategorySelector({
                 { color: isEnabled ? colors.text : colors.textDiscreet },
               ]}
             >
-              {category.label || category.category}
+              {category.label || category.name}
             </Text>
             {category.description && (
               <Tooltip
-                title={category.label || category.category}
+                title={category.label || category.name}
                 description={category.description}
                 color={color}
               />
@@ -119,7 +119,7 @@ export default function CategorySelector({
               currentMode={mode}
               onSelect={(newMode) => {
                 setMode(newMode);
-                onBulkUpdate(category.category, currentOptions, newMode);
+                onBulkUpdate(category.name, currentOptions, newMode);
               }}
             />
           </View>
@@ -158,8 +158,8 @@ export default function CategorySelector({
               .map((opt: Option) => {
                 // Create a unique key for selection state: "Category-SubName-ID" or "Category-ID"
                 const selectionKey = hasSubCategories
-                  ? `${category.category}-${currentSubCategory?.name}-${opt.id}`
-                  : `${category.category}-${opt.id}`;
+                  ? `${category.name}-${currentSubCategory?.name}-${opt.id}`
+                  : `${category.name}-${opt.id}`;
 
                 return (
                   <ConstraintSelector
@@ -172,8 +172,8 @@ export default function CategorySelector({
                       setMode("custom");
                       // Pass the specialized key to the parent handler
                       const fullKey = hasSubCategories
-                        ? `${category.category}-${currentSubCategory?.name}`
-                        : category.category;
+                        ? `${category.name}-${currentSubCategory?.name}`
+                        : category.name;
                       onToggleOption(fullKey, id);
                     }}
                   />
