@@ -29,14 +29,14 @@ export default function ConstraintSelectorForm({
 
   return (
     <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.headerLeft}>
-            <TextInput
-              style={[
-                globalStyles.input,
-                styles.nameInput,
-                { borderColor: projectColorSoft },
-              ]}
+      <View style={styles.header}>
+        <View style={styles.headerLeft}>
+          <TextInput
+            style={[
+              globalStyles.input,
+              styles.nameInput,
+              { borderColor: projectColorSoft },
+            ]}
             placeholder={t("component:constraint_option_form.name_placeholder")}
             placeholderTextColor={colors.placeholder}
             value={option.value}
@@ -64,7 +64,15 @@ export default function ConstraintSelectorForm({
 
         <TouchableOpacity
           style={globalStyles.transparentButton}
-          onPress={() => submit({ ...option, id: Math.random() * 1000000 })}
+          onPress={() => {
+            submit({ ...option, id: Math.random() * 1000000 });
+            setOption({
+              id: Math.random() * 1000000,
+              value: "",
+              description: "",
+              rarity: option.rarity,
+            });
+          }}
           disabled={option.value === ""}
         >
           <Ionicons
