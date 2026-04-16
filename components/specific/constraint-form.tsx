@@ -1,19 +1,21 @@
 import { useStyles } from "@/hooks/use-styles";
 import { Option } from "@/types/constraints";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import Description from "../generic/description";
 import { NumberPicker } from "../generic/number-picker";
 interface ConstraintSelectorFormProps {
   submit: (option: Option) => void;
+  editedOption?: Option;
   projectColor: string;
 }
 
 export default function ConstraintSelectorForm({
   submit,
   projectColor,
+  editedOption,
 }: ConstraintSelectorFormProps) {
   const { globalStyles, colors } = useStyles();
   const projectColorSoft = projectColor.replace(/[\d.]+\)$/g, `0.2)`);
@@ -26,6 +28,12 @@ export default function ConstraintSelectorForm({
     description: "",
     rarity: 1,
   });
+
+  useEffect(() => {
+    if (editedOption) {
+      setOption(editedOption);
+    }
+  }, [editedOption]);
 
   return (
     <View style={styles.container}>

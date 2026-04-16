@@ -34,6 +34,7 @@ export default function CategoryFormScreen() {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [editedOption, setEditedOption] = useState<Option | undefined>();
 
   const [isLoading] = useState(false);
 
@@ -101,8 +102,10 @@ export default function CategoryFormScreen() {
             <ConstraintForm
               submit={(option: Option) => {
                 setOptions([...options, option]);
+                setEditedOption(undefined);
               }}
               projectColor={projectColor}
+              editedOption={editedOption}
             />
             <View>
               {options
@@ -115,7 +118,10 @@ export default function CategoryFormScreen() {
                         onDelete={() =>
                           setOptions(options.filter((o) => o.id !== opt.id))
                         }
-                        onEdit={() => {}}
+                        onEdit={() => {
+                          setEditedOption(opt);
+                          setOptions(options.filter((o) => o.id !== opt.id));
+                        }}
                         projectColor={projectColor}
                       />
                       {opt.id !== options[options.length - 1].id && (
