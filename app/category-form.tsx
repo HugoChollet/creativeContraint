@@ -4,6 +4,7 @@ import { Spacer } from "@/components/generic/spacer";
 import ConstraintCrud from "@/components/specific/constraint-crud";
 import ConstraintForm from "@/components/specific/constraint-form";
 import { getProjectColor } from "@/constants/theme";
+import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { Option } from "@/types/constraints";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -21,6 +22,15 @@ import {
   View,
 } from "react-native";
 
+interface Category {
+  id: string;
+  name: string;
+  description: string;
+  options: Option[];
+  project_type_id: string;
+  is_public: boolean;
+  owner_id: string;
+}
 const ConstraintRequire = { MIN_OPTIONS: 2, NAME_LENGTH_MIN: 6 };
 
 export default function CategoryFormScreen() {
@@ -31,6 +41,8 @@ export default function CategoryFormScreen() {
   const { globalStyles, colors } = useStyles();
   const { t } = useTranslation();
   const headerHeight = useHeaderHeight();
+  const { addRecord, loading: isSaving } =
+    useCollection<Category>("categories");
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -42,6 +54,29 @@ export default function CategoryFormScreen() {
 
   const projectColor = getProjectColor(projectLabel);
   const projectColorSoft = getProjectColor(projectLabel, 0.2);
+
+  const handleSubmit = async () => {
+    if (!isFormValid || isSaving) return;
+
+    const newCategory = {
+      name,
+      description,
+      options, // This will be saved as JSONB in Supabase
+      project_type_id: projectLabel, // 'cooking', 'music', etc.
+      is_public: false, // Defaulting to private for now
+      favorited_counter: 0,
+    };
+
+    const result = await addRecord(newCategory);
+
+    if (result) {
+      // Success! Go back to the previous screen
+      console.log("success");
+    } else {
+      // You might want to show an Alert here if result is null
+      console.error("Failed to save category");
+    }
+  };
 
   const isFormValid =
     name.length > ConstraintRequire.NAME_LENGTH_MIN &&
@@ -145,7 +180,7 @@ export default function CategoryFormScreen() {
                 backgroundColor: isFormValid ? projectColor : colors.disable,
               },
             ]}
-            onPress={() => {}}
+            onPress={() => handleSubmit()}
             disabled={!isFormValid}
           >
             {isLoading ? (

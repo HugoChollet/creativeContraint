@@ -1,6 +1,7 @@
 import { useAuth } from "@/contexts/auth-context";
 import { supabase } from "@/lib/supabase";
 import { useCallback, useEffect, useState } from "react";
+
 export function useCollection<T>(tableName: string) {
   const { session } = useAuth();
   const [data, setData] = useState<T[]>([]);
