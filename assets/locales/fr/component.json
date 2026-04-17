@@ -45,12 +45,6 @@
   "constraint-set-card": {
     "upload": "Soumettre un projet"
   },
-  "add-button": {
-    "label-category": "Créer une catégorie",
-    "label-constraint": "Ajouter une contrainte",
-    "placeholder-category": "Nom de la catégorie",
-    "placeholder-constraint": "Description de la contrainte"
-  },
   "constraint_option_form": {
     "name_label": "Nom de la contrainte",
     "name_placeholder": "Nouvelle contrainte",

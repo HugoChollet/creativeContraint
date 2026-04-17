@@ -13,7 +13,9 @@
     "constraints_title": "Contraintes de {{type}}",
     "back_button": "Retour au Lab",
     "empty_result": "-",
-    "generate_symbol": "G"
+    "add-button": {
+      "label-category": "Ajouter une catégorie"
+    }
   },
   "home": {
     "project_choice": "Choisissez un projet pour commencer",

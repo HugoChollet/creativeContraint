@@ -12,8 +12,9 @@
     "constraints_title": "{{type}} Constraints",
     "back_button": "Back to Lab",
     "empty_result": "-",
-    "generate_symbol": "G",
-    "categories": "{{type}} constraints"
+    "add-button": {
+      "label-category": "Add a category"
+    }
   },
   "home": {
     "project_choice": "Choose a project to start",
