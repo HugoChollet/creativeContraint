@@ -9,20 +9,20 @@ import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import i18nInstance from "@/i18n";
 import {
-  ConstraintSetDataJSON,
   GeneratedConstraints,
   IdSetConstraint,
   Option,
   SelectedState,
 } from "@/types/constraints";
+import { CategoryJSON, ConstraintSetDataJSON } from "@/types/json-objects";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
+  ActivityIndicator,
   LayoutAnimation,
   ScrollView,
   StyleSheet,
-  Text,
   View,
 } from "react-native";
 
@@ -68,7 +68,7 @@ export default function LabScreen() {
     const activeCats: Record<string, boolean> = {};
     const selOpts: Record<string, boolean> = {};
 
-    dataSource.categories.forEach((cat) => {
+    dataSource.categories.forEach((cat: CategoryJSON) => {
       if (cat.disabled) {
         activeCats[cat.name] = false;
       } else {
@@ -215,11 +215,7 @@ export default function LabScreen() {
   };
 
   if (!dataSource)
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
+    return <ActivityIndicator size="large" color={projectColor} />;
 
   return (
     <>
@@ -231,7 +227,7 @@ export default function LabScreen() {
       />
       <View style={[globalStyles.screenContainer]}>
         <ScrollView>
-          {dataSource.categories.map((cat) => (
+          {dataSource.categories.map((cat: CategoryJSON) => (
             <CategorySelector
               key={cat.name}
               category={cat}
@@ -246,10 +242,10 @@ export default function LabScreen() {
           ))}
           <AddButton
             projectColor={projectColor}
-            label={t("component:add-button.label-category")}
+            label={t("screen:lab.add-button.label-category")}
             onClick={() =>
               router.push({
-                pathname: "/category-form",
+                pathname: "/category-browse",
                 params: { id: 1, type: dataSource.project_type },
               })
             }

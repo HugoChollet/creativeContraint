@@ -93,6 +93,13 @@ export default function TabLayout() {
           title: "New Category",
         }}
       />
+      <Tabs.Screen
+        name="category-browse"
+        options={{
+          href: null,
+          title: "Browse Categories",
+        }}
+      />
     </Tabs>
   );
 }
