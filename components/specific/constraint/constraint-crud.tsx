@@ -1,8 +1,8 @@
+import Crud from "@/components/generic/crud";
 import { useStyles } from "@/hooks/use-styles";
 import { Option } from "@/types/constraints";
-import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Tooltip from "../../generic/tooltip";
 
 interface ConstraintSelectorFormProps {
@@ -19,7 +19,6 @@ export default function ConstraintCrud({
   option,
 }: ConstraintSelectorFormProps) {
   const { globalStyles, colors } = useStyles();
-  const projectColorSoft = projectColor.replace(/[\d.]+\)$/g, `0.2)`);
   const { t } = useTranslation();
 
   return (
@@ -63,30 +62,7 @@ export default function ConstraintCrud({
             />
           )}
         </View>
-        <View style={styles.crud}>
-          <TouchableOpacity
-            style={globalStyles.transparentButton}
-            onPress={() => onEdit()}
-            disabled={option.value === ""}
-          >
-            <Ionicons
-              name="pencil-sharp"
-              size={24}
-              color={option.value === "" ? colors.disable : projectColor}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={globalStyles.transparentButton}
-            onPress={() => onDelete()}
-            disabled={option.value === ""}
-          >
-            <Ionicons
-              name="trash-sharp"
-              size={24}
-              color={option.value === "" ? colors.disable : projectColor}
-            />
-          </TouchableOpacity>
-        </View>
+        <Crud onDelete={onDelete} onEdit={onEdit} color={projectColor} />
       </View>
     </>
   );
