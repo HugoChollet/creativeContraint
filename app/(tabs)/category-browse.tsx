@@ -1,8 +1,8 @@
 import { AddButton } from "@/components/generic/add-button";
 import { Header } from "@/components/generic/header";
-import { useAuth } from "@/contexts/auth-context";
 import CategoryCrud from "@/components/specific/category-crud";
 import { getProjectColor } from "@/constants/theme";
+import { useAuth } from "@/contexts/auth-context";
 import { useStyles } from "@/hooks/use-styles";
 import { supabase } from "@/lib/supabase";
 import { Category } from "@/types/category";
@@ -71,14 +71,25 @@ export default function CategoryBrowseScreen() {
   );
 
   const sections = [
-    { title: "Personal", data: personalCategories },
-    { title: "Official", data: officialCategories },
-    { title: "Community", data: communityCategories },
+    {
+      title: t("screen:category_browse.personal_section"),
+      data: personalCategories,
+    },
+    {
+      title: t("screen:category_browse.official_section"),
+      data: officialCategories,
+    },
+    {
+      title: t("screen:category_browse.community_section"),
+      data: communityCategories,
+    },
   ];
 
   return (
     <View style={globalStyles.screenContainer}>
-      <Header title="Browse Categories" />
+      <Header
+        title={t("screen:category_browse.title", { type: projectLabel })}
+      />
       {isLoading ? (
         <View
           style={[globalStyles.screenContainer, { justifyContent: "center" }]}
@@ -104,14 +115,30 @@ export default function CategoryBrowseScreen() {
                   <CategoryCrud
                     key={item.id}
                     category={item}
-                    onDelete={() => {}}
-                    onEdit={() => {}}
+                    onDelete={
+                      section.title ===
+                      t("screen:category_browse.personal_section")
+                        ? () => {}
+                        : undefined
+                    }
+                    onFork={
+                      section.title !==
+                      t("screen:category_browse.personal_section")
+                        ? () => {}
+                        : undefined
+                    }
+                    onEdit={
+                      section.title ===
+                      t("screen:category_browse.personal_section")
+                        ? () => {}
+                        : undefined
+                    }
                     projectColor={projectColor}
                   />
                 ))
               ) : (
                 <Text style={{ color: colors.placeholder }}>
-                  No categories yet.
+                  {t("screen:category_browse.no_categories")}
                 </Text>
               )}
             </View>
@@ -124,7 +151,7 @@ export default function CategoryBrowseScreen() {
       )}
       <AddButton
         projectColor={projectColor}
-        label={t("screen:lab.add-button.label-category")}
+        label={t("screen:category_browse.add_button")}
         onClick={() =>
           router.push({
             pathname: "/category-form",

@@ -67,5 +67,13 @@
     "add_button": "Ajouter une nouvelle contrainte",
     "submit_button": "Soumettre la catégorie",
     "constraint_list_label": "Contraintes de cette catégorie (minimum {{min}})"
+  },
+  "category_browse": {
+    "title": "Parcourir les catégories de {{type}}",
+    "personal_section": "Personnel",
+    "community_section": "Communauté",
+    "official_section": "Officiel",
+    "no_categories": "Aucune catégorie à afficher.",
+    "add_button": "Créer votre propre catégorie"
   }
 }
