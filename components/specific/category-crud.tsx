@@ -6,8 +6,9 @@ import Crud from "../generic/crud";
 import Tooltip from "../generic/tooltip";
 
 interface CategoryCrudProps {
-  onDelete: () => void;
-  onEdit: () => void;
+  onDelete?: () => void;
+  onEdit?: () => void;
+  onFork?: () => void;
   projectColor: string;
   category: Category;
 }
@@ -15,6 +16,7 @@ interface CategoryCrudProps {
 export default function CategoryCrud({
   onDelete,
   onEdit,
+  onFork,
   projectColor,
   category,
 }: CategoryCrudProps) {
@@ -54,7 +56,12 @@ export default function CategoryCrud({
             />
           )}
         </View>
-        <Crud onDelete={onDelete} onEdit={onEdit} color={projectColor} />
+        <Crud
+          onDelete={onDelete}
+          onEdit={onEdit}
+          onFork={onFork}
+          color={projectColor}
+        />
       </View>
     </>
   );
