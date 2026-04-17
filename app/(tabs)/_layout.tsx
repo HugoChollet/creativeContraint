@@ -75,17 +75,19 @@ export default function TabLayout() {
       <Tabs.Screen
         name="lab"
         options={{
+          href: null,
           title: "Lab",
         }}
       />
       <Tabs.Screen
         name="publication-form"
         options={{
+          href: null,
           title: "Submit",
         }}
       />
       <Tabs.Screen
-        name="new-category-form"
+        name="category-form"
         options={{
           href: null,
           title: "New Category",
