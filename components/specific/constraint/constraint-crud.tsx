@@ -3,7 +3,7 @@ import { Option } from "@/types/constraints";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Tooltip from "../generic/tooltip";
+import Tooltip from "../../generic/tooltip";
 
 interface ConstraintSelectorFormProps {
   onDelete: () => void;

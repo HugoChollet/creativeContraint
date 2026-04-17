@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import Tooltip from "../generic/tooltip";
+import Tooltip from "../../generic/tooltip";
 
 interface OptionProps {
   option: Option;

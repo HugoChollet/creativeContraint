@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import Tooltip from "../generic/tooltip";
-import { ConstraintSelector } from "./constraint-selector";
+import { ConstraintSelector } from "./constraint/constraint-selector";
 import { PresetMode, StatusSelector } from "./status-selector";
 
 interface CategoryProps {

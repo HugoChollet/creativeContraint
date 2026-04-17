@@ -1,5 +1,5 @@
 import Auth from "@/components/specific/auth";
-import { ConstraintsSetCard } from "@/components/specific/constraint-set-card";
+import { ConstraintsSetCard } from "@/components/specific/constraint/constraint-set-card";
 import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";

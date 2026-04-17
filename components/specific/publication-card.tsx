@@ -4,7 +4,7 @@ import { Publication } from "@/types/publication";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { ConstraintsTags } from "./constraint-tags";
+import { ConstraintsTags } from "./constraint/constraint-tags";
 import { DifficultyIndicator } from "./difficulty-indicator";
 
 interface PublicationCardProps {

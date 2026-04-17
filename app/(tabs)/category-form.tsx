@@ -1,8 +1,8 @@
 import Description from "@/components/generic/description";
 import { Header } from "@/components/generic/header";
 import { Spacer } from "@/components/generic/spacer";
-import ConstraintCrud from "@/components/specific/constraint-crud";
-import ConstraintForm from "@/components/specific/constraint-form";
+import ConstraintCrud from "@/components/specific/constraint/constraint-crud";
+import ConstraintForm from "@/components/specific/constraint/constraint-form";
 import { getProjectColor } from "@/constants/theme";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";

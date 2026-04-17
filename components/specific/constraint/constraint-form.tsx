@@ -4,8 +4,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
-import Description from "../generic/description";
-import { NumberPicker } from "../generic/number-picker";
+import Description from "../../generic/description";
+import { NumberPicker } from "../../generic/number-picker";
 interface ConstraintSelectorFormProps {
   submit: (option: Option) => void;
   editedOption?: Option;
