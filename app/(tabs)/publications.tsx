@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 
-export default function FeedScreen() {
+export default function PublicationsScreen() {
   const { globalStyles, colors } = useStyles();
   const [publications, setPublications] = useState<Publication[]>([]);
   const [loading, setLoading] = useState(true);

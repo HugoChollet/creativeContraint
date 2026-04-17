@@ -5,8 +5,8 @@ import {
 } from "@/components/specific/pickers/media-pickers";
 import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
-import { supabase } from "@/lib/supabase"; // Import pour récupérer l'user
-import { publicationService } from "@/services/publication.service"; // Import du service
+import { supabase } from "@/lib/supabase";
+import { publicationService } from "@/services/publication.service";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,7 +20,7 @@ import {
   View,
 } from "react-native";
 
-export default function SubmitFormScreen() {
+export default function PublicationFormScreen() {
   const { id: constraintId, type: projectLabel } = useLocalSearchParams<{
     id: string;
     type: string;

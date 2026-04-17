@@ -75,14 +75,12 @@ export default function TabLayout() {
       <Tabs.Screen
         name="lab"
         options={{
-          href: null, // This hides the tab button from the bottom bar!
           title: "Lab",
         }}
       />
       <Tabs.Screen
-        name="submit-form"
+        name="publication-form"
         options={{
-          href: null, // This hides the tab button from the bottom bar!
           title: "Submit",
         }}
       />

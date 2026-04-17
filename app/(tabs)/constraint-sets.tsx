@@ -62,7 +62,7 @@ export default function ConstraintSetsScreen() {
               deleteRecord={deleteRecord}
               submit={() =>
                 router.push({
-                  pathname: "/submit-form",
+                  pathname: "/publication-form",
                   params: { id: item.id.toString(), type: item.project_type },
                 })
               }
