@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import {
-  ConstraintSetData,
+  ConstraintSetDataJSON,
   ConstraintSetIds,
   Option,
   SavedConstraintSet,
@@ -21,7 +21,7 @@ type GeneratedConstraintsSheetProps = {
   setModalVisible: (visible: boolean) => void;
   randomConstraints: Record<string, Option>;
   color: string;
-  dataSource: ConstraintSetData;
+  dataSource: ConstraintSetDataJSON;
   constraintSetIds: ConstraintSetIds;
 };
 

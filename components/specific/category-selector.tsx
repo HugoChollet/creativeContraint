@@ -1,10 +1,6 @@
 import { useStyles } from "@/hooks/use-styles";
-import {
-  Category,
-  Option,
-  SelectedState,
-  SubCategory,
-} from "@/types/constraints";
+import { Option, SelectedState, SubCategory } from "@/types/constraints";
+import { CategoryJSON } from "@/types/json-objects";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -14,7 +10,7 @@ import { ConstraintSelector } from "./constraint-selector";
 import { PresetMode, StatusSelector } from "./status-selector";
 
 interface CategoryProps {
-  category: Category;
+  category: CategoryJSON;
   selectedItems: SelectedState;
   onToggleCategory: (name: string) => void;
   onToggleOption: (catName: string, id: number) => void;

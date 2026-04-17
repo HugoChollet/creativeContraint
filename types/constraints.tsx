@@ -12,23 +12,6 @@ export interface SubCategory {
   description?: string;
 }
 
-export interface Category {
-  name: string;
-  disabled?: boolean;
-  label?: string;
-  options?: Option[];
-  sub_categories?: SubCategory[];
-  tabs?: string[];
-  tabs_labels?: string[];
-  description?: string;
-}
-
-export interface ConstraintSetData {
-  project_type: string;
-  project_label?: string;
-  categories: Category[];
-}
-
 export type SelectedState = {
   activeCategories: Record<string, boolean>; // e.g., { "Core Theme": true }
   selectedOptions: Record<string, boolean>; // e.g., { "Core Theme-5": true }

@@ -9,7 +9,7 @@ import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import i18nInstance from "@/i18n";
 import {
-  ConstraintSetData,
+  ConstraintSetDataJSON,
   GeneratedConstraints,
   IdSetConstraint,
   Option,
@@ -58,7 +58,7 @@ export default function LabScreen() {
       console.error(
         `Namespace "${typeKey}" does not exist for "${i18nInstance.language}"`,
       );
-    return data as ConstraintSetData;
+    return data as ConstraintSetDataJSON;
   }, [i18nInstance.language, typeKey]);
 
   const projectColor = getProjectColor(dataSource.project_type);

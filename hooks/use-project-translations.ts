@@ -1,4 +1,4 @@
-import { Category } from "@/types/constraints";
+import { CategoryJSON } from "@/types/json-objects";
 import { useMemo } from "react";
 import { useTranslationTool } from "./use-translation";
 export interface TranslatedRow {
@@ -9,7 +9,7 @@ export interface TranslatedRow {
 
 export const useProjectTranslations = (
   constraintsData: Record<string, number>, // Now expects Record<string, number>
-  dataSheet: Category[],
+  dataSheet: CategoryJSON[],
 ) => {
   const { getTranslation } = useTranslationTool(dataSheet);
 

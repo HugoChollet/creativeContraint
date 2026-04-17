@@ -1,7 +1,7 @@
 import { getProjectColor } from "@/constants/theme";
 import { useProjectTranslations } from "@/hooks/use-project-translations";
 import { useStyles } from "@/hooks/use-styles";
-import { ConstraintSetData, SavedConstraintSet } from "@/types/constraints";
+import { ConstraintSetDataJSON, SavedConstraintSet } from "@/types/constraints";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -38,7 +38,7 @@ export function ConstraintsSetCard({
     const data = i18n.getResourceBundle(
       i18n.language,
       typeKey,
-    ) as ConstraintSetData;
+    ) as ConstraintSetDataJSON;
     return data || { constraints: [] };
   }, [i18n.language, typeKey]);
 

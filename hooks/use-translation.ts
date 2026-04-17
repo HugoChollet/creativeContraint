@@ -1,7 +1,7 @@
-import { Category } from "@/types/constraints";
+import { CategoryJSON } from "@/types/json-objects";
 import { useCallback } from "react";
 
-export const useTranslationTool = (dataSheet: Category[]) => {
+export const useTranslationTool = (dataSheet: CategoryJSON[]) => {
   const getTranslation = useCallback(
     (
       type: "name" | "SubCategory" | "Option" | "Description",
