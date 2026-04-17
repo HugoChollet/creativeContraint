@@ -1,6 +1,6 @@
 import { AddButton } from "@/components/generic/add-button";
 import { Header } from "@/components/generic/header";
-import CategoryCrud from "@/components/specific/category-crud";
+import CategoryItem from "@/components/specific/category-item";
 import { getProjectColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
 import { useStyles } from "@/hooks/use-styles";
@@ -10,7 +10,12 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, View } from "react-native";
+
+export interface CategorySection {
+  title: string;
+  data: Category[];
+}
 
 export default function CategoryBrowseScreen() {
   const { type: projectLabel } = useLocalSearchParams<{
@@ -70,7 +75,7 @@ export default function CategoryBrowseScreen() {
     [data, userId],
   );
 
-  const sections = [
+  const sections: CategorySection[] = [
     {
       title: t("screen:category_browse.personal_section"),
       data: personalCategories,
@@ -101,47 +106,11 @@ export default function CategoryBrowseScreen() {
           data={sections}
           keyExtractor={(item) => item.title}
           renderItem={({ item: section }) => (
-            <View style={{ marginBottom: 24 }}>
-              <Text
-                style={[
-                  globalStyles.subtitle,
-                  { color: colors.text, marginBottom: 12 },
-                ]}
-              >
-                {section.title}
-              </Text>
-              {section.data.length > 0 ? (
-                section.data.map((item) => (
-                  <CategoryCrud
-                    key={item.id}
-                    category={item}
-                    onDelete={
-                      section.title ===
-                      t("screen:category_browse.personal_section")
-                        ? () => {}
-                        : undefined
-                    }
-                    onFork={
-                      section.title !==
-                      t("screen:category_browse.personal_section")
-                        ? () => {}
-                        : undefined
-                    }
-                    onEdit={
-                      section.title ===
-                      t("screen:category_browse.personal_section")
-                        ? () => {}
-                        : undefined
-                    }
-                    projectColor={projectColor}
-                  />
-                ))
-              ) : (
-                <Text style={{ color: colors.placeholder }}>
-                  {t("screen:category_browse.no_categories")}
-                </Text>
-              )}
-            </View>
+            <CategoryItem
+              key={section.title}
+              section={section}
+              projectColor={projectColor}
+            />
           )}
           contentContainerStyle={{
             padding: 20,
