@@ -34,9 +34,7 @@ export default function CategorySelector({
   const { t } = useTranslation();
   const { globalStyles, colors } = useStyles();
 
-  const [isEnabled, setIsEnabled] = useState(
-    !!selectedItems.activeCategories[category.name],
-  );
+  const [isEnabled, setIsEnabled] = useState(!category.disabled);
   const hasSubCategories =
     category.sub_categories && category.sub_categories.length > 0;
 
@@ -53,7 +51,7 @@ export default function CategorySelector({
       style={[
         globalStyles.card,
         !isEnabled && { borderColor: colors.disable },
-        isExpanded && { height: 500 }, // Increased height to accommodate tabs
+        isExpanded && { height: 500 },
       ]}
     >
       <CategoryHeader
