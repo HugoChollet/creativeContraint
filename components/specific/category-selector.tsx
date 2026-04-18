@@ -1,15 +1,14 @@
 import { useStyles } from "@/hooks/use-styles";
 import { Option, SelectedState, SubCategory } from "@/types/constraints";
 import { CategoryJSON } from "@/types/json-objects";
-import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import Tooltip from "../generic/tooltip";
+import CategoryHeader from "./category-header";
 import { ConstraintSelector } from "./constraint/constraint-selector";
 import { PresetMode, StatusSelector } from "./status-selector";
 
-interface CategoryProps {
+interface CategorySelectorProps {
   category: CategoryJSON;
   selectedItems: SelectedState;
   onToggleCategory: (name: string) => void;
@@ -29,20 +28,17 @@ export default function CategorySelector({
   isExpanded,
   onExpand,
   color,
-}: CategoryProps) {
+}: CategorySelectorProps) {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [mode, setMode] = useState<PresetMode>("all");
   const { t } = useTranslation();
   const { globalStyles, colors } = useStyles();
 
-  const isEnabled = !!selectedItems.activeCategories[category.name];
+  const [isEnabled, setIsEnabled] = useState(
+    !!selectedItems.activeCategories[category.name],
+  );
   const hasSubCategories =
     category.sub_categories && category.sub_categories.length > 0;
-
-  const handleToggleExpand = () => {
-    if (!isEnabled) return;
-    onExpand();
-  };
 
   const currentSubCategory: SubCategory | null = hasSubCategories
     ? category.sub_categories![activeTabIndex]
@@ -60,55 +56,20 @@ export default function CategorySelector({
         isExpanded && { height: 500 }, // Increased height to accommodate tabs
       ]}
     >
-      <Pressable onPress={handleToggleExpand} style={globalStyles.headerRow}>
-        <Pressable
-          onPress={() => {
-            onToggleCategory(category.name);
-            if (isExpanded) handleToggleExpand();
-          }}
-        >
-          <Ionicons
-            name={isEnabled ? "checkbox" : "square-outline"}
-            size={24}
-            color={isEnabled ? color : colors.textDiscreet}
-          />
-        </Pressable>
+      <CategoryHeader
+        category={category}
+        onToggleCategory={() => {
+          onToggleCategory(category.name);
+          setIsEnabled((prev) => !prev);
+        }}
+        isExpanded={isExpanded}
+        onExpand={onExpand}
+        color={color}
+        isEnabled={isEnabled}
+        subtitle={t("component:status." + mode)}
+      />
 
-        <View style={globalStyles.titleArea}>
-          <View style={globalStyles.elementAndDescriptorContainer}>
-            <Text
-              style={[
-                globalStyles.text,
-                { color: isEnabled ? colors.text : colors.textDiscreet },
-              ]}
-            >
-              {category.label || category.name}
-            </Text>
-            {category.description && (
-              <Tooltip
-                title={category.label || category.name}
-                description={category.description}
-                color={color}
-              />
-            )}
-          </View>
-          <Text
-            style={[
-              globalStyles.discreetText,
-              { color: isEnabled ? colors.textDiscreet : colors.disable },
-            ]}
-          >
-            {t("component:status." + mode)}
-          </Text>
-        </View>
-        <Ionicons
-          name={isExpanded ? "chevron-up" : "chevron-down"}
-          size={20}
-          color={isEnabled ? colors.textDiscreet : colors.disable}
-        />
-      </Pressable>
-
-      {isExpanded && isEnabled && (
+      {isExpanded && (
         <View style={styles.expandedContent}>
           <View style={styles.fixedSelectorWrapper}>
             <StatusSelector
@@ -116,6 +77,7 @@ export default function CategorySelector({
               onSelect={(newMode) => {
                 setMode(newMode);
                 onBulkUpdate(category.name, currentOptions, newMode);
+                setIsEnabled(true);
               }}
             />
           </View>
@@ -161,7 +123,7 @@ export default function CategorySelector({
                   <ConstraintSelector
                     key={opt.id}
                     option={opt}
-                    isParentEnabled={isEnabled}
+                    isParentEnabled={true}
                     isSelected={!!selectedItems.selectedOptions[selectionKey]}
                     color={color}
                     onToggle={(id) => {
@@ -171,6 +133,7 @@ export default function CategorySelector({
                         ? `${category.name}-${currentSubCategory?.name}`
                         : category.name;
                       onToggleOption(fullKey, id);
+                      setIsEnabled(true);
                     }}
                   />
                 );
