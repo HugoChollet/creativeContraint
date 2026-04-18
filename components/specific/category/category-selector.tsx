@@ -4,9 +4,9 @@ import { CategoryJSON } from "@/types/json-objects";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ConstraintSelector } from "../constraint/constraint-selector";
+import { PresetMode, StatusSelector } from "../status-selector";
 import CategoryHeader from "./category-header";
-import { ConstraintSelector } from "./constraint/constraint-selector";
-import { PresetMode, StatusSelector } from "./status-selector";
 
 interface CategorySelectorProps {
   category: CategoryJSON;

@@ -1,6 +1,6 @@
 import { AddButton } from "@/components/generic/add-button";
 import { Header } from "@/components/generic/header";
-import CategoryItem from "@/components/specific/category-section";
+import CategoryItem from "@/components/specific/category/category-section";
 import { getProjectColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
 import { useStyles } from "@/hooks/use-styles";

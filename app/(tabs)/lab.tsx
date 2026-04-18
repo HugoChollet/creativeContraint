@@ -2,7 +2,7 @@ import { AddButton } from "@/components/generic/add-button";
 import { FloatingButton } from "@/components/generic/floating-button";
 import { Header } from "@/components/generic/header";
 import { Spacer } from "@/components/generic/spacer";
-import CategorySelector from "@/components/specific/category-selector";
+import CategorySelector from "@/components/specific/category/category-selector";
 import GeneratedConstraintsSheet from "@/components/specific/generated-constraints-sheet";
 import { PresetMode } from "@/components/specific/status-selector";
 import { getProjectColor } from "@/constants/theme";

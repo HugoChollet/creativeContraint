@@ -2,8 +2,8 @@ import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
-import Crud from "../generic/crud";
-import Tooltip from "../generic/tooltip";
+import Crud from "../../generic/crud";
+import Tooltip from "../../generic/tooltip";
 
 interface CategoryCrudProps {
   onDelete?: () => void;

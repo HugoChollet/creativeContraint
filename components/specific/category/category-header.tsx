@@ -3,7 +3,7 @@ import { CategoryJSON } from "@/types/json-objects";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import Tooltip from "../generic/tooltip";
+import Tooltip from "../../generic/tooltip";
 
 interface CategoryHeaderProps {
   category: CategoryJSON;
