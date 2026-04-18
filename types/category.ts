@@ -1,6 +1,6 @@
 import { Option } from "@/types/constraints";
 
-enum Source {
+export enum Source {
   Official = "official",
   Community = "community",
   User = "user",

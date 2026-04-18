@@ -1,6 +1,6 @@
 import { AddButton } from "@/components/generic/add-button";
 import { Header } from "@/components/generic/header";
-import CategoryItem from "@/components/specific/category/category-section";
+import CategorySection from "@/components/specific/category/category-section";
 import { getProjectColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
 import { useStyles } from "@/hooks/use-styles";
@@ -106,14 +106,16 @@ export default function CategoryBrowseScreen() {
           data={sections}
           keyExtractor={(item) => item.title}
           renderItem={({ item: section }) => (
-            <CategoryItem
+            <CategorySection
               key={section.title}
               section={section}
               projectColor={projectColor}
+              onDelete={() => {}}
+              onEdit={() => {}}
+              onFork={() => {}}
             />
           )}
           contentContainerStyle={{
-            padding: 20,
             paddingBottom: headerHeight + 20,
           }}
         />
