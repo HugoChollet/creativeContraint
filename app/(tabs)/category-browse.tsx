@@ -1,6 +1,6 @@
 import { AddButton } from "@/components/generic/add-button";
 import { Header } from "@/components/generic/header";
-import CategoryItem from "@/components/specific/category-item";
+import CategoryItem from "@/components/specific/category-section";
 import { getProjectColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
 import { useStyles } from "@/hooks/use-styles";
@@ -12,7 +12,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, View } from "react-native";
 
-export interface CategorySection {
+export interface CategorySectionData {
   title: string;
   data: Category[];
 }
@@ -75,7 +75,7 @@ export default function CategoryBrowseScreen() {
     [data, userId],
   );
 
-  const sections: CategorySection[] = [
+  const sections: CategorySectionData[] = [
     {
       title: t("screen:category_browse.personal_section"),
       data: personalCategories,
