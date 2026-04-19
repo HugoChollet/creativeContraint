@@ -35,6 +35,7 @@ export default function CategoryItem({
   const [isEnabled, setIsEnabled] = useState(false);
   const isPersonalCategory =
     type === t("screen:category_browse.personal_section");
+  const isCommunity = type === t("screen:category_browse.community_section");
 
   const actions: CrudActionItem[] = [
     ...(isPersonalCategory && onEdit
@@ -48,6 +49,14 @@ export default function CategoryItem({
       : []),
     ...(!isPersonalCategory && onFork
       ? [{ action: Action.FORK, onPress: onFork }]
+      : []),
+    ...(isCommunity && onFork
+      ? [
+          {
+            action: Action.FAVORITE,
+            onPress: () => console.log("favorite ", category.name),
+          },
+        ]
       : []),
   ];
 

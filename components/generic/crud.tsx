@@ -9,6 +9,7 @@ export enum Action {
   DELETE = "delete",
   ADD = "add",
   PUBLISH = "publish",
+  FAVORITE = "favorite",
 }
 
 type CrudIconName = ComponentProps<typeof Ionicons>["name"];
@@ -30,6 +31,7 @@ const ACTION_ICONS: Record<Action, CrudIconName> = {
   [Action.DELETE]: "trash-sharp",
   [Action.ADD]: "add-sharp",
   [Action.PUBLISH]: "cloud-upload-sharp",
+  [Action.FAVORITE]: "bookmark-sharp",
 };
 
 export default function Crud({ actions, disabled, color }: CrudProps) {
