@@ -1,8 +1,9 @@
+import { OptionItem } from "@/components/generic/option-item";
 import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, View } from "react-native";
 import Crud from "../../generic/crud";
 import CategoryHeader from "./category-header";
 
@@ -33,7 +34,7 @@ export default function CategoryCrud({
 
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
-      <View style={[globalStyles.card]}>
+      <View style={[globalStyles.card, { width: 300 }]}>
         <CategoryHeader
           category={category}
           onToggleCategory={() => {
@@ -56,8 +57,8 @@ export default function CategoryCrud({
             data={category.options}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <View style={{ paddingLeft: 32 }}>
-                <Text>{item.value}</Text>
+              <View style={{ padding: 8 }}>
+                <OptionItem option={item} color={projectColor} />
               </View>
             )}
           />

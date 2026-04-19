@@ -6,6 +6,7 @@ import ConstraintForm from "@/components/specific/constraint/constraint-form";
 import { getProjectColor } from "@/constants/theme";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
+import { Category } from "@/types/category";
 import { Option } from "@/types/constraints";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useLocalSearchParams } from "expo-router";
@@ -22,16 +23,7 @@ import {
   View,
 } from "react-native";
 
-interface Category {
-  id: string;
-  name: string;
-  description: string;
-  options: Option[];
-  project_type_id: string;
-  is_public: boolean;
-  owner_id: string;
-}
-const ConstraintRequire = { MIN_OPTIONS: 2, NAME_LENGTH_MIN: 6 };
+const ConstraintRequire = { MIN_OPTIONS: 2, NAME_LENGTH_MIN: 2 };
 
 export default function CategoryFormScreen() {
   const { type: projectLabel } = useLocalSearchParams<{

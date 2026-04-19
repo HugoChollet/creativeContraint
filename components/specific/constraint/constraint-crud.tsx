@@ -1,9 +1,8 @@
 import Crud from "@/components/generic/crud";
+import { OptionItem } from "@/components/generic/option-item";
 import { useStyles } from "@/hooks/use-styles";
 import { Option } from "@/types/constraints";
-import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
-import Tooltip from "../../generic/tooltip";
+import { View } from "react-native";
 
 interface ConstraintSelectorFormProps {
   onDelete: () => void;
@@ -18,74 +17,17 @@ export default function ConstraintCrud({
   projectColor,
   option,
 }: ConstraintSelectorFormProps) {
-  const { globalStyles, colors } = useStyles();
-  const { t } = useTranslation();
+  const { globalStyles } = useStyles();
 
   return (
-    <>
-      <View
-        style={[
-          globalStyles.optionItem,
-          { justifyContent: "space-between", padding: 4 },
-        ]}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 8,
-            flex: 1,
-          }}
-        >
-          <View>
-            <Text
-              style={{
-                color: colors.text,
-              }}
-            >
-              {option.value}
-            </Text>
-            <Text
-              style={{
-                ...styles.rarityLabel,
-                color: colors.textDiscreet,
-              }}
-            >
-              {t("component:constraint-selector.difficulty") + option.rarity}
-            </Text>
-          </View>
-          {!!option.description && (
-            <Tooltip
-              title={option.value}
-              description={option.description}
-              color={projectColor}
-            />
-          )}
-        </View>
-        <Crud onDelete={onDelete} onEdit={onEdit} color={projectColor} />
-      </View>
-    </>
+    <View
+      style={[
+        globalStyles.optionItem,
+        { justifyContent: "space-between", padding: 4, alignItems: "center" },
+      ]}
+    >
+      <OptionItem option={option} color={projectColor} />
+      <Crud onDelete={onDelete} onEdit={onEdit} color={projectColor} />
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    gap: 12,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 8,
-  },
-  headerLeft: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    gap: 8,
-  },
-  rarityLabel: { fontSize: 11, marginTop: 2 },
-  crud: {
-    flexDirection: "row",
-    gap: 16,
-  },
-});
