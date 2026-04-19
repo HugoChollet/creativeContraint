@@ -39,9 +39,9 @@ export default function Crud({ actions, disabled, color }: CrudProps) {
 
   return (
     <View style={styles.crud}>
-      {actions.map(({ action, onPress }) => (
+      {actions.map(({ action, onPress }, index) => (
         <TouchableOpacity
-          key={action}
+          key={`${action}-${index}`}
           style={globalStyles.transparentButton}
           onPress={onPress}
           disabled={disabled}
