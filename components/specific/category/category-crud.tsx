@@ -12,8 +12,8 @@ interface CategoryCrudProps {
   onFork?: () => void;
   projectColor: string;
   category: Category;
-  expand: boolean;
-  setExpand: (expanded: boolean) => void;
+  expanded: boolean;
+  toggleExpand: () => void;
   type: string;
 }
 
@@ -23,14 +23,13 @@ export default function CategoryCrud({
   onFork,
   projectColor,
   category,
-  expand,
-  setExpand,
+  expanded,
+  toggleExpand,
   type,
 }: CategoryCrudProps) {
   const { globalStyles, colors } = useStyles();
   const { t } = useTranslation();
   const [isEnabled, setIsEnabled] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
@@ -39,14 +38,11 @@ export default function CategoryCrud({
           category={category}
           onToggleCategory={() => {
             console.log("toggle");
-            setExpand(!isExpanded);
+            toggleExpand();
             setIsEnabled(!isEnabled);
           }}
-          isExpanded={isExpanded}
-          onExpand={() => {
-            setIsExpanded(!isExpanded);
-            console.log("expand to", isExpanded);
-          }}
+          isExpanded={expanded}
+          onExpand={() => toggleExpand()}
           color={projectColor}
           isEnabled={isEnabled}
           subtitle={
@@ -55,7 +51,7 @@ export default function CategoryCrud({
               : undefined
           }
         />
-        {isExpanded && category.options && (
+        {expanded && category.options && (
           <FlatList
             data={category.options}
             keyExtractor={(item) => item.id.toString()}

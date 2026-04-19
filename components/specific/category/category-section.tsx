@@ -1,7 +1,8 @@
 import { CategorySectionData } from "@/app/(tabs)/category-browse";
 import { useStyles } from "@/hooks/use-styles";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Text, View } from "react-native";
+import { LayoutAnimation, Text, View } from "react-native";
 import CategoryCrud from "./category-crud";
 
 interface CategorySectionProps {
@@ -21,6 +22,15 @@ export default function CategorySection({
 }: CategorySectionProps) {
   const { globalStyles, colors } = useStyles();
   const { t } = useTranslation();
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+
+  const handleToggleExpand = (categoryName: string) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setExpandedCategory((prev) =>
+      prev === categoryName ? null : categoryName,
+    );
+    console.log("toggle ", categoryName);
+  };
 
   return (
     <View style={{ marginBottom: 24 }}>
@@ -33,16 +43,16 @@ export default function CategorySection({
         {section.title}
       </Text>
       {section.data.length > 0 ? (
-        section.data.map((item) => (
+        section.data.map((cat) => (
           <CategoryCrud
-            key={item.id}
+            key={cat.id}
             onDelete={onDelete}
             onEdit={onEdit}
             onFork={onFork}
             projectColor={projectColor}
-            category={item}
-            expand={false}
-            setExpand={() => {}}
+            category={cat}
+            expanded={expandedCategory === cat.name}
+            toggleExpand={() => handleToggleExpand(cat.name)}
             type={section.title}
           />
         ))
