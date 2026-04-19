@@ -3,12 +3,12 @@ import { Header } from "@/components/generic/header";
 import CategorySection from "@/components/specific/category/category-section";
 import { getProjectColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
+import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
-import { supabase } from "@/lib/supabase";
 import { Category } from "@/types/category";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, View } from "react-native";
 
@@ -21,41 +21,21 @@ export default function CategoryBrowseScreen() {
   const { type: projectLabel } = useLocalSearchParams<{
     type: string;
   }>();
-  const { globalStyles, colors } = useStyles();
+  const { globalStyles } = useStyles();
   const { session } = useAuth();
   const { t } = useTranslation();
   const headerHeight = useHeaderHeight();
-  const [data, setData] = useState<Category[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   const projectColor = getProjectColor(projectLabel);
   const userId = session?.user?.id;
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        setIsLoading(true);
-
-        const { data: categories, error } = await supabase
-          .from("categories")
-          .select("*")
-          .eq("project_type_id", projectLabel)
-          .order("created_at", { ascending: false });
-
-        if (error) throw error;
-
-        setData((categories as Category[]) || []);
-      } catch (error) {
-        console.error("Failed to fetch categories:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (projectLabel) {
-      fetchCategories();
-    }
-  }, [projectLabel]);
+  const { data, updateRecord, loading } = useCollection<Category>(
+    "categories",
+    {
+      scope: "all",
+      filters: [{ column: "project_type_id", value: projectLabel }],
+    },
+  );
 
   const personalCategories = useMemo(
     () => data.filter((item) => item.owner_id === userId),
@@ -95,7 +75,7 @@ export default function CategoryBrowseScreen() {
       <Header
         title={t("screen:category_browse.title", { type: projectLabel })}
       />
-      {isLoading ? (
+      {loading ? (
         <View
           style={[globalStyles.screenContainer, { justifyContent: "center" }]}
         >
@@ -113,6 +93,10 @@ export default function CategoryBrowseScreen() {
               onDelete={() => {}}
               onEdit={() => {}}
               onFork={() => {}}
+              onPublish={(cat) => {
+                console.log("publish ", cat);
+                updateRecord(cat.id, { is_public: cat.is_public });
+              }}
             />
           )}
           contentContainerStyle={{

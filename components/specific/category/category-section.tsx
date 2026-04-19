@@ -1,5 +1,6 @@
 import { CategorySectionData } from "@/app/(tabs)/category-browse";
 import { useStyles } from "@/hooks/use-styles";
+import { Category } from "@/types/category";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LayoutAnimation, Text, View } from "react-native";
@@ -9,6 +10,7 @@ interface CategorySectionProps {
   onDelete?: () => void;
   onEdit?: () => void;
   onFork?: () => void;
+  onPublish?: (cat: Category) => void;
   projectColor: string;
   section: CategorySectionData;
 }
@@ -17,6 +19,7 @@ export default function CategorySection({
   onDelete,
   onEdit,
   onFork,
+  onPublish,
   projectColor,
   section,
 }: CategorySectionProps) {
@@ -51,6 +54,7 @@ export default function CategorySection({
             onFork={onFork}
             onPublish={() => {
               console.log("publish ", cat.name);
+              if (onPublish) onPublish(cat);
             }}
             projectColor={projectColor}
             category={cat}
