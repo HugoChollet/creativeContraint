@@ -49,6 +49,9 @@ export default function CategorySection({
             onDelete={onDelete}
             onEdit={onEdit}
             onFork={onFork}
+            onPublish={() => {
+              console.log("publish ", cat.name);
+            }}
             projectColor={projectColor}
             category={cat}
             expanded={expandedCategory === cat.name}

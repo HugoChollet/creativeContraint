@@ -4,13 +4,14 @@ import { Category } from "@/types/category";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FlatList, View } from "react-native";
-import Crud from "../../generic/crud";
+import Crud, { Action, CrudActionItem } from "../../generic/crud";
 import CategoryHeader from "./category-header";
 
 interface CategoryItemProps {
   onDelete?: () => void;
   onEdit?: () => void;
   onFork?: () => void;
+  onPublish?: () => void;
   projectColor: string;
   category: Category;
   expanded: boolean;
@@ -22,18 +23,41 @@ export default function CategoryItem({
   onDelete,
   onEdit,
   onFork,
+  onPublish,
   projectColor,
   category,
   expanded,
   toggleExpand,
   type,
 }: CategoryItemProps) {
-  const { globalStyles, colors } = useStyles();
+  const { globalStyles } = useStyles();
   const { t } = useTranslation();
   const [isEnabled, setIsEnabled] = useState(false);
+  const isPersonalCategory =
+    type === t("screen:category_browse.personal_section");
+
+  const actions: CrudActionItem[] = [
+    ...(isPersonalCategory && onEdit
+      ? [{ action: Action.EDIT, onPress: onEdit }]
+      : []),
+    ...(isPersonalCategory && onDelete
+      ? [{ action: Action.DELETE, onPress: onDelete }]
+      : []),
+    ...(isPersonalCategory && onPublish
+      ? [{ action: Action.PUBLISH, onPress: onPublish }]
+      : []),
+    ...(!isPersonalCategory && onFork
+      ? [{ action: Action.FORK, onPress: onFork }]
+      : []),
+  ];
 
   return (
-    <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+    <View
+      style={{
+        flexDirection: "row",
+        gap: 12,
+      }}
+    >
       <View style={[globalStyles.card, { width: 300 }]}>
         <CategoryHeader
           category={category}
@@ -62,24 +86,7 @@ export default function CategoryItem({
           />
         )}
       </View>
-      <Crud
-        onDelete={
-          type === t("screen:category_browse.personal_section")
-            ? onDelete
-            : undefined
-        }
-        onFork={
-          type !== t("screen:category_browse.personal_section")
-            ? onFork
-            : undefined
-        }
-        onEdit={
-          type === t("screen:category_browse.personal_section")
-            ? onEdit
-            : undefined
-        }
-        color={projectColor}
-      />
+      <Crud actions={actions} color={projectColor} />
     </View>
   );
 }

@@ -1,65 +1,56 @@
 import { useStyles } from "@/hooks/use-styles";
 import { Ionicons } from "@expo/vector-icons";
+import { ComponentProps } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
+export enum Action {
+  EDIT = "edit",
+  FORK = "fork",
+  DELETE = "delete",
+  ADD = "add",
+  PUBLISH = "publish",
+}
+
+type CrudIconName = ComponentProps<typeof Ionicons>["name"];
+
+export interface CrudActionItem {
+  action: Action;
+  onPress: () => void;
+}
+
 interface CrudProps {
-  onDelete?: () => void;
-  onEdit?: () => void;
-  onFork?: () => void;
+  actions: CrudActionItem[];
   disabled?: boolean;
   color?: string;
 }
 
-export default function Crud({
-  onDelete,
-  onEdit,
-  onFork,
-  disabled,
-  color,
-}: CrudProps) {
+const ACTION_ICONS: Record<Action, CrudIconName> = {
+  [Action.EDIT]: "pencil-sharp",
+  [Action.FORK]: "git-branch-sharp",
+  [Action.DELETE]: "trash-sharp",
+  [Action.ADD]: "add-sharp",
+  [Action.PUBLISH]: "cloud-upload-sharp",
+};
+
+export default function Crud({ actions, disabled, color }: CrudProps) {
   const { globalStyles, colors } = useStyles();
 
   return (
     <View style={styles.crud}>
-      {!onEdit ? null : (
+      {actions.map(({ action, onPress }) => (
         <TouchableOpacity
+          key={action}
           style={globalStyles.transparentButton}
-          onPress={() => onEdit()}
+          onPress={onPress}
           disabled={disabled}
         >
           <Ionicons
-            name="pencil-sharp"
+            name={ACTION_ICONS[action]}
             size={24}
             color={disabled ? colors.disable : color || colors.tint}
           />
         </TouchableOpacity>
-      )}
-      {!onDelete ? null : (
-        <TouchableOpacity
-          style={globalStyles.transparentButton}
-          onPress={() => onDelete()}
-          disabled={disabled}
-        >
-          <Ionicons
-            name="trash-sharp"
-            size={24}
-            color={disabled ? colors.disable : color || colors.tint}
-          />
-        </TouchableOpacity>
-      )}
-      {!onFork ? null : (
-        <TouchableOpacity
-          style={globalStyles.transparentButton}
-          onPress={() => onFork()}
-          disabled={disabled}
-        >
-          <Ionicons
-            name="git-branch-sharp"
-            size={24}
-            color={disabled ? colors.disable : color || colors.tint}
-          />
-        </TouchableOpacity>
-      )}
+      ))}
     </View>
   );
 }

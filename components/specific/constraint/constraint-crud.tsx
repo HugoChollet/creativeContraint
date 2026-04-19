@@ -1,4 +1,4 @@
-import Crud from "@/components/generic/crud";
+import Crud, { Action } from "@/components/generic/crud";
 import { OptionItem } from "@/components/generic/option-item";
 import { useStyles } from "@/hooks/use-styles";
 import { Option } from "@/types/constraints";
@@ -27,7 +27,13 @@ export default function ConstraintCrud({
       ]}
     >
       <OptionItem option={option} color={projectColor} />
-      <Crud onDelete={onDelete} onEdit={onEdit} color={projectColor} />
+      <Crud
+        actions={[
+          { action: Action.EDIT, onPress: onEdit },
+          { action: Action.DELETE, onPress: onDelete },
+        ]}
+        color={projectColor}
+      />
     </View>
   );
 }
