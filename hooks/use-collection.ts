@@ -2,19 +2,34 @@ import { useAuth } from "@/contexts/auth-context";
 import { supabase } from "@/lib/supabase";
 import { useCallback, useEffect, useState } from "react";
 
-export function useCollection<T>(tableName: string) {
+type FilterValue = string | number | boolean;
+
+interface UseCollectionOptions {
+  filterColumn?: string;
+  filterValue?: FilterValue;
+}
+
+export function useCollection<T>(
+  tableName: string,
+  options?: UseCollectionOptions,
+) {
   const { session } = useAuth();
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
+  const { filterColumn, filterValue } = options ?? {};
 
   const fetchCollection = useCallback(async () => {
-    if (!session?.user) return;
     try {
       setLoading(true);
-      const { data: result, error } = await supabase
-        .from(tableName)
-        .select("*")
-        .order("created_at", { ascending: false });
+      let query = supabase.from(tableName).select("*");
+
+      if (filterColumn && filterValue !== undefined) {
+        query = query.eq(filterColumn, filterValue);
+      }
+
+      const { data: result, error } = await query.order("created_at", {
+        ascending: false,
+      });
 
       if (error) throw error;
       setData(result || []);
@@ -76,7 +91,6 @@ export function useCollection<T>(tableName: string) {
         .from(tableName)
         .update(updates)
         .eq("id", id)
-        .eq("owner_id", session?.user.id)
         .select()
         .single();
 
@@ -95,10 +109,8 @@ export function useCollection<T>(tableName: string) {
   };
 
   useEffect(() => {
-    if (session?.user?.id) {
-      fetchCollection();
-    }
-  }, [session?.user?.id, fetchCollection]);
+    fetchCollection();
+  }, [fetchCollection]);
 
   return {
     data,

@@ -29,7 +29,10 @@ export default function CategoryBrowseScreen() {
   const projectColor = getProjectColor(projectLabel, 1, theme);
   const userId = session?.user?.id;
 
-  const { data, updateRecord, loading } = useCollection<Category>("categories");
+  const { data, updateRecord, loading } = useCollection<Category>("categories", {
+    filterColumn: "project_type_id",
+    filterValue: projectLabel,
+  });
 
   const personalCategories = useMemo(
     () => data.filter((item) => item.owner_id === userId),
