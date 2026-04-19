@@ -52,6 +52,11 @@
     "description_placeholder": "Describe the constraint to follow",
     "submit_button": "Add this constraint"
   },
+  "category_item": {
+    "possibilities": "Possibilities : {{count}}",
+    "delete": "Delete category",
+    "edit": "Edit category"
+  },
   "image-picker": {
     "label": "Visual Content",
     "placeholder": "Add a photo",

@@ -52,6 +52,11 @@
     "description_placeholder": "Décrivez la contrainte à suivre",
     "submit_button": "Ajouter cette contrainte"
   },
+  "category_item": {
+    "possibilities": "Possibilités : {{count}}",
+    "delete": "Supprimer la catégorie",
+    "edit": "Modifier la catégorie"
+  },
   "image-picker": {
     "label": "Contenu visuel",
     "placeholder": "Ajouter une photo",
