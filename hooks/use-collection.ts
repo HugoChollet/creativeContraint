@@ -14,7 +14,6 @@ export function useCollection<T>(tableName: string) {
       const { data: result, error } = await supabase
         .from(tableName)
         .select("*")
-        .eq("owner_id", session.user.id)
         .order("created_at", { ascending: false });
 
       if (error) throw error;
