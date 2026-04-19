@@ -7,7 +7,7 @@ import { FlatList, View } from "react-native";
 import Crud from "../../generic/crud";
 import CategoryHeader from "./category-header";
 
-interface CategoryCrudProps {
+interface CategoryItemProps {
   onDelete?: () => void;
   onEdit?: () => void;
   onFork?: () => void;
@@ -18,7 +18,7 @@ interface CategoryCrudProps {
   type: string;
 }
 
-export default function CategoryCrud({
+export default function CategoryItem({
   onDelete,
   onEdit,
   onFork,
@@ -27,7 +27,7 @@ export default function CategoryCrud({
   expanded,
   toggleExpand,
   type,
-}: CategoryCrudProps) {
+}: CategoryItemProps) {
   const { globalStyles, colors } = useStyles();
   const { t } = useTranslation();
   const [isEnabled, setIsEnabled] = useState(false);
@@ -37,18 +37,16 @@ export default function CategoryCrud({
       <View style={[globalStyles.card, { width: 300 }]}>
         <CategoryHeader
           category={category}
-          onToggleCategory={() => {
-            console.log("toggle");
-            toggleExpand();
-            setIsEnabled(!isEnabled);
-          }}
+          onToggleCategory={() => setIsEnabled(!isEnabled)}
           isExpanded={expanded}
           onExpand={() => toggleExpand()}
           color={projectColor}
           isEnabled={isEnabled}
           subtitle={
             category.options
-              ? `${category.options.length} possibilités`
+              ? t("component:category_item.possibilities", {
+                  count: category.options.length,
+                })
               : undefined
           }
         />

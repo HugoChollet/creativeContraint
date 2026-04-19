@@ -3,7 +3,7 @@ import { useStyles } from "@/hooks/use-styles";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LayoutAnimation, Text, View } from "react-native";
-import CategoryCrud from "./category-crud";
+import CategoryItem from "./category-item";
 
 interface CategorySectionProps {
   onDelete?: () => void;
@@ -44,7 +44,7 @@ export default function CategorySection({
       </Text>
       {section.data.length > 0 ? (
         section.data.map((cat) => (
-          <CategoryCrud
+          <CategoryItem
             key={cat.id}
             onDelete={onDelete}
             onEdit={onEdit}
