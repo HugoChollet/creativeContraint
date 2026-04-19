@@ -1,5 +1,5 @@
 import MainButton from "@/components/generic/main-button";
-import { ProjectsColors } from "@/constants/theme";
+import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
@@ -8,7 +8,7 @@ import { ScrollView, Text, View } from "react-native";
 export default function HomeScreen() {
   const router = useRouter();
   const { t } = useTranslation();
-  const { globalStyles } = useStyles();
+  const { globalStyles, theme } = useStyles();
 
   return (
     <View style={globalStyles.screenContainer}>
@@ -19,7 +19,7 @@ export default function HomeScreen() {
       <ScrollView>
         <MainButton
           title={t("screen:home.videointernet_button")}
-          color={ProjectsColors.videoInternet}
+          color={getProjectColor("videoInternet", 1, theme)}
           image={require("@/assets/images/projects/png/videoInternet.png")}
           onPress={() =>
             router.push({
@@ -30,7 +30,7 @@ export default function HomeScreen() {
         />
         <MainButton
           title={t("screen:home.music_button")}
-          color={ProjectsColors.music}
+          color={getProjectColor("music", 1, theme)}
           image={require("@/assets/images/projects/png/music.png")}
           onPress={() =>
             router.push({ pathname: "/lab", params: { id: 1, type: "music" } })
@@ -38,7 +38,7 @@ export default function HomeScreen() {
         />
         <MainButton
           title={t("screen:home.book_button")}
-          color={ProjectsColors.book}
+          color={getProjectColor("book", 1, theme)}
           image={require("@/assets/images/projects/png/book.png")}
           onPress={() =>
             router.push({ pathname: "/lab", params: { id: 1, type: "book" } })
@@ -46,7 +46,7 @@ export default function HomeScreen() {
         />
         <MainButton
           title={t("screen:home.videogame_button")}
-          color={ProjectsColors.videogame}
+          color={getProjectColor("videoGame", 1, theme)}
           image={require("@/assets/images/projects/png/videoGame.png")}
           onPress={() =>
             router.push({
@@ -57,7 +57,7 @@ export default function HomeScreen() {
         />
         <MainButton
           title={t("screen:home.photography_button")}
-          color={ProjectsColors.photography}
+          color={getProjectColor("photography", 1, theme)}
           image={require("@/assets/images/projects/png/photography.png")}
           onPress={() =>
             router.push({
@@ -68,7 +68,7 @@ export default function HomeScreen() {
         />
         <MainButton
           title={t("screen:home.boardgame_button")}
-          color={ProjectsColors.boardgame}
+          color={getProjectColor("boardgame", 1, theme)}
           image={require("@/assets/images/projects/png/boardgame.png")}
           onPress={() =>
             router.push({
@@ -79,7 +79,7 @@ export default function HomeScreen() {
         />
         <MainButton
           title={t("screen:home.cooking_button")}
-          color={ProjectsColors.cooking}
+          color={getProjectColor("cooking", 1, theme)}
           image={require("@/assets/images/projects/png/cooking.png")}
           onPress={() =>
             router.push({
@@ -90,7 +90,7 @@ export default function HomeScreen() {
         />
         <MainButton
           title={t("screen:home.videofiction_button")}
-          color={ProjectsColors.videoFiction}
+          color={getProjectColor("videoFiction", 1, theme)}
           image={require("@/assets/images/projects/png/videoFiction.png")}
           onPress={() =>
             router.push({

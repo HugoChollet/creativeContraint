@@ -30,7 +30,7 @@ export default function CategoryFormScreen() {
     type: string;
   }>();
 
-  const { globalStyles, colors } = useStyles();
+  const { globalStyles, colors, theme } = useStyles();
   const { t } = useTranslation();
   const headerHeight = useHeaderHeight();
   const { addRecord, loading: isSaving } =
@@ -44,8 +44,8 @@ export default function CategoryFormScreen() {
 
   const [options, setOptions] = useState<Option[]>([]);
 
-  const projectColor = getProjectColor(projectLabel);
-  const projectColorSoft = getProjectColor(projectLabel, 0.2);
+  const projectColor = getProjectColor(projectLabel, 1, theme);
+  const projectColorSoft = getProjectColor(projectLabel, 0.2, theme);
 
   const handleSubmit = async () => {
     if (!isFormValid || isSaving) return;

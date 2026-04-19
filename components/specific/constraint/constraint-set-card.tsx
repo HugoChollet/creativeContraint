@@ -29,8 +29,8 @@ export function ConstraintsSetCard({
   submit: () => void;
 }) {
   const { i18n, t } = useTranslation();
-  const { globalStyles, colors } = useStyles();
-  const solidColor = getProjectColor(item.project_type, 1);
+  const { globalStyles, colors, theme } = useStyles();
+  const solidColor = getProjectColor(item.project_type, 1, theme);
 
   const typeKey = typeMapping[item.project_type.toLowerCase()] || "book";
 
@@ -54,7 +54,7 @@ export function ConstraintsSetCard({
         {
           marginBottom: 16,
           overflow: "hidden",
-          backgroundColor: getProjectColor(item.project_type, 0.1),
+          backgroundColor: getProjectColor(item.project_type, 0.1, theme),
         },
       ]}
     >
@@ -82,7 +82,7 @@ export function ConstraintsSetCard({
         style={[
           styles.circleDecorator,
           {
-            backgroundColor: getProjectColor(item.project_type, 0.1),
+            backgroundColor: getProjectColor(item.project_type, 0.1, theme),
           },
         ]}
       />

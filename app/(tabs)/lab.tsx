@@ -44,7 +44,7 @@ export default function LabScreen() {
   const [idSetConstraint, setIdSetConstraint] = useState<IdSetConstraint>();
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const { t } = useTranslation();
-  const { globalStyles, colors } = useStyles();
+  const { globalStyles, colors, theme } = useStyles();
   const router = useRouter();
 
   const rawType = (
@@ -61,7 +61,7 @@ export default function LabScreen() {
     return data as ConstraintSetDataJSON;
   }, [i18nInstance.language, typeKey]);
 
-  const projectColor = getProjectColor(dataSource.project_type);
+  const projectColor = getProjectColor(dataSource.project_type, 1, theme);
 
   // Helper to build initial state where everything is ON
   const getInitialState = (): SelectedState => {

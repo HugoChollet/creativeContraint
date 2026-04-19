@@ -27,7 +27,7 @@ export default function PublicationFormScreen() {
   }>();
 
   const router = useRouter();
-  const { globalStyles, colors } = useStyles();
+  const { globalStyles, colors, theme } = useStyles();
   const { t } = useTranslation();
 
   const [title, setTitle] = useState("");
@@ -40,8 +40,8 @@ export default function PublicationFormScreen() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const projectColor = getProjectColor(projectLabel);
-  const projectColorSoft = getProjectColor(projectLabel, 0.2);
+  const projectColor = getProjectColor(projectLabel, 1, theme);
+  const projectColorSoft = getProjectColor(projectLabel, 0.2, theme);
 
   const isFormValid = title.length > 2 && media.isValid && !isLoading;
 

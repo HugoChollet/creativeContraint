@@ -67,19 +67,50 @@ export const Themes = {
 } as const;
 
 export const ProjectsColors = {
-  book: "rgba(27, 23, 208, 1)",
-  music: "rgba(23, 184, 166, 1)",
-  photography: "rgba(184, 22, 128, 1)",
-  videoFiction: "rgba(255, 193, 0, 1)",
-  cooking: "rgba(255, 114, 94, 1)",
-  videoInternet: "rgba(130, 200, 104, 1)",
-  boardgame: "rgba(197, 63, 63, 1)",
-  videogame: "rgba(84, 35, 147, 1)",
+  light: {
+    book: "rgba(27, 23, 208, 1)",
+    music: "rgba(23, 184, 166, 1)",
+    photography: "rgba(184, 22, 128, 1)",
+    videoFiction: "rgba(255, 193, 0, 1)",
+    cooking: "rgba(255, 114, 94, 1)",
+    videoInternet: "rgba(130, 200, 104, 1)",
+    boardgame: "rgba(197, 63, 63, 1)",
+    videogame: "rgba(84, 35, 147, 1)",
+  },
+  dark: {
+    book: "rgba(120, 133, 255, 1)",
+    music: "rgba(72, 221, 199, 1)",
+    photography: "rgba(240, 95, 183, 1)",
+    videoFiction: "rgba(255, 214, 92, 1)",
+    cooking: "rgba(255, 146, 116, 1)",
+    videoInternet: "rgba(173, 231, 110, 1)",
+    boardgame: "rgba(246, 116, 116, 1)",
+    videogame: "rgba(154, 101, 231, 1)",
+  },
 } as const;
 
-export type ProjectKey = keyof typeof ProjectsColors;
+export type ProjectKey = keyof typeof ProjectsColors.light;
 
-export const getProjectColor = (label: string, opacity: number = 1): string => {
+const projectKeyMap: Record<string, ProjectKey> = {
+  book: "book",
+  music: "music",
+  photography: "photography",
+  "video fiction": "videoFiction",
+  videofiction: "videoFiction",
+  cooking: "cooking",
+  "internet video": "videoInternet",
+  videointernet: "videoInternet",
+  "board game": "boardgame",
+  boardgame: "boardgame",
+  "video game": "videogame",
+  videogame: "videogame",
+};
+
+export const getProjectColor = (
+  label: string,
+  opacity: number = 1,
+  theme: AppTheme = "light",
+): string => {
   const map: Record<string, ProjectKey> = {
     Book: "book",
     Music: "music",
@@ -91,8 +122,9 @@ export const getProjectColor = (label: string, opacity: number = 1): string => {
     "Video Game": "videogame",
   };
 
-  const key = map[label] || "book";
-  const baseColor = ProjectsColors[key];
+  const normalizedLabel = label.trim().toLowerCase();
+  const key = map[label] || projectKeyMap[normalizedLabel] || "book";
+  const baseColor = ProjectsColors[theme][key];
 
   return baseColor.replace(/[\d.]+\)$/g, `${opacity})`);
 };

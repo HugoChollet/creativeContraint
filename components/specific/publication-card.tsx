@@ -12,8 +12,8 @@ interface PublicationCardProps {
 }
 
 export const PublicationCard = ({ publication }: PublicationCardProps) => {
-  const { globalStyles, colors } = useStyles();
-  const projectColor = getProjectColor(publication.project_type);
+  const { globalStyles, colors, theme } = useStyles();
+  const projectColor = getProjectColor(publication.project_type, 1, theme);
   const [isConstraintsVisible, setIsConstraintsVisible] = useState(false);
 
   return (
@@ -22,7 +22,7 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
         style={[
           globalStyles.headerRow,
           {
-            backgroundColor: getProjectColor(publication.project_type, 0.1),
+            backgroundColor: getProjectColor(publication.project_type, 0.1, theme),
             justifyContent: "space-between",
             gap: 8,
             height: 72,
