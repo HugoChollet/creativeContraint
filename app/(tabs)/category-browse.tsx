@@ -21,21 +21,15 @@ export default function CategoryBrowseScreen() {
   const { type: projectLabel } = useLocalSearchParams<{
     type: string;
   }>();
-  const { globalStyles } = useStyles();
+  const { globalStyles, theme } = useStyles();
   const { session } = useAuth();
   const { t } = useTranslation();
   const headerHeight = useHeaderHeight();
 
-  const projectColor = getProjectColor(projectLabel);
+  const projectColor = getProjectColor(projectLabel, 1, theme);
   const userId = session?.user?.id;
 
-  const { data, updateRecord, loading } = useCollection<Category>(
-    "categories",
-    {
-      scope: "all",
-      filters: [{ column: "project_type_id", value: projectLabel }],
-    },
-  );
+  const { data, updateRecord, loading } = useCollection<Category>("categories");
 
   const personalCategories = useMemo(
     () => data.filter((item) => item.owner_id === userId),

@@ -69,6 +69,31 @@ export function useCollection<T>(tableName: string) {
     }
   };
 
+  const updateRecord = async (id: string | number, updates: Partial<T>) => {
+    try {
+      setLoading(true);
+      const { data: updated, error } = await supabase
+        .from(tableName)
+        .update(updates)
+        .eq("id", id)
+        .eq("owner_id", session?.user.id)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      setData((prev) =>
+        prev.map((item) => ((item as any).id === id ? updated : item)),
+      );
+      return updated as T;
+    } catch (error) {
+      console.error("Update error:", error);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (session?.user?.id) {
       fetchCollection();
@@ -80,6 +105,7 @@ export function useCollection<T>(tableName: string) {
     loading,
     addRecord,
     deleteRecord,
+    updateRecord,
     refresh: fetchCollection,
   };
 }
