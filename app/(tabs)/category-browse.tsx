@@ -5,17 +5,12 @@ import { getProjectColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
-import { Category } from "@/types/category";
+import { Category, CategorySectionData } from "@/types/category";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, View } from "react-native";
-
-export interface CategorySectionData {
-  title: string;
-  data: Category[];
-}
 
 export default function CategoryBrowseScreen() {
   const { type: projectLabel } = useLocalSearchParams<{
@@ -29,10 +24,13 @@ export default function CategoryBrowseScreen() {
   const projectColor = getProjectColor(projectLabel, 1, theme);
   const userId = session?.user?.id;
 
-  const { data, updateRecord, loading } = useCollection<Category>("categories", {
-    filterColumn: "project_type_id",
-    filterValue: projectLabel,
-  });
+  const { data, updateRecord, loading } = useCollection<Category>(
+    "categories",
+    {
+      filterColumn: "project_type_id",
+      filterValue: projectLabel,
+    },
+  );
 
   const personalCategories = useMemo(
     () => data.filter((item) => item.owner_id === userId),
@@ -56,14 +54,17 @@ export default function CategoryBrowseScreen() {
     {
       title: t("screen:category_browse.personal_section"),
       data: personalCategories,
+      selected: [],
     },
     {
       title: t("screen:category_browse.official_section"),
       data: officialCategories,
+      selected: ["27cd043b-e1ea-40d8-9e77-2ddf77853f8a"],
     },
     {
       title: t("screen:category_browse.community_section"),
       data: communityCategories,
+      selected: [],
     },
   ];
 

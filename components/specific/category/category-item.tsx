@@ -14,6 +14,7 @@ interface CategoryItemProps {
   onPublish?: () => void;
   projectColor: string;
   category: Category;
+  selected: boolean;
   expanded: boolean;
   toggleExpand: () => void;
   type: string;
@@ -25,6 +26,7 @@ export default function CategoryItem({
   onFork,
   onPublish,
   projectColor,
+  selected,
   category,
   expanded,
   toggleExpand,
@@ -32,7 +34,7 @@ export default function CategoryItem({
 }: CategoryItemProps) {
   const { globalStyles } = useStyles();
   const { t } = useTranslation();
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(selected);
   const isPersonalCategory =
     type === t("screen:category_browse.personal_section");
   const isCommunity = type === t("screen:category_browse.community_section");

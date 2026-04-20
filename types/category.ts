@@ -16,3 +16,9 @@ export interface Category {
   owner_id: string;
   source: Source;
 }
+
+export interface CategorySectionData {
+  title: string;
+  data: Category[];
+  selected: string[];
+}

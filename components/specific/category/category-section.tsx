@@ -35,6 +35,8 @@ export default function CategorySection({
     console.log("toggle ", categoryName);
   };
 
+  console.log(section.selected);
+
   return (
     <View style={{ marginBottom: 24 }}>
       <Text
@@ -58,6 +60,7 @@ export default function CategorySection({
             }}
             projectColor={projectColor}
             category={cat}
+            selected={section.selected.includes(cat.id)}
             expanded={expandedCategory === cat.name}
             toggleExpand={() => handleToggleExpand(cat.name)}
             type={section.title}
