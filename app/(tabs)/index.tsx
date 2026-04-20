@@ -102,7 +102,7 @@ export default function HomeScreen() {
         />
         <AddButton
           projectColor={colors.tint}
-          label={t("screen:lab.add-button.label-category")}
+          label={t("screen:lab.add-button.label-project")}
           onClick={() =>
             router.push({
               pathname: "/project-browse",

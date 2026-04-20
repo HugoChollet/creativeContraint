@@ -45,6 +45,14 @@
   "constraint-set-card": {
     "upload": "Soumettre un projet"
   },
+  "project_form": {
+    "title": "Créer votre générateur de projet",
+    "name_label": "Nom du type projet",
+    "name_placeholder": "Mon super projet",
+    "description_label": "Description du projet",
+    "description_placeholder": "Décrivez votre projet pour inspirer les créateurs",
+    "submit_button": "Sauvegarder ce projet"
+  },
   "constraint_option_form": {
     "name_label": "Nom de la contrainte",
     "name_placeholder": "Nouvelle contrainte",

@@ -14,7 +14,8 @@
     "back_button": "Retour au Lab",
     "empty_result": "-",
     "add-button": {
-      "label-category": "Ajouter une catégorie"
+      "label-category": "Ajouter une catégorie",
+      "label-project": "Ajouter un générateur de projet"
     }
   },
   "home": {
@@ -75,5 +76,10 @@
     "official_section": "Officiel",
     "no_categories": "Aucune catégorie à afficher.",
     "add_button": "Créer votre propre catégorie"
+  },
+  "project_browse": {
+    "add_button": "Créer votre propre générateur de projet",
+    "no_projects": "Il n'y a pas encore de générateur de projet ici",
+    "create_button": "Validez votre nouveau générateur de projet"
   }
 }

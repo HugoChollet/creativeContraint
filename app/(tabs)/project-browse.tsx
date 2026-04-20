@@ -1,6 +1,6 @@
 import { AddButton } from "@/components/generic/add-button";
 import { Header } from "@/components/generic/header";
-import CategorySection from "@/components/specific/category/category-section";
+import ProjectSection from "@/components/specific/project/project-section";
 import { getProjectColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
@@ -25,6 +25,8 @@ export default function CategoryBrowseScreen() {
   const userId = session?.user?.id;
 
   const { data, updateRecord, loading } = useCollection<Project>("projects");
+
+  console.log(data);
 
   const personalCategories = useMemo(
     () => data.filter((item) => item.owner_id === userId),
@@ -65,7 +67,7 @@ export default function CategoryBrowseScreen() {
   return (
     <View style={globalStyles.screenContainer}>
       <Header
-        title={t("screen:category_browse.title", { type: projectLabel })}
+        title={t("screen:project_browse.title", { type: projectLabel })}
       />
       {loading ? (
         <View
@@ -78,7 +80,7 @@ export default function CategoryBrowseScreen() {
           data={sections}
           keyExtractor={(item) => item.title}
           renderItem={({ item: section }) => (
-            <CategorySection
+            <ProjectSection
               key={section.title}
               section={section}
               projectColor={projectColor}
@@ -98,7 +100,7 @@ export default function CategoryBrowseScreen() {
       )}
       <AddButton
         projectColor={projectColor}
-        label={t("screen:category_browse.add_button")}
+        label={t("screen:project_browse.add_button")}
         onClick={() =>
           router.push({
             pathname: "/category-form",

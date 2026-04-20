@@ -45,6 +45,14 @@
   "constraint-set-card": {
     "upload": "Upload a project"
   },
+  "project_form": {
+    "title": "Create your project generator",
+    "name_label": "Project type name",
+    "name_placeholder": "My awesome project",
+    "description_label": "Project description",
+    "description_placeholder": "Describe your project to inspire creators",
+    "submit_button": "Save this project"
+  },
   "constraint_option_form": {
     "name_label": "Constraint Name",
     "name_placeholder": "New constraint",

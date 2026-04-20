@@ -13,7 +13,8 @@
     "back_button": "Back to Lab",
     "empty_result": "-",
     "add-button": {
-      "label-category": "Add a category"
+      "label-category": "Add a category",
+      "label-project": "Add a project generator"
     }
   },
   "home": {
@@ -74,5 +75,10 @@
     "official_section": "Official",
     "no_categories": "No categories to display.",
     "add_button": "Create your own category"
+  },
+  "project_browse": {
+    "add_button": "Create your own project generator",
+    "no_projects": "There is no project generator yet here",
+    "create_button": "Save new project generator"
   }
 }
