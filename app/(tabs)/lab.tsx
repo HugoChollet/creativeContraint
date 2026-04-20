@@ -14,7 +14,7 @@ import {
   Option,
   SelectedState,
 } from "@/types/constraints";
-import { CategoryJSON, ConstraintSetDataJSON } from "@/types/json-objects";
+import { CategoryJSON, ProjectJSON } from "@/types/json-objects";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -58,7 +58,7 @@ export default function LabScreen() {
       console.error(
         `Namespace "${typeKey}" does not exist for "${i18nInstance.language}"`,
       );
-    return data as ConstraintSetDataJSON;
+    return data as ProjectJSON;
   }, [i18nInstance.language, typeKey]);
 
   const projectColor = getProjectColor(dataSource.project_type, 1, theme);

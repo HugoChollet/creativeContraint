@@ -11,8 +11,10 @@ export interface CategoryJSON {
   description?: string;
 }
 
-export interface ConstraintSetDataJSON {
+export interface ProjectJSON {
   project_type: string;
   project_label?: string;
+  id: string;
+  description?: string;
   categories: CategoryJSON[];
 }

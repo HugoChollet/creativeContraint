@@ -1,7 +1,8 @@
 import { getProjectColor } from "@/constants/theme";
 import { useProjectTranslations } from "@/hooks/use-project-translations";
 import { useStyles } from "@/hooks/use-styles";
-import { ConstraintSetDataJSON, SavedConstraintSet } from "@/types/constraints";
+import { SavedConstraintSet } from "@/types/constraints";
+import { ProjectJSON } from "@/types/json-objects";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
@@ -24,10 +25,7 @@ export function ConstraintsTags({ item }: { item: SavedConstraintSet }) {
   const typeKey = typeMapping[item.project_type.toLowerCase()] || "book";
 
   const dataSource = useMemo(() => {
-    const data = i18n.getResourceBundle(
-      i18n.language,
-      typeKey,
-    ) as ConstraintSetDataJSON;
+    const data = i18n.getResourceBundle(i18n.language, typeKey) as ProjectJSON;
     return data || { constraints: [] };
   }, [i18n.language, typeKey]);
 

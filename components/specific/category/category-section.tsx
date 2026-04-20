@@ -1,6 +1,5 @@
-import { CategorySectionData } from "@/app/(tabs)/category-browse";
 import { useStyles } from "@/hooks/use-styles";
-import { Category } from "@/types/category";
+import { Category, CategorySectionData } from "@/types/category";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LayoutAnimation, Text, View } from "react-native";

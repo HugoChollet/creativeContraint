@@ -3,11 +3,11 @@ import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import {
-  ConstraintSetDataJSON,
   ConstraintSetIds,
   Option,
   SavedConstraintSet,
 } from "@/types/constraints";
+import { ProjectJSON } from "@/types/json-objects";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
@@ -21,7 +21,7 @@ type GeneratedConstraintsSheetProps = {
   setModalVisible: (visible: boolean) => void;
   randomConstraints: Record<string, Option>;
   color: string;
-  dataSource: ConstraintSetDataJSON;
+  dataSource: ProjectJSON;
   constraintSetIds: ConstraintSetIds;
 };
 
