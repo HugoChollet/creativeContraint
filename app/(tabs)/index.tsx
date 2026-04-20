@@ -1,3 +1,4 @@
+import { AddButton } from "@/components/generic/add-button";
 import MainButton from "@/components/generic/main-button";
 import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
@@ -8,7 +9,7 @@ import { ScrollView, Text, View } from "react-native";
 export default function HomeScreen() {
   const router = useRouter();
   const { t } = useTranslation();
-  const { globalStyles, theme } = useStyles();
+  const { globalStyles, theme, colors } = useStyles();
 
   return (
     <View style={globalStyles.screenContainer}>
@@ -96,6 +97,16 @@ export default function HomeScreen() {
             router.push({
               pathname: "/lab",
               params: { id: 1, type: "videoFiction" },
+            })
+          }
+        />
+        <AddButton
+          projectColor={colors.tint}
+          label={t("screen:lab.add-button.label-category")}
+          onClick={() =>
+            router.push({
+              pathname: "/project-browse",
+              params: { id: 1, type: "new" },
             })
           }
         />

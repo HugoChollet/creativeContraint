@@ -44,7 +44,7 @@ export default function LabScreen() {
   const [idSetConstraint, setIdSetConstraint] = useState<IdSetConstraint>();
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const { t } = useTranslation();
-  const { globalStyles, colors, theme } = useStyles();
+  const { globalStyles, theme } = useStyles();
   const router = useRouter();
 
   const rawType = (
