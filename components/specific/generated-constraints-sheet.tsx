@@ -80,7 +80,7 @@ export default function GeneratedConstraintsSheet({
       // Create a new record
       const newConstraintSet = {
         project_type: constraintSetIds.project_type,
-        constraints: constraintSetIds.categories,
+        constraints: constraintSetIds.constraints,
         difficulty: getDifficultyGenerated(),
       };
 

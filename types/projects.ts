@@ -1,3 +1,5 @@
+import { Category } from "./category";
+
 export enum Source {
   Official = "official",
   Community = "community",
@@ -9,7 +11,7 @@ export interface Project {
   name: string;
   description: string;
   source: Source;
-  categories: string[];
+  categories: Category[];
   is_public: boolean;
   owner_id: string;
 }
