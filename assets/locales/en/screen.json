@@ -65,7 +65,7 @@
     "description_label": "Description",
     "description_placeholder": "Describe the category",
     "add_button": "Add new constraint",
-    "submit_button": "Submit Category",
+    "submit_button": "Save Category",
     "constraint_list_label": "Constraints of this category (minimum {{min}})"
   },
   "category_browse": {
@@ -77,8 +77,19 @@
     "add_button": "Create your own category"
   },
   "project_browse": {
+    "title": "Browse {{type}} Project Generators",
     "add_button": "Create your own project generator",
     "no_projects": "There is no project generator yet here",
     "create_button": "Save new project generator"
+  },
+  "project_form": {
+    "title": "New project generator for {{type}}",
+    "name_label": "Project Name",
+    "name_placeholder": "Enter project name",
+    "description_label": "Description",
+    "description_placeholder": "Describe the project generator",
+    "add_button": "Add new category",
+    "submit_button": "Save Project Generator",
+    "category_list_label": "Categories of this project generator (minimum {{min}})"
   }
 }

@@ -66,7 +66,7 @@
     "description_label": "Description",
     "description_placeholder": "Décrivez la catégorie",
     "add_button": "Ajouter une nouvelle contrainte",
-    "submit_button": "Soumettre la catégorie",
+    "submit_button": "Sauvegarder la catégorie",
     "constraint_list_label": "Contraintes de cette catégorie (minimum {{min}})"
   },
   "category_browse": {
@@ -78,8 +78,19 @@
     "add_button": "Créer votre propre catégorie"
   },
   "project_browse": {
+    "title": "Parcourir les générateurs de projet de {{type}}",
     "add_button": "Créer votre propre générateur de projet",
     "no_projects": "Il n'y a pas encore de générateur de projet ici",
     "create_button": "Validez votre nouveau générateur de projet"
+  },
+  "project_form": {
+    "title": "Nouveau générateur de projet pour {{type}}",
+    "name_label": "Nom du projet",
+    "name_placeholder": "Entrez le nom du projet",
+    "description_label": "Description",
+    "description_placeholder": "Décrivez le générateur de projet",
+    "add_button": "Ajouter une nouvelle catégorie",
+    "submit_button": "Sauvegarder le générateur de projet",
+    "category_list_label": "Catégories de ce générateur de projet (minimum {{min}})"
   }
 }

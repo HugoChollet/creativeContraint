@@ -95,6 +95,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="project-form"
+        options={{
+          href: null,
+          title: "New Project",
+        }}
+      />
+      <Tabs.Screen
         name="category-browse"
         options={{
           href: null,

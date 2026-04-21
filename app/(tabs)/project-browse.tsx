@@ -26,8 +26,6 @@ export default function CategoryBrowseScreen() {
 
   const { data, updateRecord, loading } = useCollection<Project>("projects");
 
-  console.log(data);
-
   const personalCategories = useMemo(
     () => data.filter((item) => item.owner_id === userId),
     [data, userId],
@@ -103,7 +101,7 @@ export default function CategoryBrowseScreen() {
         label={t("screen:project_browse.add_button")}
         onClick={() =>
           router.push({
-            pathname: "/category-form",
+            pathname: "/project-form",
             params: { id: 1, type: projectLabel },
           })
         }

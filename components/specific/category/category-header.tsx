@@ -8,7 +8,7 @@ import Tooltip from "../../generic/tooltip";
 interface CategoryHeaderProps {
   category: CategoryJSON;
   isEnabled?: boolean;
-  onToggleCategory: (name: string) => void;
+  onToggleCategory?: (name: string) => void;
   isExpanded: boolean;
   onExpand: () => void;
   color?: string;
@@ -28,17 +28,19 @@ export default function CategoryHeader({
 
   return (
     <Pressable onPress={onExpand} style={globalStyles.headerRow}>
-      <Pressable
-        onPress={() => {
-          onToggleCategory(category.name);
-        }}
-      >
-        <Ionicons
-          name={isEnabled ? "checkbox" : "square-outline"}
-          size={24}
-          color={isEnabled ? color : colors.textDiscreet}
-        />
-      </Pressable>
+      {onToggleCategory && (
+        <Pressable
+          onPress={() => {
+            onToggleCategory(category.name);
+          }}
+        >
+          <Ionicons
+            name={isEnabled ? "checkbox" : "square-outline"}
+            size={24}
+            color={isEnabled ? color : colors.textDiscreet}
+          />
+        </Pressable>
+      )}
 
       <View style={globalStyles.titleArea}>
         <View style={globalStyles.elementAndDescriptorContainer}>
