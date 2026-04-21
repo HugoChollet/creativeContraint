@@ -1,4 +1,5 @@
 import { AddButton } from "@/components/generic/add-button";
+import { ConfirmButton } from "@/components/generic/confirm-button";
 import { Header } from "@/components/generic/header";
 import CategorySection from "@/components/specific/category/category-section";
 import { getProjectColor } from "@/constants/theme";
@@ -28,7 +29,7 @@ export default function CategoryBrowseScreen() {
     "categories",
     {
       filterColumn: "project_type_id",
-      filterValue: projectLabel,
+      filterValue: projectLabel === "new" ? undefined : projectLabel,
     },
   );
 
@@ -102,16 +103,28 @@ export default function CategoryBrowseScreen() {
           }}
         />
       )}
-      <AddButton
-        projectColor={projectColor}
-        label={t("screen:category_browse.add_button")}
-        onClick={() =>
-          router.push({
-            pathname: "/category-form",
-            params: { id: 1, type: projectLabel },
-          })
-        }
-      />
+      {projectLabel !== "new" && (
+        <AddButton
+          projectColor={projectColor}
+          label={t("screen:category_browse.add_button")}
+          onClick={() =>
+            router.push({
+              pathname: "/category-form",
+              params: { id: 1, type: projectLabel },
+            })
+          }
+        />
+      )}
+      <View style={{ paddingTop: 12, paddingBottom: 20 }}>
+        <ConfirmButton
+          projectColor={projectColor}
+          label={t("screen:category_browse.confirm_button")}
+          onClick={() => {
+            console.log("validate category with name: ", projectLabel);
+          }}
+          isActive={sections.some((section) => section.selected.length > 0)}
+        />
+      </View>
     </View>
   );
 }

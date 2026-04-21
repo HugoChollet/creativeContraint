@@ -1,4 +1,5 @@
 import { AddButton } from "@/components/generic/add-button";
+import { ConfirmButton } from "@/components/generic/confirm-button";
 import { Header } from "@/components/generic/header";
 import ProjectSection from "@/components/specific/project/project-section";
 import { getProjectColor } from "@/constants/theme";
@@ -106,6 +107,16 @@ export default function CategoryBrowseScreen() {
           })
         }
       />
+      <View style={{ paddingTop: 12, paddingBottom: 20 }}>
+        <ConfirmButton
+          projectColor={projectColor}
+          label={t("screen:project_browse.confirm_button")}
+          onClick={() => {
+            console.log("validate project generator with name: ", projectLabel);
+          }}
+          isActive={sections.some((section) => section.selected.length > 0)}
+        />
+      </View>
     </View>
   );
 }

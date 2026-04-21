@@ -65,7 +65,7 @@ export default function ProjectSection({
         ))
       ) : (
         <Text style={{ color: colors.placeholder }}>
-          {t("screen:project_browse.no_categories")}
+          {t("screen:project_browse.no_projects")}
         </Text>
       )}
     </View>

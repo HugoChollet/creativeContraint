@@ -74,13 +74,15 @@
     "community_section": "Community",
     "official_section": "Official",
     "no_categories": "No categories to display.",
-    "add_button": "Create your own category"
+    "add_button": "Create your own category",
+    "confirm_button": "Confirm selection"
   },
   "project_browse": {
     "title": "Browse {{type}} Project Generators",
     "add_button": "Create your own project generator",
     "no_projects": "There is no project generator yet here",
-    "create_button": "Save new project generator"
+    "create_button": "Save new project generator",
+    "confirm_button": "Confirm selection"
   },
   "project_form": {
     "title": "New project generator for {{type}}",

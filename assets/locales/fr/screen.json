@@ -75,13 +75,15 @@
     "community_section": "Communauté",
     "official_section": "Officiel",
     "no_categories": "Aucune catégorie à afficher.",
-    "add_button": "Créer votre propre catégorie"
+    "add_button": "Créer votre propre catégorie",
+    "confirm_button": "Confirmer la sélection"
   },
   "project_browse": {
     "title": "Parcourir les générateurs de projet de {{type}}",
     "add_button": "Créer votre propre générateur de projet",
     "no_projects": "Il n'y a pas encore de générateur de projet ici",
-    "create_button": "Validez votre nouveau générateur de projet"
+    "create_button": "Validez votre nouveau générateur de projet",
+    "confirm_button": "Confirmer la sélection"
   },
   "project_form": {
     "title": "Nouveau générateur de projet pour {{type}}",

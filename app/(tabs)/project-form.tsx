@@ -133,7 +133,7 @@ export default function ProjectFormScreen() {
               onClick={() =>
                 router.push({
                   pathname: "/category-browse",
-                  params: { id: 1, type: name },
+                  params: { type: "new" },
                 })
               }
             />

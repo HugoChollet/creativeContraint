@@ -19,6 +19,7 @@ interface GlobalStyles {
   subtitle: TextStyle;
   discreetText: TextStyle;
   tabText: TextStyle;
+  primaryButtonText: TextStyle;
   secondaryButtonText: TextStyle;
   borderButtonText: TextStyle;
   alertText: TextStyle;
@@ -143,6 +144,10 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       fontSize: 11,
       fontWeight: "700",
       textTransform: "uppercase",
+    },
+    primaryButtonText: {
+      ...baseText,
+      color: themes.invertedText,
     },
     secondaryButtonText: {
       ...baseText,

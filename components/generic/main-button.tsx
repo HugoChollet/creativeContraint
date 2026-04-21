@@ -1,3 +1,4 @@
+import { useStyles } from "@/hooks/use-styles";
 import React from "react";
 import {
   Dimensions,
@@ -18,12 +19,14 @@ interface MainButtonProps {
 
 const { width } = Dimensions.get("window");
 
-const MainButton: React.FC<MainButtonProps> = ({
+export const MainButton = ({
   title,
   color,
   image,
   onPress,
-}) => {
+}: MainButtonProps) => {
+  const { globalStyles } = useStyles();
+
   return (
     <TouchableOpacity
       activeOpacity={0.85}
@@ -34,7 +37,9 @@ const MainButton: React.FC<MainButtonProps> = ({
       <View style={styles.circleDecorator} />
 
       <View style={styles.content}>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={[globalStyles.primaryButtonText, styles.title]}>
+          {title}
+        </Text>
         <Image source={image} style={styles.image} resizeMode="contain" />
       </View>
     </TouchableOpacity>
