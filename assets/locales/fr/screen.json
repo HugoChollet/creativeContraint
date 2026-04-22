@@ -80,6 +80,9 @@
   },
   "project_browse": {
     "title": "Parcourir les générateurs de projet de {{type}}",
+    "personal_section": "Personnel",
+    "community_section": "Communauté",
+    "official_section": "Officiel",
     "add_button": "Créer votre propre générateur de projet",
     "no_projects": "Il n'y a pas encore de générateur de projet ici",
     "create_button": "Validez votre nouveau générateur de projet",

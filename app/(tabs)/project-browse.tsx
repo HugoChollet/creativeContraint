@@ -13,6 +13,14 @@ import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, View } from "react-native";
 
+interface ProjectCategoryRelation {
+  id: number;
+  user_id: string;
+  project_id: number;
+  source: "official" | "community";
+  categories: string[];
+}
+
 export default function CategoryBrowseScreen() {
   const { type: projectLabel } = useLocalSearchParams<{
     type: string;
@@ -26,6 +34,14 @@ export default function CategoryBrowseScreen() {
   const userId = session?.user?.id;
 
   const { data, updateRecord, loading } = useCollection<Project>("projects");
+  // const {
+  //   data: selected,
+  //   updateRecord: updateSelected,
+  //   loading: loadingSelected,
+  // } = useCollection<ProjectCategoryRelation>("user_project_selection", {
+  //   filterColumn: "user_id",
+  //   filterValue: userId,
+  // });
 
   const personalCategories = useMemo(
     () => data.filter((item) => item.owner_id === userId),
@@ -47,17 +63,20 @@ export default function CategoryBrowseScreen() {
 
   const sections: ProjectSectionData[] = [
     {
-      title: t("screen:category_browse.personal_section"),
+      title: t("screen:project_browse.personal_section"),
       data: personalCategories,
       selected: [],
     },
     {
-      title: t("screen:category_browse.official_section"),
+      title: t("screen:project_browse.official_section"),
       data: officialCategories,
       selected: ["27cd043b-e1ea-40d8-9e77-2ddf77853f8a"],
+      // selected
+      //   .filter((source) => source.source === "official")
+      //   .map((project) => project.id.toString()),
     },
     {
-      title: t("screen:category_browse.community_section"),
+      title: t("screen:project_browse.community_section"),
       data: communityCategories,
       selected: [],
     },
@@ -113,6 +132,7 @@ export default function CategoryBrowseScreen() {
           label={t("screen:project_browse.confirm_button")}
           onClick={() => {
             console.log("validate project generator with name: ", projectLabel);
+            console.log("selection ", sections[1].selected);
           }}
           isActive={sections.some((section) => section.selected.length > 0)}
         />

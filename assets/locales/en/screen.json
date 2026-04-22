@@ -79,6 +79,9 @@
   },
   "project_browse": {
     "title": "Browse {{type}} Project Generators",
+    "personal_section": "Personal",
+    "community_section": "Community",
+    "official_section": "Official",
     "add_button": "Create your own project generator",
     "no_projects": "There is no project generator yet here",
     "create_button": "Save new project generator",
