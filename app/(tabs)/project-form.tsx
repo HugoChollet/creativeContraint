@@ -7,7 +7,6 @@ import { getProjectColor } from "@/constants/theme";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
-import { Option } from "@/types/constraints";
 import { Project } from "@/types/projects";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -33,13 +32,13 @@ export default function ProjectFormScreen() {
 
   const { globalStyles, colors, theme } = useStyles();
   const { t } = useTranslation();
+
   const headerHeight = useHeaderHeight();
-  const { addRecord, loading: isSaving } = useCollection<Project>("categories");
+  const { addRecord, loading: isSaving } = useCollection<Project>("projects");
   const router = useRouter();
 
   const [name, setName] = useState("New");
   const [description, setDescription] = useState("");
-  const [editedOption, setEditedOption] = useState<Option | undefined>();
 
   const [isLoading] = useState(false);
 
@@ -54,8 +53,6 @@ export default function ProjectFormScreen() {
     const newProject = {
       name,
       description,
-      categories, // This will be saved as JSONB in Supabase
-      project_type_id: projectLabel, // 'cooking', 'music', etc.
       is_public: false, // Defaulting to private for now
       favorited_counter: 0,
     };
@@ -73,7 +70,7 @@ export default function ProjectFormScreen() {
 
   const isFormValid =
     name.length > CategoryRequire.NAME_LENGTH_MIN &&
-    categories.length >= CategoryRequire.MIN_OPTIONS &&
+    //categories.length >= CategoryRequire.MIN_OPTIONS &&
     !isLoading;
 
   return (
