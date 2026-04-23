@@ -29,10 +29,11 @@ export default function ProjectSection({
   const handleToggleExpand = (projectName: string) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setExpandedProject((prev) => (prev === projectName ? null : projectName));
-    console.log("toggle ", projectName);
   };
 
-  console.log(section.selected);
+  const isProjectSelected = (id: string) => {
+    return section.selected.includes(id);
+  };
 
   return (
     <View style={{ marginBottom: 24 }}>
@@ -45,21 +46,21 @@ export default function ProjectSection({
         {section.title}
       </Text>
       {section.data.length > 0 ? (
-        section.data.map((cat) => (
+        section.data.map((project) => (
           <ProjectItem
-            key={cat.id}
+            key={project.id}
             onDelete={onDelete}
             onEdit={onEdit}
             onFork={onFork}
             onPublish={() => {
-              console.log("publish ", cat.name);
-              if (onPublish) onPublish(cat);
+              console.log("publish ", project.name);
+              if (onPublish) onPublish(project);
             }}
             projectColor={projectColor}
-            project={cat}
-            selected={section.selected.includes(cat.id)}
-            expanded={expandedProject === cat.name}
-            toggleExpand={() => handleToggleExpand(cat.name)}
+            project={project}
+            selected={isProjectSelected(project.id.toString())}
+            expanded={expandedProject === project.name}
+            toggleExpand={() => handleToggleExpand(project.name)}
             type={section.title}
           />
         ))

@@ -34,26 +34,28 @@ export default function CategoryBrowseScreen() {
   const userId = session?.user?.id;
 
   const { data, updateRecord, loading } = useCollection<Project>("projects");
-  // const {
-  //   data: selected,
-  //   updateRecord: updateSelected,
-  //   loading: loadingSelected,
-  // } = useCollection<ProjectCategoryRelation>("user_project_selection", {
-  //   filterColumn: "user_id",
-  //   filterValue: userId,
-  // });
+  const {
+    data: selected,
+    updateRecord: updateSelected,
+    loading: loadingSelected,
+  } = useCollection<ProjectCategoryRelation>("user_project_selections"); // TODO add filter for user_id and project_type
 
-  const personalCategories = useMemo(
+  const personalProjects = useMemo(
     () => data.filter((item) => item.owner_id === userId),
     [data, userId],
   );
 
-  const officialCategories = useMemo(
+  const officialProjects = useMemo(
     () => data.filter((item) => item.source === "official"),
     [data],
   );
 
-  const communityCategories = useMemo(
+  const getSelected = useMemo(() => {
+    if (!selected) return [];
+    return selected.map((sel) => sel.project_id.toString());
+  }, [selected]);
+
+  const communityProjects = useMemo(
     () =>
       data.filter(
         (item) => item.source === "community" && item.owner_id !== userId,
@@ -64,23 +66,25 @@ export default function CategoryBrowseScreen() {
   const sections: ProjectSectionData[] = [
     {
       title: t("screen:project_browse.personal_section"),
-      data: personalCategories,
-      selected: [],
+      data: personalProjects,
+      selected: getSelected, // This should be an array of selected project IDs as strings
     },
     {
       title: t("screen:project_browse.official_section"),
-      data: officialCategories,
-      selected: ["27cd043b-e1ea-40d8-9e77-2ddf77853f8a"],
+      data: officialProjects,
+      selected: getSelected, // This should be an array of selected project IDs as strings
       // selected
       //   .filter((source) => source.source === "official")
       //   .map((project) => project.id.toString()),
     },
     {
       title: t("screen:project_browse.community_section"),
-      data: communityCategories,
-      selected: [],
+      data: communityProjects,
+      selected: getSelected,
     },
   ];
+
+  console.log("sections", sections);
 
   return (
     <View style={globalStyles.screenContainer}>
