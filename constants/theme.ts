@@ -90,6 +90,14 @@ export const ProjectsColors = {
 } as const;
 
 export type ProjectKey = keyof typeof ProjectsColors.light;
+export type ProjectLabel = ProjectKey | string;
+export type ProjectColorValue = string;
+interface GetProjectColorParams {
+  label?: ProjectLabel;
+  color?: ProjectColorValue;
+  opacity?: number;
+  theme?: AppTheme;
+}
 
 const projectKeyMap: Record<string, ProjectKey> = {
   book: "book",
@@ -106,11 +114,12 @@ const projectKeyMap: Record<string, ProjectKey> = {
   videogame: "videogame",
 };
 
-export const getProjectColor = (
-  label: string,
-  opacity: number = 1,
-  theme: AppTheme = "light",
-): string => {
+export const getProjectColor = ({
+  label,
+  color,
+  opacity = 1,
+  theme = "light",
+}: GetProjectColorParams = {}): string => {
   const map: Record<string, ProjectKey> = {
     Book: "book",
     Music: "music",
@@ -122,11 +131,15 @@ export const getProjectColor = (
     "Video Game": "videogame",
   };
 
-  const normalizedLabel = label.trim().toLowerCase();
-  const key = map[label] || projectKeyMap[normalizedLabel] || "book";
-  const baseColor = ProjectsColors[theme][key];
-
-  return baseColor.replace(/[\d.]+\)$/g, `${opacity})`);
+  if (label) {
+    const normalizedLabel = label.trim().toLowerCase();
+    const key = map[label] || projectKeyMap[normalizedLabel] || "book";
+    const baseColor = ProjectsColors[theme][key];
+    return baseColor.replace(/[\d.]+\)$/g, `${opacity})`);
+  } else if (color) {
+    return color.replace(/[\d.]+\)$/g, `${opacity})`);
+  }
+  return Colors.grey.replace(/[\d.]+\)$/g, `${opacity})`);
 };
 
 export const Colors = {

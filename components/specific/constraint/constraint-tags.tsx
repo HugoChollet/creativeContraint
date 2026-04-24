@@ -20,7 +20,7 @@ const typeMapping: Record<string, string> = {
 export function ConstraintsTags({ item }: { item: SavedConstraintSet }) {
   const { i18n } = useTranslation();
   const { globalStyles, colors, theme } = useStyles();
-  const solidColor = getProjectColor(item.project_type, 1, theme);
+  const solidColor = getProjectColor({ label: item.project_type, theme });
 
   const typeKey = typeMapping[item.project_type.toLowerCase()] || "book";
 
@@ -41,7 +41,11 @@ export function ConstraintsTags({ item }: { item: SavedConstraintSet }) {
         {
           borderRadius: 0,
           overflow: "hidden",
-          backgroundColor: getProjectColor(item.project_type, 0.1, theme),
+          backgroundColor: getProjectColor({
+            label: item.project_type,
+            opacity: 0.1,
+            theme,
+          }),
         },
       ]}
     >

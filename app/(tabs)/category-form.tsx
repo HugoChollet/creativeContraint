@@ -44,8 +44,12 @@ export default function CategoryFormScreen() {
 
   const [options, setOptions] = useState<Option[]>([]);
 
-  const projectColor = getProjectColor(projectLabel, 1, theme);
-  const projectColorSoft = getProjectColor(projectLabel, 0.2, theme);
+  const projectColor = getProjectColor({ label: projectLabel, theme });
+  const projectColorSoft = getProjectColor({
+    label: projectLabel,
+    opacity: 0.2,
+    theme,
+  });
 
   const handleSubmit = async () => {
     if (!isFormValid || isSaving) return;

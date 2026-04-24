@@ -61,7 +61,10 @@ export default function LabScreen() {
     return data as ProjectJSON;
   }, [i18nInstance.language, typeKey]);
 
-  const projectColor = getProjectColor(dataSource.project_type, 1, theme);
+  const projectColor = getProjectColor({
+    label: dataSource.project_type,
+    theme,
+  });
 
   // Helper to build initial state where everything is ON
   const getInitialState = (): SelectedState => {

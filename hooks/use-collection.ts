@@ -9,7 +9,7 @@ interface UseCollectionOptions {
   filterValue?: FilterValue;
 }
 
-export function useCollection<T>(
+export function useCollection<T extends { id: string | number }>(
   tableName: string,
   options?: UseCollectionOptions,
 ) {

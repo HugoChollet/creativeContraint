@@ -1,4 +1,5 @@
 import { AddButton } from "@/components/generic/add-button";
+import ColorPicker from "@/components/generic/color-picker";
 import Description from "@/components/generic/description";
 import { Header } from "@/components/generic/header";
 import { Spacer } from "@/components/generic/spacer";
@@ -44,8 +45,12 @@ export default function ProjectFormScreen() {
 
   const [categories, setCategories] = useState<Category[]>([]);
 
-  const projectColor = colors.tint;
-  const projectColorSoft = getProjectColor("book", 0.2, theme);
+  const [projectHexColor, setProjectHexColor] = useState("#ffff");
+  const projectColorSoft = getProjectColor({
+    color: projectHexColor,
+    opacity: 0.2,
+    theme,
+  });
 
   const handleSubmit = async () => {
     if (!isFormValid || isSaving) return;
@@ -77,7 +82,7 @@ export default function ProjectFormScreen() {
     <>
       <Header
         title={t("screen:project_form.title", { type: projectLabel })}
-        color={projectColor}
+        color={projectHexColor}
       />
       <View style={globalStyles.screenContainer}>
         <KeyboardAvoidingView
@@ -92,18 +97,37 @@ export default function ProjectFormScreen() {
             }
             contentContainerStyle={{ paddingVertical: 20, paddingBottom: 120 }}
           >
-            <View style={{ marginBottom: 20 }}>
-              <Text style={globalStyles.label}>
-                {t("screen:project_form.name_label") + " *"}
-              </Text>
-              <TextInput
-                style={[globalStyles.input, { borderColor: projectColorSoft }]}
-                placeholder={t("screen:project_form.name_placeholder")}
-                placeholderTextColor={colors.placeholder}
-                value={name}
-                onChangeText={setName}
-                editable={!isLoading}
-              />
+            <View
+              style={{
+                marginBottom: 20,
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <View>
+                <Text style={globalStyles.label}>
+                  {t("screen:project_form.name_label") + " *"}
+                </Text>
+                <TextInput
+                  style={[
+                    globalStyles.input,
+                    { borderColor: projectColorSoft },
+                  ]}
+                  placeholder={t("screen:project_form.name_placeholder")}
+                  placeholderTextColor={colors.placeholder}
+                  value={name}
+                  onChangeText={setName}
+                  editable={!isLoading}
+                />
+              </View>
+
+              <View style={{ marginTop: 24 }}>
+                <ColorPicker
+                  defaultValue={projectHexColor}
+                  setColor={setProjectHexColor}
+                  toggleOpen={() => {}}
+                />
+              </View>
             </View>
 
             <View style={{ marginBottom: 20 }}>
@@ -114,7 +138,7 @@ export default function ProjectFormScreen() {
                 description={description}
                 setDescription={setDescription}
                 placeholder={t("screen:project_form.description_placeholder")}
-                projectColor={projectColor}
+                projectColor={projectHexColor}
                 isLoading={isLoading}
               />
             </View>
@@ -125,7 +149,7 @@ export default function ProjectFormScreen() {
               })}
             </Text>
             <AddButton
-              projectColor={projectColor}
+              projectColor={projectHexColor}
               label={t("screen:lab.add-button.label-category")}
               onClick={() =>
                 router.push({
@@ -144,7 +168,7 @@ export default function ProjectFormScreen() {
                         category={category}
                         isExpanded={false}
                         onExpand={() => () => {}}
-                        color={projectColor}
+                        color={projectHexColor}
                         isEnabled={true}
                         subtitle={
                           category.options
@@ -172,7 +196,7 @@ export default function ProjectFormScreen() {
             style={[
               globalStyles.secondaryButton,
               {
-                backgroundColor: isFormValid ? projectColor : colors.disable,
+                backgroundColor: isFormValid ? projectHexColor : colors.disable,
               },
             ]}
             onPress={() => handleSubmit()}

@@ -30,7 +30,7 @@ export default function CategoryBrowseScreen() {
   const { t } = useTranslation();
   const headerHeight = useHeaderHeight();
 
-  const projectColor = getProjectColor(projectLabel, 1, theme);
+  const projectColor = getProjectColor({ label: projectLabel, theme });
   const userId = session?.user?.id;
 
   const { data, updateRecord, loading } = useCollection<Project>("projects");

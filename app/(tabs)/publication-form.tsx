@@ -40,8 +40,12 @@ export default function PublicationFormScreen() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const projectColor = getProjectColor(projectLabel, 1, theme);
-  const projectColorSoft = getProjectColor(projectLabel, 0.2, theme);
+  const projectColor = getProjectColor({ label: projectLabel, theme });
+  const projectColorSoft = getProjectColor({
+    label: projectLabel,
+    opacity: 0.2,
+    theme,
+  });
 
   const isFormValid = title.length > 2 && media.isValid && !isLoading;
 
