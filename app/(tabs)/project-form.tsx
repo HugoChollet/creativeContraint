@@ -9,7 +9,7 @@ import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
-import { Project } from "@/types/projects";
+import { Project, ProjectCategoryRelation } from "@/types/projects";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -37,6 +37,12 @@ export default function ProjectFormScreen() {
 
   const headerHeight = useHeaderHeight();
   const { addRecord, loading: isSaving } = useCollection<Project>("projects");
+  const {
+    fetchCollection: fetchProjectCategoryRelations,
+    addRecords: addProjectCategoryRelations,
+    deleteRecords: deleteProjectCategoryRelations,
+  } = useCollection<ProjectCategoryRelation>("project_category_relations");
+
   const router = useRouter();
   const {
     name,
@@ -59,6 +65,48 @@ export default function ProjectFormScreen() {
     a.name.localeCompare(b.name),
   );
 
+  const syncProjectCategories = async (
+    projectId: string,
+    categoryIds: string[],
+  ) => {
+    const existingRelations = await fetchProjectCategoryRelations({
+      filterColumn: "project_id",
+      filterValue: projectId,
+    });
+
+    const existingCategoryIds = new Set(
+      (existingRelations ?? []).map((relation) => relation.category_id),
+    );
+    const nextCategoryIds = new Set(categoryIds);
+
+    const relationIdsToDelete = (existingRelations ?? [])
+      .filter((relation) => !nextCategoryIds.has(relation.category_id))
+      .map((relation) => relation.id);
+
+    if (relationIdsToDelete.length > 0) {
+      const didDelete =
+        await deleteProjectCategoryRelations(relationIdsToDelete);
+      if (!didDelete) throw new Error("Failed to delete project relations");
+    }
+
+    const relationsToInsert = categoryIds
+      .filter((categoryId) => !existingCategoryIds.has(categoryId))
+      .map((categoryId) => ({
+        project_id: projectId,
+        category_id: categoryId,
+      }));
+
+    if (relationsToInsert.length > 0) {
+      console.log(relationsToInsert);
+
+      const insertedRelations =
+        await addProjectCategoryRelations(relationsToInsert);
+      if (insertedRelations.length !== relationsToInsert.length) {
+        throw new Error("Failed to insert project relations");
+      }
+    }
+  };
+
   const handleSubmit = async () => {
     if (!isFormValid || isSaving) return;
 
@@ -73,6 +121,16 @@ export default function ProjectFormScreen() {
     const result = await addRecord(newProject);
 
     if (result) {
+      try {
+        await syncProjectCategories(
+          result.id,
+          selectedCategories.map((category) => category.id),
+        );
+      } catch (error) {
+        console.error("Failed to sync project categories", error);
+        return;
+      }
+
       resetProjectDraft();
       // Success! Go back to the previous screen
       console.log("success");
