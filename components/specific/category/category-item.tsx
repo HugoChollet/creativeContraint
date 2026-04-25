@@ -1,7 +1,6 @@
 import { OptionItem } from "@/components/generic/option-item";
 import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FlatList, View } from "react-native";
 import Crud, { Action, CrudActionItem } from "../../generic/crud";
@@ -15,6 +14,7 @@ interface CategoryItemProps {
   projectColor: string;
   category: Category;
   selected: boolean;
+  onToggleCategory: (category: Category) => void;
   expanded: boolean;
   toggleExpand: () => void;
   type: string;
@@ -27,6 +27,7 @@ export default function CategoryItem({
   onPublish,
   projectColor,
   selected,
+  onToggleCategory,
   category,
   expanded,
   toggleExpand,
@@ -34,7 +35,6 @@ export default function CategoryItem({
 }: CategoryItemProps) {
   const { globalStyles } = useStyles();
   const { t } = useTranslation();
-  const [isEnabled, setIsEnabled] = useState(selected);
   const isPersonalCategory =
     type === t("screen:category_browse.personal_section");
   const isCommunity = type === t("screen:category_browse.community_section");
@@ -72,11 +72,11 @@ export default function CategoryItem({
       <View style={[globalStyles.card, { width: 300 }]}>
         <CategoryHeader
           category={category}
-          onToggleCategory={() => setIsEnabled(!isEnabled)}
+          onToggleCategory={() => onToggleCategory(category)}
           isExpanded={expanded}
           onExpand={() => toggleExpand()}
           color={projectColor}
-          isEnabled={isEnabled}
+          isEnabled={selected}
           subtitle={
             category.options
               ? t("component:category_item.possibilities", {

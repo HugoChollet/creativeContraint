@@ -5,6 +5,7 @@ import { Header } from "@/components/generic/header";
 import { Spacer } from "@/components/generic/spacer";
 import CategoryHeader from "@/components/specific/category/category-header";
 import { getProjectColor } from "@/constants/theme";
+import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
@@ -37,20 +38,26 @@ export default function ProjectFormScreen() {
   const headerHeight = useHeaderHeight();
   const { addRecord, loading: isSaving } = useCollection<Project>("projects");
   const router = useRouter();
-
-  const [name, setName] = useState("New");
-  const [description, setDescription] = useState("");
+  const {
+    name,
+    setName,
+    description,
+    setDescription,
+    projectColor,
+    setProjectColor,
+    selectedCategories,
+    resetProjectDraft,
+  } = useProjectDraft();
 
   const [isLoading] = useState(false);
-
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  const [projectHexColor, setProjectHexColor] = useState("#ffff");
   const projectColorSoft = getProjectColor({
-    color: projectHexColor,
+    color: projectColor,
     opacity: 0.2,
     theme,
   });
+  const sortedCategories = [...selectedCategories].sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
 
   const handleSubmit = async () => {
     if (!isFormValid || isSaving) return;
@@ -60,11 +67,13 @@ export default function ProjectFormScreen() {
       description,
       is_public: false, // Defaulting to private for now
       favorited_counter: 0,
+      color: projectColor,
     };
 
     const result = await addRecord(newProject);
 
     if (result) {
+      resetProjectDraft();
       // Success! Go back to the previous screen
       console.log("success");
     } else {
@@ -82,7 +91,7 @@ export default function ProjectFormScreen() {
     <>
       <Header
         title={t("screen:project_form.title", { type: projectLabel })}
-        color={projectHexColor}
+        color={projectColor}
       />
       <View style={globalStyles.screenContainer}>
         <KeyboardAvoidingView
@@ -123,8 +132,8 @@ export default function ProjectFormScreen() {
 
               <View style={{ marginTop: 24 }}>
                 <ColorPicker
-                  defaultValue={projectHexColor}
-                  setColor={setProjectHexColor}
+                  defaultValue={projectColor}
+                  setColor={setProjectColor}
                   toggleOpen={() => {}}
                 />
               </View>
@@ -138,7 +147,7 @@ export default function ProjectFormScreen() {
                 description={description}
                 setDescription={setDescription}
                 placeholder={t("screen:project_form.description_placeholder")}
-                projectColor={projectHexColor}
+                projectColor={projectColor}
                 isLoading={isLoading}
               />
             </View>
@@ -149,44 +158,46 @@ export default function ProjectFormScreen() {
               })}
             </Text>
             <AddButton
-              projectColor={projectHexColor}
+              projectColor={projectColor}
               label={t("screen:lab.add-button.label-category")}
               onClick={() =>
                 router.push({
                   pathname: "/category-browse",
-                  params: { type: "new" },
+                  params: {
+                    type: "new",
+                    selectionMode: "project-form",
+                  },
                 })
               }
             />
             <View>
-              {categories
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map((category: Category) => {
-                  return (
-                    <View key={category.id}>
-                      <CategoryHeader
-                        category={category}
-                        isExpanded={false}
-                        onExpand={() => () => {}}
-                        color={projectHexColor}
-                        isEnabled={true}
-                        subtitle={
-                          category.options
-                            ? t("component:category_item.possibilities", {
-                                count: category.options.length,
-                              })
-                            : undefined
-                        }
-                      />
-                      {category.id !== categories[categories.length - 1].id && (
-                        <>
-                          <Spacer divider={true} color={projectColorSoft} />
-                          <Spacer height={8} />
-                        </>
-                      )}
-                    </View>
-                  );
-                })}
+              {sortedCategories.map((category: Category) => {
+                return (
+                  <View key={category.id}>
+                    <CategoryHeader
+                      category={category}
+                      isExpanded={false}
+                      onExpand={() => () => {}}
+                      color={projectColor}
+                      isEnabled={true}
+                      subtitle={
+                        category.options
+                          ? t("component:category_item.possibilities", {
+                              count: category.options.length,
+                            })
+                          : undefined
+                      }
+                    />
+                    {category.id !==
+                      sortedCategories[sortedCategories.length - 1].id && (
+                      <>
+                        <Spacer divider={true} color={projectColorSoft} />
+                        <Spacer height={8} />
+                      </>
+                    )}
+                  </View>
+                );
+              })}
             </View>
           </ScrollView>
         </KeyboardAvoidingView>
@@ -196,7 +207,7 @@ export default function ProjectFormScreen() {
             style={[
               globalStyles.secondaryButton,
               {
-                backgroundColor: isFormValid ? projectHexColor : colors.disable,
+                backgroundColor: isFormValid ? projectColor : colors.disable,
               },
             ]}
             onPress={() => handleSubmit()}

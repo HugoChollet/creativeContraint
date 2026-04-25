@@ -10,6 +10,7 @@ interface CategorySectionProps {
   onEdit?: () => void;
   onFork?: () => void;
   onPublish?: (cat: Category) => void;
+  onToggleCategory: (category: Category) => void;
   projectColor: string;
   section: CategorySectionData;
 }
@@ -19,6 +20,7 @@ export default function CategorySection({
   onEdit,
   onFork,
   onPublish,
+  onToggleCategory,
   projectColor,
   section,
 }: CategorySectionProps) {
@@ -33,8 +35,6 @@ export default function CategorySection({
     );
     console.log("toggle ", categoryName);
   };
-
-  console.log(section.selected);
 
   return (
     <View style={{ marginBottom: 24 }}>
@@ -60,6 +60,7 @@ export default function CategorySection({
             projectColor={projectColor}
             category={cat}
             selected={section.selected.includes(cat.id)}
+            onToggleCategory={onToggleCategory}
             expanded={expandedCategory === cat.name}
             toggleExpand={() => handleToggleExpand(cat.name)}
             type={section.title}

@@ -4,6 +4,7 @@ import { Header } from "@/components/generic/header";
 import ProjectSection from "@/components/specific/project/project-section";
 import { getProjectColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
+import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { Project, ProjectSectionData } from "@/types/projects";
@@ -29,16 +30,15 @@ export default function CategoryBrowseScreen() {
   const { session } = useAuth();
   const { t } = useTranslation();
   const headerHeight = useHeaderHeight();
+  const { resetProjectDraft } = useProjectDraft();
 
   const projectColor = getProjectColor({ label: projectLabel, theme });
   const userId = session?.user?.id;
 
   const { data, updateRecord, loading } = useCollection<Project>("projects");
-  const {
-    data: selected,
-    updateRecord: updateSelected,
-    loading: loadingSelected,
-  } = useCollection<ProjectCategoryRelation>("user_project_selections"); // TODO add filter for user_id and project_type
+  const { data: selected } = useCollection<ProjectCategoryRelation>(
+    "user_project_selections",
+  ); // TODO add filter for user_id and project_type
 
   const personalProjects = useMemo(
     () => data.filter((item) => item.owner_id === userId),
@@ -120,16 +120,17 @@ export default function CategoryBrowseScreen() {
           }}
         />
       )}
-      <AddButton
-        projectColor={projectColor}
-        label={t("screen:project_browse.add_button")}
-        onClick={() =>
-          router.push({
-            pathname: "/project-form",
-            params: { id: 1, type: projectLabel },
-          })
-        }
-      />
+        <AddButton
+          projectColor={projectColor}
+          label={t("screen:project_browse.add_button")}
+          onClick={() => {
+            resetProjectDraft();
+            router.push({
+              pathname: "/project-form",
+              params: { id: 1, type: projectLabel },
+            });
+          }}
+        />
       <View style={{ paddingTop: 12, paddingBottom: 20 }}>
         <ConfirmButton
           projectColor={projectColor}

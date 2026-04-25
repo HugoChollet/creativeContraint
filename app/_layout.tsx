@@ -1,4 +1,5 @@
 import { AuthProvider } from "@/contexts/auth-context";
+import { ProjectDraftProvider } from "@/contexts/project-draft-context";
 import { ThemeProvider } from "@/contexts/theme-context";
 import { useStyles } from "@/hooks/use-styles";
 import { Stack } from "expo-router";
@@ -35,9 +36,11 @@ export default function RootLayout() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <SafeAreaProvider>
-          <AppLayout />
-        </SafeAreaProvider>
+        <ProjectDraftProvider>
+          <SafeAreaProvider>
+            <AppLayout />
+          </SafeAreaProvider>
+        </ProjectDraftProvider>
       </AuthProvider>
     </ThemeProvider>
   );

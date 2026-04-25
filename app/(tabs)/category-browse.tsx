@@ -2,8 +2,8 @@ import { AddButton } from "@/components/generic/add-button";
 import { ConfirmButton } from "@/components/generic/confirm-button";
 import { Header } from "@/components/generic/header";
 import CategorySection from "@/components/specific/category/category-section";
-import { getProjectColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
+import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { Category, CategorySectionData } from "@/types/category";
@@ -14,16 +14,23 @@ import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, View } from "react-native";
 
 export default function CategoryBrowseScreen() {
-  const { type: projectLabel } = useLocalSearchParams<{
+  const { type: projectLabel, selectionMode } = useLocalSearchParams<{
     type: string;
+    selectionMode?: string;
   }>();
-  const { globalStyles, theme } = useStyles();
+  const { globalStyles } = useStyles();
   const { session } = useAuth();
   const { t } = useTranslation();
   const headerHeight = useHeaderHeight();
 
-  const projectColor = getProjectColor({ label: projectLabel, theme });
   const userId = session?.user?.id;
+  const isProjectFormSelection = selectionMode === "project-form";
+  const { selectedCategories, toggleSelectedCategory, projectColor } =
+    useProjectDraft();
+  const activeSelectedCategories = useMemo(
+    () => (isProjectFormSelection ? selectedCategories : []),
+    [isProjectFormSelection, selectedCategories],
+  );
 
   const { data, updateRecord, loading } = useCollection<Category>(
     "categories",
@@ -31,6 +38,11 @@ export default function CategoryBrowseScreen() {
       filterColumn: "project_type_id",
       filterValue: projectLabel === "new" ? undefined : projectLabel,
     },
+  );
+
+  const selectedCategoryIds = useMemo(
+    () => activeSelectedCategories.map((category) => category.id),
+    [activeSelectedCategories],
   );
 
   const personalCategories = useMemo(
@@ -55,17 +67,17 @@ export default function CategoryBrowseScreen() {
     {
       title: t("screen:category_browse.personal_section"),
       data: personalCategories,
-      selected: [],
+      selected: selectedCategoryIds,
     },
     {
       title: t("screen:category_browse.official_section"),
       data: officialCategories,
-      selected: ["27cd043b-e1ea-40d8-9e77-2ddf77853f8a"],
+      selected: selectedCategoryIds,
     },
     {
       title: t("screen:category_browse.community_section"),
       data: communityCategories,
-      selected: [],
+      selected: selectedCategoryIds,
     },
   ];
 
@@ -92,6 +104,9 @@ export default function CategoryBrowseScreen() {
               onDelete={() => {}}
               onEdit={() => {}}
               onFork={() => {}}
+              onToggleCategory={
+                isProjectFormSelection ? toggleSelectedCategory : () => {}
+              }
               onPublish={(cat) => {
                 console.log("publish ", cat);
                 updateRecord(cat.id, { is_public: cat.is_public });
@@ -120,9 +135,19 @@ export default function CategoryBrowseScreen() {
           projectColor={projectColor}
           label={t("screen:category_browse.confirm_button")}
           onClick={() => {
+            console.log("confirm selection", isProjectFormSelection);
+
+            if (isProjectFormSelection) {
+              router.navigate({
+                pathname: "/project-form",
+                params: { type: projectLabel },
+              });
+              return;
+            }
+
             console.log("validate category with name: ", projectLabel);
           }}
-          isActive={sections.some((section) => section.selected.length > 0)}
+          isActive={activeSelectedCategories.length > 0}
         />
       </View>
     </View>
