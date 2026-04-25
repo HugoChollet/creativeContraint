@@ -22,3 +22,10 @@ export interface ProjectSectionData {
   data: Project[];
   selected: string[];
 }
+
+export interface ProjectCategoryRelation {
+  id: string;
+  project_id: string;
+  category_id: string;
+  owner_id: string;
+}

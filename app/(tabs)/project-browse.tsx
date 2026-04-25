@@ -6,14 +6,18 @@ import { useAuth } from "@/contexts/auth-context";
 import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
-import { Project, ProjectSectionData } from "@/types/projects";
+import {
+  Project,
+  ProjectCategoryRelation,
+  ProjectSectionData,
+} from "@/types/projects";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, View } from "react-native";
 
-interface ProjectCategoryRelation {
+interface UserProjectSelection {
   id: number;
   user_id: string;
   project_id: number;
@@ -21,7 +25,7 @@ interface ProjectCategoryRelation {
   categories: string[];
 }
 
-export default function CategoryBrowseScreen() {
+export default function ProjectBrowseScreen() {
   const { type: projectLabel } = useLocalSearchParams<{
     type: string;
   }>();
@@ -34,9 +38,13 @@ export default function CategoryBrowseScreen() {
   const userId = session?.user?.id;
 
   const { data, updateRecord, loading } = useCollection<Project>("projects");
-  const { data: selected } = useCollection<ProjectCategoryRelation>(
+  const { data: selected } = useCollection<UserProjectSelection>(
     "user_project_selections",
-  ); // TODO add filter for user_id and project_type
+  );
+  const { data: relations } = useCollection<ProjectCategoryRelation>(
+    "project_category_relations",
+  );
+  console.log(relations);
 
   const personalProjects = useMemo(
     () => data.filter((item) => item.owner_id === userId),
@@ -65,15 +73,12 @@ export default function CategoryBrowseScreen() {
     {
       title: t("screen:project_browse.personal_section"),
       data: personalProjects,
-      selected: getSelected, // This should be an array of selected project IDs as strings
+      selected: getSelected,
     },
     {
       title: t("screen:project_browse.official_section"),
       data: officialProjects,
-      selected: getSelected, // This should be an array of selected project IDs as strings
-      // selected
-      //   .filter((source) => source.source === "official")
-      //   .map((project) => project.id.toString()),
+      selected: getSelected,
     },
     {
       title: t("screen:project_browse.community_section"),
@@ -81,8 +86,6 @@ export default function CategoryBrowseScreen() {
       selected: getSelected,
     },
   ];
-
-  console.log("sections", sections);
 
   return (
     <View style={globalStyles.screenContainer}>
@@ -106,8 +109,8 @@ export default function CategoryBrowseScreen() {
               onDelete={() => {}}
               onEdit={() => {}}
               onFork={() => {}}
-              onPublish={(cat) => {
-                updateRecord(cat.id, { is_public: cat.is_public });
+              onPublish={(project) => {
+                updateRecord(project.id, { is_public: project.is_public });
               }}
             />
           )}
