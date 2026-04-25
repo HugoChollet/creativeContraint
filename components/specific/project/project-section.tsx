@@ -6,7 +6,7 @@ import { LayoutAnimation, Text, View } from "react-native";
 import ProjectItem from "./project-item";
 
 interface ProjectSectionProps {
-  onDelete?: () => void;
+  onDelete?: (id: string) => void;
   onEdit?: () => void;
   onFork?: () => void;
   onPublish?: (cat: Project) => void;
@@ -47,7 +47,9 @@ export default function ProjectSection({
         section.data.map((project) => (
           <ProjectItem
             key={project.id}
-            onDelete={onDelete}
+            onDelete={() => {
+              if (onDelete) onDelete(project.id);
+            }}
             onEdit={onEdit}
             onFork={onFork}
             onPublish={() => {

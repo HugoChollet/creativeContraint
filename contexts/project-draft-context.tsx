@@ -1,6 +1,14 @@
 import { Category } from "@/types/category";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 
+export function getRandomColor() {
+  const randomChannel = () => Math.floor(Math.random() * 256);
+
+  return `#${[randomChannel(), randomChannel(), randomChannel()]
+    .map((value) => value.toString(16).padStart(2, "0"))
+    .join("")}`;
+}
+
 interface ProjectDraftContextType {
   name: string;
   setName: (name: string) => void;
@@ -21,7 +29,7 @@ const ProjectDraftContext = createContext<ProjectDraftContextType | undefined>(
 export function ProjectDraftProvider({ children }: { children: ReactNode }) {
   const [name, setName] = useState("New");
   const [description, setDescription] = useState("");
-  const [projectColor, setProjectColor] = useState("#ffff");
+  const [projectColor, setProjectColor] = useState(getRandomColor);
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
 
   const toggleSelectedCategory = (category: Category) => {
@@ -39,7 +47,7 @@ export function ProjectDraftProvider({ children }: { children: ReactNode }) {
   const resetProjectDraft = () => {
     setName("New");
     setDescription("");
-    setProjectColor("#ffff");
+    setProjectColor(getRandomColor());
     setSelectedCategories([]);
   };
 

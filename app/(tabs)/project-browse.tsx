@@ -37,7 +37,12 @@ export default function ProjectBrowseScreen() {
 
   const userId = session?.user?.id;
 
-  const { data, updateRecord, loading } = useCollection<Project>("projects");
+  const {
+    data,
+    updateRecord,
+    loading,
+    deleteRecord: deleteProject,
+  } = useCollection<Project>("projects");
   const { data: selected } = useCollection<UserProjectSelection>(
     "user_project_selections",
   );
@@ -106,7 +111,9 @@ export default function ProjectBrowseScreen() {
             <ProjectSection
               key={section.title}
               section={section}
-              onDelete={() => {}}
+              onDelete={(id) => {
+                deleteProject(id);
+              }}
               onEdit={() => {}}
               onFork={() => {}}
               onPublish={(project) => {
