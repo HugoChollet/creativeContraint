@@ -10,7 +10,6 @@ interface ProjectSectionProps {
   onEdit?: () => void;
   onFork?: () => void;
   onPublish?: (cat: Project) => void;
-  projectColor: string;
   section: ProjectSectionData;
 }
 
@@ -19,7 +18,6 @@ export default function ProjectSection({
   onEdit,
   onFork,
   onPublish,
-  projectColor,
   section,
 }: ProjectSectionProps) {
   const { globalStyles, colors } = useStyles();
@@ -53,10 +51,9 @@ export default function ProjectSection({
             onEdit={onEdit}
             onFork={onFork}
             onPublish={() => {
-              console.log("publish ", project.name);
               if (onPublish) onPublish(project);
             }}
-            projectColor={projectColor}
+            projectColor={project.color ?? colors.tint}
             project={project}
             selected={isProjectSelected(project.id.toString())}
             expanded={expandedProject === project.name}

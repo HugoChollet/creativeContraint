@@ -14,6 +14,7 @@ export interface Project {
   categories: Category[];
   is_public: boolean;
   owner_id: string;
+  color?: string;
 }
 
 export interface ProjectSectionData {

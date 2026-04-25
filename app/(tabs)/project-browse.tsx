@@ -2,7 +2,6 @@ import { AddButton } from "@/components/generic/add-button";
 import { ConfirmButton } from "@/components/generic/confirm-button";
 import { Header } from "@/components/generic/header";
 import ProjectSection from "@/components/specific/project/project-section";
-import { getProjectColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
 import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
@@ -26,13 +25,12 @@ export default function CategoryBrowseScreen() {
   const { type: projectLabel } = useLocalSearchParams<{
     type: string;
   }>();
-  const { globalStyles, theme } = useStyles();
+  const { globalStyles, colors } = useStyles();
   const { session } = useAuth();
   const { t } = useTranslation();
   const headerHeight = useHeaderHeight();
   const { resetProjectDraft } = useProjectDraft();
 
-  const projectColor = getProjectColor({ label: projectLabel, theme });
   const userId = session?.user?.id;
 
   const { data, updateRecord, loading } = useCollection<Project>("projects");
@@ -95,7 +93,7 @@ export default function CategoryBrowseScreen() {
         <View
           style={[globalStyles.screenContainer, { justifyContent: "center" }]}
         >
-          <ActivityIndicator size="large" color={projectColor} />
+          <ActivityIndicator size="large" color={colors.tint} />
         </View>
       ) : (
         <FlatList
@@ -105,12 +103,10 @@ export default function CategoryBrowseScreen() {
             <ProjectSection
               key={section.title}
               section={section}
-              projectColor={projectColor}
               onDelete={() => {}}
               onEdit={() => {}}
               onFork={() => {}}
               onPublish={(cat) => {
-                console.log("publish ", cat);
                 updateRecord(cat.id, { is_public: cat.is_public });
               }}
             />
@@ -120,20 +116,20 @@ export default function CategoryBrowseScreen() {
           }}
         />
       )}
-        <AddButton
-          projectColor={projectColor}
-          label={t("screen:project_browse.add_button")}
-          onClick={() => {
-            resetProjectDraft();
-            router.push({
-              pathname: "/project-form",
-              params: { id: 1, type: projectLabel },
-            });
-          }}
-        />
+      <AddButton
+        projectColor={colors.tint}
+        label={t("screen:project_browse.add_button")}
+        onClick={() => {
+          resetProjectDraft();
+          router.push({
+            pathname: "/project-form",
+            params: { id: 1, type: projectLabel },
+          });
+        }}
+      />
       <View style={{ paddingTop: 12, paddingBottom: 20 }}>
         <ConfirmButton
-          projectColor={projectColor}
+          projectColor={colors.tint}
           label={t("screen:project_browse.confirm_button")}
           onClick={() => {
             console.log("validate project generator with name: ", projectLabel);
