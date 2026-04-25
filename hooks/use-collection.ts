@@ -7,6 +7,8 @@ type FilterValue = string | number | boolean;
 interface UseCollectionOptions {
   filterColumn?: string;
   filterValue?: FilterValue;
+  attachOwnerId?: boolean;
+  enforceOwnerScope?: boolean;
 }
 
 export function useCollection<T extends { id: string | number }>(
@@ -16,64 +18,92 @@ export function useCollection<T extends { id: string | number }>(
   const { session } = useAuth();
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
-  const { filterColumn, filterValue } = options ?? {};
+  const {
+    filterColumn,
+    filterValue,
+    attachOwnerId = true,
+    enforceOwnerScope = true,
+  } = options ?? {};
 
-  const fetchCollection = useCallback(async () => {
-    try {
-      setLoading(true);
-      let query = supabase.from(tableName).select("*");
+  const fetchCollection = useCallback(
+    async (overrideOptions?: UseCollectionOptions) => {
+      const activeFilterColumn =
+        overrideOptions?.filterColumn ?? filterColumn;
+      const activeFilterValue =
+        overrideOptions && "filterValue" in overrideOptions
+          ? overrideOptions.filterValue
+          : filterValue;
 
-      if (filterColumn && filterValue !== undefined) {
-        query = query.eq(filterColumn, filterValue);
+      try {
+        setLoading(true);
+        let query = supabase.from(tableName).select("*");
+
+        if (activeFilterColumn && activeFilterValue !== undefined) {
+          query = query.eq(activeFilterColumn, activeFilterValue);
+        }
+
+        const { data: result, error } = await query.order("created_at", {
+          ascending: false,
+        });
+
+        if (error) throw error;
+
+        const normalizedData = (result || []) as T[];
+        setData(normalizedData);
+        return normalizedData;
+      } catch (error) {
+        console.error(error);
+        return [];
+      } finally {
+        setLoading(false);
       }
+    },
+    [filterColumn, filterValue, tableName],
+  );
 
-      const { data: result, error } = await query.order("created_at", {
-        ascending: false,
-      });
-
-      if (error) throw error;
-      setData(result || []);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }, [session?.user?.id, tableName]);
-
-  const addRecord = async (newRecord: Partial<T>) => {
+  const addRecords = async (newRecords: Partial<T>[]) => {
     try {
       setLoading(true);
+      const payload = newRecords.map((record) =>
+        attachOwnerId ? { ...record, owner_id: session?.user.id } : record,
+      );
       const { data: inserted, error } = await supabase
         .from(tableName)
-        .insert([{ ...newRecord, owner_id: session?.user.id }])
-        .select()
-        .single();
+        .insert(payload)
+        .select();
 
       if (error) throw error;
 
-      setData((prev) => [inserted, ...prev]);
-      return inserted as T;
+      const normalizedInserted = (inserted || []) as T[];
+      setData((prev) => [...normalizedInserted, ...prev]);
+      return normalizedInserted;
     } catch (error) {
       console.error(error);
-      return null;
+      return [];
     } finally {
       setLoading(false);
     }
   };
 
-  const deleteRecord = async (id: string | number) => {
+  const addRecord = async (newRecord: Partial<T>) => {
+    const [inserted] = await addRecords([newRecord]);
+    return inserted ?? null;
+  };
+
+  const deleteRecords = async (ids: (string | number)[]) => {
     try {
       setLoading(true);
+      let query = supabase.from(tableName).delete().in("id", ids);
 
-      const { error } = await supabase
-        .from(tableName)
-        .delete()
-        .eq("id", id)
-        .eq("owner_id", session?.user.id);
+      if (enforceOwnerScope) {
+        query = query.eq("owner_id", session?.user.id);
+      }
+
+      const { error } = await query;
 
       if (error) throw error;
 
-      setData((prev) => prev.filter((item) => item.id !== id));
+      setData((prev) => prev.filter((item) => !ids.includes(item.id)));
 
       return true;
     } catch (error) {
@@ -82,6 +112,10 @@ export function useCollection<T extends { id: string | number }>(
     } finally {
       setLoading(false);
     }
+  };
+
+  const deleteRecord = async (id: string | number) => {
+    return deleteRecords([id]);
   };
 
   const updateRecord = async (id: string | number, updates: Partial<T>) => {
@@ -108,6 +142,41 @@ export function useCollection<T extends { id: string | number }>(
     }
   };
 
+  const updateRecords = async (
+    updates: (Partial<T> & { id: string | number })[],
+  ) => {
+    try {
+      setLoading(true);
+      const { data: updated, error } = await supabase
+        .from(tableName)
+        .upsert(updates)
+        .select();
+
+      if (error) throw error;
+
+      const normalizedUpdated = (updated || []) as T[];
+      setData((prev) => {
+        const updatedMap = new Map(
+          normalizedUpdated.map((item) => [item.id, item]),
+        );
+
+        const merged = prev.map((item) => updatedMap.get(item.id) ?? item);
+        const newItems = normalizedUpdated.filter(
+          (item) => !prev.some((existing) => existing.id === item.id),
+        );
+
+        return [...newItems, ...merged];
+      });
+
+      return normalizedUpdated;
+    } catch (error) {
+      console.error("Bulk update error:", error);
+      return [];
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchCollection();
   }, [fetchCollection]);
@@ -115,9 +184,13 @@ export function useCollection<T extends { id: string | number }>(
   return {
     data,
     loading,
+    fetchCollection,
     addRecord,
+    addRecords,
     deleteRecord,
+    deleteRecords,
     updateRecord,
+    updateRecords,
     refresh: fetchCollection,
   };
 }
