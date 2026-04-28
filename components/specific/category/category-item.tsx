@@ -1,4 +1,4 @@
-import { OptionItem } from "@/components/generic/option-item";
+import { ConstraintItem } from "@/components/specific/constraint/constraint-item";
 import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
 import { useTranslation } from "react-i18next";
@@ -91,7 +91,7 @@ export default function CategoryItem({
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={{ padding: 8 }}>
-                <OptionItem option={item} color={projectColor} />
+                <ConstraintItem option={item} color={projectColor} />
               </View>
             )}
           />

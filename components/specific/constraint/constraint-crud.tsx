@@ -1,5 +1,5 @@
 import Crud, { Action } from "@/components/generic/crud";
-import { OptionItem } from "@/components/generic/option-item";
+import { ConstraintItem } from "@/components/specific/constraint/constraint-item";
 import { useStyles } from "@/hooks/use-styles";
 import { Option } from "@/types/constraints";
 import { View } from "react-native";
@@ -26,7 +26,7 @@ export default function ConstraintCrud({
         { justifyContent: "space-between", padding: 4, alignItems: "center" },
       ]}
     >
-      <OptionItem option={option} color={projectColor} />
+      <ConstraintItem option={option} color={projectColor} />
       <Crud
         actions={[
           { action: Action.EDIT, onPress: onEdit },

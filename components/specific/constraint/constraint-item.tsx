@@ -2,9 +2,9 @@ import { useStyles } from "@/hooks/use-styles";
 import { Option } from "@/types/constraints";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
-import Tooltip from "./tooltip";
+import Tooltip from "../../generic/tooltip";
 
-export function OptionItem({
+export function ConstraintItem({
   option,
   color,
 }: {

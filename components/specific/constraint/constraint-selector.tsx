@@ -1,4 +1,4 @@
-import { OptionItem } from "@/components/generic/option-item";
+import { ConstraintItem } from "@/components/specific/constraint/constraint-item";
 import { useStyles } from "@/hooks/use-styles";
 import { Option } from "@/types/constraints";
 import { Ionicons } from "@expo/vector-icons";
@@ -35,7 +35,7 @@ export function ConstraintSelector({
         size={22}
         color={isSelected ? color : colors.textDiscreet}
       />
-      <OptionItem option={option} color={color} />
+      <ConstraintItem option={option} color={color} />
     </Pressable>
   );
 }
