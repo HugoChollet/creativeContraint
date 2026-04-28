@@ -44,7 +44,9 @@ export default function ProjectBrowseScreen() {
     project_category_relations (
       categories (
         id,
-        name
+        name,
+        description,
+        options
       )
     )
   `,

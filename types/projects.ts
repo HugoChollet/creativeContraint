@@ -1,6 +1,9 @@
 import { Category } from "./category";
 
-export type ProjectCategory = Pick<Category, "id" | "name">;
+export type ProjectCategory = Pick<
+  Category,
+  "id" | "name" | "options" | "description"
+>;
 
 export enum Source {
   Official = "official",

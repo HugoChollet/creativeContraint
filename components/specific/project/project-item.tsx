@@ -101,11 +101,10 @@ export default function ProjectItem({
               <View style={{ padding: 8 }}>
                 <Item
                   title={item.name}
-                  subtitle={t(
-                    "component:project-item.constraints_counter",
-                    item.id,
-                  )}
-                  description={item.name}
+                  subtitle={t("component:project_item.constraints_counter", {
+                    count: item.options.length,
+                  })}
+                  description={item.description}
                   color={projectColor}
                 />
               </View>
