@@ -1,10 +1,10 @@
-import { ConstraintItem } from "@/components/specific/constraint/constraint-item";
 import { useStyles } from "@/hooks/use-styles";
 import { Option } from "@/types/constraints";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet } from "react-native";
+import { Item } from "../../generic/item";
 
 interface OptionProps {
   option: Option;
@@ -35,7 +35,12 @@ export function ConstraintSelector({
         size={22}
         color={isSelected ? color : colors.textDiscreet}
       />
-      <ConstraintItem option={option} color={color} />
+      <Item
+        title={option.value}
+        subtitle={t("component:constraint-selector.difficulty") + option.rarity}
+        description={option.description}
+        color={color}
+      />
     </Pressable>
   );
 }

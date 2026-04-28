@@ -1,17 +1,18 @@
 import { useStyles } from "@/hooks/use-styles";
-import { Option } from "@/types/constraints";
-import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
-import Tooltip from "../../generic/tooltip";
+import Tooltip from "./tooltip";
 
-export function ConstraintItem({
-  option,
+export function Item({
+  title,
+  subtitle,
+  description,
   color,
 }: {
-  option: Option;
+  title: string;
+  subtitle: string;
+  description?: string;
   color?: string;
 }) {
-  const { t } = useTranslation();
   const { colors } = useStyles();
   return (
     <View style={styles.itemContainer}>
@@ -21,7 +22,7 @@ export function ConstraintItem({
             color: colors.text,
           }}
         >
-          {option.value}
+          {title}
         </Text>
         <Text
           style={{
@@ -29,15 +30,11 @@ export function ConstraintItem({
             color: colors.textDiscreet,
           }}
         >
-          {t("component:constraint-selector.difficulty") + option.rarity}
+          {subtitle}
         </Text>
       </View>
-      {option.description && (
-        <Tooltip
-          title={option.value}
-          description={option.description}
-          color={color}
-        />
+      {description && (
+        <Tooltip title={title} description={description} color={color} />
       )}
     </View>
   );
@@ -49,7 +46,5 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   textContainer: { marginLeft: 12 },
-  optionValue: { fontSize: 16, color: "#333" },
-  textDisabled: { color: "#aaa" },
   rarityLabel: { fontSize: 11, marginTop: 2 },
 });

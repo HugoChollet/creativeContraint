@@ -1,4 +1,4 @@
-import { ConstraintItem } from "@/components/specific/constraint/constraint-item";
+import { Item } from "@/components/generic/item";
 import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
 import { useTranslation } from "react-i18next";
@@ -91,7 +91,14 @@ export default function CategoryItem({
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={{ padding: 8 }}>
-                <ConstraintItem option={item} color={projectColor} />
+                <Item
+                  title={item.value}
+                  subtitle={
+                    t("component:constraint-selector.difficulty") + item.rarity
+                  }
+                  description={item.description}
+                  color={projectColor}
+                />
               </View>
             )}
           />
