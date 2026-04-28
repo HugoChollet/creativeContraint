@@ -71,6 +71,7 @@
   "category_browse": {
     "title": "Browse {{type}} Categories",
     "personal_section": "Personal",
+    "published_section": "Published by you",
     "community_section": "Community",
     "official_section": "Official",
     "no_categories": "No categories to display.",
@@ -80,6 +81,7 @@
   "project_browse": {
     "title": "Browse {{type}} Project Generators",
     "personal_section": "Personal",
+    "published_section": "Published by you",
     "community_section": "Community",
     "official_section": "Official",
     "add_button": "Create your own project generator",

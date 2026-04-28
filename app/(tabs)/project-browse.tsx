@@ -67,7 +67,18 @@ export default function ProjectBrowseScreen() {
   );
 
   const personalProjects = useMemo(
-    () => parsedProjects.filter((item) => item.owner_id === userId),
+    () =>
+      parsedProjects.filter(
+        (item) => item.owner_id === userId && item.is_public !== false,
+      ),
+    [parsedProjects, userId],
+  );
+
+  const publishedProjects = useMemo(
+    () =>
+      parsedProjects.filter(
+        (item) => item.owner_id === userId && item.is_public !== false,
+      ),
     [parsedProjects, userId],
   );
 
@@ -93,6 +104,11 @@ export default function ProjectBrowseScreen() {
     {
       title: t("screen:project_browse.personal_section"),
       data: personalProjects,
+      selected: getSelected,
+    },
+    {
+      title: t("screen:project_browse.published_section"),
+      data: publishedProjects,
       selected: getSelected,
     },
     {
@@ -132,7 +148,7 @@ export default function ProjectBrowseScreen() {
               onEdit={() => {}}
               onFork={() => {}}
               onPublish={(project) => {
-                updateRecord(project.id, { is_public: project.is_public });
+                updateRecord(project.id, { is_public: !project.is_public });
               }}
             />
           )}

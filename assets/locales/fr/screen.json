@@ -72,6 +72,7 @@
   "category_browse": {
     "title": "Parcourir les catégories de {{type}}",
     "personal_section": "Personnel",
+    "published_section": "Publié par vous",
     "community_section": "Communauté",
     "official_section": "Officiel",
     "no_categories": "Aucune catégorie à afficher.",
@@ -81,6 +82,7 @@
   "project_browse": {
     "title": "Parcourir les générateurs de projet de {{type}}",
     "personal_section": "Personnel",
+    "published_section": "Publié par vous",
     "community_section": "Communauté",
     "official_section": "Officiel",
     "add_button": "Créer votre propre générateur de projet",
