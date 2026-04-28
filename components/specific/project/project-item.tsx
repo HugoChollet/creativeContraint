@@ -43,7 +43,7 @@ export default function ProjectItem({
     project_label: project.name,
     id: project.id,
     description: project.description,
-    categories: project.categories || [],
+    categories: project.categories,
   });
 
   const actions: CrudActionItem[] = [

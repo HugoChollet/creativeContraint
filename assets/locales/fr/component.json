@@ -53,6 +53,9 @@
     "description_placeholder": "Décrivez votre projet pour inspirer les créateurs",
     "submit_button": "Sauvegarder ce projet"
   },
+  "project_item": {
+    "possibilities": "Possibilités : {{count}}"
+  },
   "constraint_option_form": {
     "name_label": "Nom de la contrainte",
     "name_placeholder": "Nouvelle contrainte",

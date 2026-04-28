@@ -6,7 +6,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
-import { Project, ProjectSectionData } from "@/types/projects";
+import { Project, ProjectRelation, ProjectSectionData } from "@/types/projects";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useMemo } from "react";
@@ -38,7 +38,7 @@ export default function ProjectBrowseScreen() {
     updateRecord,
     loading,
     deleteRecord: deleteProject,
-  } = useCollection<Project>("projects", {
+  } = useCollection<ProjectRelation>("projects", {
     select: `
     *,
     project_category_relations (
@@ -52,16 +52,26 @@ export default function ProjectBrowseScreen() {
   const { data: selected } = useCollection<UserProjectSelection>(
     "user_project_selections",
   );
-  console.log(data);
+
+  const parsedProjects = useMemo<Project[]>(
+    () =>
+      data.map(({ project_category_relations, ...project }) => ({
+        ...project,
+        categories: project_category_relations.flatMap((relation) =>
+          relation.categories ? [relation.categories] : [],
+        ),
+      })),
+    [data],
+  );
 
   const personalProjects = useMemo(
-    () => data.filter((item) => item.owner_id === userId),
-    [data, userId],
+    () => parsedProjects.filter((item) => item.owner_id === userId),
+    [parsedProjects, userId],
   );
 
   const officialProjects = useMemo(
-    () => data.filter((item) => item.source === "official"),
-    [data],
+    () => parsedProjects.filter((item) => item.source === "official"),
+    [parsedProjects],
   );
 
   const getSelected = useMemo(() => {
@@ -71,10 +81,10 @@ export default function ProjectBrowseScreen() {
 
   const communityProjects = useMemo(
     () =>
-      data.filter(
+      parsedProjects.filter(
         (item) => item.source === "community" && item.owner_id !== userId,
       ),
-    [data, userId],
+    [parsedProjects, userId],
   );
 
   const sections: ProjectSectionData[] = [

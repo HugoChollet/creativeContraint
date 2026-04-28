@@ -1,5 +1,7 @@
 import { Category } from "./category";
 
+export type ProjectCategory = Pick<Category, "id" | "name">;
+
 export enum Source {
   Official = "official",
   Community = "community",
@@ -11,7 +13,7 @@ export interface Project {
   name: string;
   description: string;
   source: Source;
-  categories: Category[];
+  categories: ProjectCategory[];
   is_public: boolean;
   owner_id: string;
   color?: string;
@@ -28,4 +30,21 @@ export interface ProjectCategoryRelation {
   project_id: string;
   category_id: string;
   owner_id: string;
+}
+
+export interface ProjectCategoryRelationResult {
+  categories: ProjectCategory | null;
+}
+
+export interface ProjectRelation {
+  id: string;
+  name: string;
+  description: string;
+  source: Source;
+  is_public: boolean;
+  owner_id: string;
+  color?: string;
+  created_at: string;
+  favorited_counter: number;
+  project_category_relations: ProjectCategoryRelationResult[];
 }
