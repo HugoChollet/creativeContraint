@@ -54,7 +54,7 @@
     "submit_button": "Save this project"
   },
   "project_item": {
-    "possibilities": "Possibilities : {{count}}"
+    "categories_counter": "Categories : {{count}}"
   },
   "constraint_option_form": {
     "name_label": "Constraint Name",

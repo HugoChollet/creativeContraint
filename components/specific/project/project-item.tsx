@@ -86,7 +86,7 @@ export default function ProjectItem({
           isEnabled={isEnabled}
           subtitle={
             project.categories
-              ? t("component:project_item.possibilities", {
+              ? t("component:project_item.categories_counter", {
                   count: project.categories.length,
                 })
               : undefined
