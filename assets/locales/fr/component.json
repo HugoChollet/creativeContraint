@@ -54,7 +54,8 @@
     "submit_button": "Sauvegarder ce projet"
   },
   "project_item": {
-    "categories_counter": "Catégories : {{count}}"
+    "categories_counter": "Catégories : {{count}}",
+    "constraints_counter": "Contraintes : {{count}}"
   },
   "constraint_option_form": {
     "name_label": "Nom de la contrainte",

@@ -1,9 +1,10 @@
+import { Item } from "@/components/generic/item";
 import { useStyles } from "@/hooks/use-styles";
 import { ProjectJSON } from "@/types/json-objects";
 import { Project } from "@/types/projects";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, View } from "react-native";
 import Crud, { Action, CrudActionItem } from "../../generic/crud";
 import ProjectHeader from "./project-header";
 
@@ -98,9 +99,15 @@ export default function ProjectItem({
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={{ padding: 8 }}>
-                <Text style={{ color: projectColor, fontWeight: "bold" }}>
-                  {item.name}
-                </Text>
+                <Item
+                  title={item.name}
+                  subtitle={t(
+                    "component:project-item.constraints_counter",
+                    item.id,
+                  )}
+                  description={item.name}
+                  color={projectColor}
+                />
               </View>
             )}
           />
