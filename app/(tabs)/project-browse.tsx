@@ -6,11 +6,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
-import {
-  Project,
-  ProjectCategoryRelation,
-  ProjectSectionData,
-} from "@/types/projects";
+import { Project, ProjectSectionData } from "@/types/projects";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useMemo } from "react";
@@ -42,14 +38,21 @@ export default function ProjectBrowseScreen() {
     updateRecord,
     loading,
     deleteRecord: deleteProject,
-  } = useCollection<Project>("projects");
+  } = useCollection<Project>("projects", {
+    select: `
+    *,
+    project_category_relations (
+      categories (
+        id,
+        name
+      )
+    )
+  `,
+  });
   const { data: selected } = useCollection<UserProjectSelection>(
     "user_project_selections",
   );
-  const { data: relations } = useCollection<ProjectCategoryRelation>(
-    "project_category_relations",
-  );
-  console.log(relations);
+  console.log(data);
 
   const personalProjects = useMemo(
     () => data.filter((item) => item.owner_id === userId),

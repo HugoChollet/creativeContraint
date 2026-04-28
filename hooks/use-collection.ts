@@ -5,8 +5,11 @@ import { useCallback, useEffect, useState } from "react";
 type FilterValue = string | number | boolean;
 
 interface UseCollectionOptions {
+  select?: string;
   filterColumn?: string;
   filterValue?: FilterValue;
+  orderBy?: string;
+  ascending?: boolean;
   attachOwnerId?: boolean;
   enforceOwnerScope?: boolean;
 }
@@ -19,32 +22,48 @@ export function useCollection<T extends { id: string | number }>(
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
   const {
+    select = "*",
     filterColumn,
     filterValue,
+    orderBy = "created_at",
+    ascending = false,
     attachOwnerId = true,
     enforceOwnerScope = true,
   } = options ?? {};
 
   const fetchCollection = useCallback(
     async (overrideOptions?: UseCollectionOptions) => {
+      const activeSelect = overrideOptions?.select ?? select;
       const activeFilterColumn =
         overrideOptions?.filterColumn ?? filterColumn;
       const activeFilterValue =
         overrideOptions && "filterValue" in overrideOptions
           ? overrideOptions.filterValue
           : filterValue;
+      const activeOrderBy =
+        overrideOptions && "orderBy" in overrideOptions
+          ? overrideOptions.orderBy
+          : orderBy;
+      const activeAscending =
+        overrideOptions && "ascending" in overrideOptions
+          ? overrideOptions.ascending ?? false
+          : ascending;
 
       try {
         setLoading(true);
-        let query = supabase.from(tableName).select("*");
+        let query = supabase.from(tableName).select(activeSelect);
 
         if (activeFilterColumn && activeFilterValue !== undefined) {
           query = query.eq(activeFilterColumn, activeFilterValue);
         }
 
-        const { data: result, error } = await query.order("created_at", {
-          ascending: false,
-        });
+        if (activeOrderBy) {
+          query = query.order(activeOrderBy, {
+            ascending: activeAscending,
+          });
+        }
+
+        const { data: result, error } = await query;
 
         if (error) throw error;
 
@@ -58,7 +77,7 @@ export function useCollection<T extends { id: string | number }>(
         setLoading(false);
       }
     },
-    [filterColumn, filterValue, tableName],
+    [ascending, filterColumn, filterValue, orderBy, select, tableName],
   );
 
   const addRecords = async (newRecords: Partial<T>[]) => {
@@ -70,7 +89,7 @@ export function useCollection<T extends { id: string | number }>(
       const { data: inserted, error } = await supabase
         .from(tableName)
         .insert(payload)
-        .select();
+        .select(select);
 
       if (error) throw error;
 
@@ -125,7 +144,7 @@ export function useCollection<T extends { id: string | number }>(
         .from(tableName)
         .update(updates)
         .eq("id", id)
-        .select()
+        .select(select)
         .single();
 
       if (error) throw error;
@@ -150,7 +169,7 @@ export function useCollection<T extends { id: string | number }>(
       const { data: updated, error } = await supabase
         .from(tableName)
         .upsert(updates)
-        .select();
+        .select(select);
 
       if (error) throw error;
 
