@@ -48,6 +48,7 @@ export function ProjectDraftProvider({ children }: { children: ReactNode }) {
   };
 
   const resetProjectDraft = () => {
+    setId("");
     setName("New");
     setDescription("");
     setProjectColor(getRandomColor());

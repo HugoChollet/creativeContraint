@@ -8,7 +8,7 @@ import ProjectItem from "./project-item";
 interface ProjectSectionProps {
   onDelete: (id: string) => void;
   onEdit: (project: Project) => void;
-  onFork: () => void;
+  onFork: (project: Project) => void;
   onPublish: (cat: Project) => void;
   section: ProjectSectionData;
 }
@@ -49,7 +49,7 @@ export default function ProjectSection({
             key={project.id}
             onDelete={() => onDelete(project.id)}
             onEdit={() => onEdit(project)}
-            onFork={onFork}
+            onFork={() => onFork(project)}
             onPublish={() => onPublish(project)}
             projectColor={project.color ?? colors.tint}
             project={project}

@@ -136,12 +136,18 @@ export default function ProjectBrowseScreen() {
     resetProjectDraft,
   } = useProjectDraft();
 
-  const setupEdited = (toEdit: Project) => {
-    setId(toEdit.id);
-    setName(toEdit.name);
-    setDescription(toEdit.description);
-    setProjectColor(toEdit.color ?? "ffff");
-    setSelectedCategories(toEdit.categories);
+  const setupDraft = ({
+    draft,
+    isForked,
+  }: {
+    draft: Project;
+    isForked: boolean;
+  }) => {
+    setName(draft.name);
+    setDescription(draft.description);
+    setProjectColor(draft.color ?? "ffff");
+    setSelectedCategories(draft.categories);
+    setId(isForked ? "" : draft.id);
   };
 
   return (
@@ -167,7 +173,7 @@ export default function ProjectBrowseScreen() {
                 deleteProject(id);
               }}
               onEdit={(project) => {
-                setupEdited(project);
+                setupDraft({ draft: project, isForked: false });
                 router.push({
                   pathname: "/project-form",
                   params: {
@@ -176,7 +182,16 @@ export default function ProjectBrowseScreen() {
                   },
                 });
               }}
-              onFork={() => {}}
+              onFork={(project) => {
+                setupDraft({ draft: project, isForked: true });
+                router.push({
+                  pathname: "/project-form",
+                  params: {
+                    id: 1,
+                    type: projectLabel,
+                  },
+                });
+              }}
               onPublish={(project) => {
                 // TODO should redirect to project-browse and refresh data
                 updateRecord(project.id, { is_public: !project.is_public });

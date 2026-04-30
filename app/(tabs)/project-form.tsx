@@ -123,6 +123,8 @@ export default function ProjectFormScreen() {
       color: projectColor,
     };
 
+    console.log("submitting with id :", id);
+
     const result =
       id === ""
         ? await addRecord(projectDraft)
