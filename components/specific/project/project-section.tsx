@@ -6,10 +6,10 @@ import { LayoutAnimation, Text, View } from "react-native";
 import ProjectItem from "./project-item";
 
 interface ProjectSectionProps {
-  onDelete?: (id: string) => void;
-  onEdit?: () => void;
-  onFork?: () => void;
-  onPublish?: (cat: Project) => void;
+  onDelete: (id: string) => void;
+  onEdit: (project: Project) => void;
+  onFork: () => void;
+  onPublish: (cat: Project) => void;
   section: ProjectSectionData;
 }
 
@@ -47,14 +47,10 @@ export default function ProjectSection({
         section.data.map((project) => (
           <ProjectItem
             key={project.id}
-            onDelete={() => {
-              if (onDelete) onDelete(project.id);
-            }}
-            onEdit={onEdit}
+            onDelete={() => onDelete(project.id)}
+            onEdit={() => onEdit(project)}
             onFork={onFork}
-            onPublish={() => {
-              if (onPublish) onPublish(project);
-            }}
+            onPublish={() => onPublish(project)}
             projectColor={project.color ?? colors.tint}
             project={project}
             selected={isProjectSelected(project.id.toString())}

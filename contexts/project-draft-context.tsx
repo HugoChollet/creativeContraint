@@ -10,6 +10,8 @@ export function getRandomColor() {
 }
 
 interface ProjectDraftContextType {
+  id: string;
+  setId: (id: string) => void;
   name: string;
   setName: (name: string) => void;
   description: string;
@@ -27,6 +29,7 @@ const ProjectDraftContext = createContext<ProjectDraftContextType | undefined>(
 );
 
 export function ProjectDraftProvider({ children }: { children: ReactNode }) {
+  const [id, setId] = useState("");
   const [name, setName] = useState("New");
   const [description, setDescription] = useState("");
   const [projectColor, setProjectColor] = useState(getRandomColor);
@@ -54,6 +57,8 @@ export function ProjectDraftProvider({ children }: { children: ReactNode }) {
   return (
     <ProjectDraftContext.Provider
       value={{
+        id,
+        setId,
         name,
         setName,
         description,

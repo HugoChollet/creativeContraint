@@ -29,13 +29,13 @@ export default function ProjectBrowseScreen() {
   const { session } = useAuth();
   const { t } = useTranslation();
   const headerHeight = useHeaderHeight();
-  const { resetProjectDraft } = useProjectDraft();
 
   const userId = session?.user?.id;
 
   const {
     data,
     updateRecord,
+    refresh,
     loading,
     deleteRecord: deleteProject,
   } = useCollection<ProjectRelation>("projects", {
@@ -46,7 +46,11 @@ export default function ProjectBrowseScreen() {
         id,
         name,
         description,
-        options
+        options,
+        project_type_id,
+        is_public,
+        owner_id,
+        source
       )
     )
   `,
@@ -69,7 +73,7 @@ export default function ProjectBrowseScreen() {
   const personalProjects = useMemo(
     () =>
       parsedProjects.filter(
-        (item) => item.owner_id === userId && item.is_public !== false,
+        (item) => item.owner_id === userId && item.is_public === false,
       ),
     [parsedProjects, userId],
   );
@@ -77,7 +81,7 @@ export default function ProjectBrowseScreen() {
   const publishedProjects = useMemo(
     () =>
       parsedProjects.filter(
-        (item) => item.owner_id === userId && item.is_public !== false,
+        (item) => item.owner_id === userId && item.is_public === true,
       ),
     [parsedProjects, userId],
   );
@@ -123,6 +127,23 @@ export default function ProjectBrowseScreen() {
     },
   ];
 
+  const {
+    setId,
+    setName,
+    setDescription,
+    setProjectColor,
+    setSelectedCategories,
+    resetProjectDraft,
+  } = useProjectDraft();
+
+  const setupEdited = (toEdit: Project) => {
+    setId(toEdit.id);
+    setName(toEdit.name);
+    setDescription(toEdit.description);
+    setProjectColor(toEdit.color ?? "ffff");
+    setSelectedCategories(toEdit.categories);
+  };
+
   return (
     <View style={globalStyles.screenContainer}>
       <Header
@@ -145,10 +166,21 @@ export default function ProjectBrowseScreen() {
               onDelete={(id) => {
                 deleteProject(id);
               }}
-              onEdit={() => {}}
+              onEdit={(project) => {
+                setupEdited(project);
+                router.push({
+                  pathname: "/project-form",
+                  params: {
+                    id: 1,
+                    type: projectLabel,
+                  },
+                });
+              }}
               onFork={() => {}}
               onPublish={(project) => {
+                // TODO should redirect to project-browse and refresh data
                 updateRecord(project.id, { is_public: !project.is_public });
+                refresh();
               }}
             />
           )}

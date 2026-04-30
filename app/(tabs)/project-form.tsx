@@ -36,7 +36,11 @@ export default function ProjectFormScreen() {
   const { t } = useTranslation();
 
   const headerHeight = useHeaderHeight();
-  const { addRecord, loading: isSaving } = useCollection<Project>("projects");
+  const {
+    addRecord,
+    updateRecord,
+    loading: isSaving,
+  } = useCollection<Project>("projects");
   const {
     fetchCollection: fetchProjectCategoryRelations,
     addRecords: addProjectCategoryRelations,
@@ -45,6 +49,7 @@ export default function ProjectFormScreen() {
 
   const router = useRouter();
   const {
+    id,
     name,
     setName,
     description,
@@ -110,7 +115,7 @@ export default function ProjectFormScreen() {
   const handleSubmit = async () => {
     if (!isFormValid || isSaving) return;
 
-    const newProject = {
+    const projectDraft = {
       name,
       description,
       is_public: false, // Defaulting to private for now
@@ -118,7 +123,10 @@ export default function ProjectFormScreen() {
       color: projectColor,
     };
 
-    const result = await addRecord(newProject);
+    const result =
+      id === ""
+        ? await addRecord(projectDraft)
+        : await updateRecord(id, projectDraft);
 
     if (result) {
       try {
@@ -132,8 +140,10 @@ export default function ProjectFormScreen() {
       }
 
       resetProjectDraft();
-      // Success! Go back to the previous screen
-      console.log("success");
+      router.push({
+        pathname: "/project-browse",
+        params: { id: 1 },
+      });
     } else {
       // You might want to show an Alert here if result is null
       console.error("Failed to save project");
