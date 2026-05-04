@@ -32,7 +32,7 @@ export default function CategoryBrowseScreen() {
     [isProjectFormSelection, selectedCategories],
   );
 
-  const { data, updateRecord, loading } = useCollection<Category>(
+  const { data, updateRecord, loading } = useCollection<Category>( // TODO fetch relation table and select by project ID
     "categories",
     {
       filterColumn: "project_type_id",

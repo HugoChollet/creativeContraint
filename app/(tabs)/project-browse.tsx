@@ -8,8 +8,8 @@ import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { Project, ProjectRelation, ProjectSectionData } from "@/types/projects";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { router, useLocalSearchParams } from "expo-router";
-import React, { useMemo } from "react";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import React, { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, View } from "react-native";
 
@@ -70,6 +70,12 @@ export default function ProjectBrowseScreen() {
     [data],
   );
 
+  useFocusEffect(
+    useCallback(() => {
+      refresh();
+    }, [refresh]),
+  );
+
   const personalProjects = useMemo(
     () =>
       parsedProjects.filter(
@@ -91,11 +97,6 @@ export default function ProjectBrowseScreen() {
     [parsedProjects],
   );
 
-  const getSelected = useMemo(() => {
-    if (!selected) return [];
-    return selected.map((sel) => sel.project_id.toString());
-  }, [selected]);
-
   const communityProjects = useMemo(
     () =>
       parsedProjects.filter(
@@ -103,6 +104,11 @@ export default function ProjectBrowseScreen() {
       ),
     [parsedProjects, userId],
   );
+
+  const getSelected = useMemo(() => {
+    if (!selected) return [];
+    return selected.map((sel) => sel.project_id.toString());
+  }, [selected]);
 
   const sections: ProjectSectionData[] = [
     {

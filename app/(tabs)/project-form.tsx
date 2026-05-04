@@ -39,12 +39,13 @@ export default function ProjectFormScreen() {
   const {
     addRecord,
     updateRecord,
-    loading: isSaving,
+    loading: isSavingProject,
   } = useCollection<Project>("projects");
   const {
     fetchCollection: fetchProjectCategoryRelations,
     addRecords: addProjectCategoryRelations,
     deleteRecords: deleteProjectCategoryRelations,
+    loading: isSavingRelation,
   } = useCollection<ProjectCategoryRelation>("project_category_relations");
 
   const router = useRouter();
@@ -113,7 +114,7 @@ export default function ProjectFormScreen() {
   };
 
   const handleSubmit = async () => {
-    if (!isFormValid || isSaving) return;
+    if (!isFormValid || isSavingProject) return;
 
     const projectDraft = {
       name,
@@ -283,7 +284,7 @@ export default function ProjectFormScreen() {
             onPress={() => handleSubmit()}
             disabled={!isFormValid}
           >
-            {isLoading ? (
+            {isLoading || isSavingProject || isSavingRelation ? (
               <ActivityIndicator color={colors.invertedText} />
             ) : (
               <Text style={globalStyles.secondaryButtonText}>
