@@ -96,6 +96,10 @@
     "name_placeholder": "Entrez le nom du projet",
     "description_label": "Description",
     "description_placeholder": "Décrivez le générateur de projet",
+    "import_button": "Importer depuis un JSON",
+    "import_helper": "{{fileName}} • {{count}} catégories prêtes à être sauvegardées",
+    "import_error_title": "Import impossible",
+    "import_error_invalid": "Sélectionnez un fichier JSON de projet valide avec des catégories.",
     "add_button": "Ajouter une nouvelle catégorie",
     "submit_button": "Sauvegarder le générateur de projet",
     "category_list_label": "Catégories de ce générateur de projet (minimum {{min}})"

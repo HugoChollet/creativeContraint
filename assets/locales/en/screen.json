@@ -95,6 +95,10 @@
     "name_placeholder": "Enter project name",
     "description_label": "Description",
     "description_placeholder": "Describe the project generator",
+    "import_button": "Import from JSON",
+    "import_helper": "{{fileName}} • {{count}} categories ready to save",
+    "import_error_title": "Import failed",
+    "import_error_invalid": "Select a valid project JSON file with categories.",
     "add_button": "Add new category",
     "submit_button": "Save Project Generator",
     "category_list_label": "Categories of this project generator (minimum {{min}})"

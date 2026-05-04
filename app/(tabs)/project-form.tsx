@@ -4,11 +4,16 @@ import Description from "@/components/generic/description";
 import { Header } from "@/components/generic/header";
 import { Spacer } from "@/components/generic/spacer";
 import CategoryHeader from "@/components/specific/category/category-header";
+import ProjectJsonImporter, {
+  getImportedCategoryDbName,
+  isImportedDraftCategory,
+} from "@/components/specific/project/project-json-importer";
 import { getProjectColor } from "@/constants/theme";
 import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
+import { Option } from "@/types/constraints";
 import { Project, ProjectCategoryRelation } from "@/types/projects";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -27,6 +32,8 @@ import {
 
 const CategoryRequire = { MIN_OPTIONS: 2, NAME_LENGTH_MIN: 2 };
 
+const normalizeCategoryName = (value: string) => value.trim().toLowerCase();
+
 export default function ProjectFormScreen() {
   const { type: projectLabel } = useLocalSearchParams<{
     type: string;
@@ -41,6 +48,17 @@ export default function ProjectFormScreen() {
     updateRecord,
     loading: isSavingProject,
   } = useCollection<Project>("projects");
+  const {
+    data: existingCategories,
+    fetchCollection: fetchCategories,
+    addRecords: addCategories,
+    loading: isSavingCategories,
+  } = useCollection<Category>("categories", {
+    filterColumn: "project_type_id",
+    filterValue: projectLabel,
+    orderBy: "name",
+    ascending: true,
+  });
   const {
     fetchCollection: fetchProjectCategoryRelations,
     addRecords: addProjectCategoryRelations,
@@ -58,10 +76,12 @@ export default function ProjectFormScreen() {
     projectColor,
     setProjectColor,
     selectedCategories,
+    setSelectedCategories,
     resetProjectDraft,
   } = useProjectDraft();
 
   const [isLoading] = useState(false);
+  const [isImporting, setIsImporting] = useState(false);
   const projectColorSoft = getProjectColor({
     color: projectColor,
     opacity: 0.2,
@@ -70,6 +90,109 @@ export default function ProjectFormScreen() {
   const sortedCategories = [...selectedCategories].sort((a, b) =>
     a.name.localeCompare(b.name),
   );
+  const isBusy = isLoading || isImporting;
+
+  const resolveSelectedCategories = async () => {
+    const fetchedCategories = await fetchCategories({
+      filterColumn: "project_type_id",
+      filterValue: projectLabel,
+      orderBy: "name",
+      ascending: true,
+    });
+    const categoryLookup = new Map<string, Category>();
+
+    [...existingCategories, ...(fetchedCategories ?? [])].forEach(
+      (category) => {
+        const key = normalizeCategoryName(category.name);
+        if (!categoryLookup.has(key)) {
+          categoryLookup.set(key, category);
+        }
+      },
+    );
+
+    const categoriesToInsert: {
+      name: string;
+      description: string;
+      options: Option[];
+      project_type_id: string;
+      is_public: boolean;
+      favorited_counter: number;
+    }[] = [];
+    const pendingCategoryNames = new Set<string>();
+
+    selectedCategories.forEach((category) => {
+      if (!isImportedDraftCategory(category)) {
+        return;
+      }
+
+      const importedCategoryDbName = getImportedCategoryDbName(
+        name,
+        category.name,
+      );
+      const originalNameKey = normalizeCategoryName(category.name);
+      const importedNameKey = normalizeCategoryName(importedCategoryDbName);
+
+      if (
+        categoryLookup.has(originalNameKey) ||
+        categoryLookup.has(importedNameKey) ||
+        pendingCategoryNames.has(importedNameKey)
+      ) {
+        return;
+      }
+
+      pendingCategoryNames.add(importedNameKey);
+      categoriesToInsert.push({
+        name: importedCategoryDbName,
+        description: category.description,
+        options: category.options,
+        project_type_id: projectLabel ?? "",
+        is_public: false,
+        favorited_counter: 0,
+      });
+    });
+
+    if (categoriesToInsert.length > 0) {
+      const insertedCategories = await addCategories(categoriesToInsert);
+
+      if (insertedCategories.length !== categoriesToInsert.length) {
+        throw new Error("Failed to insert imported categories");
+      }
+
+      insertedCategories.forEach((category) => {
+        const key = normalizeCategoryName(category.name);
+        if (!categoryLookup.has(key)) {
+          categoryLookup.set(key, category);
+        }
+      });
+    }
+
+    const resolvedCategories: Category[] = [];
+    const resolvedCategoryIds = new Set<string>();
+
+    selectedCategories.forEach((category) => {
+      const resolvedCategory = isImportedDraftCategory(category)
+        ? categoryLookup.get(normalizeCategoryName(category.name)) ??
+          categoryLookup.get(
+            normalizeCategoryName(
+              getImportedCategoryDbName(name, category.name),
+            ),
+          )
+        : category;
+
+      if (!resolvedCategory) {
+        throw new Error(`Missing category ${category.name}`);
+      }
+
+      if (resolvedCategoryIds.has(resolvedCategory.id)) {
+        return;
+      }
+
+      resolvedCategoryIds.add(resolvedCategory.id);
+      resolvedCategories.push(resolvedCategory);
+    });
+
+    return resolvedCategories;
+  };
 
   const syncProjectCategories = async (
     projectId: string,
@@ -114,7 +237,7 @@ export default function ProjectFormScreen() {
   };
 
   const handleSubmit = async () => {
-    if (!isFormValid || isSavingProject) return;
+    if (!isFormValid || isSavingProject || isImporting) return;
 
     const projectDraft = {
       name,
@@ -133,9 +256,10 @@ export default function ProjectFormScreen() {
 
     if (result) {
       try {
+        const resolvedCategories = await resolveSelectedCategories();
         await syncProjectCategories(
           result.id,
-          selectedCategories.map((category) => category.id),
+          resolvedCategories.map((category) => category.id),
         );
       } catch (error) {
         console.error("Failed to sync project categories", error);
@@ -156,7 +280,7 @@ export default function ProjectFormScreen() {
   const isFormValid =
     name.length > CategoryRequire.NAME_LENGTH_MIN &&
     //categories.length >= CategoryRequire.MIN_OPTIONS &&
-    !isLoading;
+    !isBusy;
 
   return (
     <>
@@ -197,7 +321,7 @@ export default function ProjectFormScreen() {
                   placeholderTextColor={colors.placeholder}
                   value={name}
                   onChangeText={setName}
-                  editable={!isLoading}
+                  editable={!isBusy}
                 />
               </View>
 
@@ -219,9 +343,23 @@ export default function ProjectFormScreen() {
                 setDescription={setDescription}
                 placeholder={t("screen:project_form.description_placeholder")}
                 projectColor={projectColor}
-                isLoading={isLoading}
+                isLoading={isBusy}
               />
             </View>
+
+            <ProjectJsonImporter
+              projectColor={projectColor}
+              projectTypeId={projectLabel ?? ""}
+              fallbackProjectName={name}
+              onImportingChange={setIsImporting}
+              onImported={(draft) => {
+                if (draft.name) {
+                  setName(draft.name);
+                }
+                setDescription(draft.description);
+                setSelectedCategories(draft.categories);
+              }}
+            />
 
             <Text style={globalStyles.label}>
               {t("screen:project_form.category_list_label", {
@@ -284,7 +422,10 @@ export default function ProjectFormScreen() {
             onPress={() => handleSubmit()}
             disabled={!isFormValid}
           >
-            {isLoading || isSavingProject || isSavingRelation ? (
+            {isBusy ||
+            isSavingProject ||
+            isSavingRelation ||
+            isSavingCategories ? (
               <ActivityIndicator color={colors.invertedText} />
             ) : (
               <Text style={globalStyles.secondaryButtonText}>
