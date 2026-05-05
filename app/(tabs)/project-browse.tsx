@@ -6,6 +6,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
+import { Category } from "@/types/category";
 import { Project, ProjectRelation, ProjectSectionData } from "@/types/projects";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
@@ -58,6 +59,8 @@ export default function ProjectBrowseScreen() {
   const { data: selected } = useCollection<UserProjectSelection>(
     "user_project_selections",
   );
+  const { updateRecord: updateCategoryRecord } =
+    useCollection<Category>("categories");
 
   const parsedProjects = useMemo<Project[]>(
     () =>
@@ -156,6 +159,64 @@ export default function ProjectBrowseScreen() {
     setId(isForked ? "" : draft.id);
   };
 
+  const syncProjectVisibility = async (project: Project) => {
+    const nextIsPublic = !project.is_public;
+    const ownedCategories = project.categories.filter(
+      (category) => category.owner_id === userId,
+    );
+
+    const updatedProject = await updateRecord(project.id, {
+      is_public: nextIsPublic,
+    });
+
+    if (!updatedProject) {
+      console.error("Failed to update project visibility");
+      return;
+    }
+
+    const previousCategoryVisibility = new Map(
+      ownedCategories.map((category) => [category.id, category.is_public]),
+    );
+    const updatedCategoryIds: string[] = [];
+
+    for (const category of ownedCategories) {
+      if (category.is_public === nextIsPublic) {
+        continue;
+      }
+
+      const updatedCategory = await updateCategoryRecord(category.id, {
+        is_public: nextIsPublic,
+      });
+
+      if (!updatedCategory) {
+        console.error("Failed to update category visibility", category.id);
+
+        await updateRecord(project.id, {
+          is_public: project.is_public,
+        });
+
+        for (const updatedCategoryId of updatedCategoryIds) {
+          const previousIsPublic =
+            previousCategoryVisibility.get(updatedCategoryId);
+
+          if (previousIsPublic === undefined) {
+            continue;
+          }
+
+          await updateCategoryRecord(updatedCategoryId, {
+            is_public: previousIsPublic,
+          });
+        }
+
+        return;
+      }
+
+      updatedCategoryIds.push(category.id);
+    }
+
+    refresh();
+  };
+
   return (
     <View style={globalStyles.screenContainer}>
       <Header
@@ -199,9 +260,7 @@ export default function ProjectBrowseScreen() {
                 });
               }}
               onPublish={(project) => {
-                // TODO should redirect to project-browse and refresh data
-                updateRecord(project.id, { is_public: !project.is_public });
-                refresh();
+                syncProjectVisibility(project);
               }}
             />
           )}
