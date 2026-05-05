@@ -1,5 +1,5 @@
 import { AddButton } from "@/components/generic/add-button";
-import { ConfirmButton } from "@/components/generic/confirm-button";
+import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { Header } from "@/components/generic/header";
 import CategorySection from "@/components/specific/category/category-section";
 import { useAuth } from "@/contexts/auth-context";
@@ -130,26 +130,27 @@ export default function CategoryBrowseScreen() {
           }
         />
       )}
-      <View style={{ paddingTop: 12, paddingBottom: 20 }}>
-        <ConfirmButton
-          projectColor={projectColor}
-          label={t("screen:category_browse.confirm_button")}
-          onClick={() => {
-            console.log("confirm selection", isProjectFormSelection);
 
-            if (isProjectFormSelection) {
-              router.navigate({
-                pathname: "/project-form",
-                params: { type: projectLabel },
-              });
-              return;
-            }
-
-            console.log("validate category with name: ", projectLabel);
-          }}
-          isActive={activeSelectedCategories.length > 0}
-        />
-      </View>
+      <ConfirmCancelButton
+        color={projectColor}
+        labelConfirm={t("screen:category_browse.confirm_button")}
+        onClickConfirm={() => {
+          if (isProjectFormSelection) {
+            router.navigate({
+              pathname: "/project-form",
+              params: { type: projectLabel },
+            });
+            return;
+          }
+        }}
+        onClickCancel={() =>
+          // TODO fix redirection to book
+          router.navigate({
+            pathname: "/lab",
+            params: { type: projectLabel },
+          })
+        }
+      />
     </View>
   );
 }
