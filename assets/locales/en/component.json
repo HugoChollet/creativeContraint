@@ -100,5 +100,9 @@
     "file_placeholder": "Select a PDF or Word file",
     "file_hint": "PDF, DOCX accepted",
     "file_ready": "Document ready"
+  },
+  "confirm-cancel": {
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   }
 }

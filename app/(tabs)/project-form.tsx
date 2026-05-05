@@ -1,5 +1,6 @@
 import { AddButton } from "@/components/generic/add-button";
 import ColorPicker from "@/components/generic/color-picker";
+import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import Description from "@/components/generic/description";
 import { Header } from "@/components/generic/header";
 import { Spacer } from "@/components/generic/spacer";
@@ -20,13 +21,11 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -171,12 +170,12 @@ export default function ProjectFormScreen() {
 
     selectedCategories.forEach((category) => {
       const resolvedCategory = isImportedDraftCategory(category)
-        ? categoryLookup.get(normalizeCategoryName(category.name)) ??
+        ? (categoryLookup.get(normalizeCategoryName(category.name)) ??
           categoryLookup.get(
             normalizeCategoryName(
               getImportedCategoryDbName(name, category.name),
             ),
-          )
+          ))
         : category;
 
       if (!resolvedCategory) {
@@ -411,29 +410,15 @@ export default function ProjectFormScreen() {
           </ScrollView>
         </KeyboardAvoidingView>
 
-        <View style={{ paddingTop: 12, paddingBottom: 20 }}>
-          <TouchableOpacity
-            style={[
-              globalStyles.secondaryButton,
-              {
-                backgroundColor: isFormValid ? projectColor : colors.disable,
-              },
-            ]}
-            onPress={() => handleSubmit()}
-            disabled={!isFormValid}
-          >
-            {isBusy ||
-            isSavingProject ||
-            isSavingRelation ||
-            isSavingCategories ? (
-              <ActivityIndicator color={colors.invertedText} />
-            ) : (
-              <Text style={globalStyles.secondaryButtonText}>
-                {t("screen:project_form.submit_button")}
-              </Text>
-            )}
-          </TouchableOpacity>
-        </View>
+        <ConfirmCancelButton
+          color={projectColor}
+          labelConfirm={t("screen:project_form.submit_button")}
+          isActive={isFormValid}
+          isLoading={
+            isBusy || isSavingProject || isSavingRelation || isSavingCategories
+          }
+          onClick={handleSubmit}
+        />
       </View>
     </>
   );
