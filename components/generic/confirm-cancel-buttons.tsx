@@ -10,7 +10,8 @@ interface ConfirmButtonProps {
   labelCancel?: string;
   isActive?: boolean;
   isLoading?: boolean;
-  onClick: () => void;
+  onClickConfirm: () => void;
+  onClickCancel: () => void;
 }
 
 export const ConfirmCancelButton = ({
@@ -19,7 +20,8 @@ export const ConfirmCancelButton = ({
   labelCancel,
   isActive = true,
   isLoading = false,
-  onClick,
+  onClickConfirm,
+  onClickCancel,
 }: ConfirmButtonProps) => {
   const { globalStyles } = useStyles();
   const { t } = useTranslation();
@@ -39,7 +41,7 @@ export const ConfirmCancelButton = ({
           label={labelConfirm ?? t("component:confirm-cancel.confirm")}
           isActive={isActive}
           isLoading={isLoading}
-          onClick={onClick}
+          onClick={onClickConfirm}
         />
       </View>
       <TouchableOpacity
@@ -50,6 +52,7 @@ export const ConfirmCancelButton = ({
             flex: 1,
           },
         ]}
+        onPress={onClickCancel}
       >
         <Text style={{ color: color }}>
           {labelCancel ?? t("component:confirm-cancel.cancel")}

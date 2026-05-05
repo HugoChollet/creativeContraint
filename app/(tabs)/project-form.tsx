@@ -417,7 +417,13 @@ export default function ProjectFormScreen() {
           isLoading={
             isBusy || isSavingProject || isSavingRelation || isSavingCategories
           }
-          onClick={handleSubmit}
+          onClickConfirm={handleSubmit}
+          onClickCancel={() =>
+            router.navigate({
+              pathname: "/project-browse",
+              params: { type: projectLabel },
+            })
+          }
         />
       </View>
     </>
