@@ -1,5 +1,5 @@
 import { AddButton } from "@/components/generic/add-button";
-import { ConfirmButton } from "@/components/generic/confirm-button";
+import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { Header } from "@/components/generic/header";
 import ProjectSection from "@/components/specific/project/project-section";
 import { useAuth } from "@/contexts/auth-context";
@@ -280,17 +280,21 @@ export default function ProjectBrowseScreen() {
           });
         }}
       />
-      <View style={{ paddingTop: 12, paddingBottom: 20 }}>
-        <ConfirmButton
-          projectColor={colors.tint}
-          label={t("screen:project_browse.confirm_button")}
-          onClick={() => {
-            console.log("validate project generator with name: ", projectLabel);
-            console.log("selection ", sections[1].selected);
-          }}
-          isActive={sections.some((section) => section.selected.length > 0)}
-        />
-      </View>
+      <ConfirmCancelButton
+        color={colors.tint}
+        labelConfirm={t("screen:project_browse.confirm_button")}
+        isActive={sections.some((section) => section.selected.length > 0)}
+        onClickConfirm={() => {
+          console.log("validate project generator with name: ", projectLabel);
+          console.log("selection ", sections[1].selected);
+        }}
+        onClickCancel={() =>
+          router.navigate({
+            pathname: "/",
+            params: { type: projectLabel },
+          })
+        }
+      />
     </View>
   );
 }
