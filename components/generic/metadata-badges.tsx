@@ -7,6 +7,8 @@ import { StyleSheet, Text, View } from "react-native";
 interface MetadataBadgesProps {
   tags?: readonly string[] | null;
   color?: string;
+  textColor?: string;
+  backgroundColor?: string;
 }
 
 const formatFallbackLabel = (value: string) =>
@@ -17,7 +19,12 @@ const formatFallbackLabel = (value: string) =>
     )
     .join(" ");
 
-export default function MetadataBadges({ tags, color }: MetadataBadgesProps) {
+export default function MetadataBadges({
+  tags,
+  color,
+  textColor,
+  backgroundColor,
+}: MetadataBadgesProps) {
   const { t } = useTranslation();
   const { globalStyles, colors } = useStyles();
   const normalizedTags = normalizeProjectTags(tags);
@@ -30,8 +37,6 @@ export default function MetadataBadges({ tags, color }: MetadataBadgesProps) {
   ];
 
   if (badgeLabels.length === 0) {
-    console.log("null");
-
     return null;
   }
 
@@ -43,10 +48,20 @@ export default function MetadataBadges({ tags, color }: MetadataBadgesProps) {
           style={[
             globalStyles.tag,
             styles.badge,
-            { borderColor: color ?? colors.borderColor },
+            {
+              borderColor: color ?? colors.borderColor,
+              backgroundColor:
+                backgroundColor ?? globalStyles.tag.backgroundColor,
+            },
           ]}
         >
-          <Text style={[globalStyles.discreetText, styles.badgeText]}>
+          <Text
+            style={[
+              globalStyles.discreetText,
+              styles.badgeText,
+              { color: textColor ?? colors.textDiscreet },
+            ]}
+          >
             {label}
           </Text>
         </View>
