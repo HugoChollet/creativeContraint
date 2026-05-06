@@ -45,6 +45,31 @@
   "constraint-set-card": {
     "upload": "Upload a project"
   },
+  "metadata": {
+    "language_label": "Language",
+    "tags_label": "Tags",
+    "tags_limit": "{{count}} / {{max}} selected",
+    "languages": {
+      "en": "English",
+      "fr": "French"
+    },
+    "tag_values": {
+      "all": "All",
+      "fiction": "Fiction",
+      "writing": "Writing",
+      "video": "Video",
+      "game": "Game",
+      "music": "Music",
+      "character": "Character",
+      "localisation": "Localisation",
+      "physical": "Physical",
+      "numerical": "Numerical",
+      "photography": "Photography",
+      "short": "Short",
+      "podcast": "Podcast",
+      "long": "Long"
+    }
+  },
   "project_form": {
     "title": "Create your project generator",
     "name_label": "Project type name",

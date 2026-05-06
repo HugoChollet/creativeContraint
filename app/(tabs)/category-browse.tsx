@@ -1,7 +1,13 @@
 import { AddButton } from "@/components/generic/add-button";
 import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { Header } from "@/components/generic/header";
+import MetadataBadges from "@/components/generic/metadata-badges";
 import CategorySection from "@/components/specific/category/category-section";
+import {
+  matchesProjectLanguage,
+  matchesProjectTags,
+  normalizeProjectTags,
+} from "@/constants/project-metadata";
 import { useAuth } from "@/contexts/auth-context";
 import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
@@ -11,7 +17,7 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator, FlatList, View } from "react-native";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 
 export default function CategoryBrowseScreen() {
   const { type: projectLabel, selectionMode } = useLocalSearchParams<{
@@ -25,42 +31,82 @@ export default function CategoryBrowseScreen() {
 
   const userId = session?.user?.id;
   const isProjectFormSelection = selectionMode === "project-form";
-  const { selectedCategories, toggleSelectedCategory, projectColor } =
-    useProjectDraft();
+  const {
+    selectedCategories,
+    toggleSelectedCategory,
+    projectColor,
+    language,
+    tags,
+  } = useProjectDraft();
   const activeSelectedCategories = useMemo(
     () => (isProjectFormSelection ? selectedCategories : []),
     [isProjectFormSelection, selectedCategories],
   );
-
-  const { data, updateRecord, loading } = useCollection<Category>( // TODO fetch relation table and select by project ID
-    "categories",
-    {
-      filterColumn: "project_type_id",
-      filterValue: projectLabel === "new" ? undefined : projectLabel,
-    },
-  );
-
   const selectedCategoryIds = useMemo(
     () => activeSelectedCategories.map((category) => category.id),
     [activeSelectedCategories],
   );
+  const tagFilterValue = useMemo(() => {
+    if (!isProjectFormSelection) {
+      return undefined;
+    }
+
+    const normalizedTags = normalizeProjectTags(tags);
+
+    console.log("tags : ", normalizedTags);
+
+    if (normalizedTags.length === 0 || normalizedTags.includes("all")) {
+      return undefined;
+    }
+
+    console.log(normalizedTags);
+    return [...normalizedTags, "all"];
+  }, [isProjectFormSelection, tags]);
+
+  const { data, updateRecord, loading } = useCollection<Category>(
+    "categories",
+    {
+      filterColumn: isProjectFormSelection ? "tags" : undefined,
+      filterValue: isProjectFormSelection ? tagFilterValue : undefined,
+      filterOperator: isProjectFormSelection ? "overlaps" : "eq",
+    },
+  );
+
+  const filteredCategories = useMemo(
+    () =>
+      data.filter((item) => {
+        if (!isProjectFormSelection) {
+          return true;
+        }
+
+        if (selectedCategoryIds.includes(item.id)) {
+          return true;
+        }
+
+        return (
+          matchesProjectLanguage(item.language, language) &&
+          matchesProjectTags(item.tags, tags)
+        );
+      }),
+    [data, isProjectFormSelection, language, selectedCategoryIds, tags],
+  );
 
   const personalCategories = useMemo(
-    () => data.filter((item) => item.owner_id === userId),
-    [data, userId],
+    () => filteredCategories.filter((item) => item.owner_id === userId),
+    [filteredCategories, userId],
   );
 
   const officialCategories = useMemo(
-    () => data.filter((item) => item.source === "official"),
-    [data],
+    () => filteredCategories.filter((item) => item.source === "official"),
+    [filteredCategories],
   );
 
   const communityCategories = useMemo(
     () =>
-      data.filter(
+      filteredCategories.filter(
         (item) => item.source === "community" && item.owner_id !== userId,
       ),
-    [data, userId],
+    [filteredCategories, userId],
   );
 
   const sections: CategorySectionData[] = [
@@ -86,6 +132,14 @@ export default function CategoryBrowseScreen() {
       <Header
         title={t("screen:category_browse.title", { type: projectLabel })}
       />
+      {isProjectFormSelection && (
+        <View style={{ marginTop: 16, marginBottom: 8 }}>
+          <Text style={globalStyles.label}>
+            {t("screen:category_browse.filters_label")}
+          </Text>
+          <MetadataBadges tags={tags} color={projectColor} />
+        </View>
+      )}
       {loading ? (
         <View
           style={[globalStyles.screenContainer, { justifyContent: "center" }]}

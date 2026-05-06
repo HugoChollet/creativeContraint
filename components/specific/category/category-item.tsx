@@ -1,4 +1,5 @@
 import { Item } from "@/components/generic/item";
+import MetadataBadges from "@/components/generic/metadata-badges";
 import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
 import { useTranslation } from "react-i18next";
@@ -85,6 +86,13 @@ export default function CategoryItem({
               : undefined
           }
         />
+        {category.tags?.length ? (
+          <View style={{ padding: 8 }}>
+            <MetadataBadges tags={category.tags} color={projectColor} />
+          </View>
+        ) : (
+          <></>
+        )}
         {expanded && category.options && (
           <FlatList
             data={category.options}

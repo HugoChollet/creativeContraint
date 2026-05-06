@@ -2,12 +2,14 @@ import { useAuth } from "@/contexts/auth-context";
 import { supabase } from "@/lib/supabase";
 import { useCallback, useEffect, useState } from "react";
 
-type FilterValue = string | number | boolean;
+type FilterValue = string | number | boolean | readonly string[];
+type FilterOperator = "eq" | "overlaps";
 
 interface UseCollectionOptions {
   select?: string;
   filterColumn?: string;
   filterValue?: FilterValue;
+  filterOperator?: FilterOperator;
   orderBy?: string;
   ascending?: boolean;
   attachOwnerId?: boolean;
@@ -25,6 +27,7 @@ export function useCollection<T extends { id: string | number }>(
     select = "*",
     filterColumn,
     filterValue,
+    filterOperator = "eq",
     orderBy = "created_at",
     ascending = false,
     attachOwnerId = true,
@@ -40,6 +43,8 @@ export function useCollection<T extends { id: string | number }>(
         overrideOptions && "filterValue" in overrideOptions
           ? overrideOptions.filterValue
           : filterValue;
+      const activeFilterOperator =
+        overrideOptions?.filterOperator ?? filterOperator;
       const activeOrderBy =
         overrideOptions && "orderBy" in overrideOptions
           ? overrideOptions.orderBy
@@ -54,7 +59,17 @@ export function useCollection<T extends { id: string | number }>(
         let query = supabase.from(tableName).select(activeSelect);
 
         if (activeFilterColumn && activeFilterValue !== undefined) {
-          query = query.eq(activeFilterColumn, activeFilterValue);
+          if (
+            activeFilterOperator === "overlaps" &&
+            Array.isArray(activeFilterValue)
+          ) {
+            query = query.overlaps(activeFilterColumn, activeFilterValue);
+          } else {
+            query = query.eq(
+              activeFilterColumn,
+              activeFilterValue as string | number | boolean,
+            );
+          }
         }
 
         if (activeOrderBy) {
@@ -77,7 +92,15 @@ export function useCollection<T extends { id: string | number }>(
         setLoading(false);
       }
     },
-    [ascending, filterColumn, filterValue, orderBy, select, tableName],
+    [
+      ascending,
+      filterColumn,
+      filterOperator,
+      filterValue,
+      orderBy,
+      select,
+      tableName,
+    ],
   );
 
   const addRecords = async (newRecords: Partial<T>[]) => {

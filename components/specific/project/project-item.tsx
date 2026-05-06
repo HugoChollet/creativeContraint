@@ -1,4 +1,5 @@
 import { Item } from "@/components/generic/item";
+import MetadataBadges from "@/components/generic/metadata-badges";
 import { useStyles } from "@/hooks/use-styles";
 import { ProjectJSON } from "@/types/json-objects";
 import { Project } from "@/types/projects";
@@ -39,13 +40,15 @@ export default function ProjectItem({
   const isPersonalProject =
     type === t("screen:project_browse.personal_section");
   const isCommunity = type === t("screen:project_browse.community_section");
-  const [toJSONProject, setToJSONProject] = useState<ProjectJSON>({
+  const toJSONProject: ProjectJSON = {
     project_type: project.name,
     project_label: project.name,
     id: project.id,
     description: project.description,
+    language: project.language ?? undefined,
+    tags: project.tags ?? undefined,
     categories: project.categories,
-  });
+  };
 
   const actions: CrudActionItem[] = [
     ...(isPersonalProject && onEdit
@@ -93,6 +96,13 @@ export default function ProjectItem({
               : undefined
           }
         />
+        {project.tags?.length ? (
+          <View style={{ padding: 8 }}>
+            <MetadataBadges tags={project.tags} color={projectColor} />
+          </View>
+        ) : (
+          <></>
+        )}
         {expanded && project.categories && (
           <FlatList
             data={project.categories}

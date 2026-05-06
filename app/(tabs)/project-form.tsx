@@ -3,12 +3,24 @@ import ColorPicker from "@/components/generic/color-picker";
 import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import Description from "@/components/generic/description";
 import { Header } from "@/components/generic/header";
+import LanguageSelector from "@/components/generic/language-selector";
 import { Spacer } from "@/components/generic/spacer";
+import TagSelector, {
+  TagSelectorOption,
+} from "@/components/generic/tag-selector";
 import CategoryHeader from "@/components/specific/category/category-header";
 import ProjectJsonImporter, {
   getImportedCategoryDbName,
   isImportedDraftCategory,
 } from "@/components/specific/project/project-json-importer";
+import {
+  getCategoryTagsFromProject,
+  normalizeProjectTags,
+  PROJECT_TAGS,
+  ProjectLanguage,
+  ProjectTag,
+  toggleProjectTag,
+} from "@/constants/project-metadata";
 import { getProjectColor } from "@/constants/theme";
 import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
@@ -18,7 +30,7 @@ import { Option } from "@/types/constraints";
 import { Project, ProjectCategoryRelation } from "@/types/projects";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   KeyboardAvoidingView,
@@ -30,6 +42,7 @@ import {
 } from "react-native";
 
 const CategoryRequire = { MIN_OPTIONS: 2, NAME_LENGTH_MIN: 2 };
+const PROJECT_TAG_LIMIT = 4;
 
 const normalizeCategoryName = (value: string) => value.trim().toLowerCase();
 
@@ -53,8 +66,6 @@ export default function ProjectFormScreen() {
     addRecords: addCategories,
     loading: isSavingCategories,
   } = useCollection<Category>("categories", {
-    filterColumn: "project_type_id",
-    filterValue: projectLabel,
     orderBy: "name",
     ascending: true,
   });
@@ -72,6 +83,10 @@ export default function ProjectFormScreen() {
     setName,
     description,
     setDescription,
+    language,
+    setLanguage,
+    tags,
+    setTags,
     projectColor,
     setProjectColor,
     selectedCategories,
@@ -90,11 +105,17 @@ export default function ProjectFormScreen() {
     a.name.localeCompare(b.name),
   );
   const isBusy = isLoading || isImporting;
+  const tagOptions = useMemo<TagSelectorOption[]>(
+    () =>
+      PROJECT_TAGS.map((value) => ({
+        value,
+        label: t(`component:metadata.tag_values.${value}`),
+      })),
+    [t],
+  );
 
   const resolveSelectedCategories = async () => {
     const fetchedCategories = await fetchCategories({
-      filterColumn: "project_type_id",
-      filterValue: projectLabel,
       orderBy: "name",
       ascending: true,
     });
@@ -113,7 +134,8 @@ export default function ProjectFormScreen() {
       name: string;
       description: string;
       options: Option[];
-      project_type_id: string;
+      language: ProjectLanguage;
+      tags: ProjectTag[];
       is_public: boolean;
       favorited_counter: number;
     }[] = [];
@@ -144,7 +166,10 @@ export default function ProjectFormScreen() {
         name: importedCategoryDbName,
         description: category.description,
         options: category.options,
-        project_type_id: projectLabel ?? "",
+        language,
+        // Imported categories inherit the project's metadata while
+        // keeping the tighter category tag limit.
+        tags: getCategoryTagsFromProject(tags),
         is_public: false,
         favorited_counter: 0,
       });
@@ -238,9 +263,12 @@ export default function ProjectFormScreen() {
   const handleSubmit = async () => {
     if (!isFormValid || isSavingProject || isImporting) return;
 
+    const normalizedTags = normalizeProjectTags(tags);
     const projectDraft = {
       name,
       description,
+      language,
+      tags: normalizedTags,
       is_public: false, // Defaulting to private for now
       favorited_counter: 0,
       color: projectColor,
@@ -346,9 +374,48 @@ export default function ProjectFormScreen() {
               />
             </View>
 
+            <LanguageSelector
+              label={t("component:metadata.language_label")}
+              selectedLanguage={language}
+              onChange={setLanguage}
+              color={projectColor}
+            />
+
+            <TagSelector
+              label={t("component:metadata.tags_label")}
+              options={tagOptions}
+              selectedValues={tags}
+              onChange={(values) => {
+                const latestValue = values.find(
+                  (value): value is ProjectTag =>
+                    PROJECT_TAGS.includes(value as ProjectTag) &&
+                    !tags.includes(value as ProjectTag),
+                );
+
+                if (!latestValue) {
+                  setTags(normalizeProjectTags(values));
+                  return;
+                }
+
+                setTags(
+                  toggleProjectTag(
+                    tags,
+                    latestValue as ProjectTag,
+                    PROJECT_TAG_LIMIT,
+                  ),
+                );
+              }}
+              helperText={t("component:metadata.tags_limit", {
+                count: tags.length,
+                max: PROJECT_TAG_LIMIT,
+              })}
+              color={projectColor}
+              maxSelections={PROJECT_TAG_LIMIT}
+              alwaysEnabledValues={["all"]}
+            />
+
             <ProjectJsonImporter
               projectColor={projectColor}
-              projectTypeId={projectLabel ?? ""}
               fallbackProjectName={name}
               onImportingChange={setIsImporting}
               onImported={(draft) => {

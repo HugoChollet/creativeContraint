@@ -71,6 +71,7 @@
   },
   "category_browse": {
     "title": "Parcourir les catégories de {{type}}",
+    "filters_label": "Correspond aux filtres de votre projet",
     "personal_section": "Personnel",
     "published_section": "Publié par vous",
     "community_section": "Communauté",

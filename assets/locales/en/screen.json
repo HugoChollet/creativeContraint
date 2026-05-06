@@ -70,6 +70,7 @@
   },
   "category_browse": {
     "title": "Browse {{type}} Categories",
+    "filters_label": "Matching your project filters",
     "personal_section": "Personal",
     "published_section": "Published by you",
     "community_section": "Community",

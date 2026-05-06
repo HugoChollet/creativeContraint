@@ -45,6 +45,31 @@
   "constraint-set-card": {
     "upload": "Soumettre un projet"
   },
+  "metadata": {
+    "language_label": "Langue",
+    "tags_label": "Tags",
+    "tags_limit": "{{count}} / {{max}} sélectionnés",
+    "languages": {
+      "en": "Anglais",
+      "fr": "Français"
+    },
+    "tag_values": {
+      "all": "Tous",
+      "fiction": "Fiction",
+      "writing": "Écriture",
+      "video": "Vidéo",
+      "game": "Jeu",
+      "music": "Musique",
+      "character": "Personnage",
+      "localisation": "Localisation",
+      "physical": "Physique",
+      "numerical": "Numérique",
+      "photography": "Photographie",
+      "short": "Court",
+      "podcast": "Podcast",
+      "long": "Long"
+    }
+  },
   "project_form": {
     "title": "Créer votre générateur de projet",
     "name_label": "Nom du type projet",

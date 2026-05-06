@@ -1,3 +1,4 @@
+import { ProjectLanguage, ProjectTag } from "@/constants/project-metadata";
 import { Category } from "./category";
 
 export enum Source {
@@ -12,6 +13,8 @@ export interface Project {
   description: string;
   source: Source;
   categories: Category[];
+  language?: ProjectLanguage | null;
+  tags?: ProjectTag[] | null;
   is_public: boolean;
   owner_id: string;
   color?: string;
@@ -39,6 +42,8 @@ export interface ProjectRelation {
   name: string;
   description: string;
   source: Source;
+  language?: ProjectLanguage | null;
+  tags?: ProjectTag[] | null;
   is_public: boolean;
   owner_id: string;
   color?: string;

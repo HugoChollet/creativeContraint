@@ -2,6 +2,10 @@ import { AddButton } from "@/components/generic/add-button";
 import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { Header } from "@/components/generic/header";
 import ProjectSection from "@/components/specific/project/project-section";
+import {
+  getDefaultProjectLanguage,
+  normalizeProjectTags,
+} from "@/constants/project-metadata";
 import { useAuth } from "@/contexts/auth-context";
 import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
@@ -28,7 +32,7 @@ export default function ProjectBrowseScreen() {
   }>();
   const { globalStyles, colors } = useStyles();
   const { session } = useAuth();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const headerHeight = useHeaderHeight();
 
   const userId = session?.user?.id;
@@ -48,7 +52,8 @@ export default function ProjectBrowseScreen() {
         name,
         description,
         options,
-        project_type_id,
+        language,
+        tags,
         is_public,
         owner_id,
         source
@@ -140,6 +145,8 @@ export default function ProjectBrowseScreen() {
     setId,
     setName,
     setDescription,
+    setLanguage,
+    setTags,
     setProjectColor,
     setSelectedCategories,
     resetProjectDraft,
@@ -154,6 +161,8 @@ export default function ProjectBrowseScreen() {
   }) => {
     setName(draft.name);
     setDescription(draft.description);
+    setLanguage(getDefaultProjectLanguage(draft.language ?? i18n.language));
+    setTags(normalizeProjectTags(draft.tags));
     setProjectColor(draft.color ?? "ffff");
     setSelectedCategories(draft.categories);
     setId(isForked ? "" : draft.id);

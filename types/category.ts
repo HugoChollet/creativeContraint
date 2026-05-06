@@ -1,3 +1,4 @@
+import { ProjectLanguage, ProjectTag } from "@/constants/project-metadata";
 import { Option } from "@/types/constraints";
 
 export enum Source {
@@ -11,7 +12,8 @@ export interface Category {
   name: string;
   description: string;
   options: Option[];
-  project_type_id: string;
+  language?: ProjectLanguage | null;
+  tags?: ProjectTag[] | null;
   is_public: boolean;
   owner_id: string;
   source: Source;

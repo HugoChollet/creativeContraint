@@ -1,4 +1,11 @@
+import {
+  getDefaultProjectLanguage,
+  normalizeProjectTags,
+  ProjectLanguage,
+  ProjectTag,
+} from "@/constants/project-metadata";
 import { Category } from "@/types/category";
+import i18n from "@/i18n";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 
 export function getRandomColor() {
@@ -16,6 +23,10 @@ interface ProjectDraftContextType {
   setName: (name: string) => void;
   description: string;
   setDescription: (description: string) => void;
+  language: ProjectLanguage;
+  setLanguage: (language: ProjectLanguage) => void;
+  tags: ProjectTag[];
+  setTags: (tags: ProjectTag[]) => void;
   projectColor: string;
   setProjectColor: (color: string) => void;
   selectedCategories: Category[];
@@ -32,6 +43,10 @@ export function ProjectDraftProvider({ children }: { children: ReactNode }) {
   const [id, setId] = useState("");
   const [name, setName] = useState("New");
   const [description, setDescription] = useState("");
+  const [language, setLanguage] = useState<ProjectLanguage>(
+    getDefaultProjectLanguage(i18n.language),
+  );
+  const [tags, setTags] = useState<ProjectTag[]>([]);
   const [projectColor, setProjectColor] = useState(getRandomColor);
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
 
@@ -51,6 +66,8 @@ export function ProjectDraftProvider({ children }: { children: ReactNode }) {
     setId("");
     setName("New");
     setDescription("");
+    setLanguage(getDefaultProjectLanguage(i18n.language));
+    setTags([]);
     setProjectColor(getRandomColor());
     setSelectedCategories([]);
   };
@@ -64,6 +81,10 @@ export function ProjectDraftProvider({ children }: { children: ReactNode }) {
         setName,
         description,
         setDescription,
+        language,
+        setLanguage,
+        tags,
+        setTags: (nextTags) => setTags(normalizeProjectTags(nextTags)),
         projectColor,
         setProjectColor,
         selectedCategories,

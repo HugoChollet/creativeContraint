@@ -9,6 +9,8 @@ export interface CategoryJSON {
   tabs?: string[];
   tabs_labels?: string[];
   description?: string;
+  language?: string | null;
+  tags?: string[] | null;
 }
 
 export interface ProjectJSON {
@@ -16,5 +18,7 @@ export interface ProjectJSON {
   project_label?: string;
   id: string;
   description?: string;
+  language?: string | null;
+  tags?: string[] | null;
   categories: CategoryJSON[];
 }

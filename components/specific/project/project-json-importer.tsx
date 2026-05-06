@@ -33,7 +33,6 @@ interface ImportedProjectDraft {
 
 interface ProjectJsonImporterProps {
   projectColor: string;
-  projectTypeId: string;
   fallbackProjectName: string;
   onImported: (draft: ImportedProjectDraft) => void;
   onImportingChange?: (isImporting: boolean) => void;
@@ -103,7 +102,6 @@ const readImportedFileContent = async (
 
 const buildImportedDraftCategories = (
   importedProject: ProjectJSON,
-  projectTypeId: string,
 ) => {
   const normalizedCategories = importedProject.categories.flatMap((category) => {
     const categoryName = (category.label ?? category.name ?? "").trim();
@@ -147,7 +145,6 @@ const buildImportedDraftCategories = (
     name: category.name,
     description: category.description,
     options: category.options,
-    project_type_id: projectTypeId,
     is_public: false,
     owner_id: "",
     source: CategorySource.User,
@@ -156,7 +153,6 @@ const buildImportedDraftCategories = (
 
 export default function ProjectJsonImporter({
   projectColor,
-  projectTypeId,
   fallbackProjectName,
   onImported,
   onImportingChange,
@@ -191,10 +187,7 @@ export default function ProjectJsonImporter({
       const selectedAsset = result.assets[0];
       const rawFileContent = await readImportedFileContent(selectedAsset);
       const importedProject = normalizeImportedProject(rawFileContent);
-      const importedCategories = buildImportedDraftCategories(
-        importedProject,
-        projectTypeId,
-      );
+      const importedCategories = buildImportedDraftCategories(importedProject);
 
       if (importedCategories.length === 0) {
         throw new Error("No importable categories found");
