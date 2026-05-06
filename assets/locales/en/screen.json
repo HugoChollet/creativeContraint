@@ -19,6 +19,10 @@
   },
   "home": {
     "project_choice": "Choose a project to start",
+    "selected_project_choice": "Choose one of your saved project generators",
+    "no_selected_projects": "You have no saved project generators yet",
+    "no_selected_projects_hint": "Pick some project generators from the browse screen and they will appear here.",
+    "manage_projects_button": "Manage project generators",
     "book_button": "Write a Fiction Book",
     "music_button": "Compose a song",
     "videointernet_button": "Create Video Content",
