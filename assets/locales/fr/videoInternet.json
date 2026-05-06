@@ -1,6 +1,8 @@
 {
   "project_type": "Internet Video",
   "project_label": "Vidéo pour plateforme",
+  "language": "fr",
+  "tags": ["video", "short", "character"],
   "categories": [
     {
       "name": "Type",

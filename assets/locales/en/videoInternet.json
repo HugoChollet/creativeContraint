@@ -1,5 +1,7 @@
 {
   "project_type": "Internet Video",
+  "language": "en",
+  "tags": ["video", "short", "character"],
   "categories": [
     {
       "name": "Type",

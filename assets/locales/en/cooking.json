@@ -1,5 +1,7 @@
 {
   "project_type": "Cooking",
+  "language": "en",
+  "tags": ["physical", "short"],
   "categories": [
     {
       "name": "Base / Carb",

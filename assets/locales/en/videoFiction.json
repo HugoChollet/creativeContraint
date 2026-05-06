@@ -1,5 +1,7 @@
 {
   "project_type": "Video Fiction",
+  "language": "en",
+  "tags": ["video", "fiction", "long", "character"],
   "categories": [
     {
       "name": "Genre",

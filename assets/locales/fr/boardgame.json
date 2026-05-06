@@ -1,5 +1,7 @@
 {
   "project_type": "Board Game",
+  "language": "fr",
+  "tags": ["game", "physical", "long", "character"],
   "categories": [
     {
       "name": "Game Style & Mechanics",

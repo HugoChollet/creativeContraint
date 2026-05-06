@@ -1,3 +1,10 @@
+import {
+  getCategoryTagsFromProject,
+  getDefaultProjectLanguage,
+  normalizeProjectTags,
+  ProjectLanguage,
+  ProjectTag,
+} from "@/constants/project-metadata";
 import { useStyles } from "@/hooks/use-styles";
 import { Category, Source as CategorySource } from "@/types/category";
 import { Option } from "@/types/constraints";
@@ -28,6 +35,8 @@ export const getImportedCategoryDbName = (
 interface ImportedProjectDraft {
   name?: string;
   description: string;
+  language: ProjectLanguage;
+  tags: ProjectTag[];
   categories: Category[];
 }
 
@@ -71,6 +80,11 @@ const normalizeImportedProject = (rawFileContent: string): ProjectJSON => {
     id: typeof parsed.id === "string" ? parsed.id : "",
     description:
       typeof parsed.description === "string" ? parsed.description : undefined,
+    language:
+      typeof parsed.language === "string" ? parsed.language : undefined,
+    tags: Array.isArray(parsed.tags)
+      ? parsed.tags.filter((tag): tag is string => typeof tag === "string")
+      : undefined,
     categories: parsed.categories,
   };
 };
@@ -103,10 +117,18 @@ const readImportedFileContent = async (
 const buildImportedDraftCategories = (
   importedProject: ProjectJSON,
 ) => {
+  const projectLanguage = getDefaultProjectLanguage(importedProject.language);
+  const projectTags = normalizeProjectTags(importedProject.tags);
   const normalizedCategories = importedProject.categories.flatMap((category) => {
     const categoryName = (category.label ?? category.name ?? "").trim();
     const categoryDescription = category.description?.trim() ?? "";
     const categoryOptions = normalizeOptions(category.options);
+    const categoryLanguage = getDefaultProjectLanguage(
+      category.language ?? importedProject.language,
+    );
+    const categoryTags = getCategoryTagsFromProject(
+      category.tags && category.tags.length > 0 ? category.tags : projectTags,
+    );
 
     if (categoryName.length > 0 && categoryOptions.length > 0) {
       return [
@@ -114,6 +136,8 @@ const buildImportedDraftCategories = (
           name: categoryName,
           description: categoryDescription,
           options: categoryOptions,
+          language: categoryLanguage,
+          tags: categoryTags,
         },
       ];
     }
@@ -135,6 +159,8 @@ const buildImportedDraftCategories = (
           name: [categoryName, subCategoryName].filter(Boolean).join(" - "),
           description: subCategory.description?.trim() ?? categoryDescription,
           options: subCategoryOptions,
+          language: categoryLanguage,
+          tags: categoryTags,
         },
       ];
     });
@@ -145,6 +171,8 @@ const buildImportedDraftCategories = (
     name: category.name,
     description: category.description,
     options: category.options,
+    language: category.language ?? projectLanguage,
+    tags: category.tags ?? getCategoryTagsFromProject(projectTags),
     is_public: false,
     owner_id: "",
     source: CategorySource.User,
@@ -199,6 +227,8 @@ export default function ProjectJsonImporter({
           importedProject.project_type?.trim() ||
           fallbackProjectName,
         description: importedProject.description?.trim() ?? "",
+        language: getDefaultProjectLanguage(importedProject.language),
+        tags: normalizeProjectTags(importedProject.tags),
         categories: importedCategories,
       });
 

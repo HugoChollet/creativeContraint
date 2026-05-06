@@ -423,6 +423,8 @@ export default function ProjectFormScreen() {
                   setName(draft.name);
                 }
                 setDescription(draft.description);
+                setLanguage(draft.language);
+                setTags(draft.tags);
                 setSelectedCategories(draft.categories);
               }}
             />

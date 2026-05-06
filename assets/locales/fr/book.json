@@ -1,6 +1,8 @@
 {
   "project_type": "Book",
   "project_label": "Livre",
+  "language": "fr",
+  "tags": ["writing", "fiction", "long"],
   "categories": [
     {
       "name": "Genre & Setting",

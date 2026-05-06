@@ -1,6 +1,8 @@
 {
   "project_type": "Photography",
   "project_label": "Photographie",
+  "language": "fr",
+  "tags": ["photography", "physical", "short"],
   "categories": [
     {
       "name": "Material & Gear",

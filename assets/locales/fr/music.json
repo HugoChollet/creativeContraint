@@ -1,6 +1,8 @@
 {
   "project_type": "Music",
   "project_label": "Musique",
+  "language": "fr",
+  "tags": ["music", "short"],
   "categories": [
     {
       "name": "Instruments",
