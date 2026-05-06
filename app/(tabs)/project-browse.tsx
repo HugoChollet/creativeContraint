@@ -11,20 +11,17 @@ import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
-import { Project, ProjectRelation, ProjectSectionData } from "@/types/projects";
+import {
+  Project,
+  ProjectRelation,
+  ProjectSectionData,
+  UserProjectSelection,
+} from "@/types/projects";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, View } from "react-native";
-
-interface UserProjectSelection {
-  id: number;
-  user_id: string;
-  project_id: number;
-  source: "official" | "community";
-  categories: string[];
-}
 
 export default function ProjectBrowseScreen() {
   const { type: projectLabel } = useLocalSearchParams<{
@@ -61,9 +58,11 @@ export default function ProjectBrowseScreen() {
     )
   `,
   });
-  const { data: selected } = useCollection<UserProjectSelection>(
-    "user_project_selections",
-  );
+  const {
+    data: selected,
+    addRecord: addProjectSelection,
+    deleteRecords: deleteProjectSelections,
+  } = useCollection<UserProjectSelection>("user_project_selections");
   const { updateRecord: updateCategoryRecord } =
     useCollection<Category>("categories");
 
@@ -113,31 +112,51 @@ export default function ProjectBrowseScreen() {
     [parsedProjects, userId],
   );
 
-  const getSelected = useMemo(() => {
-    if (!selected) return [];
-    return selected.map((sel) => sel.project_id.toString());
+  const persistedSelectedIds = useMemo(() => {
+    if (!selected.length) return [];
+
+    return Array.from(
+      new Set(selected.map((selection) => selection.project_id.toString())),
+    );
   }, [selected]);
+  const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    setSelectedProjectIds(persistedSelectedIds);
+  }, [persistedSelectedIds]);
+
+  const hasSelectionChanges = useMemo(() => {
+    if (selectedProjectIds.length !== persistedSelectedIds.length) {
+      return true;
+    }
+
+    const persistedSelectionSet = new Set(persistedSelectedIds);
+
+    return selectedProjectIds.some(
+      (projectId) => !persistedSelectionSet.has(projectId),
+    );
+  }, [persistedSelectedIds, selectedProjectIds]);
 
   const sections: ProjectSectionData[] = [
     {
       title: t("screen:project_browse.personal_section"),
       data: personalProjects,
-      selected: getSelected,
+      selected: selectedProjectIds,
     },
     {
       title: t("screen:project_browse.published_section"),
       data: publishedProjects,
-      selected: getSelected,
+      selected: selectedProjectIds,
     },
     {
       title: t("screen:project_browse.official_section"),
       data: officialProjects,
-      selected: getSelected,
+      selected: selectedProjectIds,
     },
     {
       title: t("screen:project_browse.community_section"),
       data: communityProjects,
-      selected: getSelected,
+      selected: selectedProjectIds,
     },
   ];
 
@@ -226,6 +245,42 @@ export default function ProjectBrowseScreen() {
     refresh();
   };
 
+  const handleConfirmSelection = async () => {
+    const selectionIdsToDelete = selected.map((selection) => selection.id);
+
+    if (selectionIdsToDelete.length > 0) {
+      const didDelete = await deleteProjectSelections(selectionIdsToDelete);
+
+      if (!didDelete) {
+        console.error("Failed to delete old project selections");
+        return;
+      }
+    }
+
+    const nextSelections = parsedProjects
+      .filter((project) => selectedProjectIds.includes(project.id))
+      .map((project) => ({
+        project_id: project.id,
+        selected_category_ids: project.categories.map((category) => category.id),
+      }));
+
+    if (nextSelections.length > 0) {
+      const insertedSelections = await Promise.all(
+        nextSelections.map((selection) => addProjectSelection(selection)),
+      );
+
+      if (insertedSelections.some((selection) => !selection)) {
+        console.error("Failed to save project selections");
+        return;
+      }
+    }
+
+    router.navigate({
+      pathname: "/",
+      params: { type: projectLabel },
+    });
+  };
+
   return (
     <View style={globalStyles.screenContainer}>
       <Header
@@ -271,6 +326,13 @@ export default function ProjectBrowseScreen() {
               onPublish={(project) => {
                 syncProjectVisibility(project);
               }}
+              onToggleProject={(projectId) => {
+                setSelectedProjectIds((prev) =>
+                  prev.includes(projectId)
+                    ? prev.filter((id) => id !== projectId)
+                    : [...prev, projectId],
+                );
+              }}
             />
           )}
           contentContainerStyle={{
@@ -292,11 +354,8 @@ export default function ProjectBrowseScreen() {
       <ConfirmCancelButton
         color={colors.tint}
         labelConfirm={t("screen:project_browse.confirm_button")}
-        isActive={sections.some((section) => section.selected.length > 0)}
-        onClickConfirm={() => {
-          console.log("validate project generator with name: ", projectLabel);
-          console.log("selection ", sections[1].selected);
-        }}
+        isActive={hasSelectionChanges}
+        onClickConfirm={handleConfirmSelection}
         onClickCancel={() =>
           router.navigate({
             pathname: "/",
