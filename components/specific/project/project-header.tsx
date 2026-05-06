@@ -8,7 +8,7 @@ import Tooltip from "../../generic/tooltip";
 interface ProjectHeaderProps {
   project: ProjectJSON;
   isEnabled?: boolean;
-  onToggleProject: (name: string) => void;
+  onToggleProject: () => void;
   isExpanded: boolean;
   onExpand: () => void;
   color?: string;
@@ -30,7 +30,7 @@ export default function ProjectHeader({
     <Pressable onPress={onExpand} style={globalStyles.headerRow}>
       <Pressable
         onPress={() => {
-          onToggleProject(project.project_type);
+          onToggleProject();
         }}
       >
         <Ionicons

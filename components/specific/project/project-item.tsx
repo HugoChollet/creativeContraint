@@ -3,7 +3,6 @@ import MetadataBadges from "@/components/generic/metadata-badges";
 import { useStyles } from "@/hooks/use-styles";
 import { ProjectJSON } from "@/types/json-objects";
 import { Project } from "@/types/projects";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FlatList, View } from "react-native";
 import Crud, { Action, CrudActionItem } from "../../generic/crud";
@@ -19,6 +18,7 @@ interface ProjectItemProps {
   selected: boolean;
   expanded: boolean;
   toggleExpand: () => void;
+  onToggleProject: () => void;
   type: string;
 }
 
@@ -32,11 +32,11 @@ export default function ProjectItem({
   project,
   expanded,
   toggleExpand,
+  onToggleProject,
   type,
 }: ProjectItemProps) {
   const { globalStyles } = useStyles();
   const { t } = useTranslation();
-  const [isEnabled, setIsEnabled] = useState(selected);
   const isPersonalProject =
     type === t("screen:project_browse.personal_section");
   const isCommunity = type === t("screen:project_browse.community_section");
@@ -83,11 +83,11 @@ export default function ProjectItem({
       <View style={[globalStyles.card, { width: 300 }]}>
         <ProjectHeader
           project={toJSONProject}
-          onToggleProject={() => setIsEnabled(!isEnabled)}
+          onToggleProject={onToggleProject}
           isExpanded={expanded}
           onExpand={() => toggleExpand()}
           color={projectColor}
-          isEnabled={isEnabled}
+          isEnabled={selected}
           subtitle={
             project.categories
               ? t("component:project_item.categories_counter", {

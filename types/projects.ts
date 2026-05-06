@@ -26,6 +26,14 @@ export interface ProjectSectionData {
   selected: string[];
 }
 
+export interface UserProjectSelection {
+  id: string;
+  owner_id: string;
+  project_id: string;
+  selected_category_ids: string[];
+  created_at: string;
+}
+
 export interface ProjectCategoryRelation {
   id: string;
   project_id: string;

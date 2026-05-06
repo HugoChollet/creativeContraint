@@ -10,6 +10,7 @@ interface ProjectSectionProps {
   onEdit: (project: Project) => void;
   onFork: (project: Project) => void;
   onPublish: (cat: Project) => void;
+  onToggleProject: (id: string) => void;
   section: ProjectSectionData;
 }
 
@@ -18,6 +19,7 @@ export default function ProjectSection({
   onEdit,
   onFork,
   onPublish,
+  onToggleProject,
   section,
 }: ProjectSectionProps) {
   const { globalStyles, colors } = useStyles();
@@ -56,6 +58,7 @@ export default function ProjectSection({
             selected={isProjectSelected(project.id.toString())}
             expanded={expandedProject === project.name}
             toggleExpand={() => handleToggleExpand(project.name)}
+            onToggleProject={() => onToggleProject(project.id)}
             type={section.title}
           />
         ))

@@ -1,22 +1,37 @@
 import { useAuth } from "@/contexts/auth-context";
 import { supabase } from "@/lib/supabase";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Alert } from "react-native";
 
-export function useProfile<T>(tableName: string, initialData: T) {
+interface UseProfileOptions {
+  profileId?: string;
+  enabled?: boolean;
+}
+
+export function useProfile<T>(
+  tableName: string,
+  initialData: T,
+  options?: UseProfileOptions,
+) {
   const { session } = useAuth();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<T>(initialData);
+  const initialDataRef = useRef(initialData);
+  const profileId = options?.profileId ?? session?.user?.id;
+  const enabled = options?.enabled ?? true;
 
   const fetchData = useCallback(async () => {
-    if (!session?.user) return;
+    if (!enabled || !profileId) {
+      setData(initialDataRef.current);
+      return;
+    }
 
     try {
       setLoading(true);
       const { data: result, error } = await supabase
         .from(tableName)
         .select("*")
-        .eq("id", session.user.id)
+        .eq("id", profileId)
         .single();
 
       if (error) throw error;
@@ -26,7 +41,7 @@ export function useProfile<T>(tableName: string, initialData: T) {
     } finally {
       setLoading(false);
     }
-  }, [session?.user?.id, tableName]);
+  }, [enabled, profileId, tableName]);
 
   const updateData = async (updates: Partial<T>) => {
     try {
