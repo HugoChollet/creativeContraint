@@ -4,7 +4,6 @@ import {
   getHomeProjectType,
 } from "@/constants/home-projects";
 import { getProjectColor } from "@/constants/theme";
-import { useProfile } from "@/hooks/use-profile";
 import { useStyles } from "@/hooks/use-styles";
 import { Project } from "@/types/projects";
 import { useRouter } from "expo-router";
@@ -22,40 +21,22 @@ export interface HomeProjectRecord {
   source: Project["source"];
 }
 
-interface ProfileRecord {
-  id: string;
-  username: string | null;
-}
-
-const EMPTY_PROFILE: ProfileRecord = {
-  id: "",
-  username: null,
-};
-
 interface HomeProjectButtonProps {
   project: HomeProjectRecord;
   currentUserId?: string;
+  ownerUsername?: string | null;
 }
 
 export default function HomeProjectButton({
   project,
   currentUserId,
+  ownerUsername,
 }: HomeProjectButtonProps) {
   const router = useRouter();
   const { t } = useTranslation();
   const { theme } = useStyles();
   const config = getHomeProjectConfig(project.name);
   const routeType = getHomeProjectType(project.name) ?? project.name;
-  const shouldFetchOwnerProfile =
-    project.source !== "official" && project.owner_id !== currentUserId;
-  const { data: ownerProfile } = useProfile<ProfileRecord>(
-    "profiles",
-    EMPTY_PROFILE,
-    {
-      profileId: project.owner_id,
-      enabled: shouldFetchOwnerProfile,
-    },
-  );
 
   const subtitle =
     project.source === "official"
@@ -63,14 +44,15 @@ export default function HomeProjectButton({
       : project.owner_id === currentUserId
         ? t("screen:home.project_source_you")
         : t("screen:home.project_source_user", {
-            username: ownerProfile.username ?? project.owner_id.slice(0, 8),
+            username: ownerUsername ?? project.owner_id.slice(0, 8),
           });
 
-  const cardColor = getProjectColor({
-    label: routeType,
-    color: project.color,
-    theme,
-  });
+  const cardColor =
+    project.color ??
+    getProjectColor({
+      label: routeType,
+      theme,
+    });
 
   return (
     <MainButton

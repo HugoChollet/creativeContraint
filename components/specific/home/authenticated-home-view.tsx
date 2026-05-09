@@ -5,7 +5,6 @@ import HomeProjectButton, {
 import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
-import { UserProjectSelection } from "@/types/projects";
 import { useRouter } from "expo-router";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -17,33 +16,90 @@ import {
   View,
 } from "react-native";
 
+interface HomeProjectSelectionRecord {
+  id: string;
+  owner_id: string;
+  project_id: string;
+  selected_category_ids: string[];
+  created_at: string;
+  project: HomeProjectRecord | null;
+}
+
+interface ProfileRecord {
+  id: string;
+  username: string | null;
+}
+
 export default function AuthenticatedHomeView() {
   const router = useRouter();
   const { t } = useTranslation();
   const { session } = useAuth();
   const { globalStyles, colors } = useStyles();
 
-  const { data: selections, loading: loadingSelections } =
-    useCollection<UserProjectSelection>("user_project_selections");
-  const { data: projects, loading: loadingProjects } =
-    useCollection<HomeProjectRecord>("projects");
+  const { data: selections, loading } =
+    useCollection<HomeProjectSelectionRecord>("user_project_selections", {
+      select: `
+        id,
+        owner_id,
+        project_id,
+        selected_category_ids,
+        created_at,
+        project:projects!project_id (
+          id,
+          name,
+          description,
+          language,
+          tags,
+          color,
+          is_public,
+          owner_id,
+          source
+        )
+      `,
+    });
 
   const selectedProjects = useMemo(() => {
-    const selectedProjectIds = selections.map((selection) =>
-      selection.project_id.toString(),
-    );
-    const selectedProjectIdSet = new Set(selectedProjectIds);
-    const projectMap = new Map(
-      projects.map((project) => [project.id, project]),
-    );
+    return selections
+      .map((selection) => selection.project)
+      .filter((project): project is NonNullable<typeof project> =>
+        Boolean(project),
+      );
+  }, [selections]);
 
-    return selectedProjectIds
-      .map((projectId) => projectMap.get(projectId))
-      .filter((project): project is HomeProjectRecord => Boolean(project))
-      .filter((project) => selectedProjectIdSet.has(project.id));
-  }, [projects, selections]);
+  const ownerIds = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          selectedProjects
+            .filter(
+              (project) =>
+                project.source !== "official" &&
+                project.owner_id !== session?.user.id,
+            )
+            .map((project) => project.owner_id),
+        ),
+      ),
+    [selectedProjects, session?.user.id],
+  );
 
-  if (loadingSelections || loadingProjects) {
+  const { data: ownerProfiles, loading: loadingProfiles } =
+    useCollection<ProfileRecord>("profiles", {
+      filterColumn: "id",
+      filterValue: ownerIds,
+      filterOperator: "in",
+      orderBy: "username",
+      ascending: true,
+    });
+
+  const ownerProfilesById = useMemo(
+    () =>
+      new Map(
+        ownerProfiles.map((profile) => [profile.id, profile.username ?? null]),
+      ),
+    [ownerProfiles],
+  );
+
+  if (loading || loadingProfiles) {
     return (
       <View style={[globalStyles.screenContainer, styles.centeredContent]}>
         <ActivityIndicator size="large" color={colors.tint} />
@@ -64,6 +120,7 @@ export default function AuthenticatedHomeView() {
               key={project.id}
               project={project}
               currentUserId={session?.user.id}
+              ownerUsername={ownerProfilesById.get(project.owner_id)}
             />
           ))
         ) : (
