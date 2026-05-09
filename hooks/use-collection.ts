@@ -2,8 +2,9 @@ import { useAuth } from "@/contexts/auth-context";
 import { supabase } from "@/lib/supabase";
 import { useCallback, useEffect, useState } from "react";
 
-type FilterValue = string | number | boolean | readonly string[];
-type FilterOperator = "eq" | "overlaps";
+type PrimitiveFilterValue = string | number | boolean;
+type FilterValue = PrimitiveFilterValue | readonly PrimitiveFilterValue[];
+type FilterOperator = "eq" | "overlaps" | "in";
 
 interface UseCollectionOptions {
   select?: string;
@@ -59,7 +60,14 @@ export function useCollection<T extends { id: string | number }>(
         let query = supabase.from(tableName).select(activeSelect);
 
         if (activeFilterColumn && activeFilterValue !== undefined) {
-          if (
+          if (activeFilterOperator === "in" && Array.isArray(activeFilterValue)) {
+            if (activeFilterValue.length === 0) {
+              setData([]);
+              return [];
+            }
+
+            query = query.in(activeFilterColumn, activeFilterValue);
+          } else if (
             activeFilterOperator === "overlaps" &&
             Array.isArray(activeFilterValue)
           ) {
