@@ -24,8 +24,9 @@ import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, Text, View } from "react-native";
 
 export default function CategoryBrowseScreen() {
-  const { mode } = useLocalSearchParams<{
+  const { mode, selectionMode } = useLocalSearchParams<{
     mode?: string;
+    selectionMode?: string;
   }>();
   const { globalStyles, theme, colors } = useStyles();
   const { session } = useAuth();
@@ -34,7 +35,8 @@ export default function CategoryBrowseScreen() {
   const headerHeight = useHeaderHeight();
 
   const userId = session?.user?.id;
-  const isCreation = mode === "creation";
+  const browseMode = mode ?? selectionMode;
+  const isCreation = browseMode === "creation";
   const {
     name,
     selectedCategories,
@@ -56,7 +58,9 @@ export default function CategoryBrowseScreen() {
         theme,
       });
   const screenProjectTitle =
-    (isCreation ? name : activeProjectTitle) ?? activeProjectTitle ?? "Project";
+    (isCreation ? name : activeProjectTitle) ??
+    activeProjectTitle ??
+    "Project";
   const screenProjectColor = isCreation
     ? draftProjectColor
     : activeProjectColor;
@@ -194,7 +198,7 @@ export default function CategoryBrowseScreen() {
               pathname: "/category-form",
               params: {
                 id: 1,
-                type: activeProjectTitle ?? activeProject.routeType,
+                type: screenProjectTitle,
               },
             })
           }
@@ -216,7 +220,7 @@ export default function CategoryBrowseScreen() {
                 pathname: "/lab",
                 params: {
                   id: activeProject.id,
-                  type: activeProjectTitle,
+                  type: screenProjectTitle,
                 },
               })
             : router.back()

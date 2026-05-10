@@ -98,7 +98,7 @@ export default function CategoryFormScreen() {
       router.push({
         pathname: "/category-browse",
         params: {
-          selectionMode: "edition",
+          mode: "edition",
         },
       });
     } else {

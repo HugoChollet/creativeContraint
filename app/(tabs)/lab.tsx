@@ -284,7 +284,7 @@ export default function LabScreen() {
               router.push({
                 pathname: "/category-browse",
                 params: {
-                  selectionMode: "edition",
+                  mode: "edition",
                 },
               })
             }
