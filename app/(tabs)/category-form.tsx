@@ -21,7 +21,7 @@ import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
 import { Option } from "@/types/constraints";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -95,6 +95,12 @@ export default function CategoryFormScreen() {
     if (result) {
       // Success! Go back to the previous screen
       console.log("success");
+      router.push({
+        pathname: "/category-browse",
+        params: {
+          selectionMode: "edition",
+        },
+      });
     } else {
       // You might want to show an Alert here if result is null
       console.error("Failed to save category");
