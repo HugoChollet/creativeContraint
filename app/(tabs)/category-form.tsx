@@ -9,6 +9,7 @@ import TagSelector, {
 import ConstraintCrud from "@/components/specific/constraint/constraint-crud";
 import ConstraintForm from "@/components/specific/constraint/constraint-form";
 import {
+  getCategoryTagsFromProject,
   getDefaultProjectLanguage,
   normalizeProjectTags,
   PROJECT_TAGS,
@@ -25,7 +26,7 @@ import { Category } from "@/types/category";
 import { Option } from "@/types/constraints";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router } from "expo-router";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
@@ -47,13 +48,16 @@ export default function CategoryFormScreen() {
   const { activeProject, loading: loadingHomeProjects } = useHomeProjects();
   const { addRecord, loading: isSaving } =
     useCollection<Category>("categories");
+  const initialProjectLanguage = getDefaultProjectLanguage(
+    activeProject?.language ?? i18n.language,
+  );
+  const initialProjectTags = getCategoryTagsFromProject(activeProject?.tags);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [language, setLanguage] = useState<ProjectLanguage>(
-    getDefaultProjectLanguage(i18n.language),
-  );
-  const [tags, setTags] = useState<ProjectTag[]>([]);
+  const [language, setLanguage] =
+    useState<ProjectLanguage>(initialProjectLanguage);
+  const [tags, setTags] = useState<ProjectTag[]>(initialProjectTags);
   const [editedOption, setEditedOption] = useState<Option | undefined>();
 
   const [isLoading] = useState(false);
@@ -87,6 +91,11 @@ export default function CategoryFormScreen() {
       })),
     [t],
   );
+
+  useEffect(() => {
+    setLanguage(initialProjectLanguage);
+    setTags(initialProjectTags);
+  }, [activeProject?.id, initialProjectLanguage, initialProjectTags]);
 
   const handleSubmit = async () => {
     if (!isFormValid || isSaving) return;
