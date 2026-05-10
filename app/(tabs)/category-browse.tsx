@@ -8,10 +8,13 @@ import {
   matchesProjectTags,
   normalizeProjectTags,
 } from "@/constants/project-metadata";
+import { getProjectColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
+import { useHomeProjects } from "@/contexts/home-projects-context";
 import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
+import { getProjectTitle } from "@/lib/project-data";
 import { Category, CategorySectionData } from "@/types/category";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router, useLocalSearchParams } from "expo-router";
@@ -20,75 +23,71 @@ import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, Text, View } from "react-native";
 
 export default function CategoryBrowseScreen() {
-  const { type: projectLabel, selectionMode } = useLocalSearchParams<{
-    type: string;
-    selectionMode?: string;
+  const { mode } = useLocalSearchParams<{
+    mode?: string;
   }>();
-  const { globalStyles } = useStyles();
+  const { globalStyles, theme, colors } = useStyles();
   const { session } = useAuth();
+  const { activeProject, loading: loadingHomeProjects } = useHomeProjects();
   const { t } = useTranslation();
   const headerHeight = useHeaderHeight();
 
   const userId = session?.user?.id;
-  const isProjectFormSelection = selectionMode === "project-form";
+  const isCreation = mode === "creation";
   const {
+    name,
     selectedCategories,
     toggleSelectedCategory,
-    projectColor,
+    projectColor: draftProjectColor,
     language,
     tags,
   } = useProjectDraft();
+  const activeProjectTitle = activeProject
+    ? getProjectTitle(activeProject.dataSource)
+    : undefined;
+  const activeProjectColor = activeProject?.color
+    ? getProjectColor({
+        color: activeProject.color,
+        theme,
+      })
+    : getProjectColor({
+        label: activeProject?.routeType,
+        theme,
+      });
+  const screenProjectTitle =
+    (isCreation ? name : activeProjectTitle) ?? activeProjectTitle ?? "Project";
+  const screenProjectColor = isCreation
+    ? draftProjectColor
+    : activeProjectColor;
+  // Creation mode reads from the draft project, edition mode reads from the active home project.
+  const currentProjectLanguage = isCreation
+    ? language
+    : activeProject?.language;
+  const currentProjectTags = normalizeProjectTags(
+    isCreation ? tags : (activeProject?.tags ?? undefined),
+  );
+  console.log(currentProjectTags);
+
   const activeSelectedCategories = useMemo(
-    () => (isProjectFormSelection ? selectedCategories : []),
-    [isProjectFormSelection, selectedCategories],
+    () => (isCreation ? selectedCategories : []),
+    [isCreation, selectedCategories],
   );
   const selectedCategoryIds = useMemo(
     () => activeSelectedCategories.map((category) => category.id),
     [activeSelectedCategories],
   );
-  const tagFilterValue = useMemo(() => {
-    if (!isProjectFormSelection) {
-      return undefined;
-    }
-
-    const normalizedTags = normalizeProjectTags(tags);
-
-    console.log("tags : ", normalizedTags);
-
-    if (normalizedTags.length === 0 || normalizedTags.includes("all")) {
-      return undefined;
-    }
-
-    console.log(normalizedTags);
-    return [...normalizedTags, "all"];
-  }, [isProjectFormSelection, tags]);
-
-  const { data, updateRecord, loading } = useCollection<Category>(
-    "categories",
-    {
-      filterColumn: isProjectFormSelection ? "tags" : undefined,
-      filterValue: isProjectFormSelection ? tagFilterValue : undefined,
-      filterOperator: isProjectFormSelection ? "overlaps" : "eq",
-    },
-  );
+  const { data, updateRecord, loading } = useCollection<Category>("categories");
 
   const filteredCategories = useMemo(
     () =>
+      // Keep the tag/language rule in one place so the same OR logic applies everywhere.
       data.filter((item) => {
-        if (!isProjectFormSelection) {
-          return true;
-        }
-
-        if (selectedCategoryIds.includes(item.id)) {
-          return true;
-        }
-
         return (
-          matchesProjectLanguage(item.language, language) &&
-          matchesProjectTags(item.tags, tags)
+          matchesProjectLanguage(item.language, currentProjectLanguage) &&
+          matchesProjectTags(item.tags, currentProjectTags)
         );
       }),
-    [data, isProjectFormSelection, language, selectedCategoryIds, tags],
+    [currentProjectLanguage, currentProjectTags, data],
   );
 
   const personalCategories = useMemo(
@@ -127,24 +126,37 @@ export default function CategoryBrowseScreen() {
     },
   ];
 
+  if (!isCreation && loadingHomeProjects && !activeProject) {
+    return (
+      <View
+        style={[globalStyles.screenContainer, { justifyContent: "center" }]}
+      >
+        <ActivityIndicator size="large" color={colors.tint} />
+      </View>
+    );
+  }
+
   return (
     <View style={globalStyles.screenContainer}>
       <Header
-        title={t("screen:category_browse.title", { type: projectLabel })}
+        title={t("screen:category_browse.title", { type: screenProjectTitle })}
       />
-      {isProjectFormSelection && (
+      {currentProjectTags.length > 0 && (
         <View style={{ marginTop: 16, marginBottom: 8 }}>
           <Text style={globalStyles.label}>
             {t("screen:category_browse.filters_label")}
           </Text>
-          <MetadataBadges tags={tags} color={projectColor} />
+          <MetadataBadges
+            tags={currentProjectTags}
+            color={screenProjectColor}
+          />
         </View>
       )}
       {loading ? (
         <View
           style={[globalStyles.screenContainer, { justifyContent: "center" }]}
         >
-          <ActivityIndicator size="large" color={projectColor} />
+          <ActivityIndicator size="large" color={screenProjectColor} />
         </View>
       ) : (
         <FlatList
@@ -154,13 +166,11 @@ export default function CategoryBrowseScreen() {
             <CategorySection
               key={section.title}
               section={section}
-              projectColor={projectColor}
+              projectColor={screenProjectColor}
               onDelete={() => {}}
               onEdit={() => {}}
               onFork={() => {}}
-              onToggleCategory={
-                isProjectFormSelection ? toggleSelectedCategory : () => {}
-              }
+              onToggleCategory={isCreation ? toggleSelectedCategory : () => {}}
               onPublish={(cat) => {
                 console.log("publish ", cat);
                 updateRecord(cat.id, { is_public: cat.is_public });
@@ -172,37 +182,41 @@ export default function CategoryBrowseScreen() {
           }}
         />
       )}
-      {projectLabel !== "new" && (
+      {!isCreation && activeProject && (
         <AddButton
-          projectColor={projectColor}
+          projectColor={screenProjectColor}
           label={t("screen:category_browse.add_button")}
           onClick={() =>
             router.push({
               pathname: "/category-form",
-              params: { id: 1, type: projectLabel },
+              params: {
+                id: 1,
+                type: activeProjectTitle ?? activeProject.routeType,
+              },
             })
           }
         />
       )}
 
       <ConfirmCancelButton
-        color={projectColor}
+        color={screenProjectColor}
         labelConfirm={t("screen:category_browse.confirm_button")}
         onClickConfirm={() => {
-          if (isProjectFormSelection) {
-            router.navigate({
-              pathname: "/project-form",
-              params: { type: projectLabel },
-            });
+          if (isCreation) {
+            router.back();
             return;
           }
         }}
         onClickCancel={() =>
-          // TODO fix redirection to book
-          router.navigate({
-            pathname: "/lab",
-            params: { type: projectLabel },
-          })
+          activeProject
+            ? router.navigate({
+                pathname: "/lab",
+                params: {
+                  id: activeProject.id,
+                  type: activeProjectTitle,
+                },
+              })
+            : router.back()
         }
       />
     </View>

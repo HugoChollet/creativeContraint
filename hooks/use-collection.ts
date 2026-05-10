@@ -90,7 +90,7 @@ export function useCollection<T extends { id: string | number }>(
 
         if (error) throw error;
 
-        const normalizedData = (result || []) as T[];
+        const normalizedData = (result || []) as unknown as T[];
         setData(normalizedData);
         return normalizedData;
       } catch (error) {
@@ -124,7 +124,7 @@ export function useCollection<T extends { id: string | number }>(
 
       if (error) throw error;
 
-      const normalizedInserted = (inserted || []) as T[];
+      const normalizedInserted = (inserted || []) as unknown as T[];
       setData((prev) => [...normalizedInserted, ...prev]);
       return normalizedInserted;
     } catch (error) {
@@ -180,10 +180,12 @@ export function useCollection<T extends { id: string | number }>(
 
       if (error) throw error;
 
+      const normalizedUpdated = updated as unknown as T;
+
       setData((prev) =>
-        prev.map((item) => ((item as any).id === id ? updated : item)),
+        prev.map((item) => ((item as any).id === id ? normalizedUpdated : item)),
       );
-      return updated as T;
+      return normalizedUpdated;
     } catch (error) {
       console.error("Update error:", error);
       return null;
@@ -204,7 +206,7 @@ export function useCollection<T extends { id: string | number }>(
 
       if (error) throw error;
 
-      const normalizedUpdated = (updated || []) as T[];
+      const normalizedUpdated = (updated || []) as unknown as T[];
       setData((prev) => {
         const updatedMap = new Map(
           normalizedUpdated.map((item) => [item.id, item]),

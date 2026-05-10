@@ -27,8 +27,8 @@ export default function ConstraintSetsScreen() {
   const { session } = useAuth();
 
   useEffect(() => {
-    refresh();
-  }, []);
+    void refresh();
+  }, [refresh]);
 
   useFocusEffect(
     useCallback(() => {
@@ -78,7 +78,9 @@ export default function ConstraintSetsScreen() {
               </Text>
               <TouchableOpacity
                 style={globalStyles.secondaryButton}
-                onPress={refresh}
+                onPress={() => {
+                  void refresh();
+                }}
               >
                 <Text
                   style={[globalStyles.secondaryButtonText, { padding: 16 }]}

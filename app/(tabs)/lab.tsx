@@ -6,8 +6,9 @@ import CategorySelector from "@/components/specific/category/category-selector";
 import GeneratedConstraintsSheet from "@/components/specific/generated-constraints-sheet";
 import { PresetMode } from "@/components/specific/status-selector";
 import { getProjectColor } from "@/constants/theme";
+import { useHomeProjects } from "@/contexts/home-projects-context";
 import { useStyles } from "@/hooks/use-styles";
-import i18nInstance from "@/i18n";
+import { getBundledProjectData, getProjectTitle } from "@/lib/project-data";
 import {
   GeneratedConstraints,
   IdSetConstraint,
@@ -26,87 +27,110 @@ import {
   View,
 } from "react-native";
 
-export const typeMapping: Record<string, string> = {
-  music: "music",
-  book: "book",
-  photography: "photo",
-  videofiction: "videoFiction",
-  videointernet: "videoInternet",
-  cooking: "cooking",
-  boardgame: "boardGame",
+const buildInitialSelectedState = (projectData: ProjectJSON): SelectedState => {
+  const activeCategories: Record<string, boolean> = {};
+  const selectedOptions: Record<string, boolean> = {};
+
+  // Lab keeps its toggles separate from the source project, so everything starts enabled here.
+  projectData.categories.forEach((category: CategoryJSON) => {
+    activeCategories[category.name] = !category.disabled;
+
+    if (category.options) {
+      category.options.forEach((option) => {
+        selectedOptions[`${category.name}-${option.id}`] = true;
+      });
+
+      return;
+    }
+
+    category.sub_categories?.forEach((subCategory) => {
+      subCategory.options.forEach((option) => {
+        selectedOptions[`${category.name}-${subCategory.name}-${option.id}`] =
+          true;
+      });
+    });
+  });
+
+  return {
+    activeCategories,
+    selectedOptions,
+  };
 };
 
 export default function LabScreen() {
-  const { type } = useLocalSearchParams<{ id: string; type: string }>();
+  const { id, type } = useLocalSearchParams<{ id?: string; type?: string }>();
   const [modalVisible, setModalVisible] = useState(false);
   const [randomConstraints, setRandomConstraints] =
     useState<GeneratedConstraints>({});
   const [idSetConstraint, setIdSetConstraint] = useState<IdSetConstraint>();
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
-  const { t } = useTranslation();
-  const { globalStyles, theme } = useStyles();
+  const { t, i18n } = useTranslation();
+  const { activeProject, projects, loading, setActiveProjectId } =
+    useHomeProjects();
+  const { globalStyles, theme, colors } = useStyles();
   const router = useRouter();
+  const routeProjectId = Array.isArray(id) ? id[0] : id;
+  const routeType = Array.isArray(type) ? type[0] : type;
 
-  const rawType = (
-    Array.isArray(type) ? type[0] : (type ?? "book")
-  ).toLowerCase();
-  const typeKey = typeMapping[rawType] || "book";
+  const contextProject = useMemo(() => {
+    // Prefer the DB-backed project selected on Home, but keep route-based fallback support.
+    if (routeProjectId && routeProjectId !== "1") {
+      return projects.find((project) => project.id === routeProjectId) ?? null;
+    }
 
-  const dataSource = useMemo(() => {
-    const data = i18nInstance.getResourceBundle(i18nInstance.language, typeKey);
-    if (!data)
-      console.error(
-        `Namespace "${typeKey}" does not exist for "${i18nInstance.language}"`,
-      );
-    return data as ProjectJSON;
-  }, [i18nInstance.language, typeKey]);
-
-  const projectColor = getProjectColor({
-    label: dataSource.project_type,
-    theme,
-  });
-
-  // Helper to build initial state where everything is ON
-  const getInitialState = (): SelectedState => {
-    const activeCats: Record<string, boolean> = {};
-    const selOpts: Record<string, boolean> = {};
-
-    dataSource.categories.forEach((cat: CategoryJSON) => {
-      if (cat.disabled) {
-        activeCats[cat.name] = false;
-      } else {
-        // Enable the category by default
-        activeCats[cat.name] = true;
-      }
-
-      if (cat.options) {
-        // Enable every option by default
-        cat.options.forEach((opt) => {
-          selOpts[`${cat.name}-${opt.id}`] = true;
-        });
-      } else if (cat.sub_categories) {
-        // Enable every subcategory by default
-        cat.sub_categories.forEach((subCat) => {
-          subCat.options.forEach((opt) => {
-            selOpts[`${cat.name}-${subCat.name}-${opt.id}`] = true;
-          });
-        });
-      }
-    });
-
-    return {
-      activeCategories: activeCats,
-      selectedOptions: selOpts,
-    };
-  };
-
-  const [selectedItems, setSelectedItems] =
-    useState<SelectedState>(getInitialState);
+    return activeProject;
+  }, [activeProject, projects, routeProjectId]);
 
   useEffect(() => {
-    setSelectedItems(getInitialState());
+    if (contextProject && contextProject.id !== activeProject?.id) {
+      setActiveProjectId(contextProject.id);
+    }
+  }, [activeProject?.id, contextProject, setActiveProjectId]);
+
+  const shouldWaitForContextProject =
+    routeProjectId !== undefined &&
+    routeProjectId !== "1" &&
+    loading &&
+    !contextProject;
+
+  const fallbackProjectData = useMemo(
+    () =>
+      getBundledProjectData({
+        projectType: routeType,
+        language: i18n.language,
+      }),
+    [i18n.language, routeType],
+  );
+
+  const dataSource = contextProject?.dataSource ?? fallbackProjectData;
+  const projectTitle = getProjectTitle(dataSource);
+
+  const projectColor = contextProject?.color
+    ? getProjectColor({
+        color: contextProject.color,
+        theme,
+      })
+    : getProjectColor({
+        label: contextProject?.routeType ?? dataSource.project_type,
+        theme,
+      });
+
+  const initialSelectedItems = useMemo(
+    () => buildInitialSelectedState(dataSource),
+    [dataSource],
+  );
+
+  const [selectedItems, setSelectedItems] =
+    useState<SelectedState>(initialSelectedItems);
+
+  useEffect(() => {
+    // Switching project source should fully reset the Lab selection UI.
+    setSelectedItems(initialSelectedItems);
     setRandomConstraints({});
-  }, [type]);
+    setIdSetConstraint(undefined);
+    setExpandedCategory(null);
+    setModalVisible(false);
+  }, [initialSelectedItems]);
 
   const toggleCategory = (name: string) => {
     setSelectedItems((prev) => ({
@@ -217,14 +241,24 @@ export default function LabScreen() {
     });
   };
 
-  if (!dataSource)
-    return <ActivityIndicator size="large" color={projectColor} />;
+  if (shouldWaitForContextProject) {
+    return (
+      <View
+        style={[
+          globalStyles.screenContainer,
+          { justifyContent: "center", alignItems: "center" },
+        ]}
+      >
+        <ActivityIndicator size="large" color={colors.tint} />
+      </View>
+    );
+  }
 
   return (
     <>
       <Header
         title={t("screen:lab.lab_title", {
-          type: dataSource.project_label ?? dataSource.project_type,
+          type: projectTitle,
         })}
         color={projectColor}
       />
@@ -249,7 +283,9 @@ export default function LabScreen() {
             onClick={() =>
               router.push({
                 pathname: "/category-browse",
-                params: { id: 1, type: dataSource.project_type },
+                params: {
+                  selectionMode: "edition",
+                },
               })
             }
           />
@@ -273,7 +309,7 @@ export default function LabScreen() {
             bottom={-24}
             right={120}
             label={t("screen:lab.generate_button", {
-              type: dataSource.project_type,
+              type: projectTitle,
             })}
           />
         </View>
@@ -286,7 +322,7 @@ export default function LabScreen() {
             color={projectColor}
             dataSource={dataSource}
             constraintSetIds={{
-              project_type: dataSource.project_type,
+              project_type: projectTitle,
               constraints: idSetConstraint,
             }}
           />

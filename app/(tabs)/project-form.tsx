@@ -441,8 +441,7 @@ export default function ProjectFormScreen() {
                 router.push({
                   pathname: "/category-browse",
                   params: {
-                    type: "new",
-                    selectionMode: "project-form",
+                    selectionMode: "creation",
                   },
                 })
               }

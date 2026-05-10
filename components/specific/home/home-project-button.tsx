@@ -1,42 +1,30 @@
 import { MainButton } from "@/components/generic/main-button";
 import {
   getHomeProjectConfig,
-  getHomeProjectType,
 } from "@/constants/home-projects";
+import {
+  HomeContextProject,
+  useHomeProjects,
+} from "@/contexts/home-projects-context";
 import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
-import { Project } from "@/types/projects";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 
-export interface HomeProjectRecord {
-  id: string;
-  name: string;
-  description: string;
-  language?: Project["language"];
-  tags?: Project["tags"];
-  color?: string;
-  is_public: boolean;
-  owner_id: string;
-  source: Project["source"];
-}
-
 interface HomeProjectButtonProps {
-  project: HomeProjectRecord;
+  project: HomeContextProject;
   currentUserId?: string;
-  ownerUsername?: string | null;
 }
 
 export default function HomeProjectButton({
   project,
   currentUserId,
-  ownerUsername,
 }: HomeProjectButtonProps) {
   const router = useRouter();
   const { t } = useTranslation();
   const { theme } = useStyles();
+  const { setActiveProjectId } = useHomeProjects();
   const config = getHomeProjectConfig(project.name);
-  const routeType = getHomeProjectType(project.name) ?? project.name;
 
   const subtitle =
     project.source === "official"
@@ -44,13 +32,13 @@ export default function HomeProjectButton({
       : project.owner_id === currentUserId
         ? t("screen:home.project_source_you")
         : t("screen:home.project_source_user", {
-            username: ownerUsername ?? project.owner_id.slice(0, 8),
+            username: project.ownerUsername ?? project.owner_id.slice(0, 8),
           });
 
   const cardColor =
     project.color ??
     getProjectColor({
-      label: routeType,
+      label: project.routeType,
       theme,
     });
 
@@ -62,12 +50,14 @@ export default function HomeProjectButton({
       tags={project.tags}
       color={cardColor}
       image={config?.image}
-      onPress={() =>
+      onPress={() => {
+        // Lab is a sibling route, so we store the selected project in shared context first.
+        setActiveProjectId(project.id);
         router.push({
           pathname: "/lab",
-          params: { id: project.id, type: routeType },
-        })
-      }
+          params: { id: project.id, type: project.routeType },
+        });
+      }}
     />
   );
 }

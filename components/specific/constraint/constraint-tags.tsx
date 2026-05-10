@@ -1,33 +1,24 @@
 import { getProjectColor } from "@/constants/theme";
 import { useProjectTranslations } from "@/hooks/use-project-translations";
 import { useStyles } from "@/hooks/use-styles";
+import { getBundledProjectData } from "@/lib/project-data";
 import { SavedConstraintSet } from "@/types/constraints";
-import { ProjectJSON } from "@/types/json-objects";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 import Tooltip from "../../generic/tooltip";
-
-const typeMapping: Record<string, string> = {
-  music: "music",
-  book: "book",
-  photography: "photo",
-  "video fiction": "videoFiction",
-  "internet video": "videoInternet",
-  cooking: "cooking",
-};
 
 export function ConstraintsTags({ item }: { item: SavedConstraintSet }) {
   const { i18n } = useTranslation();
   const { globalStyles, colors, theme } = useStyles();
   const solidColor = getProjectColor({ label: item.project_type, theme });
 
-  const typeKey = typeMapping[item.project_type.toLowerCase()] || "book";
-
   const dataSource = useMemo(() => {
-    const data = i18n.getResourceBundle(i18n.language, typeKey) as ProjectJSON;
-    return data || { constraints: [] };
-  }, [i18n.language, typeKey]);
+    return getBundledProjectData({
+      projectType: item.project_type,
+      language: i18n.language,
+    });
+  }, [i18n.language, item.project_type]);
 
   const translatedConstraints = useProjectTranslations(
     item.constraints,

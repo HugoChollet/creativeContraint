@@ -1,8 +1,11 @@
 import { getProjectColor } from "@/constants/theme";
 import { useProjectTranslations } from "@/hooks/use-project-translations";
 import { useStyles } from "@/hooks/use-styles";
+import {
+  getBundledProjectData,
+  getProjectTitle,
+} from "@/lib/project-data";
 import { SavedConstraintSet } from "@/types/constraints";
-import { ProjectJSON } from "@/types/json-objects";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -10,15 +13,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Tooltip from "../../generic/tooltip";
 import { DifficultyIndicator } from "../difficulty-indicator";
 import ShareConstraintButton from "../share-constraint-set";
-
-const typeMapping: Record<string, string> = {
-  music: "music",
-  book: "book",
-  photography: "photo",
-  "video fiction": "videoFiction",
-  "internet video": "videoInternet",
-  cooking: "cooking",
-};
 
 export function ConstraintsSetCard({
   item,
@@ -33,12 +27,12 @@ export function ConstraintsSetCard({
   const { globalStyles, colors, theme } = useStyles();
   const solidColor = getProjectColor({ label: item.project_type, theme });
 
-  const typeKey = typeMapping[item.project_type.toLowerCase()] || "book";
-
   const dataSource = useMemo(() => {
-    const data = i18n.getResourceBundle(i18n.language, typeKey) as ProjectJSON;
-    return data || { constraints: [] };
-  }, [i18n.language, typeKey]);
+    return getBundledProjectData({
+      projectType: item.project_type,
+      language: i18n.language,
+    });
+  }, [i18n.language, item.project_type]);
 
   const translatedConstraints = useProjectTranslations(
     item.constraints,
@@ -63,12 +57,12 @@ export function ConstraintsSetCard({
       <View style={styles.headerContainer}>
         <DifficultyIndicator difficultyIndicator={item.difficulty} />
         <Text style={[globalStyles.title, { color: solidColor }]}>
-          {(dataSource.project_label ?? dataSource.project_type).toUpperCase()}
+          {getProjectTitle(dataSource).toUpperCase()}
         </Text>
 
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
           <ShareConstraintButton
-            project_type={dataSource.project_label ?? item.project_type}
+            project_type={getProjectTitle(dataSource)}
             constraints={translatedConstraints}
             difficulty={item.difficulty}
             color={solidColor}
