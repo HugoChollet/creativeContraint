@@ -24,9 +24,10 @@ import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, Text, View } from "react-native";
 
 export default function CategoryBrowseScreen() {
-  const { mode, selectionMode } = useLocalSearchParams<{
+  const { mode, selectionMode, type } = useLocalSearchParams<{
     mode?: string;
     selectionMode?: string;
+    type?: string;
   }>();
   const { globalStyles, theme, colors } = useStyles();
   const { session } = useAuth();
@@ -58,9 +59,7 @@ export default function CategoryBrowseScreen() {
         theme,
       });
   const screenProjectTitle =
-    (isCreation ? name : activeProjectTitle) ??
-    activeProjectTitle ??
-    "Project";
+    (isCreation ? name : activeProjectTitle) ?? activeProjectTitle ?? "Project";
   const screenProjectColor = isCreation
     ? draftProjectColor
     : activeProjectColor;
@@ -210,20 +209,45 @@ export default function CategoryBrowseScreen() {
         labelConfirm={t("screen:category_browse.confirm_button")}
         onClickConfirm={() => {
           if (isCreation) {
-            router.back();
+            router.navigate({
+              pathname: "/project-form",
+              params: {
+                type, // TODO refacto to prevent to have send param back to the original screen
+              },
+            });
             return;
           }
+
+          if (activeProject) {
+            router.navigate({
+              pathname: "/lab",
+              params: {
+                id: activeProject.id,
+                type: screenProjectTitle,
+              },
+            });
+            return;
+          }
+
+          router.back();
         }}
         onClickCancel={() =>
-          activeProject
+          isCreation
             ? router.navigate({
-                pathname: "/lab",
+                pathname: "/project-form",
                 params: {
-                  id: activeProject.id,
-                  type: screenProjectTitle,
+                  type,
                 },
               })
-            : router.back()
+            : activeProject
+              ? router.navigate({
+                  pathname: "/lab",
+                  params: {
+                    id: activeProject.id,
+                    type: screenProjectTitle,
+                  },
+                })
+              : router.back()
         }
       />
     </View>

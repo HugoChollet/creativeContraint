@@ -442,6 +442,7 @@ export default function ProjectFormScreen() {
                   pathname: "/category-browse",
                   params: {
                     mode: "creation",
+                    type: projectLabel,
                   },
                 })
               }
