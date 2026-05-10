@@ -1,3 +1,4 @@
+import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import Description from "@/components/generic/description";
 import { Header } from "@/components/generic/header";
 import LanguageSelector from "@/components/generic/language-selector";
@@ -16,12 +17,14 @@ import {
   toggleProjectTag,
 } from "@/constants/project-metadata";
 import { getProjectColor } from "@/constants/theme";
+import { useHomeProjects } from "@/contexts/home-projects-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
+import { getProjectTitle } from "@/lib/project-data";
 import { Category } from "@/types/category";
 import { Option } from "@/types/constraints";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
 import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -31,7 +34,6 @@ import {
   ScrollView,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -39,13 +41,10 @@ const ConstraintRequire = { MIN_OPTIONS: 2, NAME_LENGTH_MIN: 2 };
 const CATEGORY_TAG_LIMIT = 2;
 
 export default function CategoryFormScreen() {
-  const { type: projectLabel } = useLocalSearchParams<{
-    type: string;
-  }>();
-
   const { globalStyles, colors, theme } = useStyles();
   const { t, i18n } = useTranslation();
   const headerHeight = useHeaderHeight();
+  const { activeProject, loading: loadingHomeProjects } = useHomeProjects();
   const { addRecord, loading: isSaving } =
     useCollection<Category>("categories");
 
@@ -61,9 +60,22 @@ export default function CategoryFormScreen() {
 
   const [options, setOptions] = useState<Option[]>([]);
 
-  const projectColor = getProjectColor({ label: projectLabel, theme });
+  const projectTitle = activeProject
+    ? getProjectTitle(activeProject.dataSource)
+    : "Project";
+  const projectColor = activeProject?.color
+    ? getProjectColor({
+        color: activeProject.color,
+        theme,
+      })
+    : getProjectColor({
+        label: activeProject?.routeType,
+        theme,
+      });
   const projectColorSoft = getProjectColor({
-    label: projectLabel,
+    ...(activeProject?.color
+      ? { color: activeProject.color }
+      : { label: activeProject?.routeType }),
     opacity: 0.2,
     theme,
   });
@@ -112,10 +124,20 @@ export default function CategoryFormScreen() {
     options.length >= ConstraintRequire.MIN_OPTIONS &&
     !isLoading;
 
+  if (loadingHomeProjects && !activeProject) {
+    return (
+      <View
+        style={[globalStyles.screenContainer, { justifyContent: "center" }]}
+      >
+        <ActivityIndicator size="large" color={colors.tint} />
+      </View>
+    );
+  }
+
   return (
     <>
       <Header
-        title={t("screen:category_form.title", { type: projectLabel })}
+        title={t("screen:category_form.title", { type: projectTitle })}
         color={projectColor}
       />
       <View style={globalStyles.screenContainer}>
@@ -241,26 +263,21 @@ export default function CategoryFormScreen() {
           </ScrollView>
         </KeyboardAvoidingView>
 
-        <View style={{ paddingTop: 12, paddingBottom: 20 }}>
-          <TouchableOpacity
-            style={[
-              globalStyles.secondaryButton,
-              {
-                backgroundColor: isFormValid ? projectColor : colors.disable,
+        <ConfirmCancelButton
+          color={projectColor}
+          labelConfirm={t("screen:category_form.submit_button")}
+          isActive={isFormValid}
+          isLoading={isSaving || isLoading}
+          onClickConfirm={handleSubmit}
+          onClickCancel={() =>
+            router.navigate({
+              pathname: "/category-browse",
+              params: {
+                mode: "edition",
               },
-            ]}
-            onPress={() => handleSubmit()}
-            disabled={!isFormValid}
-          >
-            {isLoading ? (
-              <ActivityIndicator color={colors.invertedText} />
-            ) : (
-              <Text style={globalStyles.secondaryButtonText}>
-                {t("screen:category_form.submit_button")}
-              </Text>
-            )}
-          </TouchableOpacity>
-        </View>
+            })
+          }
+        />
       </View>
     </>
   );

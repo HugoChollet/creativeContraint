@@ -197,7 +197,6 @@ export default function CategoryBrowseScreen() {
               pathname: "/category-form",
               params: {
                 id: 1,
-                type: screenProjectTitle,
               },
             })
           }
