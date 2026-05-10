@@ -41,6 +41,35 @@ import {
 const ConstraintRequire = { MIN_OPTIONS: 2, NAME_LENGTH_MIN: 2 };
 const CATEGORY_TAG_LIMIT = 2;
 
+const cleanCategoryOptions = (values: Option[]) =>
+  values
+    .map((option) => ({
+      ...option,
+      value: option.value.trim(),
+      description: option.description?.trim() || undefined,
+    }))
+    .filter((option) => option.value.length > 0);
+
+const cleanCategoryDraft = ({
+  name,
+  description,
+  options,
+  language,
+  tags,
+}: {
+  name: string;
+  description: string;
+  options: Option[];
+  language: ProjectLanguage;
+  tags: readonly string[];
+}) => ({
+  name: name.trim(),
+  description: description.trim(),
+  options: cleanCategoryOptions(options),
+  language: getDefaultProjectLanguage(language),
+  tags: normalizeProjectTags(tags),
+});
+
 export default function CategoryFormScreen() {
   const { globalStyles, colors, theme } = useStyles();
   const { t, i18n } = useTranslation();
@@ -55,8 +84,9 @@ export default function CategoryFormScreen() {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [language, setLanguage] =
-    useState<ProjectLanguage>(initialProjectLanguage);
+  const [language, setLanguage] = useState<ProjectLanguage>(
+    initialProjectLanguage,
+  );
   const [tags, setTags] = useState<ProjectTag[]>(initialProjectTags);
   const [editedOption, setEditedOption] = useState<Option | undefined>();
 
@@ -91,6 +121,17 @@ export default function CategoryFormScreen() {
       })),
     [t],
   );
+  const cleanedDraft = useMemo(
+    () =>
+      cleanCategoryDraft({
+        name,
+        description,
+        options,
+        language,
+        tags,
+      }),
+    [description, language, name, options, tags],
+  );
 
   useEffect(() => {
     setLanguage(initialProjectLanguage);
@@ -100,13 +141,12 @@ export default function CategoryFormScreen() {
   const handleSubmit = async () => {
     if (!isFormValid || isSaving) return;
 
-    const normalizedTags = normalizeProjectTags(tags);
     const newCategory = {
-      name,
-      description,
-      options, // This will be saved as JSONB in Supabase
-      language,
-      tags: normalizedTags,
+      name: cleanedDraft.name,
+      description: cleanedDraft.description,
+      options: cleanedDraft.options,
+      language: cleanedDraft.language,
+      tags: cleanedDraft.tags,
       is_public: false, // Defaulting to private for now
       favorited_counter: 0,
     };
@@ -129,8 +169,8 @@ export default function CategoryFormScreen() {
   };
 
   const isFormValid =
-    name.length > ConstraintRequire.NAME_LENGTH_MIN &&
-    options.length >= ConstraintRequire.MIN_OPTIONS &&
+    cleanedDraft.name.length > ConstraintRequire.NAME_LENGTH_MIN &&
+    cleanedDraft.options.length >= ConstraintRequire.MIN_OPTIONS &&
     !isLoading;
 
   if (loadingHomeProjects && !activeProject) {
@@ -278,14 +318,7 @@ export default function CategoryFormScreen() {
           isActive={isFormValid}
           isLoading={isSaving || isLoading}
           onClickConfirm={handleSubmit}
-          onClickCancel={() =>
-            router.navigate({
-              pathname: "/category-browse",
-              params: {
-                mode: "edition",
-              },
-            })
-          }
+          onClickCancel={() => router.back()}
         />
       </View>
     </>

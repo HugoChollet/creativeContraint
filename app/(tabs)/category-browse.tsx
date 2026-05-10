@@ -18,8 +18,8 @@ import { useStyles } from "@/hooks/use-styles";
 import { getProjectTitle } from "@/lib/project-data";
 import { Category, CategorySectionData } from "@/types/category";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { router, useLocalSearchParams } from "expo-router";
-import React, { useMemo } from "react";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import React, { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, Text, View } from "react-native";
 
@@ -81,7 +81,14 @@ export default function CategoryBrowseScreen() {
     () => activeSelectedCategories.map((category) => category.id),
     [activeSelectedCategories],
   );
-  const { data, updateRecord, loading } = useCollection<Category>("categories");
+  const { data, updateRecord, refresh, loading } =
+    useCollection<Category>("categories");
+
+  useFocusEffect(
+    useCallback(() => {
+      refresh();
+    }, [refresh]),
+  );
 
   const filteredCategories = useMemo(
     () =>
