@@ -4,6 +4,7 @@ import { Header } from "@/components/generic/header";
 import MetadataBadges from "@/components/generic/metadata-badges";
 import CategorySection from "@/components/specific/category/category-section";
 import {
+  isProjectLanguage,
   matchesProjectLanguage,
   matchesProjectTags,
   normalizeProjectTags,
@@ -66,7 +67,8 @@ export default function CategoryBrowseScreen() {
   const currentProjectTags = normalizeProjectTags(
     isCreation ? tags : (activeProject?.tags ?? undefined),
   );
-  console.log(currentProjectTags);
+  const hasActiveFilters =
+    isProjectLanguage(currentProjectLanguage) || currentProjectTags.length > 0;
 
   const activeSelectedCategories = useMemo(
     () => (isCreation ? selectedCategories : []),
@@ -141,12 +143,13 @@ export default function CategoryBrowseScreen() {
       <Header
         title={t("screen:category_browse.title", { type: screenProjectTitle })}
       />
-      {currentProjectTags.length > 0 && (
+      {hasActiveFilters && (
         <View style={{ marginTop: 16, marginBottom: 8 }}>
           <Text style={globalStyles.label}>
             {t("screen:category_browse.filters_label")}
           </Text>
           <MetadataBadges
+            language={currentProjectLanguage}
             tags={currentProjectTags}
             color={screenProjectColor}
           />

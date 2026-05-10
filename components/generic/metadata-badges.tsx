@@ -1,10 +1,15 @@
-import { normalizeProjectTags } from "@/constants/project-metadata";
+import {
+  getProjectLanguageFlag,
+  isProjectLanguage,
+  normalizeProjectTags,
+} from "@/constants/project-metadata";
 import { useStyles } from "@/hooks/use-styles";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 
 interface MetadataBadgesProps {
+  language?: string | null;
   tags?: readonly string[] | null;
   color?: string;
   textColor?: string;
@@ -20,6 +25,7 @@ const formatFallbackLabel = (value: string) =>
     .join(" ");
 
 export default function MetadataBadges({
+  language,
   tags,
   color,
   textColor,
@@ -29,11 +35,25 @@ export default function MetadataBadges({
   const { globalStyles, colors } = useStyles();
   const normalizedTags = normalizeProjectTags(tags);
   const badgeLabels = [
-    ...normalizedTags.map((tag) =>
-      t(`component:metadata.tag_values.${tag}`, {
+    ...(isProjectLanguage(language)
+      ? [
+          {
+            key: `language-${language}`,
+            label: `${getProjectLanguageFlag(language)} ${t(
+              `component:metadata.languages.${language}`,
+              {
+                defaultValue: language.toUpperCase(),
+              },
+            )}`,
+          },
+        ]
+      : []),
+    ...normalizedTags.map((tag) => ({
+      key: `tag-${tag}`,
+      label: t(`component:metadata.tag_values.${tag}`, {
         defaultValue: formatFallbackLabel(tag),
       }),
-    ),
+    })),
   ];
 
   if (badgeLabels.length === 0) {
@@ -42,9 +62,9 @@ export default function MetadataBadges({
 
   return (
     <View style={styles.badgesRow}>
-      {badgeLabels.map((label) => (
+      {badgeLabels.map((badge) => (
         <View
-          key={label}
+          key={badge.key}
           style={[
             globalStyles.tag,
             styles.badge,
@@ -62,7 +82,7 @@ export default function MetadataBadges({
               { color: textColor ?? colors.textDiscreet },
             ]}
           >
-            {label}
+            {badge.label}
           </Text>
         </View>
       ))}
