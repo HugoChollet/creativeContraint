@@ -266,6 +266,7 @@ const contrastPalette = {
 } as const;
 
 export const getContrastingColor = (
+  // TODO add similar function for colored text on background
   backgroundColor?: string | null,
   variant: ContrastColorVariant = "primary",
   luminancePivot = DEFAULT_DARK_COLOR_LUMINANCE_PIVOT,

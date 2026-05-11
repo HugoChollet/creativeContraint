@@ -1,3 +1,4 @@
+import { getContrastingColor } from "@/constants/theme";
 import {
   getProjectLanguageFlag,
   PROJECT_LANGUAGES,
@@ -51,7 +52,9 @@ export default function LanguageSelector({
                   globalStyles.text,
                   styles.optionLabel,
                   {
-                    color: isSelected ? colors.invertedText : colors.text,
+                    color: isSelected
+                      ? getContrastingColor(activeColor, "primary")
+                      : colors.text,
                   },
                 ]}
               >

@@ -3,7 +3,7 @@ import {
   MediaPicker,
   MediaPickerResult,
 } from "@/components/specific/pickers/media-pickers";
-import { getProjectColor } from "@/constants/theme";
+import { getContrastingColor, getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import { supabase } from "@/lib/supabase";
 import { publicationService } from "@/services/publication.service";
@@ -46,8 +46,12 @@ export default function PublicationFormScreen() {
     opacity: 0.2,
     theme,
   });
-
   const isFormValid = title.length > 2 && media.isValid && !isLoading;
+  const submitButtonColor = isFormValid ? projectColor : colors.disable;
+  const submitButtonTextColor = getContrastingColor(
+    submitButtonColor,
+    "primary",
+  );
 
   const handlePublish = async () => {
     if (!isFormValid) return;
@@ -147,7 +151,7 @@ export default function PublicationFormScreen() {
           style={[
             globalStyles.secondaryButton,
             {
-              backgroundColor: isFormValid ? projectColor : colors.disable,
+              backgroundColor: submitButtonColor,
               marginTop: 10,
             },
           ]}
@@ -155,9 +159,14 @@ export default function PublicationFormScreen() {
           disabled={!isFormValid}
         >
           {isLoading ? (
-            <ActivityIndicator color={colors.invertedText} />
+            <ActivityIndicator color={submitButtonTextColor} />
           ) : (
-            <Text style={globalStyles.secondaryButtonText}>
+            <Text
+              style={[
+                globalStyles.secondaryButtonText,
+                { color: submitButtonTextColor },
+              ]}
+            >
               {t("screen:submit.publish_button")}
             </Text>
           )}

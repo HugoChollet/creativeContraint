@@ -1,3 +1,4 @@
+import { getContrastingColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
@@ -15,6 +16,8 @@ function Tooltip({ title, description, color }: TooltipProps) {
   const [visible, setVisible] = useState(false);
   const { globalStyles, colors } = useStyles();
   const { t } = useTranslation();
+  const actionColor = color ?? "red";
+  const actionTextColor = getContrastingColor(actionColor, "primary");
 
   return (
     <View style={styles.container}>
@@ -42,11 +45,13 @@ function Tooltip({ title, description, color }: TooltipProps) {
         <TouchableOpacity
           style={[
             globalStyles.secondaryButton,
-            { backgroundColor: color ?? "red" },
+            { backgroundColor: actionColor },
           ]}
           onPress={() => setVisible(false)}
         >
-          <Text style={globalStyles.secondaryButtonText}>
+          <Text
+            style={[globalStyles.secondaryButtonText, { color: actionTextColor }]}
+          >
             {t("component:tooltip.ok")}
           </Text>
         </TouchableOpacity>

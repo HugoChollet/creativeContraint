@@ -1,3 +1,4 @@
+import { getContrastingColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -90,7 +91,11 @@ export default function TagSelector({
                 style={[
                   globalStyles.text,
                   styles.chipText,
-                  { color: isSelected ? colors.invertedText : colors.text },
+                  {
+                    color: isSelected
+                      ? getContrastingColor(activeColor, "primary")
+                      : colors.text,
+                  },
                 ]}
               >
                 {option.label}
