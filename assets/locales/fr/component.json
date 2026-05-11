@@ -34,7 +34,9 @@
     "difficulty": "Difficulté : "
   },
   "result-modal-header": {
-    "title": "Contraint(es) pour {{type}}"
+    "title": "Contraint(es) pour {{type}}",
+    "save_button": "Sauvegarder le résultat",
+    "remove_button": "Retirer la sauvegarde"
   },
   "share": {
     "button": "Partager le défi",

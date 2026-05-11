@@ -43,6 +43,7 @@ export default function GeneratedConstraintsSheet({
 
   const [savedId, setSavedId] = useState<string | number | null>(null);
   const [isSaved, setIsSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     setIsSaved(false);
@@ -65,19 +66,28 @@ export default function GeneratedConstraintsSheet({
   };
 
   const onSaveConstraints = async () => {
+    if (isSaving) {
+      return;
+    }
+
     if (!session?.user) {
       setModalVisible(false);
       setVisibleLogin(true);
       return;
     }
-    if (isSaved && savedId) {
-      // Delete using the ID we got back from the first save
-      await deleteRecord(savedId);
-      setSavedId(null);
-      setIsSaved(false);
-    } else {
-      setIsSaved(true);
-      // Create a new record
+
+    setIsSaving(true);
+
+    try {
+      if (isSaved && savedId) {
+        // Delete using the ID we got back from the first save.
+        await deleteRecord(savedId);
+        setSavedId(null);
+        setIsSaved(false);
+        return;
+      }
+
+      // Create a new saved constraint set for the current generated result.
       const newConstraintSet = {
         project_type: constraintSetIds.project_type,
         constraints: constraintSetIds.constraints,
@@ -86,10 +96,13 @@ export default function GeneratedConstraintsSheet({
 
       const savedData = await addRecord(newConstraintSet);
 
-      // If successful, Supabase returns the record including the new ID
+      // Only mark the result as saved once the DB write succeeded.
       if (savedData?.id) {
         setSavedId(savedData.id);
+        setIsSaved(true);
       }
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -98,8 +111,15 @@ export default function GeneratedConstraintsSheet({
       <BottomSheet
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
-        buttonText={t("screen:lab.back_button")}
+        onConfirm={onSaveConstraints}
         color={color}
+        labelConfirm={t(
+          isSaved
+            ? "component:result-modal-header.remove_button"
+            : "component:result-modal-header.save_button",
+        )}
+        labelCancel={t("screen:lab.back_button")}
+        isConfirmLoading={isSaving}
       >
         <ResultModalHeader
           difficultyIndicator={getDifficultyGenerated()}

@@ -34,7 +34,9 @@
     "difficulty": "Difficulty : "
   },
   "result-modal-header": {
-    "title": "Constraint(s) for {{type}}"
+    "title": "Constraint(s) for {{type}}",
+    "save_button": "Save result",
+    "remove_button": "Remove save"
   },
   "share": {
     "button": "Share Challenge",
