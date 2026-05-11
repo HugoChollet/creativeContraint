@@ -35,6 +35,10 @@
   },
   "result-modal-header": {
     "title": "Contraint(es) pour {{type}}",
+    "history_counter": "Génération {{current}} / {{total}}",
+    "generate_again_button": "Générer à nouveau",
+    "previous_button": "Résultat précédent",
+    "next_button": "Résultat suivant",
     "save_button": "Sauvegarder le résultat",
     "remove_button": "Retirer la sauvegarde"
   },

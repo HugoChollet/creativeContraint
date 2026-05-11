@@ -35,6 +35,10 @@
   },
   "result-modal-header": {
     "title": "Constraint(s) for {{type}}",
+    "history_counter": "Generation {{current}} / {{total}}",
+    "generate_again_button": "Generate again",
+    "previous_button": "Previous result",
+    "next_button": "Next result",
     "save_button": "Save result",
     "remove_button": "Remove save"
   },

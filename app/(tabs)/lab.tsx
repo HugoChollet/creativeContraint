@@ -8,10 +8,14 @@ import { PresetMode } from "@/components/specific/status-selector";
 import { getProjectColor } from "@/constants/theme";
 import { useHomeProjects } from "@/contexts/home-projects-context";
 import { useStyles } from "@/hooks/use-styles";
+import {
+  LAB_GENERATION_HISTORY_LIMIT,
+  loadLabGenerationHistory,
+  saveLabGenerationHistory,
+} from "@/lib/lab-generation-history";
 import { getBundledProjectData, getProjectTitle } from "@/lib/project-data";
 import {
-  GeneratedConstraints,
-  IdSetConstraint,
+  GeneratedConstraintSet,
   Option,
   SelectedState,
 } from "@/types/constraints";
@@ -56,12 +60,99 @@ const buildInitialSelectedState = (projectData: ProjectJSON): SelectedState => {
   };
 };
 
+const createGeneratedConstraintSetId = () =>
+  `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+
+const buildGeneratedConstraintSet = (
+  projectData: ProjectJSON,
+  selectedItems: SelectedState,
+  projectTitle: string,
+): GeneratedConstraintSet => {
+  const results: GeneratedConstraintSet["constraints"] = {};
+  const ids: GeneratedConstraintSet["constraintIds"] = {};
+
+  projectData.categories.forEach((category) => {
+    if (!selectedItems.activeCategories[category.name]) {
+      return;
+    }
+
+    if (category.options) {
+      const availableOptions = category.options.filter(
+        (option) => selectedItems.selectedOptions[`${category.name}-${option.id}`],
+      );
+
+      if (availableOptions.length === 0) {
+        return;
+      }
+
+      const randomOption =
+        availableOptions[Math.floor(Math.random() * availableOptions.length)];
+
+      results[category.name] = {
+        id: randomOption.id,
+        value: randomOption.value,
+        rarity: randomOption.rarity,
+        description: randomOption.description,
+      };
+      ids[category.name] = randomOption.id;
+      return;
+    }
+
+    const generatedValues: string[] = [];
+    let generatedRarity = 0;
+
+    category.sub_categories?.forEach((subCategory) => {
+      const availableOptions = subCategory.options.filter(
+        (option) =>
+          selectedItems.selectedOptions[
+            `${category.name}-${subCategory.name}-${option.id}`
+          ],
+      );
+
+      if (availableOptions.length === 0) {
+        return;
+      }
+
+      const randomOption =
+        availableOptions[Math.floor(Math.random() * availableOptions.length)];
+
+      generatedValues.push(randomOption.value);
+      generatedRarity += randomOption.rarity;
+      ids[`${category.name}_${subCategory.name}`] = randomOption.id;
+    });
+
+    if (generatedValues.length === 0) {
+      return;
+    }
+
+    results[category.name] = {
+      id: -1,
+      value: generatedValues.join(" "),
+      rarity: generatedRarity,
+      description: "",
+    };
+  });
+
+  return {
+    id: createGeneratedConstraintSetId(),
+    projectType: projectTitle,
+    generatedAt: new Date().toISOString(),
+    constraints: results,
+    constraintIds: ids,
+    savedConstraintSetId: null,
+  };
+};
+
 export default function LabScreen() {
   const { id, type } = useLocalSearchParams<{ id?: string; type?: string }>();
   const [modalVisible, setModalVisible] = useState(false);
-  const [randomConstraints, setRandomConstraints] =
-    useState<GeneratedConstraints>({});
-  const [idSetConstraint, setIdSetConstraint] = useState<IdSetConstraint>();
+  const [generationHistory, setGenerationHistory] = useState<
+    GeneratedConstraintSet[]
+  >([]);
+  const [currentHistoryIndex, setCurrentHistoryIndex] = useState<number | null>(
+    null,
+  );
+  const [isHistoryHydrated, setIsHistoryHydrated] = useState(false);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const { t, i18n } = useTranslation();
   const { activeProject, projects, loading, setActiveProjectId } =
@@ -103,6 +194,13 @@ export default function LabScreen() {
 
   const dataSource = contextProject?.dataSource ?? fallbackProjectData;
   const projectTitle = getProjectTitle(dataSource);
+  const projectHistoryKey = useMemo(() => {
+    if (contextProject?.id) {
+      return `project:${contextProject.id}`;
+    }
+
+    return `bundled:${routeType ?? dataSource.project_type}:${i18n.language}`;
+  }, [contextProject?.id, dataSource.project_type, i18n.language, routeType]);
 
   const projectColor = contextProject?.color
     ? getProjectColor({
@@ -121,16 +219,54 @@ export default function LabScreen() {
 
   const [selectedItems, setSelectedItems] =
     useState<SelectedState>(initialSelectedItems);
-  const hasGeneratedConstraints = Object.keys(randomConstraints).length > 0;
+  const hasSelectedCategories = Object.values(
+    selectedItems.activeCategories,
+  ).some(Boolean);
+  const hasGeneratedConstraints = generationHistory.length > 0;
+  const currentGeneratedConstraintSet =
+    currentHistoryIndex === null
+      ? null
+      : generationHistory[currentHistoryIndex] ?? null;
 
   useEffect(() => {
-    // Switching project source should fully reset the Lab selection UI.
+    let isMounted = true;
+
+    // Switching project source resets the Lab toggles, then rehydrates the local history for that project.
     setSelectedItems(initialSelectedItems);
-    setRandomConstraints({});
-    setIdSetConstraint(undefined);
+    setGenerationHistory([]);
+    setCurrentHistoryIndex(null);
+    setIsHistoryHydrated(false);
     setExpandedCategory(null);
     setModalVisible(false);
-  }, [initialSelectedItems]);
+    
+    const hydrateGenerationHistory = async () => {
+      const storedHistory = await loadLabGenerationHistory(projectHistoryKey);
+
+      if (!isMounted) {
+        return;
+      }
+
+      setGenerationHistory(storedHistory);
+      setCurrentHistoryIndex(
+        storedHistory.length > 0 ? storedHistory.length - 1 : null,
+      );
+      setIsHistoryHydrated(true);
+    };
+
+    void hydrateGenerationHistory();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [initialSelectedItems, projectHistoryKey]);
+
+  useEffect(() => {
+    if (!isHistoryHydrated) {
+      return;
+    }
+
+    void saveLabGenerationHistory(projectHistoryKey, generationHistory);
+  }, [generationHistory, isHistoryHydrated, projectHistoryKey]);
 
   const toggleCategory = (name: string) => {
     setSelectedItems((prev) => ({
@@ -160,65 +296,42 @@ export default function LabScreen() {
     );
   };
 
-  function refreshConstraints() {
-    const results: GeneratedConstraints = {};
-    const ids: IdSetConstraint = {};
+  const generateConstraintSet = () => {
+    const nextGeneratedConstraintSet = buildGeneratedConstraintSet(
+      dataSource,
+      selectedItems,
+      projectTitle,
+    );
+    const nextGenerationHistory = [
+      ...generationHistory,
+      nextGeneratedConstraintSet,
+    ].slice(-LAB_GENERATION_HISTORY_LIMIT);
 
-    dataSource.categories.forEach((cat) => {
-      if (selectedItems.activeCategories[cat.name]) {
-        const availableOptions = cat.options
-          ? cat.options.filter(
-              (opt) => selectedItems.selectedOptions[`${cat.name}-${opt.id}`],
-            )
-          : cat.sub_categories
-            ? cat.sub_categories.flatMap((subCat) =>
-                subCat.options.filter(
-                  (opt) =>
-                    selectedItems.selectedOptions[
-                      `${cat.name}-${subCat.name}-${opt.id}`
-                    ],
-                ),
-              )
-            : [];
-
-        if (availableOptions.length > 0) {
-          results[cat.name] = {
-            id: -1,
-            value: "",
-            rarity: 0,
-            description: "",
-          };
-          if (cat.options) {
-            const randomIndex = Math.floor(
-              Math.random() * availableOptions.length,
-            );
-            results[cat.name].value = availableOptions[randomIndex].value;
-            results[cat.name].id = availableOptions[randomIndex].id;
-            results[cat.name].rarity = availableOptions[randomIndex].rarity;
-            results[cat.name].description =
-              availableOptions[randomIndex].description;
-            ids[cat.name] = availableOptions[randomIndex].id;
-          } else if (cat.sub_categories) {
-            for (const subCat of cat.sub_categories) {
-              const randomIndex = Math.floor(
-                Math.random() * subCat.options.length,
-              );
-              results[cat.name].value +=
-                " " + subCat.options[randomIndex].value;
-              results[cat.name].rarity += subCat.options[randomIndex].rarity;
-
-              ids[cat.name + "_" + subCat.name] =
-                subCat.options[randomIndex].id;
-            }
-          }
-        }
-      }
-    });
-
-    setIdSetConstraint(ids);
-    setRandomConstraints(results);
+    setGenerationHistory(nextGenerationHistory);
+    setCurrentHistoryIndex(nextGenerationHistory.length - 1);
     setModalVisible(true);
-  }
+  };
+
+  const openLatestGeneratedConstraintSet = () => {
+    if (!hasGeneratedConstraints) {
+      return;
+    }
+
+    setCurrentHistoryIndex(generationHistory.length - 1);
+    setModalVisible(true);
+  };
+
+  const updateGeneratedConstraintSet = (
+    updatedGeneratedConstraintSet: GeneratedConstraintSet,
+  ) => {
+    setGenerationHistory((previousHistory) =>
+      previousHistory.map((generatedConstraintSet) =>
+        generatedConstraintSet.id === updatedGeneratedConstraintSet.id
+          ? updatedGeneratedConstraintSet
+          : generatedConstraintSet,
+      ),
+    );
+  };
 
   const bulkUpdateOptions = (
     categoryName: string,
@@ -299,27 +412,40 @@ export default function LabScreen() {
           })}
           accessibilityLabelCancel={t("screen:lab.latest_result_button")}
           iconCancel="arrow-up-outline"
+          isActive={hasSelectedCategories}
           isCancelActive={hasGeneratedConstraints}
-          onClickConfirm={refreshConstraints}
-          onClickCancel={() => {
-            if (!hasGeneratedConstraints) {
-              return;
-            }
-            setModalVisible(true);
-          }}
+          onClickConfirm={generateConstraintSet}
+          onClickCancel={openLatestGeneratedConstraintSet}
         />
 
-        {idSetConstraint && (
+        {currentGeneratedConstraintSet && (
           <GeneratedConstraintsSheet
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
-            randomConstraints={randomConstraints}
+            generatedConstraintSet={currentGeneratedConstraintSet}
             color={projectColor}
             dataSource={dataSource}
-            constraintSetIds={{
-              project_type: projectTitle,
-              constraints: idSetConstraint,
-            }}
+            historyCount={generationHistory.length}
+            currentHistoryIndex={currentHistoryIndex ?? 0}
+            canGenerateAnother={hasSelectedCategories}
+            onGenerateAnother={generateConstraintSet}
+            onNavigatePrevious={() =>
+              setCurrentHistoryIndex((previousIndex) =>
+                previousIndex === null ? null : Math.max(0, previousIndex - 1),
+              )
+            }
+            onNavigateNext={() =>
+              setCurrentHistoryIndex((previousIndex) =>
+                previousIndex === null
+                  ? null
+                  : Math.min(generationHistory.length - 1, previousIndex + 1),
+              )
+            }
+            canNavigatePrevious={(currentHistoryIndex ?? 0) > 0}
+            canNavigateNext={
+              (currentHistoryIndex ?? 0) < generationHistory.length - 1
+            }
+            onUpdateGeneratedConstraintSet={updateGeneratedConstraintSet}
           />
         )}
       </View>

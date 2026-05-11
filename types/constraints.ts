@@ -25,6 +25,15 @@ export type ConstraintSetIds = {
   constraints: IdSetConstraint;
 };
 
+export type GeneratedConstraintSet = {
+  id: string;
+  projectType: string;
+  generatedAt: string;
+  constraints: GeneratedConstraints;
+  constraintIds: IdSetConstraint;
+  savedConstraintSetId?: number | string | null;
+};
+
 export type SavedConstraintSet = {
   id: number | string;
   project_type: string;
