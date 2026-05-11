@@ -33,6 +33,9 @@
   "constraint-selector": {
     "difficulty": "Difficulty : "
   },
+  "result-modal-header": {
+    "title": "Constraint(s) for {{type}}"
+  },
   "share": {
     "button": "Share Challenge",
     "error_title": "Error",

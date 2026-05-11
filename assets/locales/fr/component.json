@@ -33,6 +33,9 @@
   "constraint-selector": {
     "difficulty": "Difficulté : "
   },
+  "result-modal-header": {
+    "title": "Contraint(es) pour {{type}}"
+  },
   "share": {
     "button": "Partager le défi",
     "error_title": "Erreur",

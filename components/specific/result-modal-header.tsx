@@ -27,7 +27,7 @@ export default function ResultModalHeader({
       <DifficultyIndicator difficultyIndicator={difficultyIndicator} />
       <View style={styles.headerContainer}>
         <Text style={globalStyles.title}>
-          {t("screen:lab.categories_title", {
+          {t("component:result-modal-header.title", {
             type: "Project",
           })}
         </Text>

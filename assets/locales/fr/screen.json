@@ -10,7 +10,7 @@
   "lab": {
     "lab_title": "Labo pour {{type}}",
     "generate_button": "Générer une idée de {{type}}",
-    "constraints_title": "Contraintes de {{type}}",
+    "latest_result_button": "Voir le dernier résultat",
     "back_button": "Retour au Lab",
     "empty_result": "-",
     "add-button": {

@@ -9,7 +9,7 @@
   "lab": {
     "lab_title": "{{type}} Lab",
     "generate_button": "Generate {{type}} Idea",
-    "constraints_title": "{{type}} Constraints",
+    "latest_result_button": "Show latest result",
     "back_button": "Back to Lab",
     "empty_result": "-",
     "add-button": {
