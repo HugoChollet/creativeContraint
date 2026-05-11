@@ -1,5 +1,5 @@
 import { AddButton } from "@/components/generic/add-button";
-import { FloatingButton } from "@/components/generic/floating-button";
+import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { Header } from "@/components/generic/header";
 import { Spacer } from "@/components/generic/spacer";
 import CategorySelector from "@/components/specific/category/category-selector";
@@ -23,7 +23,6 @@ import {
   ActivityIndicator,
   LayoutAnimation,
   ScrollView,
-  StyleSheet,
   View,
 } from "react-native";
 
@@ -122,6 +121,7 @@ export default function LabScreen() {
 
   const [selectedItems, setSelectedItems] =
     useState<SelectedState>(initialSelectedItems);
+  const hasGeneratedConstraints = Object.keys(randomConstraints).length > 0;
 
   useEffect(() => {
     // Switching project source should fully reset the Lab selection UI.
@@ -289,30 +289,25 @@ export default function LabScreen() {
               })
             }
           />
-          <Spacer height={60} />
+          <Spacer height={20} />
         </ScrollView>
 
-        <View style={[styles.floatingButtonsWrapper]}>
-          <FloatingButton
-            onPress={() => {
-              setModalVisible(true);
-            }}
-            color={projectColor}
-            disabled={Object.keys(randomConstraints).length === 0}
-            icon="arrow-up-outline"
-            bottom={-24}
-            right={24}
-          />
-          <FloatingButton
-            onPress={refreshConstraints}
-            color={projectColor}
-            bottom={-24}
-            right={120}
-            label={t("screen:lab.generate_button", {
-              type: projectTitle,
-            })}
-          />
-        </View>
+        <ConfirmCancelButton
+          color={projectColor}
+          labelConfirm={t("screen:lab.generate_button", {
+            type: projectTitle,
+          })}
+          accessibilityLabelCancel={t("screen:lab.latest_result_button")}
+          iconCancel="arrow-up-outline"
+          isCancelActive={hasGeneratedConstraints}
+          onClickConfirm={refreshConstraints}
+          onClickCancel={() => {
+            if (!hasGeneratedConstraints) {
+              return;
+            }
+            setModalVisible(true);
+          }}
+        />
 
         {idSetConstraint && (
           <GeneratedConstraintsSheet
@@ -331,15 +326,3 @@ export default function LabScreen() {
     </>
   );
 }
-
-export const styles = StyleSheet.create({
-  floatingButtonsWrapper: {
-    // TODO Container should be floating and not buttons in this case
-    position: "absolute",
-    bottom: 30,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
