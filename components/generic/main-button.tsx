@@ -1,8 +1,8 @@
 import MetadataBadges from "@/components/generic/metadata-badges";
+import { getContrastingColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import React from "react";
 import {
-  Dimensions,
   Image,
   ImageSourcePropType,
   StyleSheet,
@@ -22,8 +22,6 @@ interface MainButtonProps {
   onPress: () => void;
 }
 
-const { width } = Dimensions.get("window");
-
 export const MainButton = ({
   title,
   color,
@@ -33,8 +31,11 @@ export const MainButton = ({
   tags,
   onPress,
 }: MainButtonProps) => {
-  const { globalStyles, colors } = useStyles();
+  const { globalStyles } = useStyles();
   const hasExtraContent = Boolean(subtitle || description || tags?.length);
+  const foregroundColor = getContrastingColor(color, "primary");
+  const secondaryColor = getContrastingColor(color, "secondary");
+  const contrastBackgroundColor = getContrastingColor(color, "background");
 
   return (
     <TouchableOpacity
@@ -51,7 +52,13 @@ export const MainButton = ({
       <View style={styles.content}>
         <View style={styles.textColumn}>
           <View style={styles.titleRow}>
-            <Text style={[globalStyles.primaryButtonText, styles.title]}>
+            <Text
+              style={[
+                globalStyles.primaryButtonText,
+                styles.title,
+                { color: foregroundColor },
+              ]}
+            >
               {title}
             </Text>
             {description ? (
@@ -59,7 +66,13 @@ export const MainButton = ({
             ) : null}
           </View>
           {subtitle ? (
-            <Text style={[globalStyles.primaryButtonText, styles.subtitle]}>
+            <Text
+              style={[
+                globalStyles.primaryButtonText,
+                styles.subtitle,
+                { color: secondaryColor },
+              ]}
+            >
               {subtitle}
             </Text>
           ) : null}
@@ -67,9 +80,9 @@ export const MainButton = ({
             <View style={styles.badgesWrapper}>
               <MetadataBadges
                 tags={tags}
-                color={colors.text}
-                textColor={colors.text}
-                backgroundColor={colors.shadeContainer}
+                color={foregroundColor}
+                textColor={foregroundColor}
+                backgroundColor={contrastBackgroundColor}
               />
             </View>
           ) : null}
@@ -84,7 +97,7 @@ export const MainButton = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: width * 0.9,
+    flex: 1,
     minHeight: 100,
     borderRadius: 20,
     marginVertical: 10,
@@ -112,21 +125,19 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   textColumn: {
-    flex: 1,
     justifyContent: "center",
   },
   titleRow: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "flex-start",
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#FFFFFF",
     flex: 1,
   },
   subtitle: {
-    color: "rgba(255,255,255,0.82)",
     fontSize: 12,
     marginTop: 6,
   },
