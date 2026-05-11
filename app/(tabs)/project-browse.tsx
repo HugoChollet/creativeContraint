@@ -62,7 +62,11 @@ export default function ProjectBrowseScreen() {
     data: selected,
     addRecord: addProjectSelection,
     deleteRecords: deleteProjectSelections,
-  } = useCollection<UserProjectSelection>("user_project_selections");
+    refresh: refreshSelectedProjects,
+  } = useCollection<UserProjectSelection>("user_project_selections", {
+    filterColumn: "owner_id",
+    filterValue: userId ?? "__guest__",
+  });
   const { updateRecord: updateCategoryRecord } =
     useCollection<Category>("categories");
 
@@ -80,7 +84,8 @@ export default function ProjectBrowseScreen() {
   useFocusEffect(
     useCallback(() => {
       refresh();
-    }, [refresh]),
+      refreshSelectedProjects();
+    }, [refresh, refreshSelectedProjects]),
   );
 
   const personalProjects = useMemo(

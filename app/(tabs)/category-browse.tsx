@@ -107,6 +107,7 @@ export default function CategoryBrowseScreen() {
   const {
     data: userProjectSelections,
     updateRecord: updateProjectSelection,
+    refresh: refreshProjectSelections,
     loading: loadingProjectSelections,
   } = useCollection<UserProjectSelection>("user_project_selections", {
     filterColumn: "owner_id",
@@ -127,7 +128,8 @@ export default function CategoryBrowseScreen() {
     useCallback(() => {
       // Category browse keeps its own collection state, so refetch after coming back from the form.
       refresh();
-    }, [refresh]),
+      refreshProjectSelections();
+    }, [refresh, refreshProjectSelections]),
   );
 
   // This row represents "which project this user is currently using" plus its selected categories.
