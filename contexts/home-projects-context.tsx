@@ -148,13 +148,10 @@ export function HomeProjectsProvider({ children }: { children: ReactNode }) {
           relation.categories ? [relation.categories] : [],
         );
         const selectedCategoryIdSet = new Set(selection.selected_category_ids);
-        // Home/Lab should only see the categories the user selected for this project.
-        const categories =
-          selectedCategoryIdSet.size > 0
-            ? allCategories.filter((category) =>
-                selectedCategoryIdSet.has(category.id),
-              )
-            : allCategories;
+        // Home/Lab should only see the categories the user explicitly selected for this project.
+        const categories = allCategories.filter((category) =>
+          selectedCategoryIdSet.has(category.id),
+        );
         const routeType = getProjectRouteType(projectRecord.name);
         const baseProject: HomeContextProject = {
           ...projectRecord,

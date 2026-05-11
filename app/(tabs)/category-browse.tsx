@@ -17,9 +17,14 @@ import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { getProjectTitle } from "@/lib/project-data";
 import { Category, CategorySectionData } from "@/types/category";
+import {
+  Project,
+  ProjectCategoryRelation,
+  UserProjectSelection,
+} from "@/types/projects";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, Text, View } from "react-native";
 
@@ -31,7 +36,12 @@ export default function CategoryBrowseScreen() {
   }>();
   const { globalStyles, theme, colors } = useStyles();
   const { session } = useAuth();
-  const { activeProject, loading: loadingHomeProjects } = useHomeProjects();
+  const {
+    activeProject,
+    loading: loadingHomeProjects,
+    refreshProjects,
+    setActiveProjectId,
+  } = useHomeProjects();
   const { t } = useTranslation();
   const headerHeight = useHeaderHeight();
 
@@ -46,6 +56,10 @@ export default function CategoryBrowseScreen() {
     language,
     tags,
   } = useProjectDraft();
+  // Edition mode batches checkbox changes locally until the user confirms.
+  const [editionSelectedCategoryIds, setEditionSelectedCategoryIds] = useState<
+    string[]
+  >([]);
   const activeProjectTitle = activeProject
     ? getProjectTitle(activeProject.dataSource)
     : undefined;
@@ -73,21 +87,56 @@ export default function CategoryBrowseScreen() {
   const hasActiveFilters =
     isProjectLanguage(currentProjectLanguage) || currentProjectTags.length > 0;
 
-  const activeSelectedCategories = useMemo(
-    () => (isCreation ? selectedCategories : []),
-    [isCreation, selectedCategories],
-  );
+  useEffect(() => {
+    // Reset the local edition selection whenever we switch to another active project.
+    if (!isCreation) {
+      setEditionSelectedCategoryIds(activeProject?.selected_category_ids ?? []);
+    }
+  }, [activeProject?.id, activeProject?.selected_category_ids, isCreation]);
+
+  // Creation mode reads from the draft, edition mode reads from the local checkbox buffer.
   const selectedCategoryIds = useMemo(
-    () => activeSelectedCategories.map((category) => category.id),
-    [activeSelectedCategories],
+    () =>
+      isCreation
+        ? selectedCategories.map((category) => category.id)
+        : editionSelectedCategoryIds,
+    [editionSelectedCategoryIds, isCreation, selectedCategories],
   );
   const { data, updateRecord, refresh, loading } =
     useCollection<Category>("categories");
+  const {
+    data: userProjectSelections,
+    updateRecord: updateProjectSelection,
+    loading: loadingProjectSelections,
+  } = useCollection<UserProjectSelection>("user_project_selections", {
+    filterColumn: "owner_id",
+    filterValue: userId ?? "__guest__",
+  });
+  const {
+    fetchCollection: fetchProjectCategoryRelations,
+    addRecords: addProjectCategoryRelations,
+    loading: loadingProjectCategoryRelations,
+  } = useCollection<ProjectCategoryRelation>("project_category_relations");
+  const {
+    addRecord: addProjectRecord,
+    deleteRecord: deleteProjectRecord,
+    loading: loadingProjectFork,
+  } = useCollection<Project>("projects");
 
   useFocusEffect(
     useCallback(() => {
+      // Category browse keeps its own collection state, so refetch after coming back from the form.
       refresh();
     }, [refresh]),
+  );
+
+  // This row represents "which project this user is currently using" plus its selected categories.
+  const activeProjectSelection = useMemo(
+    () =>
+      userProjectSelections.find(
+        (selection) => selection.project_id === activeProject?.id,
+      ) ?? null,
+    [activeProject?.id, userProjectSelections],
   );
 
   const filteredCategories = useMemo(
@@ -138,6 +187,131 @@ export default function CategoryBrowseScreen() {
     },
   ];
 
+  const toggleEditionSelectedCategory = useCallback((category: Category) => {
+    setEditionSelectedCategoryIds((prev) =>
+      prev.includes(category.id)
+        ? prev.filter((id) => id !== category.id)
+        : [...prev, category.id],
+    );
+  }, []);
+
+  const persistProjectSelection = useCallback(
+    async ({
+      projectId,
+      selectionId,
+      selectedCategoryIds,
+      nextProjectId,
+    }: {
+      projectId: string;
+      selectionId: string;
+      selectedCategoryIds: string[];
+      nextProjectId?: string;
+    }) => {
+      // The selection row can only point at categories that are actually linked to the project.
+      const uniqueSelectedCategoryIds = Array.from(new Set(selectedCategoryIds));
+      const existingRelations = await fetchProjectCategoryRelations({
+        filterColumn: "project_id",
+        filterValue: projectId,
+      });
+      const existingCategoryIds = new Set(
+        (existingRelations ?? []).map((relation) => relation.category_id),
+      );
+      const relationsToInsert = uniqueSelectedCategoryIds
+        .filter((categoryId) => !existingCategoryIds.has(categoryId))
+        .map((categoryId) => ({
+          project_id: projectId,
+          category_id: categoryId,
+        }));
+
+      if (relationsToInsert.length > 0) {
+        const insertedRelations =
+          await addProjectCategoryRelations(relationsToInsert);
+
+        if (insertedRelations.length !== relationsToInsert.length) {
+          console.error("Failed to insert project category relations");
+          return false;
+        }
+      }
+
+      const updatedSelection = await updateProjectSelection(selectionId, {
+        ...(nextProjectId ? { project_id: nextProjectId } : {}),
+        selected_category_ids: uniqueSelectedCategoryIds,
+      });
+
+      if (!updatedSelection) {
+        console.error("Failed to update project category selection");
+        return false;
+      }
+
+      return true;
+    },
+    [addProjectCategoryRelations, fetchProjectCategoryRelations, updateProjectSelection],
+  );
+
+  const persistEditionSelection = useCallback(async () => {
+    if (!activeProject || !activeProjectSelection) {
+      console.error("Missing active project selection");
+      return false;
+    }
+
+    // Private projects can be updated in place for the current user selection.
+    if (!activeProject.is_public) {
+      const didPersist = await persistProjectSelection({
+        projectId: activeProject.id,
+        selectionId: activeProjectSelection.id,
+        selectedCategoryIds: editionSelectedCategoryIds,
+      });
+
+      if (!didPersist) {
+        return false;
+      }
+
+      await refreshProjects();
+      return activeProject.id;
+    }
+
+    // Public projects stay immutable here: fork first, then move the user's selection to the fork.
+    const forkedProject = await addProjectRecord({
+      name: activeProject.name,
+      description: activeProject.description,
+      language: activeProject.language ?? undefined,
+      tags: normalizeProjectTags(activeProject.tags),
+      is_public: false,
+      favorited_counter: 0,
+      color: activeProject.color,
+    });
+
+    if (!forkedProject) {
+      console.error("Failed to fork public project");
+      return false;
+    }
+
+    const didPersistFork = await persistProjectSelection({
+      projectId: forkedProject.id,
+      selectionId: activeProjectSelection.id,
+      selectedCategoryIds: editionSelectedCategoryIds,
+      nextProjectId: forkedProject.id,
+    });
+
+    if (!didPersistFork) {
+      await deleteProjectRecord(forkedProject.id);
+      return false;
+    }
+
+    setActiveProjectId(forkedProject.id);
+    await refreshProjects();
+    return forkedProject.id;
+  }, [
+    activeProject,
+    activeProjectSelection,
+    addProjectRecord,
+    deleteProjectRecord,
+    editionSelectedCategoryIds,
+    persistProjectSelection,
+    refreshProjects,
+    setActiveProjectId,
+  ]);
+
   if (!isCreation && loadingHomeProjects && !activeProject) {
     return (
       <View
@@ -183,7 +357,9 @@ export default function CategoryBrowseScreen() {
               onDelete={() => {}}
               onEdit={() => {}}
               onFork={() => {}}
-              onToggleCategory={isCreation ? toggleSelectedCategory : () => {}}
+              onToggleCategory={
+                isCreation ? toggleSelectedCategory : toggleEditionSelectedCategory
+              }
               onPublish={(cat) => {
                 console.log("publish ", cat);
                 updateRecord(cat.id, { is_public: cat.is_public });
@@ -213,7 +389,12 @@ export default function CategoryBrowseScreen() {
       <ConfirmCancelButton
         color={screenProjectColor}
         labelConfirm={t("screen:category_browse.confirm_button")}
-        onClickConfirm={() => {
+        isLoading={
+          loadingProjectSelections ||
+          loadingProjectCategoryRelations ||
+          loadingProjectFork
+        }
+        onClickConfirm={async () => {
           if (isCreation) {
             router.navigate({
               pathname: "/project-form",
@@ -225,10 +406,16 @@ export default function CategoryBrowseScreen() {
           }
 
           if (activeProject) {
+            const nextProjectId = await persistEditionSelection();
+
+            if (!nextProjectId) {
+              return;
+            }
+
             router.navigate({
               pathname: "/lab",
               params: {
-                id: activeProject.id,
+                id: nextProjectId,
                 type: screenProjectTitle,
               },
             });
@@ -246,13 +433,19 @@ export default function CategoryBrowseScreen() {
                 },
               })
             : activeProject
-              ? router.navigate({
-                  pathname: "/lab",
-                  params: {
-                    id: activeProject.id,
-                    type: screenProjectTitle,
-                  },
-                })
+              ? (() => {
+                  setEditionSelectedCategoryIds(
+                    activeProject.selected_category_ids ?? [],
+                  );
+
+                  router.navigate({
+                    pathname: "/lab",
+                    params: {
+                      id: activeProject.id,
+                      type: screenProjectTitle,
+                    },
+                  });
+                })()
               : router.back()
         }
       />
