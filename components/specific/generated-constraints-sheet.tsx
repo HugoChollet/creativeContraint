@@ -158,7 +158,10 @@ export default function GeneratedConstraintsSheet({
           historyCount={historyCount}
           currentHistoryIndex={currentHistoryIndex}
           canGenerateAnother={canGenerateAnother}
+          canToggleSaved={isSaved || generatedConstraintsEntries.length > 0}
+          isSaved={isSaved}
           onGenerateAnother={onGenerateAnother}
+          onToggleSaved={onSaveConstraints}
           onNavigatePrevious={onNavigatePrevious}
           onNavigateNext={onNavigateNext}
           canNavigatePrevious={canNavigatePrevious}

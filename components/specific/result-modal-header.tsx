@@ -13,7 +13,10 @@ interface ResultModalHeaderProps {
   historyCount: number;
   currentHistoryIndex: number;
   canGenerateAnother?: boolean;
+  canToggleSaved?: boolean;
+  isSaved?: boolean;
   onGenerateAnother: () => void;
+  onToggleSaved: () => void;
   onNavigatePrevious: () => void;
   onNavigateNext: () => void;
   canNavigatePrevious: boolean;
@@ -28,7 +31,10 @@ export default function ResultModalHeader({
   historyCount,
   currentHistoryIndex,
   canGenerateAnother = true,
+  canToggleSaved = true,
+  isSaved = false,
   onGenerateAnother,
+  onToggleSaved,
   onNavigatePrevious,
   onNavigateNext,
   canNavigatePrevious,
@@ -58,7 +64,25 @@ export default function ResultModalHeader({
             })}
           </Text>
         </View>
-        <DifficultyIndicator difficultyIndicator={difficultyIndicator} />
+        <View style={styles.headerActions}>
+          <DifficultyIndicator difficultyIndicator={difficultyIndicator} />
+          <TouchableOpacity
+            style={globalStyles.transparentButton}
+            onPress={onToggleSaved}
+            disabled={!canToggleSaved || isBusy}
+            accessibilityLabel={t(
+              isSaved
+                ? "component:result-modal-header.remove_button"
+                : "component:result-modal-header.save_button",
+            )}
+          >
+            <Ionicons
+              size={28}
+              name={isSaved ? "bookmark" : "bookmark-outline"}
+              color={canToggleSaved && !isBusy ? color : colors.disable}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.navigationRow}>
         <TouchableOpacity
@@ -122,6 +146,11 @@ const styles = StyleSheet.create({
   },
   titleBlock: {
     flex: 1,
+  },
+  headerActions: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
   },
   counterText: {
     marginBottom: 4,
