@@ -1,7 +1,7 @@
 import { getContrastingColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
-import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import React, { useMemo } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export interface TagSelectorOption {
   label: string;
@@ -18,7 +18,12 @@ interface TagSelectorProps {
   singleSelect?: boolean;
   maxSelections?: number;
   alwaysEnabledValues?: readonly string[];
+  maxVisibleRows?: number;
 }
+
+const DEFAULT_MAX_VISIBLE_ROWS = 3;
+const CHIP_ROW_HEIGHT = 36;
+const CHIP_ROW_GAP = 8;
 
 export default function TagSelector({
   label,
@@ -30,9 +35,22 @@ export default function TagSelector({
   singleSelect = false,
   maxSelections,
   alwaysEnabledValues = [],
+  maxVisibleRows = DEFAULT_MAX_VISIBLE_ROWS,
 }: TagSelectorProps) {
   const { globalStyles, colors } = useStyles();
   const activeColor = color ?? colors.tint;
+  const displayedOptions = useMemo(
+    () =>
+      [...options].sort((left, right) =>
+        left.label.localeCompare(right.label, undefined, {
+          sensitivity: "base",
+        }),
+      ),
+    [options],
+  );
+  const chipsMaxHeight =
+    Math.max(1, maxVisibleRows) * CHIP_ROW_HEIGHT +
+    Math.max(0, maxVisibleRows - 1) * CHIP_ROW_GAP;
 
   const handlePress = (value: string) => {
     if (singleSelect) {
@@ -61,8 +79,12 @@ export default function TagSelector({
         ) : null}
       </View>
 
-      <View style={styles.chipsRow}>
-        {options.map((option) => {
+      <ScrollView
+        nestedScrollEnabled={true}
+        style={[styles.scrollWrapper, { maxHeight: chipsMaxHeight }]}
+        contentContainerStyle={styles.chipsRow}
+      >
+        {displayedOptions.map((option) => {
           const isSelected = selectedValues.includes(option.value);
           const isDisabled =
             !singleSelect &&
@@ -103,7 +125,7 @@ export default function TagSelector({
             </Pressable>
           );
         })}
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -119,6 +141,9 @@ const styles = StyleSheet.create({
   },
   label: { marginBottom: 0 },
   helperText: { marginRight: 0 },
+  scrollWrapper: {
+    paddingRight: 4,
+  },
   chipsRow: {
     flexDirection: "row",
     flexWrap: "wrap",

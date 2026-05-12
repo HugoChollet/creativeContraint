@@ -361,7 +361,7 @@ export default function ProjectFormScreen() {
               </View>
             </View>
 
-            <View style={{ marginBottom: 20 }}>
+            <View>
               <Text style={globalStyles.label}>
                 {t("screen:project_form.description_label")}
               </Text>
@@ -373,6 +373,8 @@ export default function ProjectFormScreen() {
                 isLoading={isBusy}
               />
             </View>
+
+            <Spacer height={16} />
 
             <LanguageSelector
               label={t("component:metadata.language_label")}
@@ -412,21 +414,6 @@ export default function ProjectFormScreen() {
               color={projectColor}
               maxSelections={PROJECT_TAG_LIMIT}
               alwaysEnabledValues={["all"]}
-            />
-
-            <ProjectJsonImporter
-              projectColor={projectColor}
-              fallbackProjectName={name}
-              onImportingChange={setIsImporting}
-              onImported={(draft) => {
-                if (draft.name) {
-                  setName(draft.name);
-                }
-                setDescription(draft.description);
-                setLanguage(draft.language);
-                setTags(draft.tags);
-                setSelectedCategories(draft.categories);
-              }}
             />
 
             <Text style={globalStyles.label}>
@@ -476,6 +463,23 @@ export default function ProjectFormScreen() {
                 );
               })}
             </View>
+
+            <Spacer height={16} />
+
+            <ProjectJsonImporter
+              projectColor={projectColor}
+              fallbackProjectName={name}
+              onImportingChange={setIsImporting}
+              onImported={(draft) => {
+                if (draft.name) {
+                  setName(draft.name);
+                }
+                setDescription(draft.description);
+                setLanguage(draft.language);
+                setTags(draft.tags);
+                setSelectedCategories(draft.categories);
+              }}
+            />
           </ScrollView>
         </KeyboardAvoidingView>
 
