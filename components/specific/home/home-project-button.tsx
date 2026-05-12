@@ -1,6 +1,7 @@
 import { MainButton } from "@/components/generic/main-button";
 import {
   getHomeProjectConfig,
+  getHomeProjectImageFromTags,
 } from "@/constants/home-projects";
 import {
   HomeContextProject,
@@ -24,7 +25,9 @@ export default function HomeProjectButton({
   const { t } = useTranslation();
   const { theme } = useStyles();
   const { setActiveProjectId } = useHomeProjects();
-  const config = getHomeProjectConfig(project.name);
+  const image =
+    getHomeProjectConfig(project.routeType)?.image ??
+    getHomeProjectImageFromTags(project.tags);
 
   const subtitle =
     project.source === "official"
@@ -49,7 +52,7 @@ export default function HomeProjectButton({
       description={project.description}
       tags={project.tags}
       color={cardColor}
-      image={config?.image}
+      image={image}
       onPress={() => {
         // Lab is a sibling route, so we store the selected project in shared context first.
         setActiveProjectId(project.id);
