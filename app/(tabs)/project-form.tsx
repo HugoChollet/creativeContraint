@@ -15,6 +15,7 @@ import ProjectJsonImporter, {
 } from "@/components/specific/project/project-json-importer";
 import {
   getCategoryTagsFromProject,
+  getDefaultProjectTags,
   getDefaultProjectSupportedFileType,
   normalizeProjectTags,
   PROJECT_SUPPORTED_FILE_TYPES,
@@ -525,7 +526,7 @@ export default function ProjectFormScreen() {
                 setDescription(draft.description);
                 setLanguage(draft.language);
                 setSupportedFileType(draft.supportedFileType);
-                setTags(draft.tags);
+                setTags(getDefaultProjectTags(draft.tags));
                 setSelectedCategories(draft.categories);
               }}
             />

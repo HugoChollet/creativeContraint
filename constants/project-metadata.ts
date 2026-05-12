@@ -47,6 +47,7 @@ export type ProjectTag = (typeof PROJECT_TAGS)[number];
 export const DEFAULT_PROJECT_LANGUAGE: ProjectLanguage = "en";
 export const DEFAULT_PROJECT_SUPPORTED_FILE_TYPE: ProjectSupportedFileType =
   "plain text";
+export const DEFAULT_PROJECT_TAGS: ProjectTag[] = ["all"];
 export const PROJECT_LANGUAGE_FLAGS: Record<ProjectLanguage, string> = {
   en: "🇬🇧",
   fr: "🇫🇷",
@@ -96,6 +97,14 @@ export const normalizeProjectTags = (
   );
 
   return normalized.includes("all") ? ["all"] : normalized;
+};
+
+export const getDefaultProjectTags = (
+  preferredTags?: readonly string[] | null,
+): ProjectTag[] => {
+  const normalizedTags = normalizeProjectTags(preferredTags);
+
+  return normalizedTags.length > 0 ? normalizedTags : DEFAULT_PROJECT_TAGS;
 };
 
 export const toggleProjectTag = (

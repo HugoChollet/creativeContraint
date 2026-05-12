@@ -12,6 +12,8 @@ interface GlobalStyles {
   screenContainer: ViewStyle;
   elementAndDescriptorContainer: ViewStyle;
   mediaIntegrationContainer: ViewStyle;
+  rowBetween: ViewStyle;
+  wrapRow: ViewStyle;
 
   text: TextStyle;
   label: TextStyle;
@@ -107,6 +109,17 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       borderStyle: "dashed",
       borderWidth: 2,
       alignItems: "center",
+    },
+    rowBetween: {
+      flexDirection: "row",
+      justifyContent: "flex-end",
+      alignItems: "center",
+      gap: 8,
+    },
+    wrapRow: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: 8,
     },
 
     // Texts
@@ -207,7 +220,6 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       padding: 8,
       borderRadius: 20,
     },
-
     backgroundColor: {
       backgroundColor: themes.background,
     },

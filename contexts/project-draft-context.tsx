@@ -1,6 +1,7 @@
 import {
   getDefaultProjectLanguage,
   getDefaultProjectSupportedFileType,
+  getDefaultProjectTags,
   normalizeProjectTags,
   ProjectLanguage,
   ProjectSupportedFileType,
@@ -52,7 +53,7 @@ export function ProjectDraftProvider({ children }: { children: ReactNode }) {
   );
   const [supportedFileType, setSupportedFileType] =
     useState<ProjectSupportedFileType>(getDefaultProjectSupportedFileType());
-  const [tags, setTags] = useState<ProjectTag[]>([]);
+  const [tags, setTags] = useState<ProjectTag[]>(getDefaultProjectTags());
   const [projectColor, setProjectColor] = useState(getRandomColor);
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
 
@@ -74,7 +75,7 @@ export function ProjectDraftProvider({ children }: { children: ReactNode }) {
     setDescription("");
     setLanguage(getDefaultProjectLanguage(i18n.language));
     setSupportedFileType(getDefaultProjectSupportedFileType());
-    setTags([]);
+    setTags(getDefaultProjectTags());
     setProjectColor(getRandomColor());
     setSelectedCategories([]);
   };

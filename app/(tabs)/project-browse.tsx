@@ -5,7 +5,7 @@ import ProjectSection from "@/components/specific/project/project-section";
 import {
   getDefaultProjectLanguage,
   getDefaultProjectSupportedFileType,
-  normalizeProjectTags,
+  getDefaultProjectTags,
 } from "@/constants/project-metadata";
 import { useAuth } from "@/contexts/auth-context";
 import { useProjectDraft } from "@/contexts/project-draft-context";
@@ -191,7 +191,7 @@ export default function ProjectBrowseScreen() {
     setSupportedFileType(
       getDefaultProjectSupportedFileType(draft.supported_files),
     );
-    setTags(normalizeProjectTags(draft.tags));
+    setTags(getDefaultProjectTags(draft.tags));
     setProjectColor(draft.color ?? "ffff");
     setSelectedCategories(draft.categories);
     setId(isForked ? "" : draft.id);
