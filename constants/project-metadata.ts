@@ -7,13 +7,29 @@ export const PROJECT_TAGS = [
   "game",
   "music",
   "character",
-  "localisation",
-  "physical",
-  "numerical",
   "photography",
-  "short",
   "podcast",
-  "long",
+  "internet-content",
+  "video game",
+  "board game",
+  "art",
+  "drawing",
+  "cooking",
+  "vlog",
+  "stream",
+  "dnd",
+  "object",
+  "sport",
+  "clothe",
+  "vehicle",
+  "business",
+  "product",
+  "website",
+  "comic",
+  "architecture",
+  "education",
+  "enigma",
+  "other",
 ] as const;
 
 export type ProjectLanguage = (typeof PROJECT_LANGUAGES)[number];
@@ -115,10 +131,7 @@ export const matchesProjectTags = (
     return false;
   }
 
-  if (
-    normalizedFilter.includes("all") ||
-    normalizedCandidate.includes("all")
-  ) {
+  if (normalizedFilter.includes("all") || normalizedCandidate.includes("all")) {
     return true;
   }
 
