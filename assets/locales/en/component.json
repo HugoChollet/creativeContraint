@@ -59,6 +59,8 @@
     "supported_files_label": "Supported publication format",
     "tags_label": "Tags",
     "tags_limit": "{{count}} / {{max}} selected",
+    "tags_range": "{{count}} selected (minimum {{min}}, maximum {{max}})",
+    "selection_min": "{{count}} selected (minimum {{min}})",
     "languages": {
       "en": "English",
       "fr": "French"

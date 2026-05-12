@@ -43,7 +43,12 @@ import {
   View,
 } from "react-native";
 
-const CategoryRequire = { MIN_OPTIONS: 2, NAME_LENGTH_MIN: 2 };
+const ProjectFormRequirements = {
+  MIN_CATEGORIES: 2,
+  NAME_LENGTH_MIN: 2,
+  PROJECT_TAGS_MIN: 1,
+  PROJECT_FILE_MIN: 1,
+};
 const PROJECT_TAG_LIMIT = 4;
 
 const normalizeCategoryName = (value: string) => value.trim().toLowerCase();
@@ -109,6 +114,11 @@ export default function ProjectFormScreen() {
     a.name.localeCompare(b.name),
   );
   const isBusy = isLoading || isImporting;
+  const normalizedTags = normalizeProjectTags(tags);
+  const selectedSupportedFileTypes = supportedFileType
+    ? [supportedFileType]
+    : [];
+  const trimmedName = name.trim();
   const tagOptions = useMemo<TagSelectorOption[]>(
     () =>
       PROJECT_TAGS.map((value) => ({
@@ -159,7 +169,7 @@ export default function ProjectFormScreen() {
       }
 
       const importedCategoryDbName = getImportedCategoryDbName(
-        name,
+        trimmedName,
         category.name,
       );
       const originalNameKey = normalizeCategoryName(category.name);
@@ -210,7 +220,7 @@ export default function ProjectFormScreen() {
         ? (categoryLookup.get(normalizeCategoryName(category.name)) ??
           categoryLookup.get(
             normalizeCategoryName(
-              getImportedCategoryDbName(name, category.name),
+              getImportedCategoryDbName(trimmedName, category.name),
             ),
           ))
         : category;
@@ -275,9 +285,8 @@ export default function ProjectFormScreen() {
   const handleSubmit = async () => {
     if (!isFormValid || isSavingProject || isImporting) return;
 
-    const normalizedTags = normalizeProjectTags(tags);
     const projectDraft = {
-      name,
+      name: trimmedName,
       description,
       language,
       supported_files: supportedFileType,
@@ -286,8 +295,6 @@ export default function ProjectFormScreen() {
       favorited_counter: 0,
       color: projectColor,
     };
-
-    console.log("submitting with id :", id);
 
     const result =
       id === ""
@@ -318,8 +325,11 @@ export default function ProjectFormScreen() {
   };
 
   const isFormValid =
-    name.length > CategoryRequire.NAME_LENGTH_MIN &&
-    //categories.length >= CategoryRequire.MIN_OPTIONS &&
+    trimmedName.length >= ProjectFormRequirements.NAME_LENGTH_MIN &&
+    normalizedTags.length >= ProjectFormRequirements.PROJECT_TAGS_MIN &&
+    selectedSupportedFileTypes.length >=
+      ProjectFormRequirements.PROJECT_FILE_MIN &&
+    selectedCategories.length >= ProjectFormRequirements.MIN_CATEGORIES &&
     !isBusy;
 
   return (
@@ -399,12 +409,16 @@ export default function ProjectFormScreen() {
             <TagSelector
               label={t("component:metadata.supported_files_label")}
               options={supportedFileTypeOptions}
-              selectedValues={[supportedFileType]}
+              selectedValues={selectedSupportedFileTypes}
               onChange={(values) =>
                 setSupportedFileType(
                   getDefaultProjectSupportedFileType(values[0]),
                 )
               }
+              helperText={t("component:metadata.selection_min", {
+                count: selectedSupportedFileTypes.length,
+                min: ProjectFormRequirements.PROJECT_FILE_MIN,
+              })}
               color={projectColor}
               singleSelect={true}
               maxVisibleRows={2}
@@ -434,8 +448,9 @@ export default function ProjectFormScreen() {
                   ),
                 );
               }}
-              helperText={t("component:metadata.tags_limit", {
-                count: tags.length,
+              helperText={t("component:metadata.tags_range", {
+                count: normalizedTags.length,
+                min: ProjectFormRequirements.PROJECT_TAGS_MIN,
                 max: PROJECT_TAG_LIMIT,
               })}
               color={projectColor}
@@ -445,7 +460,13 @@ export default function ProjectFormScreen() {
 
             <Text style={globalStyles.label}>
               {t("screen:project_form.category_list_label", {
-                min: CategoryRequire.MIN_OPTIONS,
+                min: ProjectFormRequirements.MIN_CATEGORIES,
+              })}
+            </Text>
+            <Text style={[globalStyles.discreetText, { marginBottom: 8 }]}>
+              {t("component:metadata.selection_min", {
+                count: selectedCategories.length,
+                min: ProjectFormRequirements.MIN_CATEGORIES,
               })}
             </Text>
             <AddButton
