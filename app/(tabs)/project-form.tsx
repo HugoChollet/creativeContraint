@@ -15,7 +15,9 @@ import ProjectJsonImporter, {
 } from "@/components/specific/project/project-json-importer";
 import {
   getCategoryTagsFromProject,
+  getDefaultProjectSupportedFileType,
   normalizeProjectTags,
+  PROJECT_SUPPORTED_FILE_TYPES,
   PROJECT_TAGS,
   ProjectLanguage,
   ProjectTag,
@@ -85,6 +87,8 @@ export default function ProjectFormScreen() {
     setDescription,
     language,
     setLanguage,
+    supportedFileType,
+    setSupportedFileType,
     tags,
     setTags,
     projectColor,
@@ -110,6 +114,14 @@ export default function ProjectFormScreen() {
       PROJECT_TAGS.map((value) => ({
         value,
         label: t(`component:metadata.tag_values.${value}`),
+      })),
+    [t],
+  );
+  const supportedFileTypeOptions = useMemo<TagSelectorOption[]>(
+    () =>
+      PROJECT_SUPPORTED_FILE_TYPES.map((value) => ({
+        value,
+        label: t(`component:metadata.supported_filess.${value}`),
       })),
     [t],
   );
@@ -268,6 +280,7 @@ export default function ProjectFormScreen() {
       name,
       description,
       language,
+      supported_files: supportedFileType,
       tags: normalizedTags,
       is_public: false, // Defaulting to private for now
       favorited_counter: 0,
@@ -384,6 +397,20 @@ export default function ProjectFormScreen() {
             />
 
             <TagSelector
+              label={t("component:metadata.supported_files_label")}
+              options={supportedFileTypeOptions}
+              selectedValues={[supportedFileType]}
+              onChange={(values) =>
+                setSupportedFileType(
+                  getDefaultProjectSupportedFileType(values[0]),
+                )
+              }
+              color={projectColor}
+              singleSelect={true}
+              maxVisibleRows={2}
+            />
+
+            <TagSelector
               label={t("component:metadata.tags_label")}
               options={tagOptions}
               selectedValues={tags}
@@ -476,6 +503,7 @@ export default function ProjectFormScreen() {
                 }
                 setDescription(draft.description);
                 setLanguage(draft.language);
+                setSupportedFileType(draft.supportedFileType);
                 setTags(draft.tags);
                 setSelectedCategories(draft.categories);
               }}

@@ -1,7 +1,9 @@
 import {
   getDefaultProjectLanguage,
+  getDefaultProjectSupportedFileType,
   normalizeProjectTags,
   ProjectLanguage,
+  ProjectSupportedFileType,
   ProjectTag,
 } from "@/constants/project-metadata";
 import { Category } from "@/types/category";
@@ -25,6 +27,8 @@ interface ProjectDraftContextType {
   setDescription: (description: string) => void;
   language: ProjectLanguage;
   setLanguage: (language: ProjectLanguage) => void;
+  supportedFileType: ProjectSupportedFileType;
+  setSupportedFileType: (supportedFileType: ProjectSupportedFileType) => void;
   tags: ProjectTag[];
   setTags: (tags: ProjectTag[]) => void;
   projectColor: string;
@@ -46,6 +50,8 @@ export function ProjectDraftProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<ProjectLanguage>(
     getDefaultProjectLanguage(i18n.language),
   );
+  const [supportedFileType, setSupportedFileType] =
+    useState<ProjectSupportedFileType>(getDefaultProjectSupportedFileType());
   const [tags, setTags] = useState<ProjectTag[]>([]);
   const [projectColor, setProjectColor] = useState(getRandomColor);
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
@@ -67,6 +73,7 @@ export function ProjectDraftProvider({ children }: { children: ReactNode }) {
     setName("New");
     setDescription("");
     setLanguage(getDefaultProjectLanguage(i18n.language));
+    setSupportedFileType(getDefaultProjectSupportedFileType());
     setTags([]);
     setProjectColor(getRandomColor());
     setSelectedCategories([]);
@@ -83,6 +90,8 @@ export function ProjectDraftProvider({ children }: { children: ReactNode }) {
         setDescription,
         language,
         setLanguage,
+        supportedFileType,
+        setSupportedFileType,
         tags,
         setTags: (nextTags) => setTags(normalizeProjectTags(nextTags)),
         projectColor,

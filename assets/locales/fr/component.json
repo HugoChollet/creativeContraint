@@ -56,11 +56,19 @@
   },
   "metadata": {
     "language_label": "Langue",
+    "supported_files_label": "Format de publication supporté",
     "tags_label": "Tags",
     "tags_limit": "{{count}} / {{max}} sélectionnés",
     "languages": {
       "en": "Anglais",
       "fr": "Français"
+    },
+    "supported_filess": {
+      "png/jpg": "PNG / JPG",
+      "docs/pdf": "Docs / PDF",
+      "plain text": "Texte brut",
+      "youtube link": "Lien YouTube",
+      "mp3": "Mp3"
     },
     "tag_values": {
       "all": "Tous",

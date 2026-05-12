@@ -1,4 +1,11 @@
 export const PROJECT_LANGUAGES = ["en", "fr"] as const;
+export const PROJECT_SUPPORTED_FILE_TYPES = [
+  "png/jpg",
+  "docs/pdf",
+  "plain text",
+  "youtube link",
+  "mp3",
+] as const;
 export const PROJECT_TAGS = [
   "all",
   "fiction",
@@ -33,15 +40,22 @@ export const PROJECT_TAGS = [
 ] as const;
 
 export type ProjectLanguage = (typeof PROJECT_LANGUAGES)[number];
+export type ProjectSupportedFileType =
+  (typeof PROJECT_SUPPORTED_FILE_TYPES)[number];
 export type ProjectTag = (typeof PROJECT_TAGS)[number];
 
 export const DEFAULT_PROJECT_LANGUAGE: ProjectLanguage = "en";
+export const DEFAULT_PROJECT_SUPPORTED_FILE_TYPE: ProjectSupportedFileType =
+  "plain text";
 export const PROJECT_LANGUAGE_FLAGS: Record<ProjectLanguage, string> = {
   en: "🇬🇧",
   fr: "🇫🇷",
 };
 
 const projectLanguageSet = new Set<string>(PROJECT_LANGUAGES);
+const projectSupportedFileTypeSet = new Set<string>(
+  PROJECT_SUPPORTED_FILE_TYPES,
+);
 const projectTagSet = new Set<string>(PROJECT_TAGS);
 
 export const isProjectLanguage = (
@@ -54,6 +68,18 @@ export const getDefaultProjectLanguage = (
   isProjectLanguage(preferredLanguage)
     ? preferredLanguage
     : DEFAULT_PROJECT_LANGUAGE;
+
+export const isProjectSupportedFileType = (
+  value?: string | null,
+): value is ProjectSupportedFileType =>
+  projectSupportedFileTypeSet.has(value ?? "");
+
+export const getDefaultProjectSupportedFileType = (
+  preferredFileType?: string | null,
+): ProjectSupportedFileType =>
+  isProjectSupportedFileType(preferredFileType)
+    ? preferredFileType
+    : DEFAULT_PROJECT_SUPPORTED_FILE_TYPE;
 
 export const getProjectLanguageFlag = (language: ProjectLanguage) =>
   PROJECT_LANGUAGE_FLAGS[language];

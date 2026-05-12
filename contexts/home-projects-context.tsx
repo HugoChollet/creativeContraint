@@ -53,18 +53,21 @@ interface HomeProjectsContextType {
   loading: boolean;
 }
 
-const HomeProjectsContext = createContext<
-  HomeProjectsContextType | undefined
->(undefined);
+const HomeProjectsContext = createContext<HomeProjectsContextType | undefined>(
+  undefined,
+);
 
 export function HomeProjectsProvider({ children }: { children: ReactNode }) {
   const { session } = useAuth();
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
   const userId = session?.user.id ?? "__guest__";
 
-  const { data: selections, loading: loadingSelections, refresh } =
-    useCollection<HomeProjectSelectionRecord>("user_project_selections", {
-      select: `
+  const {
+    data: selections,
+    loading: loadingSelections,
+    refresh,
+  } = useCollection<HomeProjectSelectionRecord>("user_project_selections", {
+    select: `
         id,
         owner_id,
         project_id,
@@ -75,6 +78,7 @@ export function HomeProjectsProvider({ children }: { children: ReactNode }) {
           name,
           description,
           language,
+          supported_files,
           tags,
           color,
           is_public,
@@ -97,9 +101,9 @@ export function HomeProjectsProvider({ children }: { children: ReactNode }) {
           )
         )
       `,
-      filterColumn: "owner_id",
-      filterValue: userId,
-    });
+    filterColumn: "owner_id",
+    filterValue: userId,
+  });
 
   const ownerIds = useMemo(
     () =>
@@ -107,7 +111,9 @@ export function HomeProjectsProvider({ children }: { children: ReactNode }) {
         new Set(
           selections
             .map((selection) => selection.project)
-            .filter((project): project is HomeProjectRelation => Boolean(project))
+            .filter((project): project is HomeProjectRelation =>
+              Boolean(project),
+            )
             .filter(
               (project) =>
                 project.source !== "official" &&
@@ -143,7 +149,8 @@ export function HomeProjectsProvider({ children }: { children: ReactNode }) {
           return [];
         }
 
-        const { project_category_relations, ...projectRecord } = selection.project;
+        const { project_category_relations, ...projectRecord } =
+          selection.project;
         const allCategories = project_category_relations.flatMap((relation) =>
           relation.categories ? [relation.categories] : [],
         );

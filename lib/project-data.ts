@@ -48,10 +48,9 @@ export const getBundledProjectData = ({
   language?: string;
 }): ProjectJSON => {
   const namespace = getProjectBundleNamespace(projectType);
-  const bundledProject = i18n.getResourceBundle(
-    language,
-    namespace,
-  ) as ProjectJSON | undefined;
+  const bundledProject = i18n.getResourceBundle(language, namespace) as
+    | ProjectJSON
+    | undefined;
 
   if (bundledProject) {
     return bundledProject;
@@ -80,7 +79,13 @@ export const getBundledProjectData = ({
 export const buildProjectJsonFromProject = (
   project: Pick<
     Project,
-    "id" | "name" | "description" | "language" | "tags" | "categories"
+    | "id"
+    | "name"
+    | "description"
+    | "language"
+    | "supported_files"
+    | "tags"
+    | "categories"
   >,
   projectType = getProjectRouteType(project.name),
 ): ProjectJSON => ({
@@ -89,6 +94,7 @@ export const buildProjectJsonFromProject = (
   project_label: project.name,
   description: project.description,
   language: project.language ?? undefined,
+  supported_files: project.supported_files ?? undefined,
   tags: project.tags ?? undefined,
   categories: project.categories.map((category: Category) => ({
     name: category.name,

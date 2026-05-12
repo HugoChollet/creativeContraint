@@ -4,6 +4,7 @@ import { Header } from "@/components/generic/header";
 import ProjectSection from "@/components/specific/project/project-section";
 import {
   getDefaultProjectLanguage,
+  getDefaultProjectSupportedFileType,
   normalizeProjectTags,
 } from "@/constants/project-metadata";
 import { useAuth } from "@/contexts/auth-context";
@@ -170,6 +171,7 @@ export default function ProjectBrowseScreen() {
     setName,
     setDescription,
     setLanguage,
+    setSupportedFileType,
     setTags,
     setProjectColor,
     setSelectedCategories,
@@ -186,6 +188,9 @@ export default function ProjectBrowseScreen() {
     setName(draft.name);
     setDescription(draft.description);
     setLanguage(getDefaultProjectLanguage(draft.language ?? i18n.language));
+    setSupportedFileType(
+      getDefaultProjectSupportedFileType(draft.supported_files),
+    );
     setTags(normalizeProjectTags(draft.tags));
     setProjectColor(draft.color ?? "ffff");
     setSelectedCategories(draft.categories);
@@ -266,7 +271,9 @@ export default function ProjectBrowseScreen() {
       .filter((project) => selectedProjectIds.includes(project.id))
       .map((project) => ({
         project_id: project.id,
-        selected_category_ids: project.categories.map((category) => category.id),
+        selected_category_ids: project.categories.map(
+          (category) => category.id,
+        ),
       }));
 
     if (nextSelections.length > 0) {

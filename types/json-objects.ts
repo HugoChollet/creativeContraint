@@ -19,6 +19,7 @@ export interface ProjectJSON {
   id: string;
   description?: string;
   language?: string | null;
+  supported_files?: string | null;
   tags?: string[] | null;
   categories: CategoryJSON[];
 }
