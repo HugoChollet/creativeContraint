@@ -28,6 +28,7 @@ interface MetadataBadgesProps {
   textColor?: string;
   backgroundColor?: string;
   onRemoveBadge?: (badge: MetadataBadge) => void;
+  trailingContent?: React.ReactNode;
 }
 
 const formatFallbackLabel = (value: string) =>
@@ -47,6 +48,7 @@ export default function MetadataBadges({
   textColor,
   backgroundColor,
   onRemoveBadge,
+  trailingContent,
 }: MetadataBadgesProps) {
   const { t } = useTranslation();
   const { globalStyles, colors } = useStyles();
@@ -89,7 +91,7 @@ export default function MetadataBadges({
     })),
   ];
 
-  if (badgeLabels.length === 0) {
+  if (badgeLabels.length === 0 && !trailingContent) {
     return null;
   }
 
@@ -145,6 +147,7 @@ export default function MetadataBadges({
           ) : null}
         </Pressable>
       ))}
+      {trailingContent}
     </View>
   );
 }

@@ -11,7 +11,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 interface LanguageSelectorProps {
   label: string;
-  selectedLanguage: ProjectLanguage;
+  selectedLanguage?: ProjectLanguage | null;
   onChange: (language: ProjectLanguage) => void;
   color?: string;
 }

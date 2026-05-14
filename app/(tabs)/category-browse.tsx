@@ -1,13 +1,22 @@
 import { AddButton } from "@/components/generic/add-button";
+import { ConfirmButton } from "@/components/generic/confirm-button";
 import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { Header } from "@/components/generic/header";
+import LanguageSelector from "@/components/generic/language-selector";
 import MetadataBadges from "@/components/generic/metadata-badges";
+import { ModalGeneric } from "@/components/generic/modal-generic";
+import TagSelector, {
+  TagSelectorOption,
+} from "@/components/generic/tag-selector";
 import CategorySection from "@/components/specific/category/category-section";
 import {
   isProjectLanguage,
   matchesProjectLanguage,
   matchesProjectTags,
   normalizeProjectTags,
+  PROJECT_TAGS,
+  ProjectLanguage,
+  ProjectTag,
 } from "@/constants/project-metadata";
 import { getProjectColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
@@ -23,6 +32,7 @@ import {
   UserProjectSelection,
 } from "@/types/projects";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { Ionicons } from "@expo/vector-icons";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import React, {
   useCallback,
@@ -32,7 +42,15 @@ import React, {
   useState,
 } from "react";
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 export default function CategoryBrowseScreen() {
   const { mode, selectionMode, type } = useLocalSearchParams<{
@@ -107,10 +125,8 @@ export default function CategoryBrowseScreen() {
   >(isProjectLanguage(currentProjectLanguage) ? currentProjectLanguage : null);
   const [browseTagFilters, setBrowseTagFilters] =
     useState<string[]>(currentProjectTags);
+  const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
   const previousBrowseFilterSeedRef = useRef<string | null>(null);
-
-  const hasActiveFilters =
-    isProjectLanguage(browseLanguageFilter) || browseTagFilters.length > 0;
 
   useEffect(() => {
     if (previousBrowseFilterSeedRef.current === browseFilterSeed) {
@@ -233,6 +249,14 @@ export default function CategoryBrowseScreen() {
       selected: selectedCategoryIds,
     },
   ];
+  const tagOptions = useMemo<TagSelectorOption[]>(
+    () =>
+      PROJECT_TAGS.map((value) => ({
+        value,
+        label: t(`component:metadata.tag_values.${value}`),
+      })),
+    [t],
+  );
 
   const toggleEditionSelectedCategory = useCallback((category: Category) => {
     setEditionSelectedCategoryIds((prev) =>
@@ -473,30 +497,45 @@ export default function CategoryBrowseScreen() {
       <Header
         title={t("screen:category_browse.title", { type: screenProjectTitle })}
       />
-      {hasActiveFilters && (
-        <View style={{ marginTop: 16, marginBottom: 8 }}>
-          <Text style={globalStyles.label}>
-            {t("screen:category_browse.filters_label")}
-          </Text>
-          <MetadataBadges
-            language={browseLanguageFilter}
-            tags={browseTagFilters}
-            color={screenProjectColor}
-            onRemoveBadge={(badge) => {
-              if (badge.type === "language") {
-                setBrowseLanguageFilter(null);
-                return;
-              }
+      <View style={{ marginTop: 16, marginBottom: 8 }}>
+        <Text style={globalStyles.label}>
+          {t("screen:category_browse.filters_label")}
+        </Text>
+        <MetadataBadges
+          language={browseLanguageFilter}
+          tags={browseTagFilters}
+          color={screenProjectColor}
+          onRemoveBadge={(badge) => {
+            if (badge.type === "language") {
+              setBrowseLanguageFilter(null);
+              return;
+            }
 
-              if (badge.type === "tag") {
-                setBrowseTagFilters((prev) =>
-                  prev.filter((tag) => tag !== badge.value),
-                );
-              }
-            }}
-          />
-        </View>
-      )}
+            if (badge.type === "tag") {
+              setBrowseTagFilters((prev) =>
+                prev.filter((tag) => tag !== badge.value),
+              );
+            }
+          }}
+          trailingContent={
+            <Pressable
+              onPress={() => setIsFilterModalVisible(true)}
+              style={[
+                globalStyles.tag,
+                globalStyles.tagMedium,
+                globalStyles.elementAndDescriptorContainer,
+                styles.addFilterButton,
+                {
+                  borderColor: screenProjectColor,
+                },
+              ]}
+              accessibilityLabel="Add filters"
+            >
+              <Ionicons name="add" size={14} color={screenProjectColor} />
+            </Pressable>
+          }
+        />
+      </View>
       {loading ? (
         <View
           style={[globalStyles.screenContainer, { justifyContent: "center" }]}
@@ -609,6 +648,59 @@ export default function CategoryBrowseScreen() {
               : router.back()
         }
       />
+
+      <ModalGeneric
+        visible={isFilterModalVisible}
+        setVisible={setIsFilterModalVisible}
+      >
+        <Text style={[globalStyles.subtitle, { marginTop: 0 }]}>
+          {t("screen:category_browse.filters_label")}
+        </Text>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.filterModalContent}
+        >
+          <LanguageSelector
+            label={t("component:metadata.language_label")}
+            selectedLanguage={
+              isProjectLanguage(browseLanguageFilter)
+                ? (browseLanguageFilter as ProjectLanguage)
+                : null
+            }
+            onChange={(nextLanguage) => setBrowseLanguageFilter(nextLanguage)}
+            color={screenProjectColor}
+          />
+          <TagSelector
+            label={t("component:metadata.tags_label")}
+            options={tagOptions}
+            selectedValues={browseTagFilters}
+            onChange={(values) =>
+              setBrowseTagFilters(
+                normalizeProjectTags(values) as ProjectTag[],
+              )
+            }
+            color={screenProjectColor}
+            maxVisibleRows={3}
+          />
+        </ScrollView>
+        <ConfirmButton
+          projectColor={screenProjectColor}
+          label={t("component:confirm-cancel.confirm")}
+          onClick={() => setIsFilterModalVisible(false)}
+        />
+      </ModalGeneric>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  addFilterButton: {
+    minWidth: 32,
+    justifyContent: "center",
+    backgroundColor: "transparent",
+  },
+  filterModalContent: {
+    paddingTop: 8,
+    paddingBottom: 12,
+  },
+});
