@@ -1,10 +1,15 @@
+import MetadataBadges from "@/components/generic/metadata-badges";
 import { getProjectColor } from "@/constants/theme";
 import { useProjectTranslations } from "@/hooks/use-project-translations";
 import { useStyles } from "@/hooks/use-styles";
 import {
-  getBundledProjectData,
-  getProjectTitle,
-} from "@/lib/project-data";
+  getConstraintSetProjectColor,
+  getConstraintSetProjectDataSource,
+  getConstraintSetProjectLabel,
+  getConstraintSetProjectLanguage,
+  getConstraintSetProjectSupportedFile,
+  getConstraintSetProjectTags,
+} from "@/lib/constraint-set-data";
 import { SavedConstraintSet } from "@/types/constraints";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useMemo } from "react";
@@ -23,20 +28,34 @@ export function ConstraintsSetCard({
   deleteRecord: (id: number | string) => void;
   submit: () => void;
 }) {
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
   const { globalStyles, colors, theme } = useStyles();
-  const solidColor = getProjectColor({ label: item.project_type, theme });
+  const projectLabel = getConstraintSetProjectLabel(item);
+  const solidColor = getConstraintSetProjectColor({
+    constraintSet: item,
+    theme,
+  });
+  console.log("base color : ", item.color);
+
+  const projectBackgroundColor = item.color
+    ? getProjectColor({
+        color: item.color,
+        opacity: 0.1,
+        theme,
+      })
+    : getProjectColor({
+        label: item.project?.name ?? item.project_label,
+        opacity: 0.1,
+        theme,
+      });
 
   const dataSource = useMemo(() => {
-    return getBundledProjectData({
-      projectType: item.project_type,
-      language: i18n.language,
-    });
-  }, [i18n.language, item.project_type]);
+    return getConstraintSetProjectDataSource({ constraintSet: item });
+  }, [item]);
 
   const translatedConstraints = useProjectTranslations(
     item.constraints,
-    dataSource.categories,
+    dataSource?.categories,
   );
 
   return (
@@ -46,23 +65,19 @@ export function ConstraintsSetCard({
         {
           marginBottom: 16,
           overflow: "hidden",
-          backgroundColor: getProjectColor({
-            label: item.project_type,
-            opacity: 0.1,
-            theme,
-          }),
+          backgroundColor: projectBackgroundColor,
         },
       ]}
     >
       <View style={styles.headerContainer}>
         <DifficultyIndicator difficultyIndicator={item.difficulty} />
         <Text style={[globalStyles.title, { color: solidColor }]}>
-          {getProjectTitle(dataSource).toUpperCase()}
+          {projectLabel.toUpperCase()}
         </Text>
 
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
           <ShareConstraintButton
-            project_type={getProjectTitle(dataSource)}
+            projectLabel={projectLabel}
             constraints={translatedConstraints}
             difficulty={item.difficulty}
             color={solidColor}
@@ -78,14 +93,19 @@ export function ConstraintsSetCard({
         style={[
           styles.circleDecorator,
           {
-            backgroundColor: getProjectColor({
-              label: item.project_type,
-              opacity: 0.1,
-              theme,
-            }),
+            backgroundColor: projectBackgroundColor,
           },
         ]}
       />
+
+      <View style={{ marginBottom: 12 }}>
+        <MetadataBadges
+          language={getConstraintSetProjectLanguage(item)}
+          supportedFile={getConstraintSetProjectSupportedFile(item)}
+          tags={getConstraintSetProjectTags(item)}
+          color={solidColor}
+        />
+      </View>
 
       <View style={styles.tagContainer}>
         {translatedConstraints.map(({ label, displayValue, description }) => (
@@ -107,6 +127,11 @@ export function ConstraintsSetCard({
             </View>
           </View>
         ))}
+        {translatedConstraints.length === 0 && (
+          <Text style={{ color: colors.textDiscreet }}>
+            {t("screen:lab.empty_result")}
+          </Text>
+        )}
       </View>
 
       <TouchableOpacity

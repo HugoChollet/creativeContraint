@@ -2,6 +2,7 @@ import { BottomSheet } from "@/components/generic/bottom-sheet";
 import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
+import { getConstraintCategoryIdentifier } from "@/lib/constraint-set-data";
 import {
   GeneratedConstraintSet,
   SavedConstraintSet,
@@ -64,7 +65,7 @@ export default function GeneratedConstraintsSheet({
     () =>
       Object.fromEntries(
         dataSource.categories.map((category) => [
-          category.name,
+          getConstraintCategoryIdentifier(category),
           category.label || category.name,
         ]),
       ),
@@ -116,7 +117,15 @@ export default function GeneratedConstraintsSheet({
 
       // Create a new saved constraint set for the current generated result.
       const newConstraintSet = {
-        project_type: generatedConstraintSet.projectType,
+        project_id: generatedConstraintSet.projectId ?? null,
+        project_label:
+          generatedConstraintSet.projectLabel ??
+          dataSource.project_label ??
+          dataSource.project_type,
+        language: generatedConstraintSet.language ?? null,
+        supported_files: generatedConstraintSet.supportedFiles ?? null,
+        tags: generatedConstraintSet.tags ?? null,
+        color: generatedConstraintSet.color ?? null,
         constraints: generatedConstraintSet.constraintIds,
         difficulty: getDifficultyGenerated(),
       };
@@ -154,7 +163,11 @@ export default function GeneratedConstraintsSheet({
         <ResultModalHeader
           difficultyIndicator={getDifficultyGenerated()}
           color={color}
-          titleType={generatedConstraintSet.projectType}
+          titleType={
+            generatedConstraintSet.projectLabel ??
+            dataSource.project_label ??
+            dataSource.project_type
+          }
           historyCount={historyCount}
           currentHistoryIndex={currentHistoryIndex}
           canGenerateAnother={canGenerateAnother}

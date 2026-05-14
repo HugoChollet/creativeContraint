@@ -1,28 +1,28 @@
-import { getProjectColor } from "@/constants/theme";
 import { useProjectTranslations } from "@/hooks/use-project-translations";
 import { useStyles } from "@/hooks/use-styles";
-import { getBundledProjectData } from "@/lib/project-data";
+import {
+  getConstraintSetProjectColor,
+  getConstraintSetProjectDataSource,
+} from "@/lib/constraint-set-data";
 import { SavedConstraintSet } from "@/types/constraints";
 import React, { useMemo } from "react";
-import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 import Tooltip from "../../generic/tooltip";
 
 export function ConstraintsTags({ item }: { item: SavedConstraintSet }) {
-  const { i18n } = useTranslation();
   const { globalStyles, colors, theme } = useStyles();
-  const solidColor = getProjectColor({ label: item.project_type, theme });
+  const solidColor = getConstraintSetProjectColor({
+    constraintSet: item,
+    theme,
+  });
 
   const dataSource = useMemo(() => {
-    return getBundledProjectData({
-      projectType: item.project_type,
-      language: i18n.language,
-    });
-  }, [i18n.language, item.project_type]);
+    return getConstraintSetProjectDataSource({ constraintSet: item });
+  }, [item]);
 
   const translatedConstraints = useProjectTranslations(
     item.constraints,
-    dataSource.categories,
+    dataSource?.categories,
   );
 
   return (
@@ -32,11 +32,9 @@ export function ConstraintsTags({ item }: { item: SavedConstraintSet }) {
         {
           borderRadius: 0,
           overflow: "hidden",
-          backgroundColor: getProjectColor({
-            label: item.project_type,
-            opacity: 0.1,
-            theme,
-          }),
+          backgroundColor: item.color
+            ? solidColor
+            : colors.shadeContainer,
         },
       ]}
     >

@@ -11,6 +11,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 interface MetadataBadgesProps {
   language?: string | null;
+  supportedFile?: string | null;
   tags?: readonly string[] | null;
   size?: TagSize;
   color?: string;
@@ -28,6 +29,7 @@ const formatFallbackLabel = (value: string) =>
 
 export default function MetadataBadges({
   language,
+  supportedFile,
   tags,
   size = "medium",
   color,
@@ -48,6 +50,16 @@ export default function MetadataBadges({
                 defaultValue: language.toUpperCase(),
               },
             )}`,
+          },
+        ]
+      : []),
+    ...(supportedFile
+      ? [
+          {
+            key: `supported-file-${supportedFile}`,
+            label: t(`component:metadata.supported_filess.${supportedFile}`, {
+              defaultValue: formatFallbackLabel(supportedFile),
+            }),
           },
         ]
       : []),

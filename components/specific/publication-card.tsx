@@ -1,5 +1,9 @@
 import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
+import {
+  getConstraintSetProjectColor,
+  getConstraintSetProjectLabel,
+} from "@/lib/constraint-set-data";
 import { Publication } from "@/types/publication";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
@@ -13,10 +17,19 @@ interface PublicationCardProps {
 
 export const PublicationCard = ({ publication }: PublicationCardProps) => {
   const { globalStyles, colors, theme } = useStyles();
-  const projectColor = getProjectColor({
-    label: publication.project_type,
-    theme,
-  });
+  const constraintSet = publication.generated_constraints ?? null;
+  const projectLabel = constraintSet
+    ? getConstraintSetProjectLabel(constraintSet)
+    : publication.project_type;
+  const projectColor = constraintSet
+    ? getConstraintSetProjectColor({
+        constraintSet,
+        theme,
+      })
+    : getProjectColor({
+        label: publication.project_type,
+        theme,
+      });
   const [isConstraintsVisible, setIsConstraintsVisible] = useState(false);
 
   return (
@@ -25,11 +38,13 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
         style={[
           globalStyles.headerRow,
           {
-            backgroundColor: getProjectColor({
-              label: publication.project_type,
-              opacity: 0.1,
-              theme,
-            }),
+            backgroundColor: constraintSet?.color
+              ? projectColor
+              : getProjectColor({
+                  label: publication.project_type,
+                  opacity: 0.1,
+                  theme,
+                }),
             justifyContent: "space-between",
             gap: 8,
             height: 72,
@@ -57,9 +72,17 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
             {publication.profile?.username}
           </Text>
         </View>
-        <Text style={{ color: projectColor, fontWeight: "bold", fontSize: 16 }}>
-          {publication.title}
-        </Text>
+        <View style={{ flex: 1, alignItems: "center" }}>
+          <Text
+            style={{ color: projectColor, fontWeight: "bold", fontSize: 16 }}
+            numberOfLines={1}
+          >
+            {publication.title}
+          </Text>
+          <Text style={{ color: colors.textDiscreet, fontSize: 11 }}>
+            {projectLabel}
+          </Text>
+        </View>
         <View style={styles.headerLeft}>
           <DifficultyIndicator
             isLabel={isConstraintsVisible}
@@ -79,8 +102,8 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
         </View>
       </View>
 
-      {publication.generated_constraints && isConstraintsVisible && (
-        <ConstraintsTags item={publication.generated_constraints} />
+      {constraintSet && isConstraintsVisible && (
+        <ConstraintsTags item={constraintSet} />
       )}
 
       {publication.media_type === "image" && publication.media_url && (

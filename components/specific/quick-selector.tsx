@@ -1,19 +1,31 @@
 import ExpandableHeader from "@/components/generic/expandable-header";
+import {
+  getConstraintCategoryIdentifier,
+  getConstraintSelectionKey,
+} from "@/lib/constraint-set-data";
 import { useStyles } from "@/hooks/use-styles";
 import { Option, SelectedState, SubCategory } from "@/types/constraints";
 import { CategoryJSON } from "@/types/json-objects";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { ConstraintSelector } from "./constraint/constraint-selector";
 import { PresetMode, StatusSelector } from "./status-selector";
 
+type QuickSelectorOptionSelection = {
+  key: string;
+  option: Option;
+};
+
 interface QuickSelectorProps {
   category: CategoryJSON;
   selectedItems: SelectedState;
-  onToggleCategory: (name: string) => void;
-  onToggleOption: (catName: string, id: number) => void;
-  onBulkUpdate: (catName: string, options: Option[], mode: PresetMode) => void;
+  onToggleCategory: (categoryKey: string) => void;
+  onToggleOption: (selectionKey: string) => void;
+  onBulkUpdate: (
+    selections: QuickSelectorOptionSelection[],
+    mode: PresetMode,
+  ) => void;
   isExpanded: boolean;
   onExpand: () => void;
   color?: string;
@@ -33,27 +45,39 @@ export default function QuickSelector({
   const [mode, setMode] = useState<PresetMode>("all");
   const { t } = useTranslation();
   const { globalStyles, colors } = useStyles();
-
-  const [isEnabled, setIsEnabled] = useState(!category.disabled);
   const hasSubCategories =
     category.sub_categories && category.sub_categories.length > 0;
+  const categoryStateKey = getConstraintCategoryIdentifier(category);
+  const isEnabled =
+    selectedItems.activeCategories[categoryStateKey] ?? !category.disabled;
 
   const currentSubCategory: SubCategory | null = hasSubCategories
     ? category.sub_categories![activeTabIndex]
     : null;
 
-  const currentOptions = hasSubCategories
-    ? currentSubCategory?.options || []
-    : category.options || [];
+  const currentOptionSelections = useMemo(
+    () =>
+      (hasSubCategories
+        ? currentSubCategory?.options || []
+        : category.options || []
+      ).map((option) => ({
+        key: getConstraintSelectionKey(
+          category,
+          option.id,
+          currentSubCategory?.name,
+        ),
+        option,
+      })),
+    [category, currentSubCategory?.name, currentSubCategory?.options, hasSubCategories],
+  );
 
   const getSubtitle = () => {
     if (mode === "all" || mode === "none") return t("component:status." + mode);
 
-    const categoryKeyPrefix = `${category.name}-`;
-    const selectedCount = Object.entries(selectedItems.selectedOptions).filter(
-      ([key, isSelected]) => key.startsWith(categoryKeyPrefix) && isSelected,
+    const selectedCount = currentOptionSelections.filter(
+      ({ key }) => selectedItems.selectedOptions[key],
     ).length;
-    const totalOptionsCount = category.options?.length;
+    const totalOptionsCount = currentOptionSelections.length;
 
     return (
       selectedCount +
@@ -76,10 +100,7 @@ export default function QuickSelector({
         title={category.label || category.name}
         description={category.description}
         tags={category.tags}
-        onToggle={() => {
-          onToggleCategory(category.name);
-          setIsEnabled((prev) => !prev);
-        }}
+        onToggle={() => onToggleCategory(categoryStateKey)}
         isExpanded={isExpanded}
         onExpand={onExpand}
         color={color}
@@ -93,9 +114,12 @@ export default function QuickSelector({
             <StatusSelector
               currentMode={mode}
               onSelect={(newMode) => {
+                if (!isEnabled) {
+                  onToggleCategory(categoryStateKey);
+                }
+
                 setMode(newMode);
-                onBulkUpdate(category.name, currentOptions, newMode);
-                setIsEnabled(true);
+                onBulkUpdate(currentOptionSelections, newMode);
               }}
             />
           </View>
@@ -129,33 +153,27 @@ export default function QuickSelector({
           )}
 
           <ScrollView nestedScrollEnabled={true}>
-            {currentOptions
-              .sort((a, b) => a.value.localeCompare(b.value))
-              .map((opt: Option) => {
-                // Create a unique key for selection state: "Category-SubName-ID" or "Category-ID"
-                const selectionKey = hasSubCategories
-                  ? `${category.name}-${currentSubCategory?.name}-${opt.id}`
-                  : `${category.name}-${opt.id}`;
+            {currentOptionSelections
+              .sort((left, right) =>
+                left.option.value.localeCompare(right.option.value),
+              )
+              .map(({ key, option }) => (
+                <ConstraintSelector
+                  key={option.id}
+                  option={option}
+                  isParentEnabled={true}
+                  isSelected={!!selectedItems.selectedOptions[key]}
+                  color={color}
+                  onToggle={() => {
+                    if (!isEnabled) {
+                      onToggleCategory(categoryStateKey);
+                    }
 
-                return (
-                  <ConstraintSelector
-                    key={opt.id}
-                    option={opt}
-                    isParentEnabled={true}
-                    isSelected={!!selectedItems.selectedOptions[selectionKey]}
-                    color={color}
-                    onToggle={(id) => {
-                      setMode("custom");
-                      // Pass the specialized key to the parent handler
-                      const fullKey = hasSubCategories
-                        ? `${category.name}-${currentSubCategory?.name}`
-                        : category.name;
-                      onToggleOption(fullKey, id);
-                      setIsEnabled(true);
-                    }}
-                  />
-                );
-              })}
+                    setMode("custom");
+                    onToggleOption(key);
+                  }}
+                />
+              ))}
           </ScrollView>
         </View>
       )}

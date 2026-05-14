@@ -3,6 +3,7 @@ import { ConstraintsSetCard } from "@/components/specific/constraint/constraint-
 import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
+import { CONSTRAINT_SET_SELECT } from "@/lib/constraint-set-data";
 import { SavedConstraintSet } from "@/types/constraints";
 import { router, useFocusEffect } from "expo-router";
 import React, { useCallback, useEffect } from "react";
@@ -23,7 +24,9 @@ export default function ConstraintSetsScreen() {
     loading,
     deleteRecord,
     refresh,
-  } = useCollection<SavedConstraintSet>("constraint_sets");
+  } = useCollection<SavedConstraintSet>("constraint_sets", {
+    select: CONSTRAINT_SET_SELECT,
+  });
   const { session } = useAuth();
 
   useEffect(() => {
@@ -63,7 +66,7 @@ export default function ConstraintSetsScreen() {
               submit={() =>
                 router.push({
                   pathname: "/publication-form",
-                  params: { id: item.id.toString(), type: item.project_type },
+                  params: { id: item.id.toString() },
                 })
               }
             />
@@ -74,7 +77,7 @@ export default function ConstraintSetsScreen() {
           ListEmptyComponent={
             <View style={{ marginTop: 50, alignItems: "center" }}>
               <Text style={globalStyles.subtitle}>
-                {t("screen:constraint_sets.no_constraintSets")}
+                {t("screen:constraint_sets.no_constraint_sets")}
               </Text>
               <TouchableOpacity
                 style={globalStyles.secondaryButton}

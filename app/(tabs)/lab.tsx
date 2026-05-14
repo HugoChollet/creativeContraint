@@ -5,9 +5,19 @@ import { Spacer } from "@/components/generic/spacer";
 import GeneratedConstraintsSheet from "@/components/specific/generated-constraints-sheet";
 import QuickSelector from "@/components/specific/quick-selector";
 import { PresetMode } from "@/components/specific/status-selector";
+import {
+  isProjectLanguage,
+  isProjectSupportedFileType,
+  normalizeProjectTags,
+} from "@/constants/project-metadata";
 import { getProjectColor } from "@/constants/theme";
 import { useHomeProjects } from "@/contexts/home-projects-context";
 import { useStyles } from "@/hooks/use-styles";
+import {
+  getConstraintCategoryIdentifier,
+  getConstraintSelectionKey,
+  getConstraintValueKey,
+} from "@/lib/constraint-set-data";
 import {
   LAB_GENERATION_HISTORY_LIMIT,
   loadLabGenerationHistory,
@@ -36,11 +46,12 @@ const buildInitialSelectedState = (projectData: ProjectJSON): SelectedState => {
 
   // Lab keeps its toggles separate from the source project, so everything starts enabled here.
   projectData.categories.forEach((category: CategoryJSON) => {
-    activeCategories[category.name] = !category.disabled;
+    activeCategories[getConstraintCategoryIdentifier(category)] =
+      !category.disabled;
 
     if (category.options) {
       category.options.forEach((option) => {
-        selectedOptions[`${category.name}-${option.id}`] = true;
+        selectedOptions[getConstraintSelectionKey(category, option.id)] = true;
       });
 
       return;
@@ -48,8 +59,9 @@ const buildInitialSelectedState = (projectData: ProjectJSON): SelectedState => {
 
     category.sub_categories?.forEach((subCategory) => {
       subCategory.options.forEach((option) => {
-        selectedOptions[`${category.name}-${subCategory.name}-${option.id}`] =
-          true;
+        selectedOptions[
+          getConstraintSelectionKey(category, option.id, subCategory.name)
+        ] = true;
       });
     });
   });
@@ -66,20 +78,29 @@ const createGeneratedConstraintSetId = () =>
 const buildGeneratedConstraintSet = (
   projectData: ProjectJSON,
   selectedItems: SelectedState,
-  projectTitle: string,
+  projectSnapshot: Pick<
+    GeneratedConstraintSet,
+    | "projectId"
+    | "projectLabel"
+    | "language"
+    | "supportedFiles"
+    | "tags"
+    | "color"
+  >,
 ): GeneratedConstraintSet => {
   const results: GeneratedConstraintSet["constraints"] = {};
   const ids: GeneratedConstraintSet["constraintIds"] = {};
 
   projectData.categories.forEach((category) => {
-    if (!selectedItems.activeCategories[category.name]) {
+    const categoryIdentifier = getConstraintCategoryIdentifier(category);
+
+    if (!selectedItems.activeCategories[categoryIdentifier]) {
       return;
     }
 
     if (category.options) {
       const availableOptions = category.options.filter(
-        (option) =>
-          selectedItems.selectedOptions[`${category.name}-${option.id}`],
+        (option) => selectedItems.selectedOptions[getConstraintSelectionKey(category, option.id)],
       );
 
       if (availableOptions.length === 0) {
@@ -89,13 +110,13 @@ const buildGeneratedConstraintSet = (
       const randomOption =
         availableOptions[Math.floor(Math.random() * availableOptions.length)];
 
-      results[category.name] = {
+      results[categoryIdentifier] = {
         id: randomOption.id,
         value: randomOption.value,
         rarity: randomOption.rarity,
         description: randomOption.description,
       };
-      ids[category.name] = randomOption.id;
+      ids[getConstraintValueKey(category)] = randomOption.id;
       return;
     }
 
@@ -106,7 +127,7 @@ const buildGeneratedConstraintSet = (
       const availableOptions = subCategory.options.filter(
         (option) =>
           selectedItems.selectedOptions[
-            `${category.name}-${subCategory.name}-${option.id}`
+            getConstraintSelectionKey(category, option.id, subCategory.name)
           ],
       );
 
@@ -119,14 +140,14 @@ const buildGeneratedConstraintSet = (
 
       generatedValues.push(randomOption.value);
       generatedRarity += randomOption.rarity;
-      ids[`${category.name}_${subCategory.name}`] = randomOption.id;
+      ids[getConstraintValueKey(category, subCategory.name)] = randomOption.id;
     });
 
     if (generatedValues.length === 0) {
       return;
     }
 
-    results[category.name] = {
+    results[categoryIdentifier] = {
       id: -1,
       value: generatedValues.join(" "),
       rarity: generatedRarity,
@@ -136,7 +157,7 @@ const buildGeneratedConstraintSet = (
 
   return {
     id: createGeneratedConstraintSetId(),
-    projectType: projectTitle,
+    ...projectSnapshot,
     generatedAt: new Date().toISOString(),
     constraints: results,
     constraintIds: ids,
@@ -195,6 +216,34 @@ export default function LabScreen() {
 
   const dataSource = contextProject?.dataSource ?? fallbackProjectData;
   const projectTitle = getProjectTitle(dataSource);
+  const projectSnapshot = useMemo(
+    () => ({
+      projectId: contextProject?.id ?? null,
+      projectLabel: contextProject?.name ?? projectTitle,
+      language:
+        contextProject?.language ??
+        (isProjectLanguage(dataSource.language) ? dataSource.language : null),
+      supportedFiles:
+        contextProject?.supported_files ??
+        (isProjectSupportedFileType(dataSource.supported_files)
+          ? dataSource.supported_files
+          : null),
+      tags: contextProject?.tags ?? normalizeProjectTags(dataSource.tags),
+      color: contextProject?.color ?? null,
+    }),
+    [
+      contextProject?.color,
+      contextProject?.id,
+      contextProject?.language,
+      contextProject?.name,
+      contextProject?.supported_files,
+      contextProject?.tags,
+      dataSource.language,
+      dataSource.supported_files,
+      dataSource.tags,
+      projectTitle,
+    ],
+  );
   const projectHistoryKey = useMemo(() => {
     if (contextProject?.id) {
       return `project:${contextProject.id}`;
@@ -269,23 +318,22 @@ export default function LabScreen() {
     void saveLabGenerationHistory(projectHistoryKey, generationHistory);
   }, [generationHistory, isHistoryHydrated, projectHistoryKey]);
 
-  const toggleCategory = (name: string) => {
+  const toggleCategory = (categoryKey: string) => {
     setSelectedItems((prev) => ({
       ...prev,
       activeCategories: {
         ...prev.activeCategories,
-        [name]: !prev.activeCategories[name],
+        [categoryKey]: !prev.activeCategories[categoryKey],
       },
     }));
   };
 
-  const toggleOption = (catName: string, id: number) => {
-    const key = `${catName}-${id}`;
+  const toggleOption = (selectionKey: string) => {
     setSelectedItems((prev) => ({
       ...prev,
       selectedOptions: {
         ...prev.selectedOptions,
-        [key]: !prev.selectedOptions[key],
+        [selectionKey]: !prev.selectedOptions[selectionKey],
       },
     }));
   };
@@ -301,7 +349,7 @@ export default function LabScreen() {
     const nextGeneratedConstraintSet = buildGeneratedConstraintSet(
       dataSource,
       selectedItems,
-      projectTitle,
+      projectSnapshot,
     );
     const nextGenerationHistory = [
       ...generationHistory,
@@ -335,19 +383,17 @@ export default function LabScreen() {
   };
 
   const bulkUpdateOptions = (
-    categoryName: string,
-    options: Option[],
+    selections: { key: string; option: Option }[],
     mode: PresetMode,
   ) => {
     setSelectedItems((prev) => {
       const newOptions = { ...prev.selectedOptions };
 
-      options.forEach((opt) => {
-        const key = `${categoryName}-${opt.id}`;
+      selections.forEach(({ key, option }) => {
         if (mode === "all") newOptions[key] = true;
         else if (mode === "none") newOptions[key] = false;
-        else if (mode === "easy") newOptions[key] = opt.rarity <= 2;
-        else if (mode === "hard") newOptions[key] = opt.rarity >= 3;
+        else if (mode === "easy") newOptions[key] = option.rarity <= 2;
+        else if (mode === "hard") newOptions[key] = option.rarity >= 3;
         // 'custom' does nothing in bulk; it's handled by manual clicks
       });
 

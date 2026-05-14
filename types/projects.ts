@@ -23,6 +23,8 @@ export interface Project {
   is_public: boolean;
   owner_id: string;
   color?: string;
+  favorited_counter?: number;
+  created_at?: string;
 }
 
 export interface ProjectSectionData {

@@ -27,10 +27,16 @@ export const getProjectRouteType = (value?: string | null) => {
   return getHomeProjectType(normalizedValue) ?? normalizedValue;
 };
 
-export const getProjectBundleNamespace = (projectType?: string | null) => {
+export const getOptionalProjectBundleNamespace = (projectType?: string | null) => {
   const routeType = getProjectRouteType(projectType).trim().toLowerCase();
 
-  return projectNamespaceByType[routeType] ?? DEFAULT_PROJECT_NAMESPACE;
+  return projectNamespaceByType[routeType] ?? null;
+};
+
+export const getProjectBundleNamespace = (projectType?: string | null) => {
+  return (
+    getOptionalProjectBundleNamespace(projectType) ?? DEFAULT_PROJECT_NAMESPACE
+  );
 };
 
 export const getProjectTitle = ({
@@ -97,6 +103,7 @@ export const buildProjectJsonFromProject = (
   supported_files: project.supported_files ?? undefined,
   tags: project.tags ?? undefined,
   categories: project.categories.map((category: Category) => ({
+    id: category.id,
     name: category.name,
     label: category.name,
     description: category.description,

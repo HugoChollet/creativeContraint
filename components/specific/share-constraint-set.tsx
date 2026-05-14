@@ -5,14 +5,14 @@ import { useTranslation } from "react-i18next";
 import { Alert, Share, TouchableOpacity } from "react-native";
 
 interface ShareProps {
-  project_type: string;
+  projectLabel: string;
   constraints: TranslatedRow[];
   difficulty: number;
   color: string;
 }
 
 function ShareConstraintButton({
-  project_type,
+  projectLabel,
   constraints,
   difficulty,
   color,
@@ -25,7 +25,7 @@ function ShareConstraintButton({
       .join("\n");
 
     return t("component:share.card", {
-      type: project_type,
+      type: projectLabel,
       difficulty,
       constraints: constraintList,
     });
@@ -37,7 +37,7 @@ function ShareConstraintButton({
       const result = await Share.share({
         message,
         // TODO add link to store/deeplink to constraint set
-        title: `Contraintes pour ${project_type}`,
+        title: `Contraintes pour ${projectLabel}`,
       });
 
       if (result.action === Share.sharedAction) {

@@ -1,4 +1,5 @@
 import { MediaPickerResult } from "@/components/specific/pickers/media-pickers";
+import { CONSTRAINT_SET_SELECT } from "@/lib/constraint-set-data";
 import { supabase } from "@/lib/supabase";
 import { Publication } from "@/types/publication";
 
@@ -42,7 +43,7 @@ export const publicationService = {
     userId: string;
     title: string;
     description: string;
-    projectType: string;
+    projectLabel: string;
     media: MediaPickerResult;
     constraintId: string;
   }) {
@@ -61,7 +62,7 @@ export const publicationService = {
       user_id: payload.userId,
       title: payload.title,
       description: payload.description,
-      project_type: payload.projectType,
+      project_type: payload.projectLabel,
       media_url: finalMediaUrl,
       content_text: contentText,
       media_type: payload.media.type,
@@ -87,7 +88,9 @@ export const publicationService = {
       .select(
         `
         *,
-        generated_constraints:constraint_set_id (*),
+        generated_constraints:constraint_set_id (
+          ${CONSTRAINT_SET_SELECT}
+        ),
         profile:profiles!fk_publications_profile (
           username,
           avatar_url

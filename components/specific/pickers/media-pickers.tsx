@@ -12,13 +12,15 @@ export type MediaPickerResult = {
 };
 
 interface MediaPickerProps {
-  projectLabel: string;
+  projectLabel?: string;
+  supportedFileType?: string | null;
   projectColor: string;
   onChange: (result: MediaPickerResult) => void;
 }
 
 export const MediaPicker = ({
   projectLabel,
+  supportedFileType,
   projectColor,
   onChange,
 }: MediaPickerProps) => {
@@ -44,31 +46,53 @@ export const MediaPicker = ({
     });
   };
 
+  const pickerMode =
+    supportedFileType === "png/jpg"
+      ? "image"
+      : supportedFileType === "mp3"
+        ? "audio"
+        : supportedFileType === "youtube link"
+          ? "youtube"
+          : supportedFileType === "plain text" ||
+              supportedFileType === "docs/pdf"
+            ? "book"
+            : ["Photography", "Cooking", "Board Game"].includes(
+                  projectLabel ?? "",
+                )
+              ? "image"
+              : projectLabel === "Music"
+                ? "audio"
+                : projectLabel === "Video Fiction" ||
+                    projectLabel === "Internet Video"
+                  ? "youtube"
+                  : projectLabel === "Book"
+                    ? "book"
+                    : null;
+
   return (
     <View style={{ marginBottom: 20 }}>
-      {["Photography", "Cooking", "Board Game"].includes(projectLabel) && (
+      {pickerMode === "image" && (
         <ImageMediaPicker
           projectColor={projectColor}
           onImageSelected={handleImage}
         />
       )}
 
-      {projectLabel === "Music" && (
+      {pickerMode === "audio" && (
         <MusicMediaPicker
           projectColor={projectColor}
           onFileSelected={handleMusic}
         />
       )}
 
-      {(projectLabel === "Video Fiction" ||
-        projectLabel === "Internet Video") && (
+      {pickerMode === "youtube" && (
         <YoutubeLinkPicker
           projectColor={projectColor}
           onUrlChange={handleYoutube}
         />
       )}
 
-      {projectLabel === "Book" && (
+      {pickerMode === "book" && (
         <BookMediaPicker
           projectColor={projectColor}
           onContentChange={handleBook}

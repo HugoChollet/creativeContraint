@@ -1,6 +1,7 @@
 import { Option, SubCategory } from "@/types/constraints";
 
 export interface CategoryJSON {
+  id?: string;
   name: string;
   disabled?: boolean;
   label?: string;

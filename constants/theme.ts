@@ -137,11 +137,14 @@ export const getProjectColor = ({
     const normalizedLabel = label.trim().toLowerCase();
     const key = map[label] || projectKeyMap[normalizedLabel] || "book";
     const baseColor = ProjectsColors[theme][key];
-    return baseColor.replace(/[\d.]+\)$/g, `${opacity})`);
-  } else if (color) {
-    return color.replace(/[\d.]+\)$/g, `${opacity})`);
+    return withOpacity(baseColor, opacity);
   }
-  return Colors.grey.replace(/[\d.]+\)$/g, `${opacity})`);
+
+  if (color) {
+    return withOpacity(color, opacity);
+  }
+
+  return withOpacity(Colors.grey, opacity);
 };
 
 export const Colors = {
@@ -210,6 +213,18 @@ const parseColorToRgb = (value?: string | null) => {
   }
 
   return null;
+};
+
+const withOpacity = (value: string, opacity = 1) => {
+  const parsedColor = parseColorToRgb(value);
+
+  if (!parsedColor) {
+    return value;
+  }
+
+  const normalizedOpacity = Math.min(1, Math.max(0, opacity));
+
+  return `rgba(${parsedColor.r}, ${parsedColor.g}, ${parsedColor.b}, ${normalizedOpacity})`;
 };
 
 const getRelativeLuminance = (value?: string | null) => {
