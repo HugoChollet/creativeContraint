@@ -2,8 +2,8 @@ import { AddButton } from "@/components/generic/add-button";
 import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { Header } from "@/components/generic/header";
 import { Spacer } from "@/components/generic/spacer";
-import CategorySelector from "@/components/specific/category/category-selector";
 import GeneratedConstraintsSheet from "@/components/specific/generated-constraints-sheet";
+import QuickSelector from "@/components/specific/quick-selector";
 import { PresetMode } from "@/components/specific/status-selector";
 import { getProjectColor } from "@/constants/theme";
 import { useHomeProjects } from "@/contexts/home-projects-context";
@@ -78,7 +78,8 @@ const buildGeneratedConstraintSet = (
 
     if (category.options) {
       const availableOptions = category.options.filter(
-        (option) => selectedItems.selectedOptions[`${category.name}-${option.id}`],
+        (option) =>
+          selectedItems.selectedOptions[`${category.name}-${option.id}`],
       );
 
       if (availableOptions.length === 0) {
@@ -226,7 +227,7 @@ export default function LabScreen() {
   const currentGeneratedConstraintSet =
     currentHistoryIndex === null
       ? null
-      : generationHistory[currentHistoryIndex] ?? null;
+      : (generationHistory[currentHistoryIndex] ?? null);
 
   useEffect(() => {
     let isMounted = true;
@@ -238,7 +239,7 @@ export default function LabScreen() {
     setIsHistoryHydrated(false);
     setExpandedCategory(null);
     setModalVisible(false);
-    
+
     const hydrateGenerationHistory = async () => {
       const storedHistory = await loadLabGenerationHistory(projectHistoryKey);
 
@@ -378,7 +379,7 @@ export default function LabScreen() {
       <View style={[globalStyles.screenContainer]}>
         <ScrollView>
           {dataSource.categories.map((cat: CategoryJSON) => (
-            <CategorySelector
+            <QuickSelector
               key={cat.name}
               category={cat}
               selectedItems={selectedItems}

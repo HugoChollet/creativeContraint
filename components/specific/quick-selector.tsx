@@ -5,10 +5,10 @@ import { CategoryJSON } from "@/types/json-objects";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { ConstraintSelector } from "../constraint/constraint-selector";
-import { PresetMode, StatusSelector } from "../status-selector";
+import { ConstraintSelector } from "./constraint/constraint-selector";
+import { PresetMode, StatusSelector } from "./status-selector";
 
-interface CategorySelectorProps {
+interface QuickSelectorProps {
   category: CategoryJSON;
   selectedItems: SelectedState;
   onToggleCategory: (name: string) => void;
@@ -19,7 +19,7 @@ interface CategorySelectorProps {
   color?: string;
 }
 
-export default function CategorySelector({
+export default function QuickSelector({
   category,
   selectedItems,
   onToggleCategory,
@@ -28,7 +28,7 @@ export default function CategorySelector({
   isExpanded,
   onExpand,
   color,
-}: CategorySelectorProps) {
+}: QuickSelectorProps) {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [mode, setMode] = useState<PresetMode>("all");
   const { t } = useTranslation();
