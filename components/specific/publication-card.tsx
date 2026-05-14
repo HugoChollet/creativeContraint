@@ -96,6 +96,30 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
         </View>
       </View>
 
+      {isConstraintsVisible && publication.description && (
+        <View
+          style={{
+            backgroundColor: projectBackgroundColor,
+          }}
+        >
+          <View
+            style={{
+              marginHorizontal: 12,
+              padding: 12,
+              borderRadius: 12,
+              backgroundColor: getProjectColor({
+                color: constraintSet?.color?.toString(),
+                opacity: 0.15,
+                theme,
+              }),
+            }}
+          >
+            <Text style={{ color: colors.text }}>
+              {publication.description}
+            </Text>
+          </View>
+        </View>
+      )}
       {constraintSet && isConstraintsVisible && (
         <ConstraintsTags constraintSet={constraintSet} />
       )}
