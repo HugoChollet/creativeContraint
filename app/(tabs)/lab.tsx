@@ -17,6 +17,7 @@ import {
   getConstraintCategoryIdentifier,
   getConstraintSelectionKey,
   getConstraintValueKey,
+  getDefaultConstraintSetName,
 } from "@/lib/constraint-set-data";
 import {
   LAB_GENERATION_HISTORY_LIMIT,
@@ -157,6 +158,7 @@ const buildGeneratedConstraintSet = (
 
   return {
     id: createGeneratedConstraintSetId(),
+    name: getDefaultConstraintSetName(projectSnapshot.projectLabel),
     ...projectSnapshot,
     generatedAt: new Date().toISOString(),
     constraints: results,

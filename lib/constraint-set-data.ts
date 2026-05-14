@@ -1,7 +1,10 @@
 import { normalizeProjectTags } from "@/constants/project-metadata";
 import { AppTheme, getProjectColor } from "@/constants/theme";
 import { buildProjectJsonFromProject } from "@/lib/project-data";
-import { SavedConstraintSet } from "@/types/constraints";
+import {
+  GeneratedConstraintSet,
+  SavedConstraintSet,
+} from "@/types/constraints";
 import { CategoryJSON, ProjectJSON } from "@/types/json-objects";
 import { Project } from "@/types/projects";
 
@@ -146,6 +149,30 @@ export const resolveConstraintCategoryContext = (
     subCategoryName: parsedKey.subCategoryName,
   };
 };
+
+export const getDefaultConstraintSetName = (projectLabel?: string | null) =>
+  projectLabel?.trim() || "Project";
+
+export const normalizeConstraintSetName = (
+  value: string | null | undefined,
+  projectLabel?: string | null,
+) => {
+  const trimmedValue = value?.trim();
+
+  return trimmedValue && trimmedValue.length > 0
+    ? trimmedValue
+    : getDefaultConstraintSetName(projectLabel);
+};
+
+export const hasCustomConstraintSetName = (
+  constraintSet: Pick<GeneratedConstraintSet, "name" | "projectLabel">,
+) =>
+  normalizeConstraintSetName(constraintSet.name, constraintSet.projectLabel) !==
+  getDefaultConstraintSetName(constraintSet.projectLabel);
+
+export const getConstraintSetName = (
+  constraintSet: Pick<SavedConstraintSet, "name" | "project_label">,
+) => normalizeConstraintSetName(constraintSet.name, constraintSet.project_label);
 
 export const getConstraintSetProjectLabel = (constraintSet: SavedConstraintSet) =>
   constraintSet.project_label.trim() || constraintSet.project?.name?.trim() || "Project";

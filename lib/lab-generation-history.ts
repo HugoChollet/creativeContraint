@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GeneratedConstraintSet } from "@/types/constraints";
 
-const LAB_GENERATION_HISTORY_STORAGE_PREFIX = "lab-generated-history:v2";
+const LAB_GENERATION_HISTORY_STORAGE_PREFIX = "lab-generated-history:v4";
 export const LAB_GENERATION_HISTORY_LIMIT = 24;
 
 const getLabGenerationHistoryStorageKey = (projectHistoryKey: string) =>

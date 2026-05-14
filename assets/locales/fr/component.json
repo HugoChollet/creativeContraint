@@ -36,6 +36,10 @@
   "result-modal-header": {
     "title": "Contraint(es) pour {{type}}",
     "history_counter": "Génération {{current}} / {{total}}",
+    "name_placeholder": "Nommer ce set de contraintes",
+    "confirm_name_title": "Sauvegarder ce set de contraintes",
+    "confirm_name_description": "Confirmez le nom qui sera sauvegardé.",
+    "confirm_name_button": "Confirmer le nom",
     "generate_again_button": "Générer à nouveau",
     "previous_button": "Résultat précédent",
     "next_button": "Résultat suivant",

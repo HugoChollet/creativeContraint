@@ -29,6 +29,7 @@ export type IdSetConstraint = Record<string, number>;
 
 export type GeneratedConstraintSet = {
   id: string;
+  name: string;
   projectId?: string | null;
   projectLabel: string;
   language?: ProjectLanguage | null;
@@ -43,6 +44,7 @@ export type GeneratedConstraintSet = {
 
 export type SavedConstraintSet = {
   id: number | string;
+  name: string;
   project_id?: string | null;
   project_label: string;
   language?: ProjectLanguage | null;

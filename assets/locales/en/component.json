@@ -36,6 +36,10 @@
   "result-modal-header": {
     "title": "Constraint(s) for {{type}}",
     "history_counter": "Generation {{current}} / {{total}}",
+    "name_placeholder": "Name this constraint set",
+    "confirm_name_title": "Save this constraint set",
+    "confirm_name_description": "Confirm the name that will be saved.",
+    "confirm_name_button": "Confirm name",
     "generate_again_button": "Generate again",
     "previous_button": "Previous result",
     "next_button": "Next result",

@@ -4,19 +4,27 @@ import { useStyles } from "@/hooks/use-styles";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 interface ResultModalHeaderProps {
   difficultyIndicator?: number;
   color: string;
-  titleType: string;
+  constraintSetName: string;
   historyCount: number;
   currentHistoryIndex: number;
   canGenerateAnother?: boolean;
   canToggleSaved?: boolean;
   isSaved?: boolean;
+  isConstraintSetNameEditable?: boolean;
   onGenerateAnother: () => void;
   onToggleSaved: () => void;
+  onChangeConstraintSetName: (value: string) => void;
   onNavigatePrevious: () => void;
   onNavigateNext: () => void;
   canNavigatePrevious: boolean;
@@ -27,14 +35,16 @@ interface ResultModalHeaderProps {
 export default function ResultModalHeader({
   difficultyIndicator,
   color,
-  titleType,
+  constraintSetName,
   historyCount,
   currentHistoryIndex,
   canGenerateAnother = true,
   canToggleSaved = true,
   isSaved = false,
+  isConstraintSetNameEditable = true,
   onGenerateAnother,
   onToggleSaved,
+  onChangeConstraintSetName,
   onNavigatePrevious,
   onNavigateNext,
   canNavigatePrevious,
@@ -58,11 +68,22 @@ export default function ResultModalHeader({
               total: historyCount,
             })}
           </Text>
-          <Text style={globalStyles.title}>
-            {t("component:result-modal-header.title", {
-              type: titleType,
-            })}
-          </Text>
+          <TextInput
+            value={constraintSetName}
+            onChangeText={onChangeConstraintSetName}
+            editable={isConstraintSetNameEditable && !isBusy}
+            placeholder={t("component:result-modal-header.name_placeholder")}
+            placeholderTextColor={colors.placeholder}
+            style={[
+              globalStyles.input,
+              styles.titleInput,
+              {
+                borderColor: color,
+                color: colors.text,
+                opacity: isConstraintSetNameEditable && !isBusy ? 1 : 0.7,
+              },
+            ]}
+          />
         </View>
         <View style={styles.headerActions}>
           <DifficultyIndicator difficultyIndicator={difficultyIndicator} />
@@ -146,6 +167,13 @@ const styles = StyleSheet.create({
   },
   titleBlock: {
     flex: 1,
+  },
+  titleInput: {
+    height: 48,
+    fontSize: 18,
+    fontWeight: "700",
+    textAlign: "center",
+    paddingHorizontal: 12,
   },
   headerActions: {
     flexDirection: "row",

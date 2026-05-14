@@ -5,6 +5,7 @@ import { useStyles } from "@/hooks/use-styles";
 import {
   getConstraintSetProjectColor,
   getConstraintSetProjectDataSource,
+  getConstraintSetName,
   getConstraintSetProjectLabel,
   getConstraintSetProjectLanguage,
   getConstraintSetProjectSupportedFile,
@@ -30,12 +31,12 @@ export function ConstraintsSetCard({
 }) {
   const { t } = useTranslation();
   const { globalStyles, colors, theme } = useStyles();
+  const constraintSetName = getConstraintSetName(item);
   const projectLabel = getConstraintSetProjectLabel(item);
   const solidColor = getConstraintSetProjectColor({
     constraintSet: item,
     theme,
   });
-  console.log("base color : ", item.color);
 
   const projectBackgroundColor = item.color
     ? getProjectColor({
@@ -71,9 +72,14 @@ export function ConstraintsSetCard({
     >
       <View style={styles.headerContainer}>
         <DifficultyIndicator difficultyIndicator={item.difficulty} />
-        <Text style={[globalStyles.title, { color: solidColor }]}>
-          {projectLabel.toUpperCase()}
-        </Text>
+        <View style={styles.titleBlock}>
+          <Text style={[styles.constraintSetTitle, { color: solidColor }]}>
+            {constraintSetName}
+          </Text>
+          <Text style={[globalStyles.discreetText, styles.projectLabelText]}>
+            {projectLabel}
+          </Text>
+        </View>
 
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
           <ShareConstraintButton
@@ -154,9 +160,21 @@ export const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
     marginBottom: 12,
     gap: 8,
+  },
+  titleBlock: {
+    flex: 1,
+    minWidth: 0,
+  },
+  constraintSetTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    marginBottom: 4,
+  },
+  projectLabelText: {
+    marginRight: 0,
   },
   circleDecorator: {
     position: "absolute",

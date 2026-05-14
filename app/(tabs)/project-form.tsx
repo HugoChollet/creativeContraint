@@ -483,7 +483,7 @@ export default function ProjectFormScreen() {
                 })
               }
             />
-            <View style={{ marginTop: "12px" }}>
+            <View style={{ marginTop: 12 }}>
               {sortedCategories.map((category: Category) => {
                 return (
                   <View key={category.id}>
