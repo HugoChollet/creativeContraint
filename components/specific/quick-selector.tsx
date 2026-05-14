@@ -46,6 +46,24 @@ export default function QuickSelector({
     ? currentSubCategory?.options || []
     : category.options || [];
 
+  const getSubtitle = () => {
+    if (mode === "all" || mode === "none") return t("component:status." + mode);
+
+    const categoryKeyPrefix = `${category.name}-`;
+    const selectedCount = Object.entries(selectedItems.selectedOptions).filter(
+      ([key, isSelected]) => key.startsWith(categoryKeyPrefix) && isSelected,
+    ).length;
+    const totalOptionsCount = category.options?.length;
+
+    return (
+      selectedCount +
+      " / " +
+      totalOptionsCount +
+      " - " +
+      t("component:status." + mode)
+    );
+  };
+
   return (
     <View
       style={[
@@ -66,7 +84,7 @@ export default function QuickSelector({
         onExpand={onExpand}
         color={color}
         isEnabled={isEnabled}
-        subtitle={t("component:status." + mode)}
+        subtitle={getSubtitle()}
       />
 
       {isExpanded && (
