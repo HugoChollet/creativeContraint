@@ -81,11 +81,31 @@ export default function CategoryBrowseScreen() {
   const currentProjectLanguage = isCreation
     ? language
     : activeProject?.language;
-  const currentProjectTags = normalizeProjectTags(
-    isCreation ? tags : (activeProject?.tags ?? undefined),
+  const currentProjectTags = useMemo(
+    () =>
+      normalizeProjectTags(
+        isCreation ? tags : (activeProject?.tags ?? undefined),
+      ),
+    [activeProject?.tags, isCreation, tags],
   );
+  const [browseLanguageFilter, setBrowseLanguageFilter] = useState<
+    string | null
+  >(isProjectLanguage(currentProjectLanguage) ? currentProjectLanguage : null);
+  const [browseTagFilters, setBrowseTagFilters] =
+    useState<string[]>(currentProjectTags);
+
   const hasActiveFilters =
-    isProjectLanguage(currentProjectLanguage) || currentProjectTags.length > 0;
+    isProjectLanguage(browseLanguageFilter) || browseTagFilters.length > 0;
+
+  useEffect(() => {
+    setBrowseLanguageFilter(
+      isProjectLanguage(currentProjectLanguage) ? currentProjectLanguage : null,
+    );
+  }, [currentProjectLanguage]);
+
+  useEffect(() => {
+    setBrowseTagFilters(currentProjectTags);
+  }, [currentProjectTags]);
 
   useEffect(() => {
     // Reset the local edition selection whenever we switch to another active project.
@@ -146,11 +166,11 @@ export default function CategoryBrowseScreen() {
       // Keep the tag/language rule in one place so the same OR logic applies everywhere.
       data.filter((item) => {
         return (
-          matchesProjectLanguage(item.language, currentProjectLanguage) &&
-          matchesProjectTags(item.tags, currentProjectTags)
+          matchesProjectLanguage(item.language, browseLanguageFilter) &&
+          matchesProjectTags(item.tags, browseTagFilters)
         );
       }),
-    [currentProjectLanguage, currentProjectTags, data],
+    [browseLanguageFilter, browseTagFilters, data],
   );
 
   const personalCategories = useMemo(
@@ -335,9 +355,21 @@ export default function CategoryBrowseScreen() {
             {t("screen:category_browse.filters_label")}
           </Text>
           <MetadataBadges
-            language={currentProjectLanguage}
-            tags={currentProjectTags}
+            language={browseLanguageFilter}
+            tags={browseTagFilters}
             color={screenProjectColor}
+            onRemoveBadge={(badge) => {
+              if (badge.type === "language") {
+                setBrowseLanguageFilter(null);
+                return;
+              }
+
+              if (badge.type === "tag") {
+                setBrowseTagFilters((prev) =>
+                  prev.filter((tag) => tag !== badge.value),
+                );
+              }
+            }}
           />
         </View>
       )}

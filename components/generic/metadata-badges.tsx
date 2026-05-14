@@ -1,13 +1,23 @@
-import { TagSize } from "@/constants/styles";
 import {
   getProjectLanguageFlag,
   isProjectLanguage,
   normalizeProjectTags,
 } from "@/constants/project-metadata";
+import { TagSize } from "@/constants/styles";
 import { useStyles } from "@/hooks/use-styles";
+import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+
+type MetadataBadgeType = "language" | "supportedFile" | "tag";
+
+interface MetadataBadge {
+  key: string;
+  label: string;
+  type: MetadataBadgeType;
+  value: string;
+}
 
 interface MetadataBadgesProps {
   language?: string | null;
@@ -17,6 +27,7 @@ interface MetadataBadgesProps {
   color?: string;
   textColor?: string;
   backgroundColor?: string;
+  onRemoveBadge?: (badge: MetadataBadge) => void;
 }
 
 const formatFallbackLabel = (value: string) =>
@@ -35,11 +46,12 @@ export default function MetadataBadges({
   color,
   textColor,
   backgroundColor,
+  onRemoveBadge,
 }: MetadataBadgesProps) {
   const { t } = useTranslation();
   const { globalStyles, colors } = useStyles();
   const normalizedTags = normalizeProjectTags(tags);
-  const badgeLabels = [
+  const badgeLabels: MetadataBadge[] = [
     ...(isProjectLanguage(language)
       ? [
           {
@@ -50,6 +62,8 @@ export default function MetadataBadges({
                 defaultValue: language.toUpperCase(),
               },
             )}`,
+            type: "language" as const,
+            value: language,
           },
         ]
       : []),
@@ -57,9 +71,11 @@ export default function MetadataBadges({
       ? [
           {
             key: `supported-file-${supportedFile}`,
-            label: t(`component:metadata.supported_filess.${supportedFile}`, {
+            label: t(`component:metadata.supported_files.${supportedFile}`, {
               defaultValue: formatFallbackLabel(supportedFile),
             }),
+            type: "supportedFile" as const,
+            value: supportedFile,
           },
         ]
       : []),
@@ -68,6 +84,8 @@ export default function MetadataBadges({
       label: t(`component:metadata.tag_values.${tag}`, {
         defaultValue: formatFallbackLabel(tag),
       }),
+      type: "tag" as const,
+      value: tag,
     })),
   ];
 
@@ -93,12 +111,16 @@ export default function MetadataBadges({
   return (
     <View style={styles.badgesRow}>
       {badgeLabels.map((badge) => (
-        <View
+        <Pressable
           key={badge.key}
+          disabled={!onRemoveBadge}
+          onPress={() => onRemoveBadge?.(badge)}
           style={[
             globalStyles.tag,
+            globalStyles.elementAndDescriptorContainer,
             sizeStyles.container,
             {
+              gap: onRemoveBadge ? 6 : 0,
               borderColor: color ?? colors.borderColor,
               backgroundColor:
                 backgroundColor ?? globalStyles.tag.backgroundColor,
@@ -114,7 +136,14 @@ export default function MetadataBadges({
           >
             {badge.label}
           </Text>
-        </View>
+          {onRemoveBadge ? (
+            <Ionicons
+              name="close"
+              size={14}
+              color={textColor ?? colors.textDiscreet}
+            />
+          ) : null}
+        </Pressable>
       ))}
     </View>
   );

@@ -132,7 +132,7 @@ export default function ProjectFormScreen() {
     () =>
       PROJECT_SUPPORTED_FILE_TYPES.map((value) => ({
         value,
-        label: t(`component:metadata.supported_filess.${value}`),
+        label: t(`component:metadata.supported_files.${value}`),
       })),
     [t],
   );

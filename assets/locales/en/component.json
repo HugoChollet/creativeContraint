@@ -69,7 +69,7 @@
       "en": "English",
       "fr": "French"
     },
-    "supported_filess": {
+    "supported_files": {
       "png/jpg": "PNG / JPG",
       "docs/pdf": "Docs / PDF",
       "plain text": "Plain text",
