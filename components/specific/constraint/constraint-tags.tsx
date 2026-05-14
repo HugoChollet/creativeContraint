@@ -1,27 +1,30 @@
+import { getProjectColor } from "@/constants/theme";
 import { useProjectTranslations } from "@/hooks/use-project-translations";
 import { useStyles } from "@/hooks/use-styles";
-import {
-  getConstraintSetProjectColor,
-  getConstraintSetProjectDataSource,
-} from "@/lib/constraint-set-data";
+import { getConstraintSetProjectDataSource } from "@/lib/constraint-set-data";
 import { SavedConstraintSet } from "@/types/constraints";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Tooltip from "../../generic/tooltip";
 
-export function ConstraintsTags({ item }: { item: SavedConstraintSet }) {
+export function ConstraintsTags({
+  constraintSet,
+}: {
+  constraintSet: SavedConstraintSet;
+}) {
   const { globalStyles, colors, theme } = useStyles();
-  const solidColor = getConstraintSetProjectColor({
-    constraintSet: item,
+  const solidColor = getProjectColor({
+    color: constraintSet.color?.toString(),
     theme,
+    opacity: 0.1,
   });
 
   const dataSource = useMemo(() => {
-    return getConstraintSetProjectDataSource({ constraintSet: item });
-  }, [item]);
+    return getConstraintSetProjectDataSource({ constraintSet: constraintSet });
+  }, [constraintSet]);
 
   const translatedConstraints = useProjectTranslations(
-    item.constraints,
+    constraintSet.constraints,
     dataSource?.categories,
   );
 
@@ -32,7 +35,7 @@ export function ConstraintsTags({ item }: { item: SavedConstraintSet }) {
         {
           borderRadius: 0,
           overflow: "hidden",
-          backgroundColor: item.color
+          backgroundColor: constraintSet.color
             ? solidColor
             : colors.shadeContainer,
         },

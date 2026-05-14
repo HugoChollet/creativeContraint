@@ -483,7 +483,7 @@ export default function ProjectFormScreen() {
                 })
               }
             />
-            <View>
+            <View style={{ marginTop: "12px" }}>
               {sortedCategories.map((category: Category) => {
                 return (
                   <View key={category.id}>
@@ -492,7 +492,6 @@ export default function ProjectFormScreen() {
                       description={category.description}
                       tags={category.tags}
                       isExpanded={false}
-                      onExpand={() => () => {}}
                       color={projectColor}
                       isEnabled={true}
                       subtitle={

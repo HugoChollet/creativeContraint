@@ -13,7 +13,7 @@ interface ExpandableHeaderProps {
   isEnabled?: boolean;
   onToggle?: () => void;
   isExpanded: boolean;
-  onExpand: () => void;
+  onExpand?: () => void;
   color?: string;
   subtitle?: string;
 }
@@ -33,7 +33,10 @@ export default function ExpandableHeader({
   const { globalStyles, colors } = useStyles();
 
   return (
-    <Pressable onPress={onExpand} style={globalStyles.headerRow}>
+    <Pressable
+      onPress={onExpand}
+      style={[globalStyles.headerRow, { borderRadius: "12px" }]}
+    >
       {onToggle && (
         <Pressable
           onPress={() => {
@@ -90,11 +93,13 @@ export default function ExpandableHeader({
               {subtitle}
             </Text>
           )}
-          <Ionicons
-            name={isExpanded ? "chevron-up" : "chevron-down"}
-            size={20}
-            color={isEnabled ? colors.textDiscreet : colors.disable}
-          />
+          {onExpand && (
+            <Ionicons
+              name={isExpanded ? "chevron-up" : "chevron-down"}
+              size={20}
+              color={isEnabled ? colors.textDiscreet : colors.disable}
+            />
+          )}
         </View>
       </View>
     </Pressable>
