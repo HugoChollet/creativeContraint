@@ -5,6 +5,7 @@ import { Header } from "@/components/generic/header";
 import LanguageSelector from "@/components/generic/language-selector";
 import MetadataBadges from "@/components/generic/metadata-badges";
 import { ModalGeneric } from "@/components/generic/modal-generic";
+import Auth from "@/components/specific/auth";
 import TagSelector, {
   TagSelectorOption,
 } from "@/components/generic/tag-selector";
@@ -31,8 +32,8 @@ import {
   ProjectCategoryRelation,
   UserProjectSelection,
 } from "@/types/projects";
-import { useHeaderHeight } from "@react-navigation/elements";
 import { Ionicons } from "@expo/vector-icons";
+import { useHeaderHeight } from "@react-navigation/elements";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import React, {
   useCallback,
@@ -126,6 +127,7 @@ export default function CategoryBrowseScreen() {
   const [browseTagFilters, setBrowseTagFilters] =
     useState<string[]>(currentProjectTags);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
+  const [visibleLogin, setVisibleLogin] = useState(false);
   const previousBrowseFilterSeedRef = useRef<string | null>(null);
 
   useEffect(() => {
@@ -161,8 +163,7 @@ export default function CategoryBrowseScreen() {
     deleteRecord: deleteCategoryRecord,
     refresh,
     loading,
-  } =
-    useCollection<Category>("categories");
+  } = useCollection<Category>("categories");
   const {
     data: userProjectSelections,
     updateRecord: updateProjectSelection,
@@ -170,7 +171,7 @@ export default function CategoryBrowseScreen() {
     loading: loadingProjectSelections,
   } = useCollection<UserProjectSelection>("user_project_selections", {
     filterColumn: "owner_id",
-    filterValue: userId ?? "__guest__",
+    filterValue: userId,
   });
   const {
     fetchCollection: fetchProjectCategoryRelations,
@@ -279,7 +280,9 @@ export default function CategoryBrowseScreen() {
       nextProjectId?: string;
     }) => {
       // The selection row can only point at categories that are actually linked to the project.
-      const uniqueSelectedCategoryIds = Array.from(new Set(selectedCategoryIds));
+      const uniqueSelectedCategoryIds = Array.from(
+        new Set(selectedCategoryIds),
+      );
       const existingRelations = await fetchProjectCategoryRelations({
         filterColumn: "project_id",
         filterValue: projectId,
@@ -316,7 +319,11 @@ export default function CategoryBrowseScreen() {
 
       return true;
     },
-    [addProjectCategoryRelations, fetchProjectCategoryRelations, updateProjectSelection],
+    [
+      addProjectCategoryRelations,
+      fetchProjectCategoryRelations,
+      updateProjectSelection,
+    ],
   );
 
   const persistEditionSelection = useCallback(async () => {
@@ -405,6 +412,15 @@ export default function CategoryBrowseScreen() {
     },
     [returnBrowseMode, type],
   );
+
+  useEffect(() => {
+    if (!session?.user || !visibleLogin) {
+      return;
+    }
+
+    setVisibleLogin(false);
+    openCategoryForm({});
+  }, [openCategoryForm, session?.user, visibleLogin]);
 
   const handleDeleteCategory = useCallback(
     async (category: Category) => {
@@ -565,7 +581,9 @@ export default function CategoryBrowseScreen() {
                 })
               }
               onToggleCategory={
-                isCreation ? toggleSelectedCategory : toggleEditionSelectedCategory
+                isCreation
+                  ? toggleSelectedCategory
+                  : toggleEditionSelectedCategory
               }
               onPublish={(cat) => {
                 updateCategoryRecord(cat.id, { is_public: !cat.is_public });
@@ -581,7 +599,14 @@ export default function CategoryBrowseScreen() {
         <AddButton
           projectColor={screenProjectColor}
           label={t("screen:category_browse.add_button")}
-          onClick={() => openCategoryForm({})}
+          onClick={() => {
+            if (!session?.user) {
+              setVisibleLogin(true);
+              return;
+            }
+
+            openCategoryForm({});
+          }}
         />
       )}
 
@@ -675,9 +700,7 @@ export default function CategoryBrowseScreen() {
             options={tagOptions}
             selectedValues={browseTagFilters}
             onChange={(values) =>
-              setBrowseTagFilters(
-                normalizeProjectTags(values) as ProjectTag[],
-              )
+              setBrowseTagFilters(normalizeProjectTags(values) as ProjectTag[])
             }
             color={screenProjectColor}
             maxVisibleRows={3}
@@ -688,6 +711,9 @@ export default function CategoryBrowseScreen() {
           label={t("component:confirm-cancel.confirm")}
           onClick={() => setIsFilterModalVisible(false)}
         />
+      </ModalGeneric>
+      <ModalGeneric visible={visibleLogin} setVisible={setVisibleLogin}>
+        <Auth />
       </ModalGeneric>
     </View>
   );

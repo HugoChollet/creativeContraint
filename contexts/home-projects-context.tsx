@@ -60,7 +60,7 @@ const HomeProjectsContext = createContext<HomeProjectsContextType | undefined>(
 export function HomeProjectsProvider({ children }: { children: ReactNode }) {
   const { session } = useAuth();
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
-  const userId = session?.user.id ?? "__guest__";
+  const userId = session?.user.id;
 
   const {
     data: selections,

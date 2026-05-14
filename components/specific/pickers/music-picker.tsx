@@ -30,10 +30,10 @@ export const MusicMediaPicker = ({
         setFileName(result.assets[0].name);
         onFileSelected(result);
       }
-    } catch (err) {
+    } catch {
       Alert.alert(
-        t("component:music-picker.permission_error_title"),
-        t("component:music-picker.permission_error_content")
+        t("component:music-picker.error"),
+        t("component:music-picker.error_msg"),
       );
     }
   };

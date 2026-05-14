@@ -3,7 +3,7 @@ import { Item } from "@/components/generic/item";
 import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
 import { useTranslation } from "react-i18next";
-import { FlatList, View } from "react-native";
+import { View } from "react-native";
 import Crud, { Action, CrudActionItem } from "../../generic/crud";
 
 interface CategoryItemProps {
@@ -37,7 +37,6 @@ export default function CategoryItem({
   const { t } = useTranslation();
   const isPersonalCategory =
     type === t("screen:category_browse.personal_section");
-  const isCommunity = type === t("screen:category_browse.community_section");
 
   const actions: CrudActionItem[] = [
     ...(isPersonalCategory && onEdit
@@ -51,14 +50,6 @@ export default function CategoryItem({
       : []),
     ...(!isPersonalCategory && onFork
       ? [{ action: Action.FORK, onPress: () => onFork(category) }]
-      : []),
-    ...(isCommunity && onFork
-      ? [
-          {
-            action: Action.FAVORITE,
-            onPress: () => console.log("favorite ", category.name),
-          },
-        ]
       : []),
   ];
 
@@ -87,12 +78,9 @@ export default function CategoryItem({
               : undefined
           }
         />
-        {expanded && category.options && (
-          <FlatList
-            data={category.options}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <View style={{ padding: 8 }}>
+        {expanded && category.options
+          ? category.options.map((item) => (
+              <View key={item.id.toString()} style={{ padding: 8 }}>
                 <Item
                   title={item.value}
                   subtitle={
@@ -102,9 +90,8 @@ export default function CategoryItem({
                   color={projectColor}
                 />
               </View>
-            )}
-          />
-        )}
+            ))
+          : null}
       </View>
       <Crud actions={actions} color={projectColor} />
     </View>

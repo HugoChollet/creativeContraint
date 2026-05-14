@@ -3,7 +3,7 @@ import { Item } from "@/components/generic/item";
 import { useStyles } from "@/hooks/use-styles";
 import { Project } from "@/types/projects";
 import { useTranslation } from "react-i18next";
-import { FlatList, View } from "react-native";
+import { View } from "react-native";
 import Crud, { Action, CrudActionItem } from "../../generic/crud";
 
 interface ProjectItemProps {
@@ -37,7 +37,6 @@ export default function ProjectItem({
   const { t } = useTranslation();
   const isPersonalProject =
     type === t("screen:project_browse.personal_section");
-  const isCommunity = type === t("screen:project_browse.community_section");
 
   const actions: CrudActionItem[] = [
     ...(isPersonalProject && onEdit
@@ -51,14 +50,6 @@ export default function ProjectItem({
       : []),
     ...(!isPersonalProject && onFork
       ? [{ action: Action.FORK, onPress: onFork }]
-      : []),
-    ...(isCommunity && onFork
-      ? [
-          {
-            action: Action.FAVORITE,
-            onPress: () => console.log("favorite ", project.name),
-          },
-        ]
       : []),
   ];
 
@@ -87,12 +78,9 @@ export default function ProjectItem({
               : undefined
           }
         />
-        {expanded && project.categories && (
-          <FlatList
-            data={project.categories}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <View style={{ padding: 8 }}>
+        {expanded && project.categories
+          ? project.categories.map((item) => (
+              <View key={item.id.toString()} style={{ padding: 8 }}>
                 <Item
                   title={item.name}
                   subtitle={t("component:project_item.constraints_counter", {
@@ -102,9 +90,8 @@ export default function ProjectItem({
                   color={projectColor}
                 />
               </View>
-            )}
-          />
-        )}
+            ))
+          : null}
       </View>
       <Crud actions={actions} color={projectColor} />
     </View>

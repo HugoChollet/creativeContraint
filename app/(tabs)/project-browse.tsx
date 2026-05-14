@@ -1,6 +1,8 @@
 import { AddButton } from "@/components/generic/add-button";
 import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { Header } from "@/components/generic/header";
+import { ModalGeneric } from "@/components/generic/modal-generic";
+import Auth from "@/components/specific/auth";
 import ProjectSection from "@/components/specific/project/project-section";
 import {
   getDefaultProjectLanguage,
@@ -66,7 +68,7 @@ export default function ProjectBrowseScreen() {
     refresh: refreshSelectedProjects,
   } = useCollection<UserProjectSelection>("user_project_selections", {
     filterColumn: "owner_id",
-    filterValue: userId ?? "__guest__",
+    filterValue: userId,
   });
   const { updateRecord: updateCategoryRecord } =
     useCollection<Category>("categories");
@@ -126,6 +128,7 @@ export default function ProjectBrowseScreen() {
     );
   }, [selected]);
   const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
+  const [visibleLogin, setVisibleLogin] = useState(false);
 
   useEffect(() => {
     setSelectedProjectIds(persistedSelectedIds);
@@ -177,6 +180,14 @@ export default function ProjectBrowseScreen() {
     setSelectedCategories,
     resetProjectDraft,
   } = useProjectDraft();
+
+  const openProjectForm = useCallback(() => {
+    resetProjectDraft();
+    router.push({
+      pathname: "/project-form",
+      params: { id: 1, type: projectLabel },
+    });
+  }, [projectLabel, resetProjectDraft]);
 
   const setupDraft = ({
     draft,
@@ -254,6 +265,15 @@ export default function ProjectBrowseScreen() {
 
     refresh();
   };
+
+  useEffect(() => {
+    if (!session?.user || !visibleLogin) {
+      return;
+    }
+
+    setVisibleLogin(false);
+    openProjectForm();
+  }, [openProjectForm, session?.user, visibleLogin]);
 
   const handleConfirmSelection = async () => {
     const selectionIdsToDelete = selected.map((selection) => selection.id);
@@ -356,11 +376,12 @@ export default function ProjectBrowseScreen() {
         projectColor={colors.tint}
         label={t("screen:project_browse.add_button")}
         onClick={() => {
-          resetProjectDraft();
-          router.push({
-            pathname: "/project-form",
-            params: { id: 1, type: projectLabel },
-          });
+          if (!session?.user) {
+            setVisibleLogin(true);
+            return;
+          }
+
+          openProjectForm();
         }}
       />
       <ConfirmCancelButton
@@ -375,6 +396,9 @@ export default function ProjectBrowseScreen() {
           })
         }
       />
+      <ModalGeneric visible={visibleLogin} setVisible={setVisibleLogin}>
+        <Auth />
+      </ModalGeneric>
     </View>
   );
 }

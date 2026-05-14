@@ -26,9 +26,9 @@ export default function ProjectSection({
   const { t } = useTranslation();
   const [expandedProject, setExpandedProject] = useState<string | null>(null);
 
-  const handleToggleExpand = (projectName: string) => {
+  const handleToggleExpand = (projectId: string) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setExpandedProject((prev) => (prev === projectName ? null : projectName));
+    setExpandedProject((prev) => (prev === projectId ? null : projectId));
   };
 
   const isProjectSelected = (id: string) => {
@@ -56,8 +56,8 @@ export default function ProjectSection({
             projectColor={project.color ?? colors.tint}
             project={project}
             selected={isProjectSelected(project.id.toString())}
-            expanded={expandedProject === project.name}
-            toggleExpand={() => handleToggleExpand(project.name)}
+            expanded={expandedProject === project.id}
+            toggleExpand={() => handleToggleExpand(project.id)}
             onToggleProject={() => onToggleProject(project.id)}
             type={section.title}
           />

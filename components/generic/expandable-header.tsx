@@ -35,7 +35,7 @@ export default function ExpandableHeader({
   return (
     <Pressable
       onPress={onExpand}
-      style={[globalStyles.headerRow, { borderRadius: "12px" }]}
+      style={[globalStyles.headerRow, { borderRadius: 12 }]}
     >
       {onToggle && (
         <Pressable

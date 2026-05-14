@@ -1,7 +1,9 @@
 import { AddButton } from "@/components/generic/add-button";
 import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { Header } from "@/components/generic/header";
+import { ModalGeneric } from "@/components/generic/modal-generic";
 import { Spacer } from "@/components/generic/spacer";
+import Auth from "@/components/specific/auth";
 import GeneratedConstraintsSheet from "@/components/specific/generated-constraints-sheet";
 import QuickSelector from "@/components/specific/quick-selector";
 import { PresetMode } from "@/components/specific/status-selector";
@@ -11,6 +13,7 @@ import {
   normalizeProjectTags,
 } from "@/constants/project-metadata";
 import { getProjectColor } from "@/constants/theme";
+import { useAuth } from "@/contexts/auth-context";
 import { useHomeProjects } from "@/contexts/home-projects-context";
 import { useStyles } from "@/hooks/use-styles";
 import {
@@ -170,6 +173,7 @@ const buildGeneratedConstraintSet = (
 export default function LabScreen() {
   const { id, type } = useLocalSearchParams<{ id?: string; type?: string }>();
   const [modalVisible, setModalVisible] = useState(false);
+  const [visibleLogin, setVisibleLogin] = useState(false);
   const [generationHistory, setGenerationHistory] = useState<
     GeneratedConstraintSet[]
   >([]);
@@ -179,6 +183,7 @@ export default function LabScreen() {
   const [isHistoryHydrated, setIsHistoryHydrated] = useState(false);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const { t, i18n } = useTranslation();
+  const { session } = useAuth();
   const { activeProject, projects, loading, setActiveProjectId } =
     useHomeProjects();
   const { globalStyles, theme, colors } = useStyles();
@@ -280,6 +285,15 @@ export default function LabScreen() {
       ? null
       : (generationHistory[currentHistoryIndex] ?? null);
 
+  const openCategoryBrowse = () => {
+    router.push({
+      pathname: "/category-browse",
+      params: {
+        mode: "edition",
+      },
+    });
+  };
+
   useEffect(() => {
     let isMounted = true;
 
@@ -311,6 +325,15 @@ export default function LabScreen() {
       isMounted = false;
     };
   }, [initialSelectedItems, projectHistoryKey]);
+
+  useEffect(() => {
+    if (!session?.user || !visibleLogin) {
+      return;
+    }
+
+    setVisibleLogin(false);
+    openCategoryBrowse();
+  }, [session?.user, visibleLogin]);
 
   useEffect(() => {
     if (!isHistoryHydrated) {
@@ -442,14 +465,14 @@ export default function LabScreen() {
           <AddButton
             projectColor={projectColor}
             label={t("screen:lab.add-button.label-category")}
-            onClick={() =>
-              router.push({
-                pathname: "/category-browse",
-                params: {
-                  mode: "edition",
-                },
-              })
-            }
+            onClick={() => {
+              if (!session?.user) {
+                setVisibleLogin(true);
+                return;
+              }
+
+              openCategoryBrowse();
+            }}
           />
           <Spacer height={20} />
         </ScrollView>
@@ -497,6 +520,9 @@ export default function LabScreen() {
             onUpdateGeneratedConstraintSet={updateGeneratedConstraintSet}
           />
         )}
+        <ModalGeneric visible={visibleLogin} setVisible={setVisibleLogin}>
+          <Auth />
+        </ModalGeneric>
       </View>
     </>
   );

@@ -25,7 +25,7 @@ export const ImageMediaPicker = ({
     if (status !== "granted") {
       Alert.alert(
         t("component:image-picker.permission_error_title"),
-        t("component:image-picker.permission_error_content"),
+        t("component:image-picker.permission_error_msg"),
       );
       return;
     }
