@@ -72,6 +72,7 @@ export default function ExpandableHeader({
           <MetadataBadges
             language={language}
             tags={tags}
+            size="small"
             color={color}
             textColor={isEnabled ? colors.textDiscreet : colors.disable}
           />
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   headerLeft: {
-    gap: 8,
+    gap: 4,
   },
   titleRow: {
     flex: 1,

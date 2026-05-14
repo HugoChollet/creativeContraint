@@ -1,3 +1,4 @@
+import { TagSize } from "@/constants/styles";
 import {
   getProjectLanguageFlag,
   isProjectLanguage,
@@ -11,6 +12,7 @@ import { StyleSheet, Text, View } from "react-native";
 interface MetadataBadgesProps {
   language?: string | null;
   tags?: readonly string[] | null;
+  size?: TagSize;
   color?: string;
   textColor?: string;
   backgroundColor?: string;
@@ -27,6 +29,7 @@ const formatFallbackLabel = (value: string) =>
 export default function MetadataBadges({
   language,
   tags,
+  size = "medium",
   color,
   textColor,
   backgroundColor,
@@ -60,6 +63,21 @@ export default function MetadataBadges({
     return null;
   }
 
+  const sizeStyles = {
+    small: {
+      container: globalStyles.tagSmall,
+      text: globalStyles.tagTextSmall,
+    },
+    medium: {
+      container: globalStyles.tagMedium,
+      text: globalStyles.tagTextMedium,
+    },
+    big: {
+      container: globalStyles.tagBig,
+      text: globalStyles.tagTextBig,
+    },
+  }[size];
+
   return (
     <View style={styles.badgesRow}>
       {badgeLabels.map((badge) => (
@@ -67,7 +85,7 @@ export default function MetadataBadges({
           key={badge.key}
           style={[
             globalStyles.tag,
-            styles.badge,
+            sizeStyles.container,
             {
               borderColor: color ?? colors.borderColor,
               backgroundColor:
@@ -78,7 +96,7 @@ export default function MetadataBadges({
           <Text
             style={[
               globalStyles.discreetText,
-              styles.badgeText,
+              sizeStyles.text,
               { color: textColor ?? colors.textDiscreet },
             ]}
           >
@@ -95,13 +113,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 8,
-  },
-  badge: {
-    minHeight: 28,
-    justifyContent: "center",
-  },
-  badgeText: {
-    marginRight: 0,
-    fontSize: 11,
   },
 });

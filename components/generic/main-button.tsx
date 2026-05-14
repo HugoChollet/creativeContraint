@@ -80,6 +80,7 @@ export const MainButton = ({
             <View style={styles.badgesWrapper}>
               <MetadataBadges
                 tags={tags}
+                size="big"
                 color={foregroundColor}
                 textColor={foregroundColor}
                 backgroundColor={contrastBackgroundColor}

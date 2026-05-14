@@ -1,6 +1,8 @@
 import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 import { AppThemeColors, Colors } from "./theme";
 
+export type TagSize = "small" | "medium" | "big";
+
 // Define an interface for your shared styles
 interface GlobalStyles {
   noColorContainer: ViewStyle;
@@ -43,6 +45,12 @@ interface GlobalStyles {
   card: ViewStyle;
   tabSegment: ViewStyle;
   tag: ViewStyle;
+  tagSmall: ViewStyle;
+  tagMedium: ViewStyle;
+  tagBig: ViewStyle;
+  tagTextSmall: TextStyle;
+  tagTextMedium: TextStyle;
+  tagTextBig: TextStyle;
   modalOverlay: ViewStyle;
 }
 
@@ -270,6 +278,39 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       borderWidth: 1,
       borderColor: themes.borderColor,
       maxWidth: "100%",
+    },
+    tagSmall: {
+      minHeight: 16,
+      paddingHorizontal: 4,
+      paddingVertical: 2,
+      borderRadius: 4,
+      justifyContent: "center",
+    },
+    tagMedium: {
+      minHeight: 24,
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      borderRadius: 6,
+      justifyContent: "center",
+    },
+    tagBig: {
+      minHeight: 34,
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 8,
+      justifyContent: "center",
+    },
+    tagTextSmall: {
+      fontSize: 8,
+      marginRight: 0,
+    },
+    tagTextMedium: {
+      fontSize: 10,
+      marginRight: 0,
+    },
+    tagTextBig: {
+      fontSize: 13,
+      marginRight: 0,
     },
     modalOverlay: {
       flex: 1,
