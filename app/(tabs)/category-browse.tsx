@@ -24,7 +24,13 @@ import {
 } from "@/types/projects";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, Text, View } from "react-native";
 
@@ -51,6 +57,7 @@ export default function CategoryBrowseScreen() {
   const {
     name,
     selectedCategories,
+    setSelectedCategories,
     toggleSelectedCategory,
     projectColor: draftProjectColor,
     language,
@@ -88,24 +95,34 @@ export default function CategoryBrowseScreen() {
       ),
     [activeProject?.tags, isCreation, tags],
   );
+  const browseFilterSeed = useMemo(
+    () =>
+      isCreation
+        ? `creation:${currentProjectLanguage ?? ""}:${currentProjectTags.join("|")}`
+        : `edition:${activeProject?.id ?? ""}:${currentProjectLanguage ?? ""}:${currentProjectTags.join("|")}`,
+    [activeProject?.id, currentProjectLanguage, currentProjectTags, isCreation],
+  );
   const [browseLanguageFilter, setBrowseLanguageFilter] = useState<
     string | null
   >(isProjectLanguage(currentProjectLanguage) ? currentProjectLanguage : null);
   const [browseTagFilters, setBrowseTagFilters] =
     useState<string[]>(currentProjectTags);
+  const previousBrowseFilterSeedRef = useRef<string | null>(null);
 
   const hasActiveFilters =
     isProjectLanguage(browseLanguageFilter) || browseTagFilters.length > 0;
 
   useEffect(() => {
+    if (previousBrowseFilterSeedRef.current === browseFilterSeed) {
+      return;
+    }
+
     setBrowseLanguageFilter(
       isProjectLanguage(currentProjectLanguage) ? currentProjectLanguage : null,
     );
-  }, [currentProjectLanguage]);
-
-  useEffect(() => {
     setBrowseTagFilters(currentProjectTags);
-  }, [currentProjectTags]);
+    previousBrowseFilterSeedRef.current = browseFilterSeed;
+  }, [browseFilterSeed, currentProjectLanguage, currentProjectTags]);
 
   useEffect(() => {
     // Reset the local edition selection whenever we switch to another active project.
@@ -122,7 +139,13 @@ export default function CategoryBrowseScreen() {
         : editionSelectedCategoryIds,
     [editionSelectedCategoryIds, isCreation, selectedCategories],
   );
-  const { data, updateRecord, refresh, loading } =
+  const {
+    data,
+    updateRecord: updateCategoryRecord,
+    deleteRecord: deleteCategoryRecord,
+    refresh,
+    loading,
+  } =
     useCollection<Category>("categories");
   const {
     data: userProjectSelections,
@@ -136,6 +159,7 @@ export default function CategoryBrowseScreen() {
   const {
     fetchCollection: fetchProjectCategoryRelations,
     addRecords: addProjectCategoryRelations,
+    deleteRecords: deleteProjectCategoryRelations,
     loading: loadingProjectCategoryRelations,
   } = useCollection<ProjectCategoryRelation>("project_category_relations");
   const {
@@ -149,7 +173,8 @@ export default function CategoryBrowseScreen() {
       // Category browse keeps its own collection state, so refetch after coming back from the form.
       refresh();
       refreshProjectSelections();
-    }, [refresh, refreshProjectSelections]),
+      refreshProjects();
+    }, [refresh, refreshProjectSelections, refreshProjects]),
   );
 
   // This row represents "which project this user is currently using" plus its selected categories.
@@ -334,6 +359,105 @@ export default function CategoryBrowseScreen() {
     setActiveProjectId,
   ]);
 
+  const returnBrowseMode = isCreation ? "creation" : "edition";
+
+  const openCategoryForm = useCallback(
+    ({
+      category,
+      categoryAction,
+    }: {
+      category?: Category;
+      categoryAction?: "edit" | "fork";
+    }) => {
+      router.push({
+        pathname: "/category-form",
+        params: {
+          mode: returnBrowseMode,
+          type,
+          ...(category ? { categoryId: category.id } : {}),
+          ...(categoryAction ? { categoryAction } : {}),
+        },
+      });
+    },
+    [returnBrowseMode, type],
+  );
+
+  const handleDeleteCategory = useCallback(
+    async (category: Category) => {
+      const relationIds = (
+        await fetchProjectCategoryRelations({
+          filterColumn: "category_id",
+          filterValue: category.id,
+        })
+      ).map((relation) => relation.id);
+
+      if (relationIds.length > 0) {
+        const didDeleteRelations =
+          await deleteProjectCategoryRelations(relationIds);
+
+        if (!didDeleteRelations) {
+          console.error("Failed to delete project category relations");
+          return;
+        }
+      }
+
+      const selectionUpdates = userProjectSelections.filter((selection) =>
+        selection.selected_category_ids.includes(category.id),
+      );
+
+      if (selectionUpdates.length > 0) {
+        const updatedSelections = await Promise.all(
+          selectionUpdates.map((selection) =>
+            updateProjectSelection(selection.id, {
+              selected_category_ids: selection.selected_category_ids.filter(
+                (categoryId) => categoryId !== category.id,
+              ),
+            }),
+          ),
+        );
+
+        if (updatedSelections.some((selection) => !selection)) {
+          console.error("Failed to update project selections");
+          return;
+        }
+      }
+
+      const didDeleteCategory = await deleteCategoryRecord(category.id);
+
+      if (!didDeleteCategory) {
+        console.error("Failed to delete category");
+        return;
+      }
+
+      if (isCreation) {
+        setSelectedCategories(
+          selectedCategories.filter((item) => item.id !== category.id),
+        );
+      } else {
+        setEditionSelectedCategoryIds((prev) =>
+          prev.filter((categoryId) => categoryId !== category.id),
+        );
+      }
+
+      await refresh();
+      await refreshProjectSelections();
+      await refreshProjects();
+    },
+    [
+      deleteCategoryRecord,
+      deleteProjectCategoryRelations,
+      fetchProjectCategoryRelations,
+      isCreation,
+      refresh,
+      refreshProjectSelections,
+      refreshProjects,
+      selectedCategories,
+      setSelectedCategories,
+      updateProjectSelection,
+      userProjectSelections,
+    ],
+  );
+
   if (!isCreation && loadingHomeProjects && !activeProject) {
     return (
       <View
@@ -388,15 +512,24 @@ export default function CategoryBrowseScreen() {
               key={section.title}
               section={section}
               projectColor={screenProjectColor}
-              onDelete={() => {}}
-              onEdit={() => {}}
-              onFork={() => {}}
+              onDelete={handleDeleteCategory}
+              onEdit={(category) =>
+                openCategoryForm({
+                  category,
+                  categoryAction: "edit",
+                })
+              }
+              onFork={(category) =>
+                openCategoryForm({
+                  category,
+                  categoryAction: "fork",
+                })
+              }
               onToggleCategory={
                 isCreation ? toggleSelectedCategory : toggleEditionSelectedCategory
               }
               onPublish={(cat) => {
-                console.log("publish ", cat);
-                updateRecord(cat.id, { is_public: cat.is_public });
+                updateCategoryRecord(cat.id, { is_public: !cat.is_public });
               }}
             />
           )}
@@ -409,14 +542,7 @@ export default function CategoryBrowseScreen() {
         <AddButton
           projectColor={screenProjectColor}
           label={t("screen:category_browse.add_button")}
-          onClick={() =>
-            router.push({
-              pathname: "/category-form",
-              params: {
-                id: 1,
-              },
-            })
-          }
+          onClick={() => openCategoryForm({})}
         />
       )}
 

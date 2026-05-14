@@ -6,9 +6,9 @@ import { LayoutAnimation, Text, View } from "react-native";
 import CategoryItem from "./category-item";
 
 interface CategorySectionProps {
-  onDelete?: () => void;
-  onEdit?: () => void;
-  onFork?: () => void;
+  onDelete?: (category: Category) => void;
+  onEdit?: (category: Category) => void;
+  onFork?: (category: Category) => void;
   onPublish?: (cat: Category) => void;
   onToggleCategory: (category: Category) => void;
   projectColor: string;
@@ -28,12 +28,9 @@ export default function CategorySection({
   const { t } = useTranslation();
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
-  const handleToggleExpand = (categoryName: string) => {
+  const handleToggleExpand = (categoryId: string) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setExpandedCategory((prev) =>
-      prev === categoryName ? null : categoryName,
-    );
-    console.log("toggle ", categoryName);
+    setExpandedCategory((prev) => (prev === categoryId ? null : categoryId));
   };
 
   return (
@@ -53,16 +50,13 @@ export default function CategorySection({
             onDelete={onDelete}
             onEdit={onEdit}
             onFork={onFork}
-            onPublish={() => {
-              console.log("publish ", cat.name);
-              if (onPublish) onPublish(cat);
-            }}
+            onPublish={() => onPublish?.(cat)}
             projectColor={projectColor}
             category={cat}
             selected={section.selected.includes(cat.id)}
             onToggleCategory={onToggleCategory}
-            expanded={expandedCategory === cat.name}
-            toggleExpand={() => handleToggleExpand(cat.name)}
+            expanded={expandedCategory === cat.id}
+            toggleExpand={() => handleToggleExpand(cat.id)}
             type={section.title}
           />
         ))

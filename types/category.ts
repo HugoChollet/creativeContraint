@@ -17,6 +17,7 @@ export interface Category {
   is_public: boolean;
   owner_id: string;
   source: Source;
+  favorited_counter?: number;
 }
 
 export interface CategorySectionData {

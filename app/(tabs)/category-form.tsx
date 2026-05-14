@@ -25,7 +25,7 @@ import { getProjectTitle } from "@/lib/project-data";
 import { Category } from "@/types/category";
 import { Option } from "@/types/constraints";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -71,16 +71,28 @@ const cleanCategoryDraft = ({
 });
 
 export default function CategoryFormScreen() {
+  const {
+    categoryId,
+    categoryAction,
+  } = useLocalSearchParams<{
+    categoryId?: string;
+    categoryAction?: string;
+  }>();
   const { globalStyles, colors, theme } = useStyles();
   const { t, i18n } = useTranslation();
   const headerHeight = useHeaderHeight();
   const { activeProject, loading: loadingHomeProjects } = useHomeProjects();
-  const { addRecord, loading: isSaving } =
-    useCollection<Category>("categories");
+  const {
+    addRecord,
+    updateRecord,
+    fetchCollection,
+    loading: isSaving,
+  } = useCollection<Category>("categories");
   const initialProjectLanguage = getDefaultProjectLanguage(
     activeProject?.language ?? i18n.language,
   );
   const initialProjectTags = getCategoryTagsFromProject(activeProject?.tags);
+  const isEditMode = categoryAction === "edit";
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -89,10 +101,10 @@ export default function CategoryFormScreen() {
   );
   const [tags, setTags] = useState<ProjectTag[]>(initialProjectTags);
   const [editedOption, setEditedOption] = useState<Option | undefined>();
-
-  const [isLoading] = useState(false);
-
   const [options, setOptions] = useState<Option[]>([]);
+  const [isHydratingCategory, setIsHydratingCategory] = useState(
+    Boolean(categoryId),
+  );
 
   const projectTitle = activeProject
     ? getProjectTitle(activeProject.dataSource)
@@ -134,36 +146,88 @@ export default function CategoryFormScreen() {
   );
 
   useEffect(() => {
+    if (categoryId) {
+      return;
+    }
+
     setLanguage(initialProjectLanguage);
     setTags(initialProjectTags);
-  }, [activeProject?.id, initialProjectLanguage, initialProjectTags]);
+  }, [categoryId, initialProjectLanguage, initialProjectTags]);
+
+  useEffect(() => {
+    let isActive = true;
+
+    if (!categoryId) {
+      setIsHydratingCategory(false);
+      return;
+    }
+
+    const loadCategory = async () => {
+      setIsHydratingCategory(true);
+      const result = await fetchCollection({
+        filterColumn: "id",
+        filterValue: categoryId,
+      });
+
+      if (!isActive) {
+        return;
+      }
+
+      const category = result[0];
+
+      if (!category) {
+        console.error("Failed to load category");
+        setIsHydratingCategory(false);
+        router.back();
+        return;
+      }
+
+      setName(category.name);
+      setDescription(category.description);
+      setLanguage(
+        getDefaultProjectLanguage(category.language ?? activeProject?.language),
+      );
+      setTags(getCategoryTagsFromProject(category.tags ?? activeProject?.tags));
+      setOptions(category.options ?? []);
+      setEditedOption(undefined);
+      setIsHydratingCategory(false);
+    };
+
+    void loadCategory();
+
+    return () => {
+      isActive = false;
+    };
+  }, [
+    activeProject?.language,
+    activeProject?.tags,
+    categoryId,
+    fetchCollection,
+  ]);
 
   const handleSubmit = async () => {
-    if (!isFormValid || isSaving) return;
+    if (!isFormValid || isSaving || isHydratingCategory) return;
 
-    const newCategory = {
+    const categoryDraft = {
       name: cleanedDraft.name,
       description: cleanedDraft.description,
       options: cleanedDraft.options,
       language: cleanedDraft.language,
       tags: cleanedDraft.tags,
-      is_public: false, // Defaulting to private for now
-      favorited_counter: 0,
     };
 
-    const result = await addRecord(newCategory);
+    const result =
+      isEditMode && categoryId
+        ? await updateRecord(categoryId, categoryDraft)
+        : await addRecord({
+            ...categoryDraft,
+            is_public: false,
+            favorited_counter: 0,
+          });
 
     if (result) {
-      // Success! Go back to the previous screen
-      console.log("success");
-      router.push({
-        pathname: "/category-browse",
-        params: {
-          mode: "edition",
-        },
-      });
+      router.back();
     } else {
-      // You might want to show an Alert here if result is null
       console.error("Failed to save category");
     }
   };
@@ -171,7 +235,7 @@ export default function CategoryFormScreen() {
   const isFormValid =
     cleanedDraft.name.length > ConstraintRequire.NAME_LENGTH_MIN &&
     cleanedDraft.options.length >= ConstraintRequire.MIN_OPTIONS &&
-    !isLoading;
+    !isHydratingCategory;
 
   if (loadingHomeProjects && !activeProject) {
     return (
@@ -212,7 +276,7 @@ export default function CategoryFormScreen() {
                 placeholderTextColor={colors.placeholder}
                 value={name}
                 onChangeText={setName}
-                editable={!isLoading}
+                editable={!isHydratingCategory}
               />
             </View>
 
@@ -225,7 +289,7 @@ export default function CategoryFormScreen() {
                 setDescription={setDescription}
                 placeholder={t("screen:category_form.description_placeholder")}
                 projectColor={projectColor}
-                isLoading={isLoading}
+                isLoading={isHydratingCategory}
               />
             </View>
 
@@ -316,7 +380,7 @@ export default function CategoryFormScreen() {
           color={projectColor}
           labelConfirm={t("screen:category_form.submit_button")}
           isActive={isFormValid}
-          isLoading={isSaving || isLoading}
+          isLoading={isSaving || isHydratingCategory}
           onClickConfirm={handleSubmit}
           onClickCancel={() => router.back()}
         />

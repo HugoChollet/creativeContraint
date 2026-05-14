@@ -7,9 +7,9 @@ import { FlatList, View } from "react-native";
 import Crud, { Action, CrudActionItem } from "../../generic/crud";
 
 interface CategoryItemProps {
-  onDelete?: () => void;
-  onEdit?: () => void;
-  onFork?: () => void;
+  onDelete?: (category: Category) => void;
+  onEdit?: (category: Category) => void;
+  onFork?: (category: Category) => void;
   onPublish?: () => void;
   projectColor: string;
   category: Category;
@@ -41,16 +41,16 @@ export default function CategoryItem({
 
   const actions: CrudActionItem[] = [
     ...(isPersonalCategory && onEdit
-      ? [{ action: Action.EDIT, onPress: onEdit }]
+      ? [{ action: Action.EDIT, onPress: () => onEdit(category) }]
       : []),
     ...(isPersonalCategory && onDelete
-      ? [{ action: Action.DELETE, onPress: onDelete }]
+      ? [{ action: Action.DELETE, onPress: () => onDelete(category) }]
       : []),
     ...(isPersonalCategory && onPublish
       ? [{ action: Action.PUBLISH, onPress: onPublish }]
       : []),
     ...(!isPersonalCategory && onFork
-      ? [{ action: Action.FORK, onPress: onFork }]
+      ? [{ action: Action.FORK, onPress: () => onFork(category) }]
       : []),
     ...(isCommunity && onFork
       ? [
