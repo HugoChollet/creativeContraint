@@ -2,21 +2,21 @@ import { AddButton } from "@/components/generic/add-button";
 import ColorPicker from "@/components/generic/color-picker";
 import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import Description from "@/components/generic/description";
+import ExpandableHeader from "@/components/generic/expandable-header";
 import { Header } from "@/components/generic/header";
 import LanguageSelector from "@/components/generic/language-selector";
 import { Spacer } from "@/components/generic/spacer";
 import TagSelector, {
   TagSelectorOption,
 } from "@/components/generic/tag-selector";
-import CategoryHeader from "@/components/specific/category/category-header";
 import ProjectJsonImporter, {
   getImportedCategoryDbName,
   isImportedDraftCategory,
 } from "@/components/specific/project/project-json-importer";
 import {
   getCategoryTagsFromProject,
-  getDefaultProjectTags,
   getDefaultProjectSupportedFileType,
+  getDefaultProjectTags,
   normalizeProjectTags,
   PROJECT_SUPPORTED_FILE_TYPES,
   PROJECT_TAGS,
@@ -487,8 +487,10 @@ export default function ProjectFormScreen() {
               {sortedCategories.map((category: Category) => {
                 return (
                   <View key={category.id}>
-                    <CategoryHeader
-                      category={category}
+                    <ExpandableHeader
+                      title={category.name}
+                      description={category.description}
+                      tags={category.tags}
                       isExpanded={false}
                       onExpand={() => () => {}}
                       color={projectColor}

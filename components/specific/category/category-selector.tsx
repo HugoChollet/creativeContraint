@@ -1,3 +1,4 @@
+import ExpandableHeader from "@/components/generic/expandable-header";
 import { useStyles } from "@/hooks/use-styles";
 import { Option, SelectedState, SubCategory } from "@/types/constraints";
 import { CategoryJSON } from "@/types/json-objects";
@@ -6,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { ConstraintSelector } from "../constraint/constraint-selector";
 import { PresetMode, StatusSelector } from "../status-selector";
-import CategoryHeader from "./category-header";
 
 interface CategorySelectorProps {
   category: CategoryJSON;
@@ -54,9 +54,11 @@ export default function CategorySelector({
         isExpanded && { height: 500 },
       ]}
     >
-      <CategoryHeader
-        category={category}
-        onToggleCategory={() => {
+      <ExpandableHeader
+        title={category.label || category.name}
+        description={category.description}
+        tags={category.tags}
+        onToggle={() => {
           onToggleCategory(category.name);
           setIsEnabled((prev) => !prev);
         }}

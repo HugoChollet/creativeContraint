@@ -1,11 +1,10 @@
+import ExpandableHeader from "@/components/generic/expandable-header";
 import { Item } from "@/components/generic/item";
-import MetadataBadges from "@/components/generic/metadata-badges";
 import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
 import { useTranslation } from "react-i18next";
 import { FlatList, View } from "react-native";
 import Crud, { Action, CrudActionItem } from "../../generic/crud";
-import CategoryHeader from "./category-header";
 
 interface CategoryItemProps {
   onDelete?: () => void;
@@ -71,9 +70,11 @@ export default function CategoryItem({
       }}
     >
       <View style={[globalStyles.card, { width: 300 }]}>
-        <CategoryHeader
-          category={category}
-          onToggleCategory={() => onToggleCategory(category)}
+        <ExpandableHeader
+          title={category.name}
+          description={category.description}
+          tags={category.tags}
+          onToggle={() => onToggleCategory(category)}
           isExpanded={expanded}
           onExpand={() => toggleExpand()}
           color={projectColor}
@@ -86,13 +87,6 @@ export default function CategoryItem({
               : undefined
           }
         />
-        {category.tags?.length ? (
-          <View style={{ padding: 8 }}>
-            <MetadataBadges tags={category.tags} color={projectColor} />
-          </View>
-        ) : (
-          <></>
-        )}
         {expanded && category.options && (
           <FlatList
             data={category.options}
