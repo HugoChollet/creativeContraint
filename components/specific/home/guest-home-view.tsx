@@ -6,7 +6,7 @@ import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function GuestHomeView() {
   const router = useRouter();
@@ -20,7 +20,13 @@ export default function GuestHomeView() {
         {t("screen:home.project_choice")}
       </Text>
 
-      <ScrollView>
+      <View style={[globalStyles.card, styles.hintCard]}>
+        <Text style={globalStyles.discreetText}>
+          {t("screen:home.guest_projects_hint")}
+        </Text>
+      </View>
+
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         {HOME_PROJECTS.map((project) => (
           <MainButton
             key={project.type}
@@ -50,3 +56,14 @@ export default function GuestHomeView() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  hintCard: {
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    marginBottom: 8,
+  },
+  scrollContent: {
+    paddingBottom: 20,
+  },
+});

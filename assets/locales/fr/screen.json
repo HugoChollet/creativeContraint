@@ -20,6 +20,7 @@
   },
   "home": {
     "project_choice": "Choisissez un projet pour commencer",
+    "guest_projects_hint": "Connectez-vous depuis les Paramètres pour charger vos générateurs de projet sauvegardés depuis Supabase dans cette build de développement.",
     "selected_project_choice": "Choisissez un de vos générateurs de projet sauvegardés",
     "no_selected_projects": "Vous n'avez pas encore de générateurs de projet sauvegardés",
     "no_selected_projects_hint": "Choisissez des générateurs depuis l'écran de navigation et ils apparaîtront ici.",

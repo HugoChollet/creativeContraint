@@ -19,6 +19,7 @@
   },
   "home": {
     "project_choice": "Choose a project to start",
+    "guest_projects_hint": "Sign in from Settings to load your saved project generators from Supabase in this development build.",
     "selected_project_choice": "Choose one of your saved project generators",
     "no_selected_projects": "You have no saved project generators yet",
     "no_selected_projects_hint": "Pick some project generators from the browse screen and they will appear here.",

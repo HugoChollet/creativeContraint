@@ -104,7 +104,10 @@ const buildGeneratedConstraintSet = (
 
     if (category.options) {
       const availableOptions = category.options.filter(
-        (option) => selectedItems.selectedOptions[getConstraintSelectionKey(category, option.id)],
+        (option) =>
+          selectedItems.selectedOptions[
+            getConstraintSelectionKey(category, option.id)
+          ],
       );
 
       if (availableOptions.length === 0) {
@@ -333,7 +336,7 @@ export default function LabScreen() {
 
     setVisibleLogin(false);
     openCategoryBrowse();
-  }, [session?.user, visibleLogin]);
+  }, [session?.user, visibleLogin, openCategoryBrowse]);
 
   useEffect(() => {
     if (!isHistoryHydrated) {

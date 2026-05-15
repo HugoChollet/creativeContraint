@@ -98,7 +98,7 @@ export const MainButton = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: "100%",
     minHeight: 100,
     borderRadius: 20,
     marginVertical: 10,
@@ -122,10 +122,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    flex: 1,
     gap: 16,
   },
   textColumn: {
+    flex: 1,
     justifyContent: "center",
   },
   titleRow: {

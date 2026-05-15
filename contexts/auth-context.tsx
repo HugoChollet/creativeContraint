@@ -7,6 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { AppState, AppStateStatus } from "react-native";
 
 const AuthContext = createContext<{
   session: Session | null;
@@ -21,20 +22,47 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    supabase.auth.startAutoRefresh();
+
+    const appStateSubscription = AppState.addEventListener(
+      "change",
+      (nextAppState: AppStateStatus) => {
+        if (nextAppState === "active") {
+          supabase.auth.startAutoRefresh();
+        } else {
+          supabase.auth.stopAutoRefresh();
+        }
+      },
+    );
+
     // 1. Check active sessions on mount
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setLoading(false);
-    });
+    supabase.auth
+      .getSession()
+      .then(({ data: { session }, error }) => {
+        if (error) {
+          console.error("[AuthProvider] getSession failed", error);
+        }
+        setSession(session);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("[AuthProvider] getSession threw", error);
+        setLoading(false);
+      });
 
     // 2. Listen for auth state changes (sign in, sign out, etc.)
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("[AuthProvider] auth state change", event);
       setSession(session);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      appStateSubscription.remove();
+      supabase.auth.stopAutoRefresh();
+      subscription.unsubscribe();
+    };
   }, []);
 
   return (
