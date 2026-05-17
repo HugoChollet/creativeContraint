@@ -59,7 +59,7 @@ const normalizeOptions = (options?: Option[]) =>
         typeof option.value === "string"
           ? option.value.trim()
           : String(option.value ?? ""),
-      rarity: typeof option.rarity === "number" ? option.rarity : 1,
+      difficulty: typeof option.difficulty === "number" ? option.difficulty : 1,
       description:
         typeof option.description === "string"
           ? option.description.trim()

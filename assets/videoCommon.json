@@ -7,252 +7,252 @@
         {
           "id": 1,
           "value": "Mouth-only Sound Effects (Human Foley)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 2,
           "value": "Continuous Background Ambience (Rain/City/Cafe)",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 3,
           "value": "Voiceover: Whispered 'Internal Monologue'",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 4,
           "value": "Audio Ducking: Music drops 80% whenever you speak",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 5,
           "value": "The 'Vinyl' Filter: Add record crackle to all audio",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 6,
           "value": "Diegetic Music: Music must come from a visible speaker in-frame",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 7,
           "value": "J-Cut: Audio from next scene starts before the visual cut",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 8,
           "value": "L-Cut: Audio from current scene lingers into the next",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 9,
           "value": "Bitcrushed Audio: Make it sound like an 8-bit game",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 10,
           "value": "Heavy Reverb: Every word sounds like it's in a cathedral",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 11,
           "value": "Bass Boosted: Shake the 'camera' during loud noises",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 12,
           "value": "No Dialogue: Tell the story with only Sound Effects",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 13,
           "value": "The 'Underwater' Filter: Muffled audio for specific parts",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 14,
           "value": "Sound Bridges: Use a single sound to link two different locations",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 15,
           "value": "Echo Effect: Last word of every sentence repeats twice",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 16,
           "value": "Extreme Compression: 'Radio Broadcast' vocal style",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 17,
           "value": "Synthesized Voice: Use text-to-speech for one character",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 18,
           "value": "The 'Muffled Wall': Sounds like audio is coming from the next room",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 19,
           "value": "Beat-Sync: Every movement must land on a drum hit",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 20,
           "value": "Stereo Panning: Voices move from left to right ear",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 21,
           "value": "Reverse Audio: Play one specific sound backward",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 22,
           "value": "Natural 'Nat' Sound: No music, just raw environment noise",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 23,
           "value": "High-Pitch Shift: 'Chipmunk' voice for internal thoughts",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 24,
           "value": "Low-Pitch Shift: Slow, deep voice for emphasis",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 25,
           "value": "Risers & Downers: Use tension-building synth sounds",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 26,
           "value": "The 'Sting': A loud 'Dun Dun Dun!' at every revelation",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 27,
           "value": "Glitch Audio: Digital stutters during transitions",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 28,
           "value": "Heartbeat Track: A constant heartbeat during tense moments",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 29,
           "value": "Over-dubbing: Intentionally bad lip-syncing for comedy",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 30,
           "value": "Silent Cinema: Only a piano track and no other sound",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 31,
           "value": "Foley: Record the sound of a closing door using a book",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 32,
           "value": "Ear-Candy: One satisfying clicking sound every 10 seconds",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 33,
           "value": "The 'Phone Call' EQ: High-pass filter on your voice",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 34,
           "value": "Wind Noise: Intentionally 'bad' outdoor mic sound",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 35,
           "value": "Chorus Effect: Layer your voice 3 times",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 36,
           "value": "The 'Click-Clack' Keyboard: Audio is typing sounds",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 37,
           "value": "Crowd Noise: Fake laugh tracks or applause",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 38,
           "value": "Audio Zoom: Sound gets louder as the camera gets closer",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 39,
           "value": "Subliminal: A 0.5s whisper that is barely audible",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 40,
           "value": "Orchestral Hit: Dramatic brass sound for every title card",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 41,
           "value": "Distorted Scream: Peak the audio intentionally",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 42,
           "value": "Binaural: Record using headphones as a microphone",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 43,
           "value": "Tape Stop: The music slows down and groans to a halt",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 44,
           "value": "Lo-Fi Hip Hop: Chill beats throughout the entire video",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 45,
           "value": "Scary String: High-pitched violin on jumpscares",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 46,
           "value": "Walking Foley: Exaggerated footsteps for every scene",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 47,
           "value": "The 'Mute' Drop: Audio cuts to 0% for 2 seconds of silence",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 48,
           "value": "Static: TV static sounds between every scene cut",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 49,
           "value": "Humming: You must hum the background music yourself",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 50,
           "value": "ASMR Focus: Boost high frequencies (Taps/Scratches)",
-          "rarity": 2
+          "difficulty": 2
         }
       ]
     },
@@ -262,252 +262,252 @@
         {
           "id": 1,
           "value": "The Smash Cut: Instant transition from loud to silent",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 2,
           "value": "Match Cut: Next shot starts with a similar shape/object",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 3,
           "value": "Jump Cuts: Remove every 'um' and 'ah' and breath",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 4,
           "value": "The 1-Second Rule: No clip can be longer than 1s",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 5,
           "value": "Speed Ramp: Start slow, go fast, end slow",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 6,
           "value": "Split Screen: Show two angles of the same action",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 7,
           "value": "Flashback: 3-second black and white clip of an earlier shot",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 8,
           "value": "Zoom-in Cut: Cut from a Wide to a Close-up of the same face",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 9,
           "value": "Cross-Cutting: Show two events happening at once",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 10,
           "value": "The Whip-Pan: Transition by shaking the camera sideways",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 11,
           "value": "Time-Lapse: 5 seconds of footage sped up 1000%",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 12,
           "value": "Montage: 5 shots of you preparing (Training arc style)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 13,
           "value": "Axial Cut: Zoom in closer without changing the angle",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 14,
           "value": "Graphic Match: Transition using a circle-shaped object",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 15,
           "value": "Freeze Frame: Pause on a funny face and add a title",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 16,
           "value": "Reverse Motion: Play the last 3 seconds of the video backward",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 17,
           "value": "Overlapping Edit: Show the same action from 3 different angles",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 18,
           "value": "The 'Invisible' Cut: Use a person walking past to hide a cut",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 19,
           "value": "Stop-Motion: Create an 8-frame sequence of an object moving",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 20,
           "value": "Dissolve: A 2-second slow fade between two scenes",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 21,
           "value": "Wipe: One shot 'pushes' the other off-screen",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 22,
           "value": "The 'Inevitable' Loop: End exactly how the video started",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 23,
           "value": "The 'Snyder' Speed: Extreme slow motion on one object",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 24,
           "value": "Rhythmic Cut: Every cut must land on a musical beat",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 25,
           "value": "Ken Burns: Zoom in slowly on a still photograph",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 26,
           "value": "The 'Glitch' Transition: Add digital artifacts between shots",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 27,
           "value": "Frame-in-Frame: Put a small video inside a larger one",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 28,
           "value": "The 'Zoom Out' Reveal: Start close, end wide to show context",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 29,
           "value": "Subliminal: Flash a word for 0.05 seconds",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 30,
           "value": "Fake UI: Add a 'Camera Recording' overlay",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 31,
           "value": "Spin Transition: Rotate the camera 360 degrees into a cut",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 32,
           "value": "Mirroring: Flip the footage horizontally for 2 seconds",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 33,
           "value": "Negative Space: Keep the subject on the extreme left of frame",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 34,
           "value": "The 'Slow Burn': One continuous shot for 30 seconds",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 35,
           "value": "Color Grade Shift: Transition from B&W to Full Color",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 36,
           "value": "Title Overlay: Use a massive font that covers 50% of the screen",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 37,
           "value": "Motion Blur: Add artificial blur to every fast movement",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 38,
           "value": "Double Exposure: Overlay two shots at 50% opacity",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 39,
           "value": "The 'Step-In': Cut closer to the subject every 5 seconds",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 40,
           "value": "Distortion: Use a 'Fish-eye' effect during the climax",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 41,
           "value": "Handheld Shiver: Add artificial shake to create tension",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 42,
           "value": "The 'Swipe': Hand covers the lens to transition",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 43,
           "value": "Intertitles: Use text on a black screen to narrate",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 44,
           "value": "Ghosting: Add a slight delay/trail to moving objects",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 45,
           "value": "Vignette: Darken the corners to focus on the center",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 46,
           "value": "The 'Elevator' Cut: Cut as you drop out of frame",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 47,
           "value": "Strobe Effect: Flash between two different shots rapidly",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 48,
           "value": "The 'Dolly Zoom': Move camera forward while zooming out",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 49,
           "value": "Vertical/Horizontal Split: Top half is different from bottom",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 50,
           "value": "Ending: Black screen for 3 seconds before the logo",
-          "rarity": 2
+          "difficulty": 2
         }
       ]
     },
@@ -517,252 +517,252 @@
         {
           "id": 1,
           "value": "Rule of Thirds: Place subject on the far right intersection",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 2,
           "value": "Bird’s Eye View: Shoot directly from above (looking down)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 3,
           "value": "Worm’s Eye View: Shoot from the floor (looking up)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 4,
           "value": "Rembrandt Lighting: A triangle of light on the cheek",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 5,
           "value": "Dutch Angle: Tilt the camera 30 degrees to create unease",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 6,
           "value": "Symmetry: Subject must be perfectly centered",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 7,
           "value": "High Key: Use every light in the house (super bright)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 8,
           "value": "Low Key: Use only one small light (mostly shadows)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 9,
           "value": "Backlighting: Light the subject from behind (Silhouette)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 10,
           "value": "Rim Light: A glowing outline on your hair/shoulders",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 11,
           "value": "Practical Lights: Lamps or LEDs must be in the shot",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 12,
           "value": "Golden Hour: Film only with sunlight during sunset",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 13,
           "value": "Blue Hour: Film just after sunset (cool, blue tones)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 14,
           "value": "Hard Shadows: Use a bare bulb with no diffusion",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 15,
           "value": "Soft Box: Use a white sheet to diffuse a harsh light",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 16,
           "value": "The 'Noir' Slit: Light through blinds (stripes of light)",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 17,
           "value": "Colored Gels: Use a red or blue light for 'Cyberpunk' vibe",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 18,
           "value": "Motivated Lighting: Light comes from a 'TV' or 'Fire'",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 19,
           "value": "Negative Fill: Use a black blanket to deepen shadows",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 20,
           "value": "Flat Lighting: No shadows on the face (Ring light style)",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 21,
           "value": "Extreme Close-Up: Only show your eyes or mouth",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 22,
           "value": "Extreme Long Shot: Subject is tiny in a huge landscape",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 23,
           "value": "Over the Shoulder (OTS): Framing through someone else",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 24,
           "value": "Point of View (POV): Camera is your eyes",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 25,
           "value": "Two-Shot: Two people framed equally in one shot",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 26,
           "value": "Dirty Frame: Keep an object in the foreground, out of focus",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 27,
           "value": "Leading Lines: Use a hallway or road to guide the eye",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 28,
           "value": "Deep Focus: Everything from near to far is sharp",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 29,
           "value": "Shallow Depth: Background is completely blurred",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 30,
           "value": "The 'God' Ray: Light beams visible through smoke/dust",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 31,
           "value": "Top Lighting: Create 'Raccoon Eyes' with overhead light",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 32,
           "value": "Under Lighting: Horror style light from below the chin",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 33,
           "value": "Bounced Light: Fire a light at the ceiling for soft glow",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 34,
           "value": "Natural Light: Only use the window, no lamps",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 35,
           "value": "Lens Flare: Angle the camera to catch the sun's glare",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 36,
           "value": "Headroom: Intentionally leave way too much space above you",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 37,
           "value": "Nose-room: Leave empty space in the direction you're looking",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 38,
           "value": "The 'Mirror' Shot: Film your reflection in a glass",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 39,
           "value": "Framing within Frame: Shoot through a doorway or hole",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 40,
           "value": "Low Frame Rate: Motion looks jerky (like a dream)",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 41,
           "value": "High Frame Rate: Smooth as butter (for slow-mo)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 42,
           "value": "Profile Shot: Only show the side of your face",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 43,
           "value": "Canted Shot: Slightly tilted to show confusion",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 44,
           "value": "Color Contrast: Use 'Warm' lights vs 'Cold' shadows",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 45,
           "value": "The 'Spotlight': Pitch black background with one light on you",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 46,
           "value": "Rack Focus: Focus moves from foreground to background",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 47,
           "value": "Wide Angle: Use the 0.5x lens for a distorted look",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 48,
           "value": "Telephoto: Zoom in from far away for 'compression'",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 49,
           "value": "The 'Glow': Smear a tiny bit of lip balm on the lens",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 50,
           "value": "Eye-Level: The 'standard' trust-building shot",
-          "rarity": 1
+          "difficulty": 1
         }
       ]
     }

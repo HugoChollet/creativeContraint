@@ -84,7 +84,8 @@ export default function CategoryItem({
                 <Item
                   title={item.value}
                   subtitle={
-                    t("component:constraint-selector.difficulty") + item.rarity
+                    t("component:constraint-selector.difficulty") +
+                    item.difficulty
                   }
                   description={item.description}
                   color={projectColor}

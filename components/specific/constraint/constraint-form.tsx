@@ -26,7 +26,7 @@ export default function ConstraintSelectorForm({
     id: Math.random() * 1000000,
     value: "",
     description: "",
-    rarity: 1,
+    difficulty: 1,
   });
 
   useEffect(() => {
@@ -65,8 +65,10 @@ export default function ConstraintSelectorForm({
           <NumberPicker
             min={1}
             max={5}
-            initialValue={option.rarity}
-            onValueChange={(value) => setOption({ ...option, rarity: value })}
+            initialValue={option.difficulty}
+            onValueChange={(value) =>
+              setOption({ ...option, difficulty: value })
+            }
           />
         </View>
 
@@ -78,7 +80,7 @@ export default function ConstraintSelectorForm({
               id: Math.random() * 1000000,
               value: "",
               description: "",
-              rarity: option.rarity,
+              difficulty: option.difficulty,
             });
           }}
           disabled={option.value === ""}

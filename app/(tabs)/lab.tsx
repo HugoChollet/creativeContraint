@@ -120,7 +120,7 @@ const buildGeneratedConstraintSet = (
       results[categoryIdentifier] = {
         id: randomOption.id,
         value: randomOption.value,
-        rarity: randomOption.rarity,
+        difficulty: randomOption.difficulty,
         description: randomOption.description,
       };
       ids[getConstraintValueKey(category)] = randomOption.id;
@@ -146,7 +146,7 @@ const buildGeneratedConstraintSet = (
         availableOptions[Math.floor(Math.random() * availableOptions.length)];
 
       generatedValues.push(randomOption.value);
-      generatedRarity += randomOption.rarity;
+      generatedRarity += randomOption.difficulty;
       ids[getConstraintValueKey(category, subCategory.name)] = randomOption.id;
     });
 
@@ -157,7 +157,7 @@ const buildGeneratedConstraintSet = (
     results[categoryIdentifier] = {
       id: -1,
       value: generatedValues.join(" "),
-      rarity: generatedRarity,
+      difficulty: generatedRarity,
       description: "",
     };
   });
@@ -420,8 +420,8 @@ export default function LabScreen() {
       selections.forEach(({ key, option }) => {
         if (mode === "all") newOptions[key] = true;
         else if (mode === "none") newOptions[key] = false;
-        else if (mode === "easy") newOptions[key] = option.rarity <= 2;
-        else if (mode === "hard") newOptions[key] = option.rarity >= 3;
+        else if (mode === "easy") newOptions[key] = option.difficulty <= 2;
+        else if (mode === "hard") newOptions[key] = option.difficulty >= 3;
         // 'custom' does nothing in bulk; it's handled by manual clicks
       });
 

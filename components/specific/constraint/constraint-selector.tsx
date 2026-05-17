@@ -37,7 +37,9 @@ export function ConstraintSelector({
       />
       <Item
         title={option.value}
-        subtitle={t("component:constraint-selector.difficulty") + option.rarity}
+        subtitle={
+          t("component:constraint-selector.difficulty") + option.difficulty
+        }
         description={option.description}
         color={color}
       />

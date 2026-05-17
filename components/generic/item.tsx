@@ -26,7 +26,7 @@ export function Item({
         </Text>
         <Text
           style={{
-            ...styles.rarityLabel,
+            ...styles.difficultyLabel,
             color: colors.textDiscreet,
           }}
         >
@@ -46,5 +46,5 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   textContainer: { marginLeft: 12 },
-  rarityLabel: { fontSize: 11, marginTop: 2 },
+  difficultyLabel: { fontSize: 11, marginTop: 2 },
 });
