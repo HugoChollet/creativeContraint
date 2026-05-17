@@ -1,6 +1,7 @@
 import { Option, SubCategory } from "@/types/constraints";
 
 export interface CategoryJSON {
+  id?: string;
   name: string;
   disabled?: boolean;
   label?: string;
@@ -19,6 +20,7 @@ export interface ProjectJSON {
   id: string;
   description?: string;
   language?: string | null;
+  supported_files?: string | null;
   tags?: string[] | null;
   categories: CategoryJSON[];
 }

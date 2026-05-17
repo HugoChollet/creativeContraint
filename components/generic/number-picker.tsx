@@ -1,7 +1,7 @@
 import { useStyles } from "@/hooks/use-styles";
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   FlatList,
   NativeSyntheticEvent,
@@ -150,34 +150,40 @@ function WebPicker({
   const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const listData = useMemo(() => ["", ...values, ""], [values]);
 
-  const snapToValue = (value: number, animated = true) => {
-    const index = values.indexOf(value);
+  const snapToValue = useCallback(
+    (value: number, animated = true) => {
+      const index = values.indexOf(value);
 
-    if (index < 0) {
-      return;
-    }
+      if (index < 0) {
+        return;
+      }
 
-    listRef.current?.scrollToOffset({
-      offset: index * ITEM_HEIGHT,
-      animated,
-    });
-    onSelect(value);
-  };
+      listRef.current?.scrollToOffset({
+        offset: index * ITEM_HEIGHT,
+        animated,
+      });
+      onSelect(value);
+    },
+    [onSelect, values],
+  );
 
-  const snapFromOffset = (offset: number, animated = true) => {
-    // The list may stop between rows on web, so we round to the nearest item
-    // and then force the scroll position back onto that exact row.
-    const index = Math.max(
-      0,
-      Math.min(values.length - 1, Math.round(offset / ITEM_HEIGHT)),
-    );
+  const snapFromOffset = useCallback(
+    (offset: number, animated = true) => {
+      // The list may stop between rows on web, so we round to the nearest item
+      // and then force the scroll position back onto that exact row.
+      const index = Math.max(
+        0,
+        Math.min(values.length - 1, Math.round(offset / ITEM_HEIGHT)),
+      );
 
-    snapToValue(values[index], animated);
-  };
+      snapToValue(values[index], animated);
+    },
+    [snapToValue, values],
+  );
 
   useEffect(() => {
     snapToValue(selectedValue, false);
-  }, [selectedValue]);
+  }, [selectedValue, snapToValue]);
 
   useEffect(
     () => () => {

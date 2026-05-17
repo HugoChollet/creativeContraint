@@ -33,6 +33,19 @@
   "constraint-selector": {
     "difficulty": "Difficulty : "
   },
+  "result-modal-header": {
+    "title": "Constraint(s) for {{type}}",
+    "history_counter": "Generation {{current}} / {{total}}",
+    "name_placeholder": "Name this constraint set",
+    "confirm_name_title": "Save this constraint set",
+    "confirm_name_description": "Confirm the name that will be saved.",
+    "confirm_name_button": "Confirm name",
+    "generate_again_button": "Generate again",
+    "previous_button": "Previous result",
+    "next_button": "Next result",
+    "save_button": "Save result",
+    "remove_button": "Remove save"
+  },
   "share": {
     "button": "Share Challenge",
     "error_title": "Error",
@@ -47,11 +60,21 @@
   },
   "metadata": {
     "language_label": "Language",
+    "supported_files_label": "Supported publication format",
     "tags_label": "Tags",
     "tags_limit": "{{count}} / {{max}} selected",
+    "tags_range": "{{count}} selected (minimum {{min}}, maximum {{max}})",
+    "selection_min": "{{count}} selected (minimum {{min}})",
     "languages": {
       "en": "English",
       "fr": "French"
+    },
+    "supported_files": {
+      "png/jpg": "PNG / JPG",
+      "docs/pdf": "Docs / PDF",
+      "plain text": "Plain text",
+      "youtube link": "YouTube link",
+      "mp3": "Mp3"
     },
     "tag_values": {
       "all": "All",
@@ -61,6 +84,27 @@
       "game": "Game",
       "music": "Music",
       "character": "Character",
+      "internet-content": "Internet Content",
+      "video game": "Video Game",
+      "board game": "Board Game",
+      "art": "Art",
+      "drawing": "Drawing",
+      "cooking": "Cooking",
+      "vlog": "Vlog",
+      "stream": "Stream",
+      "dnd": "D&D",
+      "object": "Object",
+      "sport": "Sport",
+      "clothe": "Clothing",
+      "vehicle": "Vehicle",
+      "business": "Business",
+      "product": "Product",
+      "website": "Website",
+      "comic": "Comic",
+      "architecture": "Architecture",
+      "education": "Education",
+      "enigma": "Enigma",
+      "other": "Other",
       "localisation": "Localisation",
       "physical": "Physical",
       "numerical": "Numerical",

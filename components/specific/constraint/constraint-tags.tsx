@@ -1,37 +1,31 @@
 import { getProjectColor } from "@/constants/theme";
 import { useProjectTranslations } from "@/hooks/use-project-translations";
 import { useStyles } from "@/hooks/use-styles";
+import { getConstraintSetProjectDataSource } from "@/lib/constraint-set-data";
 import { SavedConstraintSet } from "@/types/constraints";
-import { ProjectJSON } from "@/types/json-objects";
-import React, { useMemo } from "react";
-import { useTranslation } from "react-i18next";
+import { useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Tooltip from "../../generic/tooltip";
 
-const typeMapping: Record<string, string> = {
-  music: "music",
-  book: "book",
-  photography: "photo",
-  "video fiction": "videoFiction",
-  "internet video": "videoInternet",
-  cooking: "cooking",
-};
-
-export function ConstraintsTags({ item }: { item: SavedConstraintSet }) {
-  const { i18n } = useTranslation();
+export function ConstraintsTags({
+  constraintSet,
+}: {
+  constraintSet: SavedConstraintSet;
+}) {
   const { globalStyles, colors, theme } = useStyles();
-  const solidColor = getProjectColor({ label: item.project_type, theme });
-
-  const typeKey = typeMapping[item.project_type.toLowerCase()] || "book";
+  const solidColor = getProjectColor({
+    color: constraintSet.color?.toString(),
+    theme,
+    opacity: 0.1,
+  });
 
   const dataSource = useMemo(() => {
-    const data = i18n.getResourceBundle(i18n.language, typeKey) as ProjectJSON;
-    return data || { constraints: [] };
-  }, [i18n.language, typeKey]);
+    return getConstraintSetProjectDataSource({ constraintSet: constraintSet });
+  }, [constraintSet]);
 
   const translatedConstraints = useProjectTranslations(
-    item.constraints,
-    dataSource.categories,
+    constraintSet.constraints,
+    dataSource?.categories,
   );
 
   return (
@@ -41,11 +35,9 @@ export function ConstraintsTags({ item }: { item: SavedConstraintSet }) {
         {
           borderRadius: 0,
           overflow: "hidden",
-          backgroundColor: getProjectColor({
-            label: item.project_type,
-            opacity: 0.1,
-            theme,
-          }),
+          backgroundColor: constraintSet.color
+            ? solidColor
+            : colors.shadeContainer,
         },
       ]}
     >

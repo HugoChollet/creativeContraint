@@ -1,3 +1,10 @@
+import {
+  ProjectLanguage,
+  ProjectSupportedFileType,
+  ProjectTag,
+} from "@/constants/project-metadata";
+import { ProjectRelation } from "./projects";
+
 export interface Option {
   id: number;
   value: string;
@@ -13,21 +20,41 @@ export interface SubCategory {
 }
 
 export type SelectedState = {
-  activeCategories: Record<string, boolean>; // e.g., { "Core Theme": true }
-  selectedOptions: Record<string, boolean>; // e.g., { "Core Theme-5": true }
+  activeCategories: Record<string, boolean>;
+  selectedOptions: Record<string, boolean>;
 };
 
 export type GeneratedConstraints = Record<string, Option>;
 export type IdSetConstraint = Record<string, number>;
 
-export type ConstraintSetIds = {
-  project_type: string;
-  constraints: IdSetConstraint;
+export type GeneratedConstraintSet = {
+  id: string;
+  name: string;
+  projectId?: string | null;
+  projectLabel: string;
+  language?: ProjectLanguage | null;
+  supportedFiles?: ProjectSupportedFileType | null;
+  tags?: ProjectTag[] | null;
+  color?: string | null;
+  generatedAt: string;
+  constraints: GeneratedConstraints;
+  constraintIds: IdSetConstraint;
+  savedConstraintSetId?: number | string | null;
 };
 
 export type SavedConstraintSet = {
   id: number | string;
-  project_type: string;
+  name: string;
+  project_id?: string | null;
+  project_label: string;
+  language?: ProjectLanguage | null;
+  supported_files?: ProjectSupportedFileType | null;
+  tags?: ProjectTag[] | null;
+  color?: string | null;
   difficulty: number;
   constraints: IdSetConstraint;
+  created_at?: string;
+  owner_id?: string;
+  is_public?: boolean;
+  project?: ProjectRelation | null;
 };

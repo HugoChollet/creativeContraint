@@ -1,3 +1,4 @@
+import { getContrastingColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import { Ionicons } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
@@ -58,7 +59,9 @@ export const BookMediaPicker = ({
               globalStyles.tabText,
               {
                 color:
-                  mode === "text" ? colors.invertedText : colors.textDiscreet,
+                  mode === "text"
+                    ? getContrastingColor(projectColor, "primary")
+                    : colors.textDiscreet,
               },
             ]}
           >
@@ -78,7 +81,9 @@ export const BookMediaPicker = ({
               globalStyles.tabText,
               {
                 color:
-                  mode === "file" ? colors.invertedText : colors.textDiscreet,
+                  mode === "file"
+                    ? getContrastingColor(projectColor, "primary")
+                    : colors.textDiscreet,
               },
             ]}
           >

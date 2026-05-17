@@ -1,8 +1,11 @@
 import {
   getCategoryTagsFromProject,
   getDefaultProjectLanguage,
+  getDefaultProjectSupportedFileType,
+  isProjectSupportedFileType,
   normalizeProjectTags,
   ProjectLanguage,
+  ProjectSupportedFileType,
   ProjectTag,
 } from "@/constants/project-metadata";
 import { useStyles } from "@/hooks/use-styles";
@@ -36,6 +39,7 @@ interface ImportedProjectDraft {
   name?: string;
   description: string;
   language: ProjectLanguage;
+  supportedFileType: ProjectSupportedFileType;
   tags: ProjectTag[];
   categories: Category[];
 }
@@ -80,8 +84,12 @@ const normalizeImportedProject = (rawFileContent: string): ProjectJSON => {
     id: typeof parsed.id === "string" ? parsed.id : "",
     description:
       typeof parsed.description === "string" ? parsed.description : undefined,
-    language:
-      typeof parsed.language === "string" ? parsed.language : undefined,
+    language: typeof parsed.language === "string" ? parsed.language : undefined,
+    supported_files:
+      typeof parsed.supported_files === "string" &&
+      isProjectSupportedFileType(parsed.supported_files)
+        ? parsed.supported_files
+        : undefined,
     tags: Array.isArray(parsed.tags)
       ? parsed.tags.filter((tag): tag is string => typeof tag === "string")
       : undefined,
@@ -114,57 +122,57 @@ const readImportedFileContent = async (
   return FileSystem.readAsStringAsync(asset.uri);
 };
 
-const buildImportedDraftCategories = (
-  importedProject: ProjectJSON,
-) => {
+const buildImportedDraftCategories = (importedProject: ProjectJSON) => {
   const projectLanguage = getDefaultProjectLanguage(importedProject.language);
   const projectTags = normalizeProjectTags(importedProject.tags);
-  const normalizedCategories = importedProject.categories.flatMap((category) => {
-    const categoryName = (category.label ?? category.name ?? "").trim();
-    const categoryDescription = category.description?.trim() ?? "";
-    const categoryOptions = normalizeOptions(category.options);
-    const categoryLanguage = getDefaultProjectLanguage(
-      category.language ?? importedProject.language,
-    );
-    const categoryTags = getCategoryTagsFromProject(
-      category.tags && category.tags.length > 0 ? category.tags : projectTags,
-    );
+  const normalizedCategories = importedProject.categories.flatMap(
+    (category) => {
+      const categoryName = (category.label ?? category.name ?? "").trim();
+      const categoryDescription = category.description?.trim() ?? "";
+      const categoryOptions = normalizeOptions(category.options);
+      const categoryLanguage = getDefaultProjectLanguage(
+        category.language ?? importedProject.language,
+      );
+      const categoryTags = getCategoryTagsFromProject(
+        category.tags && category.tags.length > 0 ? category.tags : projectTags,
+      );
 
-    if (categoryName.length > 0 && categoryOptions.length > 0) {
-      return [
-        {
-          name: categoryName,
-          description: categoryDescription,
-          options: categoryOptions,
-          language: categoryLanguage,
-          tags: categoryTags,
-        },
-      ];
-    }
-
-    return (category.sub_categories ?? []).flatMap((subCategory) => {
-      const subCategoryName = (
-        subCategory.label ??
-        subCategory.name ??
-        ""
-      ).trim();
-      const subCategoryOptions = normalizeOptions(subCategory.options);
-
-      if (subCategoryName.length === 0 || subCategoryOptions.length === 0) {
-        return [];
+      if (categoryName.length > 0 && categoryOptions.length > 0) {
+        return [
+          {
+            name: categoryName,
+            description: categoryDescription,
+            options: categoryOptions,
+            language: categoryLanguage,
+            tags: categoryTags,
+          },
+        ];
       }
 
-      return [
-        {
-          name: [categoryName, subCategoryName].filter(Boolean).join(" - "),
-          description: subCategory.description?.trim() ?? categoryDescription,
-          options: subCategoryOptions,
-          language: categoryLanguage,
-          tags: categoryTags,
-        },
-      ];
-    });
-  });
+      return (category.sub_categories ?? []).flatMap((subCategory) => {
+        const subCategoryName = (
+          subCategory.label ??
+          subCategory.name ??
+          ""
+        ).trim();
+        const subCategoryOptions = normalizeOptions(subCategory.options);
+
+        if (subCategoryName.length === 0 || subCategoryOptions.length === 0) {
+          return [];
+        }
+
+        return [
+          {
+            name: [categoryName, subCategoryName].filter(Boolean).join(" - "),
+            description: subCategory.description?.trim() ?? categoryDescription,
+            options: subCategoryOptions,
+            language: categoryLanguage,
+            tags: categoryTags,
+          },
+        ];
+      });
+    },
+  );
 
   return normalizedCategories.map((category, index) => ({
     id: `${IMPORTED_CATEGORY_PREFIX}${index}-${category.name}`,
@@ -228,6 +236,9 @@ export default function ProjectJsonImporter({
           fallbackProjectName,
         description: importedProject.description?.trim() ?? "",
         language: getDefaultProjectLanguage(importedProject.language),
+        supportedFileType: getDefaultProjectSupportedFileType(
+          importedProject.supported_files,
+        ),
         tags: normalizeProjectTags(importedProject.tags),
         categories: importedCategories,
       });
@@ -274,10 +285,7 @@ export default function ProjectJsonImporter({
           />
         )}
         <Text
-          style={[
-            globalStyles.text,
-            { color: projectColor, marginTop: 8 },
-          ]}
+          style={[globalStyles.text, { color: projectColor, marginTop: 8 }]}
         >
           {t("screen:project_form.import_button")}
         </Text>

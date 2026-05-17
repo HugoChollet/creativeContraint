@@ -1,16 +1,15 @@
+import ExpandableHeader from "@/components/generic/expandable-header";
 import { Item } from "@/components/generic/item";
-import MetadataBadges from "@/components/generic/metadata-badges";
 import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
 import { useTranslation } from "react-i18next";
-import { FlatList, View } from "react-native";
+import { View } from "react-native";
 import Crud, { Action, CrudActionItem } from "../../generic/crud";
-import CategoryHeader from "./category-header";
 
 interface CategoryItemProps {
-  onDelete?: () => void;
-  onEdit?: () => void;
-  onFork?: () => void;
+  onDelete?: (category: Category) => void;
+  onEdit?: (category: Category) => void;
+  onFork?: (category: Category) => void;
   onPublish?: () => void;
   projectColor: string;
   category: Category;
@@ -38,28 +37,19 @@ export default function CategoryItem({
   const { t } = useTranslation();
   const isPersonalCategory =
     type === t("screen:category_browse.personal_section");
-  const isCommunity = type === t("screen:category_browse.community_section");
 
   const actions: CrudActionItem[] = [
     ...(isPersonalCategory && onEdit
-      ? [{ action: Action.EDIT, onPress: onEdit }]
+      ? [{ action: Action.EDIT, onPress: () => onEdit(category) }]
       : []),
     ...(isPersonalCategory && onDelete
-      ? [{ action: Action.DELETE, onPress: onDelete }]
+      ? [{ action: Action.DELETE, onPress: () => onDelete(category) }]
       : []),
     ...(isPersonalCategory && onPublish
       ? [{ action: Action.PUBLISH, onPress: onPublish }]
       : []),
     ...(!isPersonalCategory && onFork
-      ? [{ action: Action.FORK, onPress: onFork }]
-      : []),
-    ...(isCommunity && onFork
-      ? [
-          {
-            action: Action.FAVORITE,
-            onPress: () => console.log("favorite ", category.name),
-          },
-        ]
+      ? [{ action: Action.FORK, onPress: () => onFork(category) }]
       : []),
   ];
 
@@ -71,9 +61,11 @@ export default function CategoryItem({
       }}
     >
       <View style={[globalStyles.card, { width: 300 }]}>
-        <CategoryHeader
-          category={category}
-          onToggleCategory={() => onToggleCategory(category)}
+        <ExpandableHeader
+          title={category.name}
+          description={category.description}
+          tags={category.tags}
+          onToggle={() => onToggleCategory(category)}
           isExpanded={expanded}
           onExpand={() => toggleExpand()}
           color={projectColor}
@@ -86,19 +78,9 @@ export default function CategoryItem({
               : undefined
           }
         />
-        {category.tags?.length ? (
-          <View style={{ padding: 8 }}>
-            <MetadataBadges tags={category.tags} color={projectColor} />
-          </View>
-        ) : (
-          <></>
-        )}
-        {expanded && category.options && (
-          <FlatList
-            data={category.options}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <View style={{ padding: 8 }}>
+        {expanded && category.options
+          ? category.options.map((item) => (
+              <View key={item.id.toString()} style={{ padding: 8 }}>
                 <Item
                   title={item.value}
                   subtitle={
@@ -108,9 +90,8 @@ export default function CategoryItem({
                   color={projectColor}
                 />
               </View>
-            )}
-          />
-        )}
+            ))
+          : null}
       </View>
       <Crud actions={actions} color={projectColor} />
     </View>

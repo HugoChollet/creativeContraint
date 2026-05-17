@@ -137,11 +137,14 @@ export const getProjectColor = ({
     const normalizedLabel = label.trim().toLowerCase();
     const key = map[label] || projectKeyMap[normalizedLabel] || "book";
     const baseColor = ProjectsColors[theme][key];
-    return baseColor.replace(/[\d.]+\)$/g, `${opacity})`);
-  } else if (color) {
-    return color.replace(/[\d.]+\)$/g, `${opacity})`);
+    return withOpacity(baseColor, opacity);
   }
-  return Colors.grey.replace(/[\d.]+\)$/g, `${opacity})`);
+
+  if (color) {
+    return withOpacity(color, opacity);
+  }
+
+  return withOpacity(Colors.grey, opacity);
 };
 
 export const Colors = {
@@ -150,6 +153,142 @@ export const Colors = {
   black: textDark,
   grey: "#8E8E93",
 };
+
+const clampChannel = (value: number) => Math.min(255, Math.max(0, value));
+
+const parseHexColor = (value: string) => {
+  const hex = value.replace("#", "").trim();
+
+  if (hex.length === 3 || hex.length === 4) {
+    return {
+      r: parseInt(hex[0] + hex[0], 16),
+      g: parseInt(hex[1] + hex[1], 16),
+      b: parseInt(hex[2] + hex[2], 16),
+    };
+  }
+
+  if (hex.length === 6 || hex.length === 8) {
+    return {
+      r: parseInt(hex.slice(0, 2), 16),
+      g: parseInt(hex.slice(2, 4), 16),
+      b: parseInt(hex.slice(4, 6), 16),
+    };
+  }
+
+  return null;
+};
+
+const parseRgbColor = (value: string) => {
+  const match = value.match(/rgba?\(([^)]+)\)/i);
+
+  if (!match) {
+    return null;
+  }
+
+  const [r, g, b] = match[1]
+    .split(",")
+    .slice(0, 3)
+    .map((channel) => clampChannel(Number.parseFloat(channel.trim())));
+
+  if ([r, g, b].some((channel) => Number.isNaN(channel))) {
+    return null;
+  }
+
+  return { r, g, b };
+};
+
+const parseColorToRgb = (value?: string | null) => {
+  if (!value) {
+    return null;
+  }
+
+  const trimmedValue = value.trim();
+
+  if (trimmedValue.startsWith("#")) {
+    return parseHexColor(trimmedValue);
+  }
+
+  if (trimmedValue.startsWith("rgb")) {
+    return parseRgbColor(trimmedValue);
+  }
+
+  return null;
+};
+
+const withOpacity = (value: string, opacity = 1) => {
+  const parsedColor = parseColorToRgb(value);
+
+  if (!parsedColor) {
+    return value;
+  }
+
+  const normalizedOpacity = Math.min(1, Math.max(0, opacity));
+
+  return `rgba(${parsedColor.r}, ${parsedColor.g}, ${parsedColor.b}, ${normalizedOpacity})`;
+};
+
+const getRelativeLuminance = (value?: string | null) => {
+  const parsedColor = parseColorToRgb(value);
+
+  if (!parsedColor) {
+    return null;
+  }
+
+  const toLinearChannel = (channel: number) => {
+    const normalized = channel / 255;
+
+    return normalized <= 0.03928
+      ? normalized / 12.92
+      : ((normalized + 0.055) / 1.055) ** 2.4;
+  };
+
+  const r = toLinearChannel(parsedColor.r);
+  const g = toLinearChannel(parsedColor.g);
+  const b = toLinearChannel(parsedColor.b);
+
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+
+// This matches the current "white text vs black text" crossover point.
+export const DEFAULT_DARK_COLOR_LUMINANCE_PIVOT = 0.4;
+
+export const isColorDark = (
+  value?: string | null,
+  luminancePivot = DEFAULT_DARK_COLOR_LUMINANCE_PIVOT,
+) => {
+  const luminance = getRelativeLuminance(value);
+
+  if (luminance === null) {
+    return true;
+  }
+
+  return luminance <= luminancePivot;
+};
+
+export type ContrastColorVariant = "primary" | "secondary" | "background";
+
+const contrastPalette = {
+  darkBackground: {
+    primary: Colors.white,
+    secondary: "rgba(255,255,255,0.82)",
+    background: "rgba(255,255,255,0.18)",
+  },
+  lightBackground: {
+    primary: Colors.black,
+    secondary: "rgba(17,24,28,0.72)",
+    background: "rgba(0,0,0,0.08)",
+  },
+} as const;
+
+export const getContrastingColor = (
+  // TODO add similar function for colored text on background
+  backgroundColor?: string | null,
+  variant: ContrastColorVariant = "primary",
+  luminancePivot = DEFAULT_DARK_COLOR_LUMINANCE_PIVOT,
+) =>
+  (isColorDark(backgroundColor, luminancePivot)
+    ? contrastPalette.darkBackground
+    : contrastPalette.lightBackground)[variant];
 
 export type AppTheme = keyof typeof Themes; // 'light' | 'dark'
 export type AppThemeColors = typeof Themes.light | typeof Themes.dark; // The structure of the color object

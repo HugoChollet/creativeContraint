@@ -1,3 +1,4 @@
+import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import Description from "@/components/generic/description";
 import { Header } from "@/components/generic/header";
 import LanguageSelector from "@/components/generic/language-selector";
@@ -8,6 +9,7 @@ import TagSelector, {
 import ConstraintCrud from "@/components/specific/constraint/constraint-crud";
 import ConstraintForm from "@/components/specific/constraint/constraint-form";
 import {
+  getCategoryTagsFromProject,
   getDefaultProjectLanguage,
   normalizeProjectTags,
   PROJECT_TAGS,
@@ -16,13 +18,15 @@ import {
   toggleProjectTag,
 } from "@/constants/project-metadata";
 import { getProjectColor } from "@/constants/theme";
+import { useHomeProjects } from "@/contexts/home-projects-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
+import { getProjectTitle } from "@/lib/project-data";
 import { Category } from "@/types/category";
 import { Option } from "@/types/constraints";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { useLocalSearchParams } from "expo-router";
-import React, { useMemo, useState } from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
@@ -31,39 +35,93 @@ import {
   ScrollView,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 
 const ConstraintRequire = { MIN_OPTIONS: 2, NAME_LENGTH_MIN: 2 };
 const CATEGORY_TAG_LIMIT = 2;
 
-export default function CategoryFormScreen() {
-  const { type: projectLabel } = useLocalSearchParams<{
-    type: string;
-  }>();
+const cleanCategoryOptions = (values: Option[]) =>
+  values
+    .map((option) => ({
+      ...option,
+      value: option.value.trim(),
+      description: option.description?.trim() || undefined,
+    }))
+    .filter((option) => option.value.length > 0);
 
+const cleanCategoryDraft = ({
+  name,
+  description,
+  options,
+  language,
+  tags,
+}: {
+  name: string;
+  description: string;
+  options: Option[];
+  language: ProjectLanguage;
+  tags: readonly string[];
+}) => ({
+  name: name.trim(),
+  description: description.trim(),
+  options: cleanCategoryOptions(options),
+  language: getDefaultProjectLanguage(language),
+  tags: normalizeProjectTags(tags),
+});
+
+export default function CategoryFormScreen() {
+  const {
+    categoryId,
+    categoryAction,
+  } = useLocalSearchParams<{
+    categoryId?: string;
+    categoryAction?: string;
+  }>();
   const { globalStyles, colors, theme } = useStyles();
   const { t, i18n } = useTranslation();
   const headerHeight = useHeaderHeight();
-  const { addRecord, loading: isSaving } =
-    useCollection<Category>("categories");
+  const { activeProject, loading: loadingHomeProjects } = useHomeProjects();
+  const {
+    addRecord,
+    updateRecord,
+    fetchCollection,
+    loading: isSaving,
+  } = useCollection<Category>("categories");
+  const initialProjectLanguage = getDefaultProjectLanguage(
+    activeProject?.language ?? i18n.language,
+  );
+  const initialProjectTags = getCategoryTagsFromProject(activeProject?.tags);
+  const isEditMode = categoryAction === "edit";
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [language, setLanguage] = useState<ProjectLanguage>(
-    getDefaultProjectLanguage(i18n.language),
+    initialProjectLanguage,
   );
-  const [tags, setTags] = useState<ProjectTag[]>([]);
+  const [tags, setTags] = useState<ProjectTag[]>(initialProjectTags);
   const [editedOption, setEditedOption] = useState<Option | undefined>();
-
-  const [isLoading] = useState(false);
-
   const [options, setOptions] = useState<Option[]>([]);
+  const [isHydratingCategory, setIsHydratingCategory] = useState(
+    Boolean(categoryId),
+  );
 
-  const projectColor = getProjectColor({ label: projectLabel, theme });
+  const projectTitle = activeProject
+    ? getProjectTitle(activeProject.dataSource)
+    : "Project";
+  const projectColor = activeProject?.color
+    ? getProjectColor({
+        color: activeProject.color,
+        theme,
+      })
+    : getProjectColor({
+        label: activeProject?.routeType,
+        theme,
+      });
   const projectColorSoft = getProjectColor({
-    label: projectLabel,
+    ...(activeProject?.color
+      ? { color: activeProject.color }
+      : { label: activeProject?.routeType }),
     opacity: 0.2,
     theme,
   });
@@ -75,41 +133,124 @@ export default function CategoryFormScreen() {
       })),
     [t],
   );
+  const cleanedDraft = useMemo(
+    () =>
+      cleanCategoryDraft({
+        name,
+        description,
+        options,
+        language,
+        tags,
+      }),
+    [description, language, name, options, tags],
+  );
 
-  const handleSubmit = async () => {
-    if (!isFormValid || isSaving) return;
+  useEffect(() => {
+    if (categoryId) {
+      return;
+    }
 
-    const normalizedTags = normalizeProjectTags(tags);
-    const newCategory = {
-      name,
-      description,
-      options, // This will be saved as JSONB in Supabase
-      language,
-      tags: normalizedTags,
-      is_public: false, // Defaulting to private for now
-      favorited_counter: 0,
+    setLanguage(initialProjectLanguage);
+    setTags(initialProjectTags);
+  }, [categoryId, initialProjectLanguage, initialProjectTags]);
+
+  useEffect(() => {
+    let isActive = true;
+
+    if (!categoryId) {
+      setIsHydratingCategory(false);
+      return;
+    }
+
+    const loadCategory = async () => {
+      setIsHydratingCategory(true);
+      const result = await fetchCollection({
+        filterColumn: "id",
+        filterValue: categoryId,
+      });
+
+      if (!isActive) {
+        return;
+      }
+
+      const category = result[0];
+
+      if (!category) {
+        console.error("Failed to load category");
+        setIsHydratingCategory(false);
+        router.back();
+        return;
+      }
+
+      setName(category.name);
+      setDescription(category.description);
+      setLanguage(
+        getDefaultProjectLanguage(category.language ?? activeProject?.language),
+      );
+      setTags(getCategoryTagsFromProject(category.tags ?? activeProject?.tags));
+      setOptions(category.options ?? []);
+      setEditedOption(undefined);
+      setIsHydratingCategory(false);
     };
 
-    const result = await addRecord(newCategory);
+    void loadCategory();
+
+    return () => {
+      isActive = false;
+    };
+  }, [
+    activeProject?.language,
+    activeProject?.tags,
+    categoryId,
+    fetchCollection,
+  ]);
+
+  const handleSubmit = async () => {
+    if (!isFormValid || isSaving || isHydratingCategory) return;
+
+    const categoryDraft = {
+      name: cleanedDraft.name,
+      description: cleanedDraft.description,
+      options: cleanedDraft.options,
+      language: cleanedDraft.language,
+      tags: cleanedDraft.tags,
+    };
+
+    const result =
+      isEditMode && categoryId
+        ? await updateRecord(categoryId, categoryDraft)
+        : await addRecord({
+            ...categoryDraft,
+            is_public: false,
+            favorited_counter: 0,
+          });
 
     if (result) {
-      // Success! Go back to the previous screen
-      console.log("success");
+      router.back();
     } else {
-      // You might want to show an Alert here if result is null
       console.error("Failed to save category");
     }
   };
 
   const isFormValid =
-    name.length > ConstraintRequire.NAME_LENGTH_MIN &&
-    options.length >= ConstraintRequire.MIN_OPTIONS &&
-    !isLoading;
+    cleanedDraft.name.length > ConstraintRequire.NAME_LENGTH_MIN &&
+    cleanedDraft.options.length >= ConstraintRequire.MIN_OPTIONS &&
+    !isHydratingCategory;
+
+  if (loadingHomeProjects && !activeProject) {
+    return (
+      <View
+        style={[globalStyles.screenContainer, { justifyContent: "center" }]}
+      >
+        <ActivityIndicator size="large" color={colors.tint} />
+      </View>
+    );
+  }
 
   return (
     <>
       <Header
-        title={t("screen:category_form.title", { type: projectLabel })}
+        title={t("screen:category_form.title", { type: projectTitle })}
         color={projectColor}
       />
       <View style={globalStyles.screenContainer}>
@@ -135,7 +276,7 @@ export default function CategoryFormScreen() {
                 placeholderTextColor={colors.placeholder}
                 value={name}
                 onChangeText={setName}
-                editable={!isLoading}
+                editable={!isHydratingCategory}
               />
             </View>
 
@@ -148,7 +289,7 @@ export default function CategoryFormScreen() {
                 setDescription={setDescription}
                 placeholder={t("screen:category_form.description_placeholder")}
                 projectColor={projectColor}
-                isLoading={isLoading}
+                isLoading={isHydratingCategory}
               />
             </View>
 
@@ -235,26 +376,14 @@ export default function CategoryFormScreen() {
           </ScrollView>
         </KeyboardAvoidingView>
 
-        <View style={{ paddingTop: 12, paddingBottom: 20 }}>
-          <TouchableOpacity
-            style={[
-              globalStyles.secondaryButton,
-              {
-                backgroundColor: isFormValid ? projectColor : colors.disable,
-              },
-            ]}
-            onPress={() => handleSubmit()}
-            disabled={!isFormValid}
-          >
-            {isLoading ? (
-              <ActivityIndicator color={colors.invertedText} />
-            ) : (
-              <Text style={globalStyles.secondaryButtonText}>
-                {t("screen:category_form.submit_button")}
-              </Text>
-            )}
-          </TouchableOpacity>
-        </View>
+        <ConfirmCancelButton
+          color={projectColor}
+          labelConfirm={t("screen:category_form.submit_button")}
+          isActive={isFormValid}
+          isLoading={isSaving || isHydratingCategory}
+          onClickConfirm={handleSubmit}
+          onClickCancel={() => router.back()}
+        />
       </View>
     </>
   );

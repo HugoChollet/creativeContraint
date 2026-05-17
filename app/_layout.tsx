@@ -8,6 +8,11 @@ import { Platform, StyleSheet, View } from "react-native";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+if (__DEV__) {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  require("expo-dev-client");
+}
+
 export const unstable_settings = {
   anchor: "(tabs)",
 };

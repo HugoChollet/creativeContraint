@@ -1,10 +1,13 @@
 import { AddButton } from "@/components/generic/add-button";
 import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { Header } from "@/components/generic/header";
+import { ModalGeneric } from "@/components/generic/modal-generic";
+import Auth from "@/components/specific/auth";
 import ProjectSection from "@/components/specific/project/project-section";
 import {
   getDefaultProjectLanguage,
-  normalizeProjectTags,
+  getDefaultProjectSupportedFileType,
+  getDefaultProjectTags,
 } from "@/constants/project-metadata";
 import { useAuth } from "@/contexts/auth-context";
 import { useProjectDraft } from "@/contexts/project-draft-context";
@@ -62,7 +65,11 @@ export default function ProjectBrowseScreen() {
     data: selected,
     addRecord: addProjectSelection,
     deleteRecords: deleteProjectSelections,
-  } = useCollection<UserProjectSelection>("user_project_selections");
+    refresh: refreshSelectedProjects,
+  } = useCollection<UserProjectSelection>("user_project_selections", {
+    filterColumn: "owner_id",
+    filterValue: userId,
+  });
   const { updateRecord: updateCategoryRecord } =
     useCollection<Category>("categories");
 
@@ -80,7 +87,8 @@ export default function ProjectBrowseScreen() {
   useFocusEffect(
     useCallback(() => {
       refresh();
-    }, [refresh]),
+      refreshSelectedProjects();
+    }, [refresh, refreshSelectedProjects]),
   );
 
   const personalProjects = useMemo(
@@ -120,6 +128,7 @@ export default function ProjectBrowseScreen() {
     );
   }, [selected]);
   const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
+  const [visibleLogin, setVisibleLogin] = useState(false);
 
   useEffect(() => {
     setSelectedProjectIds(persistedSelectedIds);
@@ -165,11 +174,20 @@ export default function ProjectBrowseScreen() {
     setName,
     setDescription,
     setLanguage,
+    setSupportedFileType,
     setTags,
     setProjectColor,
     setSelectedCategories,
     resetProjectDraft,
   } = useProjectDraft();
+
+  const openProjectForm = useCallback(() => {
+    resetProjectDraft();
+    router.push({
+      pathname: "/project-form",
+      params: { id: 1, type: projectLabel },
+    });
+  }, [projectLabel, resetProjectDraft]);
 
   const setupDraft = ({
     draft,
@@ -181,7 +199,10 @@ export default function ProjectBrowseScreen() {
     setName(draft.name);
     setDescription(draft.description);
     setLanguage(getDefaultProjectLanguage(draft.language ?? i18n.language));
-    setTags(normalizeProjectTags(draft.tags));
+    setSupportedFileType(
+      getDefaultProjectSupportedFileType(draft.supported_files),
+    );
+    setTags(getDefaultProjectTags(draft.tags));
     setProjectColor(draft.color ?? "ffff");
     setSelectedCategories(draft.categories);
     setId(isForked ? "" : draft.id);
@@ -245,6 +266,15 @@ export default function ProjectBrowseScreen() {
     refresh();
   };
 
+  useEffect(() => {
+    if (!session?.user || !visibleLogin) {
+      return;
+    }
+
+    setVisibleLogin(false);
+    openProjectForm();
+  }, [openProjectForm, session?.user, visibleLogin]);
+
   const handleConfirmSelection = async () => {
     const selectionIdsToDelete = selected.map((selection) => selection.id);
 
@@ -261,7 +291,9 @@ export default function ProjectBrowseScreen() {
       .filter((project) => selectedProjectIds.includes(project.id))
       .map((project) => ({
         project_id: project.id,
-        selected_category_ids: project.categories.map((category) => category.id),
+        selected_category_ids: project.categories.map(
+          (category) => category.id,
+        ),
       }));
 
     if (nextSelections.length > 0) {
@@ -344,11 +376,12 @@ export default function ProjectBrowseScreen() {
         projectColor={colors.tint}
         label={t("screen:project_browse.add_button")}
         onClick={() => {
-          resetProjectDraft();
-          router.push({
-            pathname: "/project-form",
-            params: { id: 1, type: projectLabel },
-          });
+          if (!session?.user) {
+            setVisibleLogin(true);
+            return;
+          }
+
+          openProjectForm();
         }}
       />
       <ConfirmCancelButton
@@ -363,6 +396,9 @@ export default function ProjectBrowseScreen() {
           })
         }
       />
+      <ModalGeneric visible={visibleLogin} setVisible={setVisibleLogin}>
+        <Auth />
+      </ModalGeneric>
     </View>
   );
 }

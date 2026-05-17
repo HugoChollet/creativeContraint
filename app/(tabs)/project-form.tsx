@@ -2,20 +2,23 @@ import { AddButton } from "@/components/generic/add-button";
 import ColorPicker from "@/components/generic/color-picker";
 import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import Description from "@/components/generic/description";
+import ExpandableHeader from "@/components/generic/expandable-header";
 import { Header } from "@/components/generic/header";
 import LanguageSelector from "@/components/generic/language-selector";
 import { Spacer } from "@/components/generic/spacer";
 import TagSelector, {
   TagSelectorOption,
 } from "@/components/generic/tag-selector";
-import CategoryHeader from "@/components/specific/category/category-header";
 import ProjectJsonImporter, {
   getImportedCategoryDbName,
   isImportedDraftCategory,
 } from "@/components/specific/project/project-json-importer";
 import {
   getCategoryTagsFromProject,
+  getDefaultProjectSupportedFileType,
+  getDefaultProjectTags,
   normalizeProjectTags,
+  PROJECT_SUPPORTED_FILE_TYPES,
   PROJECT_TAGS,
   ProjectLanguage,
   ProjectTag,
@@ -41,7 +44,12 @@ import {
   View,
 } from "react-native";
 
-const CategoryRequire = { MIN_OPTIONS: 2, NAME_LENGTH_MIN: 2 };
+const ProjectFormRequirements = {
+  MIN_CATEGORIES: 2,
+  NAME_LENGTH_MIN: 2,
+  PROJECT_TAGS_MIN: 1,
+  PROJECT_FILE_MIN: 1,
+};
 const PROJECT_TAG_LIMIT = 4;
 
 const normalizeCategoryName = (value: string) => value.trim().toLowerCase();
@@ -85,6 +93,8 @@ export default function ProjectFormScreen() {
     setDescription,
     language,
     setLanguage,
+    supportedFileType,
+    setSupportedFileType,
     tags,
     setTags,
     projectColor,
@@ -105,11 +115,24 @@ export default function ProjectFormScreen() {
     a.name.localeCompare(b.name),
   );
   const isBusy = isLoading || isImporting;
+  const normalizedTags = normalizeProjectTags(tags);
+  const selectedSupportedFileTypes = supportedFileType
+    ? [supportedFileType]
+    : [];
+  const trimmedName = name.trim();
   const tagOptions = useMemo<TagSelectorOption[]>(
     () =>
       PROJECT_TAGS.map((value) => ({
         value,
         label: t(`component:metadata.tag_values.${value}`),
+      })),
+    [t],
+  );
+  const supportedFileTypeOptions = useMemo<TagSelectorOption[]>(
+    () =>
+      PROJECT_SUPPORTED_FILE_TYPES.map((value) => ({
+        value,
+        label: t(`component:metadata.supported_files.${value}`),
       })),
     [t],
   );
@@ -147,7 +170,7 @@ export default function ProjectFormScreen() {
       }
 
       const importedCategoryDbName = getImportedCategoryDbName(
-        name,
+        trimmedName,
         category.name,
       );
       const originalNameKey = normalizeCategoryName(category.name);
@@ -198,7 +221,7 @@ export default function ProjectFormScreen() {
         ? (categoryLookup.get(normalizeCategoryName(category.name)) ??
           categoryLookup.get(
             normalizeCategoryName(
-              getImportedCategoryDbName(name, category.name),
+              getImportedCategoryDbName(trimmedName, category.name),
             ),
           ))
         : category;
@@ -263,18 +286,16 @@ export default function ProjectFormScreen() {
   const handleSubmit = async () => {
     if (!isFormValid || isSavingProject || isImporting) return;
 
-    const normalizedTags = normalizeProjectTags(tags);
     const projectDraft = {
-      name,
+      name: trimmedName,
       description,
       language,
+      supported_files: supportedFileType,
       tags: normalizedTags,
       is_public: false, // Defaulting to private for now
       favorited_counter: 0,
       color: projectColor,
     };
-
-    console.log("submitting with id :", id);
 
     const result =
       id === ""
@@ -305,8 +326,11 @@ export default function ProjectFormScreen() {
   };
 
   const isFormValid =
-    name.length > CategoryRequire.NAME_LENGTH_MIN &&
-    //categories.length >= CategoryRequire.MIN_OPTIONS &&
+    trimmedName.length >= ProjectFormRequirements.NAME_LENGTH_MIN &&
+    normalizedTags.length >= ProjectFormRequirements.PROJECT_TAGS_MIN &&
+    selectedSupportedFileTypes.length >=
+      ProjectFormRequirements.PROJECT_FILE_MIN &&
+    selectedCategories.length >= ProjectFormRequirements.MIN_CATEGORIES &&
     !isBusy;
 
   return (
@@ -361,7 +385,7 @@ export default function ProjectFormScreen() {
               </View>
             </View>
 
-            <View style={{ marginBottom: 20 }}>
+            <View>
               <Text style={globalStyles.label}>
                 {t("screen:project_form.description_label")}
               </Text>
@@ -374,11 +398,31 @@ export default function ProjectFormScreen() {
               />
             </View>
 
+            <Spacer height={16} />
+
             <LanguageSelector
               label={t("component:metadata.language_label")}
               selectedLanguage={language}
               onChange={setLanguage}
               color={projectColor}
+            />
+
+            <TagSelector
+              label={t("component:metadata.supported_files_label")}
+              options={supportedFileTypeOptions}
+              selectedValues={selectedSupportedFileTypes}
+              onChange={(values) =>
+                setSupportedFileType(
+                  getDefaultProjectSupportedFileType(values[0]),
+                )
+              }
+              helperText={t("component:metadata.selection_min", {
+                count: selectedSupportedFileTypes.length,
+                min: ProjectFormRequirements.PROJECT_FILE_MIN,
+              })}
+              color={projectColor}
+              singleSelect={true}
+              maxVisibleRows={2}
             />
 
             <TagSelector
@@ -405,8 +449,9 @@ export default function ProjectFormScreen() {
                   ),
                 );
               }}
-              helperText={t("component:metadata.tags_limit", {
-                count: tags.length,
+              helperText={t("component:metadata.tags_range", {
+                count: normalizedTags.length,
+                min: ProjectFormRequirements.PROJECT_TAGS_MIN,
                 max: PROJECT_TAG_LIMIT,
               })}
               color={projectColor}
@@ -414,24 +459,15 @@ export default function ProjectFormScreen() {
               alwaysEnabledValues={["all"]}
             />
 
-            <ProjectJsonImporter
-              projectColor={projectColor}
-              fallbackProjectName={name}
-              onImportingChange={setIsImporting}
-              onImported={(draft) => {
-                if (draft.name) {
-                  setName(draft.name);
-                }
-                setDescription(draft.description);
-                setLanguage(draft.language);
-                setTags(draft.tags);
-                setSelectedCategories(draft.categories);
-              }}
-            />
-
             <Text style={globalStyles.label}>
               {t("screen:project_form.category_list_label", {
-                min: CategoryRequire.MIN_OPTIONS,
+                min: ProjectFormRequirements.MIN_CATEGORIES,
+              })}
+            </Text>
+            <Text style={[globalStyles.discreetText, { marginBottom: 8 }]}>
+              {t("component:metadata.selection_min", {
+                count: selectedCategories.length,
+                min: ProjectFormRequirements.MIN_CATEGORIES,
               })}
             </Text>
             <AddButton
@@ -441,20 +477,21 @@ export default function ProjectFormScreen() {
                 router.push({
                   pathname: "/category-browse",
                   params: {
-                    type: "new",
-                    selectionMode: "project-form",
+                    mode: "creation",
+                    type: projectLabel,
                   },
                 })
               }
             />
-            <View>
+            <View style={{ marginTop: 12 }}>
               {sortedCategories.map((category: Category) => {
                 return (
                   <View key={category.id}>
-                    <CategoryHeader
-                      category={category}
+                    <ExpandableHeader
+                      title={category.name}
+                      description={category.description}
+                      tags={category.tags}
                       isExpanded={false}
-                      onExpand={() => () => {}}
                       color={projectColor}
                       isEnabled={true}
                       subtitle={
@@ -476,6 +513,24 @@ export default function ProjectFormScreen() {
                 );
               })}
             </View>
+
+            <Spacer height={16} />
+
+            <ProjectJsonImporter
+              projectColor={projectColor}
+              fallbackProjectName={name}
+              onImportingChange={setIsImporting}
+              onImported={(draft) => {
+                if (draft.name) {
+                  setName(draft.name);
+                }
+                setDescription(draft.description);
+                setLanguage(draft.language);
+                setSupportedFileType(draft.supportedFileType);
+                setTags(getDefaultProjectTags(draft.tags));
+                setSelectedCategories(draft.categories);
+              }}
+            />
           </ScrollView>
         </KeyboardAvoidingView>
 

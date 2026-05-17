@@ -1,6 +1,9 @@
 import { CategoryJSON } from "@/types/json-objects";
+import {
+  resolveConstraintCategoryContext,
+  type ResolvedConstraintCategoryContext,
+} from "@/lib/constraint-set-data";
 import { useMemo } from "react";
-import { useTranslationTool } from "./use-translation";
 export interface TranslatedRow {
   label: string;
   displayValue: string;
@@ -8,50 +11,49 @@ export interface TranslatedRow {
 }
 
 export const useProjectTranslations = (
-  constraintsData: Record<string, number>, // Now expects Record<string, number>
-  dataSheet: CategoryJSON[],
+  constraintsData: Record<string, number>,
+  dataSheet?: CategoryJSON[] | null,
 ) => {
-  const { getTranslation } = useTranslationTool(dataSheet);
-
   return useMemo((): TranslatedRow[] => {
-    if (!constraintsData || !dataSheet) return [];
+    if (!constraintsData) return [];
 
     const groups: Record<
       string,
       {
+        context: ResolvedConstraintCategoryContext | null;
         values: Record<string, string>;
         descriptions: Record<string, string>;
       }
     > = {};
 
     Object.entries(constraintsData).forEach(([key, id]) => {
-      // Handle both '-' and '_' as separators for sub-categories
-      const separator = key.includes("_") ? "_" : "-";
-      const [baseCat, subCat] = key.split(separator);
+      const context = resolveConstraintCategoryContext(key, dataSheet ?? []);
+      const optionSource = context?.subCategoryName
+        ? context.category?.sub_categories?.find(
+            (subCategory) => subCategory.name === context.subCategoryName,
+          )?.options
+        : context?.category?.options;
+      const option = optionSource?.find((item) => item.id === Number(id));
+      const groupKey = context?.categoryIdentifier ?? key;
+      const subKey = context?.subCategoryName ?? "default";
 
-      if (!groups[baseCat]) groups[baseCat] = { values: {}, descriptions: {} };
+      if (!groups[groupKey]) {
+        groups[groupKey] = {
+          context,
+          values: {},
+          descriptions: {},
+        };
+      }
 
-      const subKey = subCat || "default";
-
-      // IMPORTANT: Since key might have '_', we normalize it back to '-'
-      // if your getTranslation logic expects hyphenated parents
-      const translationKey = subCat ? `${baseCat}-${subCat}` : baseCat;
-
-      groups[baseCat].values[subKey] = getTranslation(
-        "Option",
-        translationKey,
-        id,
-      );
-      groups[baseCat].descriptions[subKey] = getTranslation(
-        "Description",
-        translationKey,
-        id,
-      );
+      groups[groupKey].values[subKey] = option?.value ?? String(id);
+      groups[groupKey].descriptions[subKey] =
+        option?.description ||
+        (subKey === "default" ? context?.category?.description || "" : "");
     });
 
-    return Object.entries(groups).map(([baseCatKey, groupData]) => {
-      const masterCat = dataSheet.find((c) => c.name === baseCatKey);
-      const categoryLabel = masterCat?.label || masterCat?.name || baseCatKey;
+    return Object.entries(groups).map(([groupKey, groupData]) => {
+      const masterCat = groupData.context?.category ?? null;
+      const categoryLabel = masterCat?.label || masterCat?.name || groupKey;
 
       let displayValue = "";
       let description = "";
@@ -79,5 +81,5 @@ export const useProjectTranslations = (
         description: description || undefined,
       };
     });
-  }, [constraintsData, dataSheet, getTranslation]);
+  }, [constraintsData, dataSheet]);
 };

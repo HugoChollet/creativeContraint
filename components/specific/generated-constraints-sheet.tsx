@@ -1,16 +1,21 @@
+import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { BottomSheet } from "@/components/generic/bottom-sheet";
 import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import {
-  ConstraintSetIds,
-  Option,
+  getConstraintCategoryIdentifier,
+  hasCustomConstraintSetName,
+  normalizeConstraintSetName,
+} from "@/lib/constraint-set-data";
+import {
+  GeneratedConstraintSet,
   SavedConstraintSet,
 } from "@/types/constraints";
 import { ProjectJSON } from "@/types/json-objects";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, TextInput, View } from "react-native";
 import { ModalGeneric } from "../generic/modal-generic";
 import Tooltip from "../generic/tooltip";
 import Auth from "./auth";
@@ -19,77 +24,165 @@ import ResultModalHeader from "./result-modal-header";
 type GeneratedConstraintsSheetProps = {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
-  randomConstraints: Record<string, Option>;
+  generatedConstraintSet: GeneratedConstraintSet;
   color: string;
   dataSource: ProjectJSON;
-  constraintSetIds: ConstraintSetIds;
+  historyCount: number;
+  currentHistoryIndex: number;
+  canGenerateAnother?: boolean;
+  onGenerateAnother: () => void;
+  onNavigatePrevious: () => void;
+  onNavigateNext: () => void;
+  canNavigatePrevious: boolean;
+  canNavigateNext: boolean;
+  onUpdateGeneratedConstraintSet: (
+    updatedGeneratedConstraintSet: GeneratedConstraintSet,
+  ) => void;
 };
 
 export default function GeneratedConstraintsSheet({
   modalVisible,
   setModalVisible,
-  randomConstraints,
+  generatedConstraintSet,
   dataSource,
   color,
-  constraintSetIds,
+  historyCount,
+  currentHistoryIndex,
+  canGenerateAnother = true,
+  onGenerateAnother,
+  onNavigatePrevious,
+  onNavigateNext,
+  canNavigatePrevious,
+  canNavigateNext,
+  onUpdateGeneratedConstraintSet,
 }: GeneratedConstraintsSheetProps) {
   const { t } = useTranslation();
-  const { globalStyles } = useStyles();
+  const { globalStyles, colors } = useStyles();
   const { session } = useAuth();
   const [visibleLogin, setVisibleLogin] = useState(false);
+  const [visibleNameConfirmation, setVisibleNameConfirmation] = useState(false);
 
   const { addRecord, deleteRecord } =
     useCollection<SavedConstraintSet>("constraint_sets");
 
-  const [savedId, setSavedId] = useState<string | number | null>(null);
-  const [isSaved, setIsSaved] = useState(false);
-
-  useEffect(() => {
-    setIsSaved(false);
-  }, [randomConstraints]);
+  const [isSaving, setIsSaving] = useState(false);
+  const isSaved = generatedConstraintSet.savedConstraintSetId != null;
+  const categoryLabelsByName = useMemo(
+    () =>
+      Object.fromEntries(
+        dataSource.categories.map((category) => [
+          getConstraintCategoryIdentifier(category),
+          category.label || category.name,
+        ]),
+      ),
+    [dataSource.categories],
+  );
+  const generatedConstraintsEntries = Object.entries(
+    generatedConstraintSet.constraints,
+  );
 
   useEffect(() => {
     if (session?.user && visibleLogin) {
       setVisibleLogin(false);
       setModalVisible(true);
     }
-  });
+  }, [session?.user, setModalVisible, visibleLogin]);
 
-  const getDifficultyGenerated = (): number => {
+  const getDifficultyGenerated = () => {
     let count = 0;
 
-    Object.values(randomConstraints).forEach((option) => {
+    Object.values(generatedConstraintSet.constraints).forEach((option) => {
       count += option.rarity;
     });
     return count;
   };
 
+  const persistConstraintSet = async () => {
+    const finalConstraintSetName = normalizeConstraintSetName(
+      generatedConstraintSet.name,
+      generatedConstraintSet.projectLabel,
+    );
+
+    if (finalConstraintSetName !== generatedConstraintSet.name) {
+      onUpdateGeneratedConstraintSet({
+        ...generatedConstraintSet,
+        name: finalConstraintSetName,
+      });
+    }
+
+    const newConstraintSet = {
+      name: finalConstraintSetName,
+      project_id: generatedConstraintSet.projectId ?? null,
+      project_label:
+        generatedConstraintSet.projectLabel ??
+        dataSource.project_label ??
+        dataSource.project_type,
+      language: generatedConstraintSet.language ?? null,
+      supported_files: generatedConstraintSet.supportedFiles ?? null,
+      tags: generatedConstraintSet.tags ?? null,
+      color: generatedConstraintSet.color ?? null,
+      constraints: generatedConstraintSet.constraintIds,
+      difficulty: getDifficultyGenerated(),
+    };
+
+    const savedData = await addRecord(newConstraintSet);
+
+    if (savedData?.id) {
+      onUpdateGeneratedConstraintSet({
+        ...generatedConstraintSet,
+        name: finalConstraintSetName,
+        savedConstraintSetId: savedData.id,
+      });
+    }
+  };
+
   const onSaveConstraints = async () => {
+    if (isSaving) {
+      return;
+    }
+
     if (!session?.user) {
       setModalVisible(false);
       setVisibleLogin(true);
       return;
     }
-    if (isSaved && savedId) {
-      // Delete using the ID we got back from the first save
-      await deleteRecord(savedId);
-      setSavedId(null);
-      setIsSaved(false);
-    } else {
-      setIsSaved(true);
-      // Create a new record
-      const newConstraintSet = {
-        project_type: constraintSetIds.project_type,
-        constraints: constraintSetIds.constraints,
-        difficulty: getDifficultyGenerated(),
-      };
 
-      const savedData = await addRecord(newConstraintSet);
+    setIsSaving(true);
 
-      // If successful, Supabase returns the record including the new ID
-      if (savedData?.id) {
-        setSavedId(savedData.id);
+    try {
+      if (isSaved && generatedConstraintSet.savedConstraintSetId) {
+        // Delete using the ID returned when this generated result was saved.
+        await deleteRecord(generatedConstraintSet.savedConstraintSetId);
+        onUpdateGeneratedConstraintSet({
+          ...generatedConstraintSet,
+          savedConstraintSetId: null,
+        });
+        return;
       }
+
+      if (!hasCustomConstraintSetName(generatedConstraintSet)) {
+        setVisibleNameConfirmation(true);
+        return;
+      }
+
+      await persistConstraintSet();
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const onConfirmConstraintSetName = async () => {
+    if (isSaving) {
+      return;
+    }
+
+    setVisibleNameConfirmation(false);
+    setIsSaving(true);
+
+    try {
+      await persistConstraintSet();
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -98,41 +191,67 @@ export default function GeneratedConstraintsSheet({
       <BottomSheet
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
-        buttonText={t("screen:lab.back_button")}
+        onConfirm={onSaveConstraints}
         color={color}
+        labelConfirm={t(
+          isSaved
+            ? "component:result-modal-header.remove_button"
+            : "component:result-modal-header.save_button",
+        )}
+        labelCancel={t("screen:lab.back_button")}
+        isConfirmActive={isSaved || generatedConstraintsEntries.length > 0}
+        isConfirmLoading={isSaving}
       >
         <ResultModalHeader
           difficultyIndicator={getDifficultyGenerated()}
-          onSaveConstraints={onSaveConstraints}
-          isSaved={isSaved}
           color={color}
+          constraintSetName={generatedConstraintSet.name}
+          historyCount={historyCount}
+          currentHistoryIndex={currentHistoryIndex}
+          canGenerateAnother={canGenerateAnother}
+          canToggleSaved={isSaved || generatedConstraintsEntries.length > 0}
+          isSaved={isSaved}
+          isConstraintSetNameEditable={!isSaved}
+          onGenerateAnother={onGenerateAnother}
+          onToggleSaved={onSaveConstraints}
+          onChangeConstraintSetName={(value) =>
+            onUpdateGeneratedConstraintSet({
+              ...generatedConstraintSet,
+              name: value,
+            })
+          }
+          onNavigatePrevious={onNavigatePrevious}
+          onNavigateNext={onNavigateNext}
+          canNavigatePrevious={canNavigatePrevious}
+          canNavigateNext={canNavigateNext}
+          isBusy={isSaving}
         />
 
         <ScrollView>
-          {dataSource.categories.map((cat) => {
-            if (!randomConstraints[cat.name]) return null;
-            return (
-              <View key={cat.name} style={[globalStyles.card, { padding: 16 }]}>
-                <Text style={globalStyles.label}>{cat.label || cat.name}</Text>
-                <View style={globalStyles.elementAndDescriptorContainer}>
-                  <Text style={[globalStyles.subtitle]}>
-                    {randomConstraints[cat.name].value ??
-                      t("screen:lab.empty_result")}
-                  </Text>
-                  {randomConstraints[cat.name].description && (
-                    <Tooltip
-                      title={cat.label || cat.name}
-                      description={
-                        randomConstraints[cat.name].description ??
-                        t("screen:lab.empty_result")
-                      }
-                      color={color}
-                    />
-                  )}
-                </View>
+          {generatedConstraintsEntries.map(([categoryName, generatedOption]) => (
+            <View
+              key={`${generatedConstraintSet.id}-${categoryName}`}
+              style={[globalStyles.card, { padding: 16 }]}
+            >
+              <Text style={globalStyles.label}>
+                {categoryLabelsByName[categoryName] ?? categoryName}
+              </Text>
+              <View style={globalStyles.elementAndDescriptorContainer}>
+                <Text style={[globalStyles.subtitle]}>
+                  {generatedOption.value ?? t("screen:lab.empty_result")}
+                </Text>
+                {generatedOption.description && (
+                  <Tooltip
+                    title={categoryLabelsByName[categoryName] ?? categoryName}
+                    description={
+                      generatedOption.description ?? t("screen:lab.empty_result")
+                    }
+                    color={color}
+                  />
+                )}
               </View>
-            );
-          })}
+            </View>
+          ))}
         </ScrollView>
       </BottomSheet>
       <ModalGeneric
@@ -143,6 +262,42 @@ export default function GeneratedConstraintsSheet({
         }}
       >
         <Auth />
+      </ModalGeneric>
+      <ModalGeneric
+        visible={visibleNameConfirmation}
+        setVisible={setVisibleNameConfirmation}
+      >
+        <Text style={globalStyles.title}>
+          {t("component:result-modal-header.confirm_name_title")}
+        </Text>
+        <Text style={globalStyles.discreetText}>
+          {t("component:result-modal-header.confirm_name_description")}
+        </Text>
+        <TextInput
+          value={generatedConstraintSet.name}
+          onChangeText={(value) =>
+            onUpdateGeneratedConstraintSet({
+              ...generatedConstraintSet,
+              name: value,
+            })
+          }
+          placeholder={t("component:result-modal-header.name_placeholder")}
+          placeholderTextColor={colors.placeholder}
+          style={[
+            globalStyles.input,
+            {
+              borderColor: color,
+              color: colors.text,
+            },
+          ]}
+        />
+        <ConfirmCancelButton
+          color={color}
+          labelConfirm={t("component:result-modal-header.confirm_name_button")}
+          isLoading={isSaving}
+          onClickConfirm={onConfirmConstraintSetName}
+          onClickCancel={() => setVisibleNameConfirmation(false)}
+        />
       </ModalGeneric>
     </>
   );

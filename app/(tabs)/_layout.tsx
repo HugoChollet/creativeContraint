@@ -2,6 +2,7 @@ import { Tabs } from "expo-router";
 import React, { useEffect } from "react";
 
 import { HapticTab } from "@/components/haptic-tab";
+import { HomeProjectsProvider } from "@/contexts/home-projects-context";
 import { ThemeMode } from "@/contexts/theme-context";
 import { useProfile } from "@/hooks/use-profile";
 import { useStyles } from "@/hooks/use-styles";
@@ -21,100 +22,102 @@ export default function TabLayout() {
     // Update language based on saved user preference
     i18n.changeLanguage(data.language ?? "en");
     setThemeMode((data.theme as ThemeMode) || "light");
-  }, [data]);
+  }, [data, i18n, setThemeMode]);
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarStyle: {
-          backgroundColor: colors.background,
-          borderTopWidth: 1,
-        },
-        tabBarActiveTintColor: colors.tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: t("screen:layout.Lab"),
-          tabBarIcon: ({ color }) => (
-            <Ionicons size={28} name="flask" color={color} />
-          ),
+    <HomeProjectsProvider>
+      <Tabs
+        screenOptions={{
+          tabBarStyle: {
+            backgroundColor: colors.background,
+            borderTopWidth: 1,
+          },
+          tabBarActiveTintColor: colors.tint,
+          headerShown: false,
+          tabBarButton: HapticTab,
         }}
-      />
-      <Tabs.Screen
-        name="constraint-sets"
-        options={{
-          title: t("screen:layout.constraint_sets"),
-          tabBarIcon: ({ color }) => (
-            <Ionicons size={28} name="folder-open" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="publications"
-        options={{
-          title: t("screen:layout.Publication_Feed"),
-          tabBarIcon: ({ color }) => (
-            <Ionicons size={28} name="newspaper-outline" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="settings"
-        options={{
-          title: t("screen:layout.Settings"),
-          tabBarIcon: ({ color }) => (
-            <Ionicons size={28} name="cog" color={color} />
-          ),
-        }}
-      />
+      >
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: t("screen:layout.Lab"),
+            tabBarIcon: ({ color }) => (
+              <Ionicons size={28} name="flask" color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="constraint-sets"
+          options={{
+            title: t("screen:layout.constraint_sets"),
+            tabBarIcon: ({ color }) => (
+              <Ionicons size={28} name="folder-open" color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="publications"
+          options={{
+            title: t("screen:layout.Publication_Feed"),
+            tabBarIcon: ({ color }) => (
+              <Ionicons size={28} name="newspaper-outline" color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="settings"
+          options={{
+            title: t("screen:layout.Settings"),
+            tabBarIcon: ({ color }) => (
+              <Ionicons size={28} name="cog" color={color} />
+            ),
+          }}
+        />
 
-      <Tabs.Screen
-        name="lab"
-        options={{
-          href: null,
-          title: "Lab",
-        }}
-      />
-      <Tabs.Screen
-        name="publication-form"
-        options={{
-          href: null,
-          title: "Submit Publication",
-        }}
-      />
+        <Tabs.Screen
+          name="lab"
+          options={{
+            href: null,
+            title: "Lab",
+          }}
+        />
+        <Tabs.Screen
+          name="publication-form"
+          options={{
+            href: null,
+            title: "Submit Publication",
+          }}
+        />
 
-      <Tabs.Screen
-        name="project-browse"
-        options={{
-          href: null,
-          title: "Browse Projects",
-        }}
-      />
-      <Tabs.Screen
-        name="project-form"
-        options={{
-          href: null,
-          title: "New Project",
-        }}
-      />
-      <Tabs.Screen
-        name="category-browse"
-        options={{
-          href: null,
-          title: "Browse Categories",
-        }}
-      />
-      <Tabs.Screen
-        name="category-form"
-        options={{
-          href: null,
-          title: "New Category",
-        }}
-      />
-    </Tabs>
+        <Tabs.Screen
+          name="project-browse"
+          options={{
+            href: null,
+            title: "Browse Projects",
+          }}
+        />
+        <Tabs.Screen
+          name="project-form"
+          options={{
+            href: null,
+            title: "New Project",
+          }}
+        />
+        <Tabs.Screen
+          name="category-browse"
+          options={{
+            href: null,
+            title: "Browse Categories",
+          }}
+        />
+        <Tabs.Screen
+          name="category-form"
+          options={{
+            href: null,
+            title: "New Category",
+          }}
+        />
+      </Tabs>
+    </HomeProjectsProvider>
   );
 }

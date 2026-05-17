@@ -51,3 +51,50 @@ In the output, you'll find options to open the app in a
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+
+## Development build workflow
+
+This project is configured for Expo development builds with `expo-dev-client` and EAS profiles.
+
+### First build
+
+Build and install a native development client once per platform:
+
+```bash
+npm run android
+```
+
+```bash
+npm run ios
+```
+
+Or build with EAS:
+
+```bash
+npm run build:dev:android
+```
+
+```bash
+npm run build:dev:ios
+```
+
+```bash
+npm run build:dev:ios-sim
+```
+
+### Daily development
+
+After the client is installed, start Metro for the development build with:
+
+```bash
+npm run start:dev
+```
+
+### When you need to rebuild
+
+Rebuild the native app after changing native dependencies, Expo config in `app.json`, or the Expo SDK version.
+For local native folders, regenerate them with:
+
+```bash
+npm run prebuild:clean
+```

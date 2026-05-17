@@ -1,8 +1,17 @@
+import MetadataBadges from "@/components/generic/metadata-badges";
 import { getProjectColor } from "@/constants/theme";
 import { useProjectTranslations } from "@/hooks/use-project-translations";
 import { useStyles } from "@/hooks/use-styles";
+import {
+  getConstraintSetProjectColor,
+  getConstraintSetProjectDataSource,
+  getConstraintSetName,
+  getConstraintSetProjectLabel,
+  getConstraintSetProjectLanguage,
+  getConstraintSetProjectSupportedFile,
+  getConstraintSetProjectTags,
+} from "@/lib/constraint-set-data";
 import { SavedConstraintSet } from "@/types/constraints";
-import { ProjectJSON } from "@/types/json-objects";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -10,15 +19,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Tooltip from "../../generic/tooltip";
 import { DifficultyIndicator } from "../difficulty-indicator";
 import ShareConstraintButton from "../share-constraint-set";
-
-const typeMapping: Record<string, string> = {
-  music: "music",
-  book: "book",
-  photography: "photo",
-  "video fiction": "videoFiction",
-  "internet video": "videoInternet",
-  cooking: "cooking",
-};
 
 export function ConstraintsSetCard({
   item,
@@ -29,20 +29,34 @@ export function ConstraintsSetCard({
   deleteRecord: (id: number | string) => void;
   submit: () => void;
 }) {
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation();
   const { globalStyles, colors, theme } = useStyles();
-  const solidColor = getProjectColor({ label: item.project_type, theme });
+  const constraintSetName = getConstraintSetName(item);
+  const projectLabel = getConstraintSetProjectLabel(item);
+  const solidColor = getConstraintSetProjectColor({
+    constraintSet: item,
+    theme,
+  });
 
-  const typeKey = typeMapping[item.project_type.toLowerCase()] || "book";
+  const projectBackgroundColor = item.color
+    ? getProjectColor({
+        color: item.color,
+        opacity: 0.1,
+        theme,
+      })
+    : getProjectColor({
+        label: item.project?.name ?? item.project_label,
+        opacity: 0.1,
+        theme,
+      });
 
   const dataSource = useMemo(() => {
-    const data = i18n.getResourceBundle(i18n.language, typeKey) as ProjectJSON;
-    return data || { constraints: [] };
-  }, [i18n.language, typeKey]);
+    return getConstraintSetProjectDataSource({ constraintSet: item });
+  }, [item]);
 
   const translatedConstraints = useProjectTranslations(
     item.constraints,
-    dataSource.categories,
+    dataSource?.categories,
   );
 
   return (
@@ -52,23 +66,24 @@ export function ConstraintsSetCard({
         {
           marginBottom: 16,
           overflow: "hidden",
-          backgroundColor: getProjectColor({
-            label: item.project_type,
-            opacity: 0.1,
-            theme,
-          }),
+          backgroundColor: projectBackgroundColor,
         },
       ]}
     >
       <View style={styles.headerContainer}>
         <DifficultyIndicator difficultyIndicator={item.difficulty} />
-        <Text style={[globalStyles.title, { color: solidColor }]}>
-          {(dataSource.project_label ?? dataSource.project_type).toUpperCase()}
-        </Text>
+        <View style={styles.titleBlock}>
+          <Text style={[styles.constraintSetTitle, { color: solidColor }]}>
+            {constraintSetName}
+          </Text>
+          <Text style={[globalStyles.discreetText, styles.projectLabelText]}>
+            {projectLabel}
+          </Text>
+        </View>
 
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
           <ShareConstraintButton
-            project_type={dataSource.project_label ?? item.project_type}
+            projectLabel={projectLabel}
             constraints={translatedConstraints}
             difficulty={item.difficulty}
             color={solidColor}
@@ -84,14 +99,19 @@ export function ConstraintsSetCard({
         style={[
           styles.circleDecorator,
           {
-            backgroundColor: getProjectColor({
-              label: item.project_type,
-              opacity: 0.1,
-              theme,
-            }),
+            backgroundColor: projectBackgroundColor,
           },
         ]}
       />
+
+      <View style={{ marginBottom: 12 }}>
+        <MetadataBadges
+          language={getConstraintSetProjectLanguage(item)}
+          supportedFile={getConstraintSetProjectSupportedFile(item)}
+          tags={getConstraintSetProjectTags(item)}
+          color={solidColor}
+        />
+      </View>
 
       <View style={styles.tagContainer}>
         {translatedConstraints.map(({ label, displayValue, description }) => (
@@ -113,6 +133,11 @@ export function ConstraintsSetCard({
             </View>
           </View>
         ))}
+        {translatedConstraints.length === 0 && (
+          <Text style={{ color: colors.textDiscreet }}>
+            {t("screen:lab.empty_result")}
+          </Text>
+        )}
       </View>
 
       <TouchableOpacity
@@ -135,9 +160,21 @@ export const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
     marginBottom: 12,
     gap: 8,
+  },
+  titleBlock: {
+    flex: 1,
+    minWidth: 0,
+  },
+  constraintSetTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    marginBottom: 4,
+  },
+  projectLabelText: {
+    marginRight: 0,
   },
   circleDecorator: {
     position: "absolute",

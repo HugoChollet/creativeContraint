@@ -9,9 +9,18 @@
   "packageManager": "npm@11.1.0",
   "scripts": {
     "start": "expo start",
+    "start:dev": "expo start --dev-client",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo run:android",
     "ios": "expo run:ios",
+    "prebuild:clean": "expo prebuild --clean",
+    "build:dev:android": "eas build --platform android --profile development",
+    "build:dev:ios": "eas build --platform ios --profile development",
+    "build:dev:ios-sim": "eas build --platform ios --profile development-simulator",
+    "build:apk:release": "cd android && ./gradlew assembleRelease",
+    "install:apk:release": "adb install -r android/app/build/outputs/apk/release/app-release.apk",
+    "logs:android": "adb logcat -v time ReactNativeJS:I ReactNative:I Expo:I AndroidRuntime:E *:S",
+    "logs:android:all": "adb logcat -v time",
     "web": "expo start --web",
     "lint": "expo lint"
   },

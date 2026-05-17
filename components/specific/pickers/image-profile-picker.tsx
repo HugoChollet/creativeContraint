@@ -17,7 +17,7 @@ export const ProfileImagePicker = ({
   initialImage,
   onImageSelected,
 }: ProfileImagePickerProps) => {
-  const { globalStyles, colors } = useStyles();
+  const { colors } = useStyles();
   const [image, setImage] = useState<string | null>();
   const { t } = useTranslation();
 
@@ -27,7 +27,7 @@ export const ProfileImagePicker = ({
     if (status !== "granted") {
       Alert.alert(
         t("component:image-picker.permission_error_title"),
-        t("component:image-picker.permission_error_content"),
+        t("component:image-picker.permission_error_msg"),
       );
       return;
     }
@@ -47,7 +47,6 @@ export const ProfileImagePicker = ({
   };
 
   useEffect(() => {
-    console.log(initialImage);
     if (initialImage) setImage(initialImage); // Initialize with prop value, fallback to null
   }, [initialImage]);
 

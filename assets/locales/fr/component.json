@@ -33,6 +33,19 @@
   "constraint-selector": {
     "difficulty": "Difficulté : "
   },
+  "result-modal-header": {
+    "title": "Contraint(es) pour {{type}}",
+    "history_counter": "Génération {{current}} / {{total}}",
+    "name_placeholder": "Nommer ce set de contraintes",
+    "confirm_name_title": "Sauvegarder ce set de contraintes",
+    "confirm_name_description": "Confirmez le nom qui sera sauvegardé.",
+    "confirm_name_button": "Confirmer le nom",
+    "generate_again_button": "Générer à nouveau",
+    "previous_button": "Résultat précédent",
+    "next_button": "Résultat suivant",
+    "save_button": "Sauvegarder le résultat",
+    "remove_button": "Retirer la sauvegarde"
+  },
   "share": {
     "button": "Partager le défi",
     "error_title": "Erreur",
@@ -47,11 +60,21 @@
   },
   "metadata": {
     "language_label": "Langue",
+    "supported_files_label": "Format de publication supporté",
     "tags_label": "Tags",
     "tags_limit": "{{count}} / {{max}} sélectionnés",
+    "tags_range": "{{count}} sélectionnés (minimum {{min}}, maximum {{max}})",
+    "selection_min": "{{count}} sélectionnés (minimum {{min}})",
     "languages": {
       "en": "Anglais",
       "fr": "Français"
+    },
+    "supported_files": {
+      "png/jpg": "PNG / JPG",
+      "docs/pdf": "Docs / PDF",
+      "plain text": "Texte brut",
+      "youtube link": "Lien YouTube",
+      "mp3": "Mp3"
     },
     "tag_values": {
       "all": "Tous",
@@ -61,6 +84,27 @@
       "game": "Jeu",
       "music": "Musique",
       "character": "Personnage",
+      "internet-content": "Contenu internet",
+      "video game": "Jeu vidéo",
+      "board game": "Jeu de plateau",
+      "art": "Art",
+      "drawing": "Dessin",
+      "cooking": "Cuisine",
+      "vlog": "Vlog",
+      "stream": "Stream",
+      "dnd": "D&D",
+      "object": "Objet",
+      "sport": "Sport",
+      "clothe": "Vêtement",
+      "vehicle": "Véhicule",
+      "business": "Business",
+      "product": "Produit",
+      "website": "Site web",
+      "comic": "BD",
+      "architecture": "Architecture",
+      "education": "Éducation",
+      "enigma": "Énigme",
+      "other": "Autre",
       "localisation": "Localisation",
       "physical": "Physique",
       "numerical": "Numérique",

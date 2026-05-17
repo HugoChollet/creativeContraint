@@ -1,5 +1,6 @@
 import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
+import { getConstraintSetProjectLabel } from "@/lib/constraint-set-data";
 import { Publication } from "@/types/publication";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
@@ -13,10 +14,22 @@ interface PublicationCardProps {
 
 export const PublicationCard = ({ publication }: PublicationCardProps) => {
   const { globalStyles, colors, theme } = useStyles();
+  const constraintSet = publication.generated_constraints ?? null;
+  const fallbackProjectLabel = publication.project_type;
+  const projectLabel = constraintSet
+    ? getConstraintSetProjectLabel(constraintSet)
+    : fallbackProjectLabel;
   const projectColor = getProjectColor({
-    label: publication.project_type,
+    color: constraintSet?.color?.toString(),
     theme,
   });
+  const projectBackgroundColor = getProjectColor({
+    color: constraintSet?.color?.toString(),
+    opacity: 0.1,
+    theme,
+  });
+  const difficulty = constraintSet?.difficulty ?? 0;
+  const canToggleConstraints = Boolean(constraintSet);
   const [isConstraintsVisible, setIsConstraintsVisible] = useState(false);
 
   return (
@@ -25,11 +38,7 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
         style={[
           globalStyles.headerRow,
           {
-            backgroundColor: getProjectColor({
-              label: publication.project_type,
-              opacity: 0.1,
-              theme,
-            }),
+            backgroundColor: projectBackgroundColor,
             justifyContent: "space-between",
             gap: 8,
             height: 72,
@@ -57,30 +66,62 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
             {publication.profile?.username}
           </Text>
         </View>
-        <Text style={{ color: projectColor, fontWeight: "bold", fontSize: 16 }}>
-          {publication.title}
-        </Text>
+        <View style={{ flex: 1, alignItems: "center" }}>
+          <Text
+            style={{ color: projectColor, fontWeight: "bold", fontSize: 16 }}
+            numberOfLines={1}
+          >
+            {publication.title}
+          </Text>
+          <Text style={{ color: colors.textDiscreet, fontSize: 11 }}>
+            {projectLabel}
+          </Text>
+        </View>
         <View style={styles.headerLeft}>
           <DifficultyIndicator
             isLabel={isConstraintsVisible}
-            difficultyIndicator={
-              publication.generated_constraints?.difficulty ?? 0
-            }
+            difficultyIndicator={difficulty}
           />
-          <TouchableOpacity
-            onPress={() => setIsConstraintsVisible((prev) => !prev)}
-          >
-            <Ionicons
-              name={isConstraintsVisible ? "chevron-up" : "chevron-down"}
-              size={20}
-              color={projectColor}
-            />
-          </TouchableOpacity>
+          {canToggleConstraints && (
+            <TouchableOpacity
+              onPress={() => setIsConstraintsVisible((prev) => !prev)}
+            >
+              <Ionicons
+                name={isConstraintsVisible ? "chevron-up" : "chevron-down"}
+                size={20}
+                color={projectColor}
+              />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
 
-      {publication.generated_constraints && isConstraintsVisible && (
-        <ConstraintsTags item={publication.generated_constraints} />
+      {isConstraintsVisible && publication.description && (
+        <View
+          style={{
+            backgroundColor: projectBackgroundColor,
+          }}
+        >
+          <View
+            style={{
+              marginHorizontal: 12,
+              padding: 12,
+              borderRadius: 12,
+              backgroundColor: getProjectColor({
+                color: constraintSet?.color?.toString(),
+                opacity: 0.15,
+                theme,
+              }),
+            }}
+          >
+            <Text style={{ color: colors.text }}>
+              {publication.description}
+            </Text>
+          </View>
+        </View>
+      )}
+      {constraintSet && isConstraintsVisible && (
+        <ConstraintsTags constraintSet={constraintSet} />
       )}
 
       {publication.media_type === "image" && publication.media_url && (

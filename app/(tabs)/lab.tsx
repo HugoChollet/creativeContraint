@@ -1,16 +1,35 @@
 import { AddButton } from "@/components/generic/add-button";
-import { FloatingButton } from "@/components/generic/floating-button";
+import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { Header } from "@/components/generic/header";
+import { ModalGeneric } from "@/components/generic/modal-generic";
 import { Spacer } from "@/components/generic/spacer";
-import CategorySelector from "@/components/specific/category/category-selector";
+import Auth from "@/components/specific/auth";
 import GeneratedConstraintsSheet from "@/components/specific/generated-constraints-sheet";
+import QuickSelector from "@/components/specific/quick-selector";
 import { PresetMode } from "@/components/specific/status-selector";
-import { getProjectColor } from "@/constants/theme";
-import { useStyles } from "@/hooks/use-styles";
-import i18nInstance from "@/i18n";
 import {
-  GeneratedConstraints,
-  IdSetConstraint,
+  isProjectLanguage,
+  isProjectSupportedFileType,
+  normalizeProjectTags,
+} from "@/constants/project-metadata";
+import { getProjectColor } from "@/constants/theme";
+import { useAuth } from "@/contexts/auth-context";
+import { useHomeProjects } from "@/contexts/home-projects-context";
+import { useStyles } from "@/hooks/use-styles";
+import {
+  getConstraintCategoryIdentifier,
+  getConstraintSelectionKey,
+  getConstraintValueKey,
+  getDefaultConstraintSetName,
+} from "@/lib/constraint-set-data";
+import {
+  LAB_GENERATION_HISTORY_LIMIT,
+  loadLabGenerationHistory,
+  saveLabGenerationHistory,
+} from "@/lib/lab-generation-history";
+import { getBundledProjectData, getProjectTitle } from "@/lib/project-data";
+import {
+  GeneratedConstraintSet,
   Option,
   SelectedState,
 } from "@/types/constraints";
@@ -22,109 +41,327 @@ import {
   ActivityIndicator,
   LayoutAnimation,
   ScrollView,
-  StyleSheet,
   View,
 } from "react-native";
 
-export const typeMapping: Record<string, string> = {
-  music: "music",
-  book: "book",
-  photography: "photo",
-  videofiction: "videoFiction",
-  videointernet: "videoInternet",
-  cooking: "cooking",
-  boardgame: "boardGame",
+const buildInitialSelectedState = (projectData: ProjectJSON): SelectedState => {
+  const activeCategories: Record<string, boolean> = {};
+  const selectedOptions: Record<string, boolean> = {};
+
+  // Lab keeps its toggles separate from the source project, so everything starts enabled here.
+  projectData.categories.forEach((category: CategoryJSON) => {
+    activeCategories[getConstraintCategoryIdentifier(category)] =
+      !category.disabled;
+
+    if (category.options) {
+      category.options.forEach((option) => {
+        selectedOptions[getConstraintSelectionKey(category, option.id)] = true;
+      });
+
+      return;
+    }
+
+    category.sub_categories?.forEach((subCategory) => {
+      subCategory.options.forEach((option) => {
+        selectedOptions[
+          getConstraintSelectionKey(category, option.id, subCategory.name)
+        ] = true;
+      });
+    });
+  });
+
+  return {
+    activeCategories,
+    selectedOptions,
+  };
+};
+
+const createGeneratedConstraintSetId = () =>
+  `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+
+const buildGeneratedConstraintSet = (
+  projectData: ProjectJSON,
+  selectedItems: SelectedState,
+  projectSnapshot: Pick<
+    GeneratedConstraintSet,
+    | "projectId"
+    | "projectLabel"
+    | "language"
+    | "supportedFiles"
+    | "tags"
+    | "color"
+  >,
+): GeneratedConstraintSet => {
+  const results: GeneratedConstraintSet["constraints"] = {};
+  const ids: GeneratedConstraintSet["constraintIds"] = {};
+
+  projectData.categories.forEach((category) => {
+    const categoryIdentifier = getConstraintCategoryIdentifier(category);
+
+    if (!selectedItems.activeCategories[categoryIdentifier]) {
+      return;
+    }
+
+    if (category.options) {
+      const availableOptions = category.options.filter(
+        (option) =>
+          selectedItems.selectedOptions[
+            getConstraintSelectionKey(category, option.id)
+          ],
+      );
+
+      if (availableOptions.length === 0) {
+        return;
+      }
+
+      const randomOption =
+        availableOptions[Math.floor(Math.random() * availableOptions.length)];
+
+      results[categoryIdentifier] = {
+        id: randomOption.id,
+        value: randomOption.value,
+        rarity: randomOption.rarity,
+        description: randomOption.description,
+      };
+      ids[getConstraintValueKey(category)] = randomOption.id;
+      return;
+    }
+
+    const generatedValues: string[] = [];
+    let generatedRarity = 0;
+
+    category.sub_categories?.forEach((subCategory) => {
+      const availableOptions = subCategory.options.filter(
+        (option) =>
+          selectedItems.selectedOptions[
+            getConstraintSelectionKey(category, option.id, subCategory.name)
+          ],
+      );
+
+      if (availableOptions.length === 0) {
+        return;
+      }
+
+      const randomOption =
+        availableOptions[Math.floor(Math.random() * availableOptions.length)];
+
+      generatedValues.push(randomOption.value);
+      generatedRarity += randomOption.rarity;
+      ids[getConstraintValueKey(category, subCategory.name)] = randomOption.id;
+    });
+
+    if (generatedValues.length === 0) {
+      return;
+    }
+
+    results[categoryIdentifier] = {
+      id: -1,
+      value: generatedValues.join(" "),
+      rarity: generatedRarity,
+      description: "",
+    };
+  });
+
+  return {
+    id: createGeneratedConstraintSetId(),
+    name: getDefaultConstraintSetName(projectSnapshot.projectLabel),
+    ...projectSnapshot,
+    generatedAt: new Date().toISOString(),
+    constraints: results,
+    constraintIds: ids,
+    savedConstraintSetId: null,
+  };
 };
 
 export default function LabScreen() {
-  const { type } = useLocalSearchParams<{ id: string; type: string }>();
+  const { id, type } = useLocalSearchParams<{ id?: string; type?: string }>();
   const [modalVisible, setModalVisible] = useState(false);
-  const [randomConstraints, setRandomConstraints] =
-    useState<GeneratedConstraints>({});
-  const [idSetConstraint, setIdSetConstraint] = useState<IdSetConstraint>();
+  const [visibleLogin, setVisibleLogin] = useState(false);
+  const [generationHistory, setGenerationHistory] = useState<
+    GeneratedConstraintSet[]
+  >([]);
+  const [currentHistoryIndex, setCurrentHistoryIndex] = useState<number | null>(
+    null,
+  );
+  const [isHistoryHydrated, setIsHistoryHydrated] = useState(false);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
-  const { t } = useTranslation();
-  const { globalStyles, theme } = useStyles();
+  const { t, i18n } = useTranslation();
+  const { session } = useAuth();
+  const { activeProject, projects, loading, setActiveProjectId } =
+    useHomeProjects();
+  const { globalStyles, theme, colors } = useStyles();
   const router = useRouter();
+  const routeProjectId = Array.isArray(id) ? id[0] : id;
+  const routeType = Array.isArray(type) ? type[0] : type;
 
-  const rawType = (
-    Array.isArray(type) ? type[0] : (type ?? "book")
-  ).toLowerCase();
-  const typeKey = typeMapping[rawType] || "book";
+  const contextProject = useMemo(() => {
+    // Prefer the DB-backed project selected on Home, but keep route-based fallback support.
+    if (routeProjectId && routeProjectId !== "1") {
+      return projects.find((project) => project.id === routeProjectId) ?? null;
+    }
 
-  const dataSource = useMemo(() => {
-    const data = i18nInstance.getResourceBundle(i18nInstance.language, typeKey);
-    if (!data)
-      console.error(
-        `Namespace "${typeKey}" does not exist for "${i18nInstance.language}"`,
-      );
-    return data as ProjectJSON;
-  }, [i18nInstance.language, typeKey]);
-
-  const projectColor = getProjectColor({
-    label: dataSource.project_type,
-    theme,
-  });
-
-  // Helper to build initial state where everything is ON
-  const getInitialState = (): SelectedState => {
-    const activeCats: Record<string, boolean> = {};
-    const selOpts: Record<string, boolean> = {};
-
-    dataSource.categories.forEach((cat: CategoryJSON) => {
-      if (cat.disabled) {
-        activeCats[cat.name] = false;
-      } else {
-        // Enable the category by default
-        activeCats[cat.name] = true;
-      }
-
-      if (cat.options) {
-        // Enable every option by default
-        cat.options.forEach((opt) => {
-          selOpts[`${cat.name}-${opt.id}`] = true;
-        });
-      } else if (cat.sub_categories) {
-        // Enable every subcategory by default
-        cat.sub_categories.forEach((subCat) => {
-          subCat.options.forEach((opt) => {
-            selOpts[`${cat.name}-${subCat.name}-${opt.id}`] = true;
-          });
-        });
-      }
-    });
-
-    return {
-      activeCategories: activeCats,
-      selectedOptions: selOpts,
-    };
-  };
-
-  const [selectedItems, setSelectedItems] =
-    useState<SelectedState>(getInitialState);
+    return activeProject;
+  }, [activeProject, projects, routeProjectId]);
 
   useEffect(() => {
-    setSelectedItems(getInitialState());
-    setRandomConstraints({});
-  }, [type]);
+    if (contextProject && contextProject.id !== activeProject?.id) {
+      setActiveProjectId(contextProject.id);
+    }
+  }, [activeProject?.id, contextProject, setActiveProjectId]);
 
-  const toggleCategory = (name: string) => {
+  const shouldWaitForContextProject =
+    routeProjectId !== undefined &&
+    routeProjectId !== "1" &&
+    loading &&
+    !contextProject;
+
+  const fallbackProjectData = useMemo(
+    () =>
+      getBundledProjectData({
+        projectType: routeType,
+        language: i18n.language,
+      }),
+    [i18n.language, routeType],
+  );
+
+  const dataSource = contextProject?.dataSource ?? fallbackProjectData;
+  const projectTitle = getProjectTitle(dataSource);
+  const projectSnapshot = useMemo(
+    () => ({
+      projectId: contextProject?.id ?? null,
+      projectLabel: contextProject?.name ?? projectTitle,
+      language:
+        contextProject?.language ??
+        (isProjectLanguage(dataSource.language) ? dataSource.language : null),
+      supportedFiles:
+        contextProject?.supported_files ??
+        (isProjectSupportedFileType(dataSource.supported_files)
+          ? dataSource.supported_files
+          : null),
+      tags: contextProject?.tags ?? normalizeProjectTags(dataSource.tags),
+      color: contextProject?.color ?? null,
+    }),
+    [
+      contextProject?.color,
+      contextProject?.id,
+      contextProject?.language,
+      contextProject?.name,
+      contextProject?.supported_files,
+      contextProject?.tags,
+      dataSource.language,
+      dataSource.supported_files,
+      dataSource.tags,
+      projectTitle,
+    ],
+  );
+  const projectHistoryKey = useMemo(() => {
+    if (contextProject?.id) {
+      return `project:${contextProject.id}`;
+    }
+
+    return `bundled:${routeType ?? dataSource.project_type}:${i18n.language}`;
+  }, [contextProject?.id, dataSource.project_type, i18n.language, routeType]);
+
+  const projectColor = contextProject?.color
+    ? getProjectColor({
+        color: contextProject.color,
+        theme,
+      })
+    : getProjectColor({
+        label: contextProject?.routeType ?? dataSource.project_type,
+        theme,
+      });
+
+  const initialSelectedItems = useMemo(
+    () => buildInitialSelectedState(dataSource),
+    [dataSource],
+  );
+
+  const [selectedItems, setSelectedItems] =
+    useState<SelectedState>(initialSelectedItems);
+  const hasSelectedCategories = Object.values(
+    selectedItems.activeCategories,
+  ).some(Boolean);
+  const hasGeneratedConstraints = generationHistory.length > 0;
+  const currentGeneratedConstraintSet =
+    currentHistoryIndex === null
+      ? null
+      : (generationHistory[currentHistoryIndex] ?? null);
+
+  const openCategoryBrowse = () => {
+    router.push({
+      pathname: "/category-browse",
+      params: {
+        mode: "edition",
+      },
+    });
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+
+    // Switching project source resets the Lab toggles, then rehydrates the local history for that project.
+    setSelectedItems(initialSelectedItems);
+    setGenerationHistory([]);
+    setCurrentHistoryIndex(null);
+    setIsHistoryHydrated(false);
+    setExpandedCategory(null);
+    setModalVisible(false);
+
+    const hydrateGenerationHistory = async () => {
+      const storedHistory = await loadLabGenerationHistory(projectHistoryKey);
+
+      if (!isMounted) {
+        return;
+      }
+
+      setGenerationHistory(storedHistory);
+      setCurrentHistoryIndex(
+        storedHistory.length > 0 ? storedHistory.length - 1 : null,
+      );
+      setIsHistoryHydrated(true);
+    };
+
+    void hydrateGenerationHistory();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [initialSelectedItems, projectHistoryKey]);
+
+  useEffect(() => {
+    if (!session?.user || !visibleLogin) {
+      return;
+    }
+
+    setVisibleLogin(false);
+    openCategoryBrowse();
+  }, [session?.user, visibleLogin, openCategoryBrowse]);
+
+  useEffect(() => {
+    if (!isHistoryHydrated) {
+      return;
+    }
+
+    void saveLabGenerationHistory(projectHistoryKey, generationHistory);
+  }, [generationHistory, isHistoryHydrated, projectHistoryKey]);
+
+  const toggleCategory = (categoryKey: string) => {
     setSelectedItems((prev) => ({
       ...prev,
       activeCategories: {
         ...prev.activeCategories,
-        [name]: !prev.activeCategories[name],
+        [categoryKey]: !prev.activeCategories[categoryKey],
       },
     }));
   };
 
-  const toggleOption = (catName: string, id: number) => {
-    const key = `${catName}-${id}`;
+  const toggleOption = (selectionKey: string) => {
     setSelectedItems((prev) => ({
       ...prev,
       selectedOptions: {
         ...prev.selectedOptions,
-        [key]: !prev.selectedOptions[key],
+        [selectionKey]: !prev.selectedOptions[selectionKey],
       },
     }));
   };
@@ -136,80 +373,55 @@ export default function LabScreen() {
     );
   };
 
-  function refreshConstraints() {
-    const results: GeneratedConstraints = {};
-    const ids: IdSetConstraint = {};
+  const generateConstraintSet = () => {
+    const nextGeneratedConstraintSet = buildGeneratedConstraintSet(
+      dataSource,
+      selectedItems,
+      projectSnapshot,
+    );
+    const nextGenerationHistory = [
+      ...generationHistory,
+      nextGeneratedConstraintSet,
+    ].slice(-LAB_GENERATION_HISTORY_LIMIT);
 
-    dataSource.categories.forEach((cat) => {
-      if (selectedItems.activeCategories[cat.name]) {
-        const availableOptions = cat.options
-          ? cat.options.filter(
-              (opt) => selectedItems.selectedOptions[`${cat.name}-${opt.id}`],
-            )
-          : cat.sub_categories
-            ? cat.sub_categories.flatMap((subCat) =>
-                subCat.options.filter(
-                  (opt) =>
-                    selectedItems.selectedOptions[
-                      `${cat.name}-${subCat.name}-${opt.id}`
-                    ],
-                ),
-              )
-            : [];
-
-        if (availableOptions.length > 0) {
-          results[cat.name] = {
-            id: -1,
-            value: "",
-            rarity: 0,
-            description: "",
-          };
-          if (cat.options) {
-            const randomIndex = Math.floor(
-              Math.random() * availableOptions.length,
-            );
-            results[cat.name].value = availableOptions[randomIndex].value;
-            results[cat.name].id = availableOptions[randomIndex].id;
-            results[cat.name].rarity = availableOptions[randomIndex].rarity;
-            results[cat.name].description =
-              availableOptions[randomIndex].description;
-            ids[cat.name] = availableOptions[randomIndex].id;
-          } else if (cat.sub_categories) {
-            for (const subCat of cat.sub_categories) {
-              const randomIndex = Math.floor(
-                Math.random() * subCat.options.length,
-              );
-              results[cat.name].value +=
-                " " + subCat.options[randomIndex].value;
-              results[cat.name].rarity += subCat.options[randomIndex].rarity;
-
-              ids[cat.name + "_" + subCat.name] =
-                subCat.options[randomIndex].id;
-            }
-          }
-        }
-      }
-    });
-
-    setIdSetConstraint(ids);
-    setRandomConstraints(results);
+    setGenerationHistory(nextGenerationHistory);
+    setCurrentHistoryIndex(nextGenerationHistory.length - 1);
     setModalVisible(true);
-  }
+  };
+
+  const openLatestGeneratedConstraintSet = () => {
+    if (!hasGeneratedConstraints) {
+      return;
+    }
+
+    setCurrentHistoryIndex(generationHistory.length - 1);
+    setModalVisible(true);
+  };
+
+  const updateGeneratedConstraintSet = (
+    updatedGeneratedConstraintSet: GeneratedConstraintSet,
+  ) => {
+    setGenerationHistory((previousHistory) =>
+      previousHistory.map((generatedConstraintSet) =>
+        generatedConstraintSet.id === updatedGeneratedConstraintSet.id
+          ? updatedGeneratedConstraintSet
+          : generatedConstraintSet,
+      ),
+    );
+  };
 
   const bulkUpdateOptions = (
-    categoryName: string,
-    options: Option[],
+    selections: { key: string; option: Option }[],
     mode: PresetMode,
   ) => {
     setSelectedItems((prev) => {
       const newOptions = { ...prev.selectedOptions };
 
-      options.forEach((opt) => {
-        const key = `${categoryName}-${opt.id}`;
+      selections.forEach(({ key, option }) => {
         if (mode === "all") newOptions[key] = true;
         else if (mode === "none") newOptions[key] = false;
-        else if (mode === "easy") newOptions[key] = opt.rarity <= 2;
-        else if (mode === "hard") newOptions[key] = opt.rarity >= 3;
+        else if (mode === "easy") newOptions[key] = option.rarity <= 2;
+        else if (mode === "hard") newOptions[key] = option.rarity >= 3;
         // 'custom' does nothing in bulk; it's handled by manual clicks
       });
 
@@ -217,21 +429,31 @@ export default function LabScreen() {
     });
   };
 
-  if (!dataSource)
-    return <ActivityIndicator size="large" color={projectColor} />;
+  if (shouldWaitForContextProject) {
+    return (
+      <View
+        style={[
+          globalStyles.screenContainer,
+          { justifyContent: "center", alignItems: "center" },
+        ]}
+      >
+        <ActivityIndicator size="large" color={colors.tint} />
+      </View>
+    );
+  }
 
   return (
     <>
       <Header
         title={t("screen:lab.lab_title", {
-          type: dataSource.project_label ?? dataSource.project_type,
+          type: projectTitle,
         })}
         color={projectColor}
       />
       <View style={[globalStyles.screenContainer]}>
         <ScrollView>
           {dataSource.categories.map((cat: CategoryJSON) => (
-            <CategorySelector
+            <QuickSelector
               key={cat.name}
               category={cat}
               selectedItems={selectedItems}
@@ -246,64 +468,65 @@ export default function LabScreen() {
           <AddButton
             projectColor={projectColor}
             label={t("screen:lab.add-button.label-category")}
-            onClick={() =>
-              router.push({
-                pathname: "/category-browse",
-                params: { id: 1, type: dataSource.project_type },
-              })
-            }
+            onClick={() => {
+              if (!session?.user) {
+                setVisibleLogin(true);
+                return;
+              }
+
+              openCategoryBrowse();
+            }}
           />
-          <Spacer height={60} />
+          <Spacer height={20} />
         </ScrollView>
 
-        <View style={[styles.floatingButtonsWrapper]}>
-          <FloatingButton
-            onPress={() => {
-              setModalVisible(true);
-            }}
-            color={projectColor}
-            disabled={Object.keys(randomConstraints).length === 0}
-            icon="arrow-up-outline"
-            bottom={-24}
-            right={24}
-          />
-          <FloatingButton
-            onPress={refreshConstraints}
-            color={projectColor}
-            bottom={-24}
-            right={120}
-            label={t("screen:lab.generate_button", {
-              type: dataSource.project_type,
-            })}
-          />
-        </View>
+        <ConfirmCancelButton
+          color={projectColor}
+          labelConfirm={t("screen:lab.generate_button", {
+            type: projectTitle,
+          })}
+          accessibilityLabelCancel={t("screen:lab.latest_result_button")}
+          iconCancel="arrow-up-outline"
+          isActive={hasSelectedCategories}
+          isCancelActive={hasGeneratedConstraints}
+          onClickConfirm={generateConstraintSet}
+          onClickCancel={openLatestGeneratedConstraintSet}
+        />
 
-        {idSetConstraint && (
+        {currentGeneratedConstraintSet && (
           <GeneratedConstraintsSheet
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
-            randomConstraints={randomConstraints}
+            generatedConstraintSet={currentGeneratedConstraintSet}
             color={projectColor}
             dataSource={dataSource}
-            constraintSetIds={{
-              project_type: dataSource.project_type,
-              constraints: idSetConstraint,
-            }}
+            historyCount={generationHistory.length}
+            currentHistoryIndex={currentHistoryIndex ?? 0}
+            canGenerateAnother={hasSelectedCategories}
+            onGenerateAnother={generateConstraintSet}
+            onNavigatePrevious={() =>
+              setCurrentHistoryIndex((previousIndex) =>
+                previousIndex === null ? null : Math.max(0, previousIndex - 1),
+              )
+            }
+            onNavigateNext={() =>
+              setCurrentHistoryIndex((previousIndex) =>
+                previousIndex === null
+                  ? null
+                  : Math.min(generationHistory.length - 1, previousIndex + 1),
+              )
+            }
+            canNavigatePrevious={(currentHistoryIndex ?? 0) > 0}
+            canNavigateNext={
+              (currentHistoryIndex ?? 0) < generationHistory.length - 1
+            }
+            onUpdateGeneratedConstraintSet={updateGeneratedConstraintSet}
           />
         )}
+        <ModalGeneric visible={visibleLogin} setVisible={setVisibleLogin}>
+          <Auth />
+        </ModalGeneric>
       </View>
     </>
   );
 }
-
-export const styles = StyleSheet.create({
-  floatingButtonsWrapper: {
-    // TODO Container should be floating and not buttons in this case
-    position: "absolute",
-    bottom: 30,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

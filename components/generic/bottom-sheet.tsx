@@ -1,27 +1,29 @@
+import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { useStyles } from "@/hooks/use-styles";
-import {
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Modal, Pressable, StyleSheet, View } from "react-native";
 
 interface BottomSheetProps {
   isVisible: boolean;
   onClose: () => void;
+  onConfirm: () => void;
   children: React.ReactNode;
-  buttonText?: string;
   color: string;
+  labelConfirm?: string;
+  labelCancel?: string;
+  isConfirmActive?: boolean;
+  isConfirmLoading?: boolean;
 }
 
 export function BottomSheet({
   isVisible,
   onClose,
+  onConfirm,
   children,
-  buttonText = "Close",
   color,
+  labelConfirm,
+  labelCancel,
+  isConfirmActive = true,
+  isConfirmLoading = false,
 }: BottomSheetProps) {
   const { globalStyles } = useStyles();
 
@@ -39,12 +41,15 @@ export function BottomSheet({
         <View style={[globalStyles.backgroundColor, styles.sheet]}>
           {children}
 
-          <TouchableOpacity
-            style={[globalStyles.secondaryButton, { backgroundColor: color }]}
-            onPress={onClose}
-          >
-            <Text style={globalStyles.secondaryButtonText}>{buttonText}</Text>
-          </TouchableOpacity>
+          <ConfirmCancelButton
+            color={color}
+            labelConfirm={labelConfirm}
+            labelCancel={labelCancel}
+            isActive={isConfirmActive}
+            isLoading={isConfirmLoading}
+            onClickConfirm={onConfirm}
+            onClickCancel={onClose}
+          />
         </View>
       </View>
     </Modal>

@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
-  AppState,
   StyleSheet,
   Text,
   TextInput,
@@ -12,14 +11,6 @@ import {
   View,
 } from "react-native";
 import { Spacer } from "../generic/spacer";
-
-AppState.addEventListener("change", (state) => {
-  if (state === "active") {
-    supabase.auth.startAutoRefresh();
-  } else {
-    supabase.auth.stopAutoRefresh();
-  }
-});
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -37,6 +28,7 @@ export default function Auth() {
     });
 
     if (error) {
+      console.error("[Auth] signInWithPassword failed", error);
       setErrorMessage(error.message); // On stocke l'erreur au lieu de l'alerte
     } else {
       setErrorMessage(null); // On reset si ça réussit
@@ -55,6 +47,7 @@ export default function Auth() {
     });
 
     if (error) {
+      console.error("[Auth] signUp failed", error);
       setErrorMessage(error.message); // On stocke l'erreur au lieu de l'alerte
     } else {
       setErrorMessage(null); // On reset si ça réussit
