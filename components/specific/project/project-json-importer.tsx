@@ -30,11 +30,6 @@ export const IMPORTED_CATEGORY_PREFIX = "imported-json:";
 export const isImportedDraftCategory = (category: Category) =>
   category.id.startsWith(IMPORTED_CATEGORY_PREFIX);
 
-export const getImportedCategoryDbName = (
-  projectName: string,
-  categoryName: string,
-) => `${projectName.trim()}-${categoryName.trim()}`;
-
 interface ImportedProjectDraft {
   name?: string;
   description: string;

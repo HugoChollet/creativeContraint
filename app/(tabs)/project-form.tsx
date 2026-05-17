@@ -10,7 +10,6 @@ import TagSelector, {
   TagSelectorOption,
 } from "@/components/generic/tag-selector";
 import ProjectJsonImporter, {
-  getImportedCategoryDbName,
   isImportedDraftCategory,
 } from "@/components/specific/project/project-json-importer";
 import {
@@ -169,12 +168,8 @@ export default function ProjectFormScreen() {
         return;
       }
 
-      const importedCategoryDbName = getImportedCategoryDbName(
-        trimmedName,
-        category.name,
-      );
       const originalNameKey = normalizeCategoryName(category.name);
-      const importedNameKey = normalizeCategoryName(importedCategoryDbName);
+      const importedNameKey = normalizeCategoryName(category.name);
 
       if (
         categoryLookup.has(originalNameKey) ||
@@ -186,7 +181,7 @@ export default function ProjectFormScreen() {
 
       pendingCategoryNames.add(importedNameKey);
       categoriesToInsert.push({
-        name: importedCategoryDbName,
+        name: category.name,
         description: category.description,
         options: category.options,
         language,
@@ -219,11 +214,7 @@ export default function ProjectFormScreen() {
     selectedCategories.forEach((category) => {
       const resolvedCategory = isImportedDraftCategory(category)
         ? (categoryLookup.get(normalizeCategoryName(category.name)) ??
-          categoryLookup.get(
-            normalizeCategoryName(
-              getImportedCategoryDbName(trimmedName, category.name),
-            ),
-          ))
+          categoryLookup.get(normalizeCategoryName(category.name)))
         : category;
 
       if (!resolvedCategory) {
@@ -293,7 +284,6 @@ export default function ProjectFormScreen() {
       supported_files: supportedFileType,
       tags: normalizedTags,
       is_public: false, // Defaulting to private for now
-      favorited_counter: 0,
       color: projectColor,
     };
 

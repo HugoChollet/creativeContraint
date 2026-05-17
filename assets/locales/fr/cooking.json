@@ -2,7 +2,7 @@
   "project_type": "Cooking",
   "project_label": "Plat",
   "language": "fr",
-  "tags": ["physical", "short"],
+  "tags": ["cooking"],
   "categories": [
     {
       "name": "Base / Carb",
