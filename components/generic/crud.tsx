@@ -40,18 +40,30 @@ export default function Crud({ actions, disabled, color }: CrudProps) {
   return (
     <View style={styles.crud}>
       {actions.map(({ action, onPress }, index) => (
-        <TouchableOpacity
-          key={`${action}-${index}`}
-          style={globalStyles.transparentButton}
-          onPress={onPress}
-          disabled={disabled}
-        >
-          <Ionicons
-            name={ACTION_ICONS[action]}
-            size={24}
-            color={disabled ? colors.disable : color || colors.tint}
-          />
-        </TouchableOpacity>
+        <>
+          <TouchableOpacity
+            key={`${action}-${index}`}
+            style={globalStyles.transparentButton}
+            onPress={onPress}
+            disabled={disabled}
+          >
+            <Ionicons
+              name={ACTION_ICONS[action]}
+              size={24}
+              color={disabled ? colors.disable : color || colors.tint}
+            />
+          </TouchableOpacity>
+          {index < actions.length - 1 && (
+            <View
+              style={[
+                {
+                  backgroundColor: colors.textDiscreet,
+                },
+                styles.divider,
+              ]}
+            ></View>
+          )}
+        </>
       ))}
     </View>
   );
@@ -61,5 +73,11 @@ const styles = StyleSheet.create({
   crud: {
     flexDirection: "row",
     gap: 16,
+    justifyContent: "space-evenly",
+  },
+  divider: {
+    width: 1,
+    borderRadius: 24,
+    marginVertical: 16,
   },
 });

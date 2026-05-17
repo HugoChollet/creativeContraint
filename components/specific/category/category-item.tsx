@@ -60,7 +60,7 @@ export default function CategoryItem({
         gap: 12,
       }}
     >
-      <View style={[globalStyles.card, { width: 300 }]}>
+      <View style={[globalStyles.card, { width: "100%" }]}>
         <ExpandableHeader
           title={category.name}
           description={category.description}
@@ -78,23 +78,29 @@ export default function CategoryItem({
               : undefined
           }
         />
-        {expanded && category.options
-          ? category.options.map((item) => (
-              <View key={item.id.toString()} style={{ padding: 8 }}>
-                <Item
-                  title={item.value}
-                  subtitle={
-                    t("component:constraint-selector.difficulty") +
-                    item.difficulty
-                  }
-                  description={item.description}
-                  color={projectColor}
-                />
-              </View>
-            ))
-          : null}
+        {expanded && (
+          <>
+            <Crud actions={actions} color={projectColor} />
+            <View>
+              {category.options
+                ? category.options.map((item) => (
+                    <View key={item.id.toString()} style={{ padding: 8 }}>
+                      <Item
+                        title={item.value}
+                        subtitle={
+                          t("component:constraint-selector.difficulty") +
+                          item.difficulty
+                        }
+                        description={item.description}
+                        color={projectColor}
+                      />
+                    </View>
+                  ))
+                : null}
+            </View>
+          </>
+        )}
       </View>
-      <Crud actions={actions} color={projectColor} />
     </View>
   );
 }
