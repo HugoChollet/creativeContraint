@@ -107,6 +107,26 @@ export const getDefaultProjectTags = (
   return normalizedTags.length > 0 ? normalizedTags : DEFAULT_PROJECT_TAGS;
 };
 
+export const getPrimaryProjectTag = (
+  values?: readonly string[] | null,
+): ProjectTag => getDefaultProjectTags(values)[0];
+
+export const prioritizeProjectTag = (
+  values: readonly string[],
+  preferredTag: ProjectTag,
+): ProjectTag[] => {
+  const normalizedTags = getDefaultProjectTags(values);
+
+  if (!normalizedTags.includes(preferredTag)) {
+    return normalizedTags;
+  }
+
+  return [
+    preferredTag,
+    ...normalizedTags.filter((tag) => tag !== preferredTag),
+  ];
+};
+
 export const toggleProjectTag = (
   currentTags: readonly string[],
   nextTag: ProjectTag,

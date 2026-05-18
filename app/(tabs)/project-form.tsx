@@ -1,10 +1,10 @@
 import { AddButton } from "@/components/generic/add-button";
-import ColorPicker from "@/components/generic/color-picker";
 import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import Description from "@/components/generic/description";
 import ExpandableHeader from "@/components/generic/expandable-header";
 import { Header } from "@/components/generic/header";
 import LanguageSelector from "@/components/generic/language-selector";
+import { MainButton } from "@/components/generic/main-button";
 import { Spacer } from "@/components/generic/spacer";
 import TagSelector, {
   TagSelectorOption,
@@ -16,13 +16,16 @@ import {
   getCategoryTagsFromProject,
   getDefaultProjectSupportedFileType,
   getDefaultProjectTags,
+  getPrimaryProjectTag,
   normalizeProjectTags,
+  prioritizeProjectTag,
   PROJECT_SUPPORTED_FILE_TYPES,
   PROJECT_TAGS,
   ProjectLanguage,
   ProjectTag,
   toggleProjectTag,
 } from "@/constants/project-metadata";
+import { getHomeProjectImageFromTag } from "@/constants/home-projects";
 import { getProjectColor } from "@/constants/theme";
 import { useProjectDraft } from "@/contexts/project-draft-context";
 import { useCollection } from "@/hooks/use-collection";
@@ -97,7 +100,6 @@ export default function ProjectFormScreen() {
     tags,
     setTags,
     projectColor,
-    setProjectColor,
     selectedCategories,
     setSelectedCategories,
     resetProjectDraft,
@@ -135,6 +137,17 @@ export default function ProjectFormScreen() {
       })),
     [t],
   );
+  const visualTag = getPrimaryProjectTag(normalizedTags);
+  const visualTagOptions = useMemo<TagSelectorOption[]>(
+    () =>
+      normalizedTags.map((value) => ({
+        value,
+        label: t(`component:metadata.tag_values.${value}`),
+      })),
+    [normalizedTags, t],
+  );
+  const previewImage = getHomeProjectImageFromTag(visualTag);
+  const previewTitle = trimmedName || t("screen:project_form.name_placeholder");
 
   const resolveSelectedCategories = async () => {
     const fetchedCategories = await fetchCategories({
@@ -345,34 +358,22 @@ export default function ProjectFormScreen() {
             <View
               style={{
                 marginBottom: 20,
-                flexDirection: "row",
-                justifyContent: "space-between",
               }}
             >
-              <View>
-                <Text style={globalStyles.label}>
-                  {t("screen:project_form.name_label") + " *"}
-                </Text>
-                <TextInput
-                  style={[
-                    globalStyles.input,
-                    { borderColor: projectColorSoft },
-                  ]}
-                  placeholder={t("screen:project_form.name_placeholder")}
-                  placeholderTextColor={colors.placeholder}
-                  value={name}
-                  onChangeText={setName}
-                  editable={!isBusy}
-                />
-              </View>
-
-              <View style={{ marginTop: 24 }}>
-                <ColorPicker
-                  defaultValue={projectColor}
-                  setColor={setProjectColor}
-                  toggleOpen={() => {}}
-                />
-              </View>
+              <Text style={globalStyles.label}>
+                {t("screen:project_form.name_label") + " *"}
+              </Text>
+              <TextInput
+                style={[
+                  globalStyles.input,
+                  { borderColor: projectColorSoft },
+                ]}
+                placeholder={t("screen:project_form.name_placeholder")}
+                placeholderTextColor={colors.placeholder}
+                value={name}
+                onChangeText={setName}
+                editable={!isBusy}
+              />
             </View>
 
             <View>
@@ -448,6 +449,45 @@ export default function ProjectFormScreen() {
               maxSelections={PROJECT_TAG_LIMIT}
               alwaysEnabledValues={["all"]}
             />
+
+            <TagSelector
+              label={t("component:metadata.visual_tag_label")}
+              options={visualTagOptions}
+              selectedValues={[visualTag]}
+              onChange={(values) => {
+                const nextVisualTag = values[0];
+
+                if (!nextVisualTag) {
+                  return;
+                }
+
+                setTags(
+                  prioritizeProjectTag(
+                    normalizedTags,
+                    nextVisualTag as ProjectTag,
+                  ),
+                );
+              }}
+              helperText={t("component:metadata.visual_tag_helper")}
+              color={projectColor}
+              singleSelect={true}
+              maxVisibleRows={2}
+            />
+
+            <View style={{ marginBottom: 20 }}>
+              <Text style={globalStyles.label}>
+                {t("screen:project_form.preview_label")}
+              </Text>
+              <MainButton
+                title={previewTitle}
+                subtitle={t(`component:metadata.tag_values.${visualTag}`)}
+                description={description || undefined}
+                tags={normalizedTags}
+                color={projectColor}
+                image={previewImage}
+                onPress={() => {}}
+              />
+            </View>
 
             <Text style={globalStyles.label}>
               {t("screen:project_form.category_list_label", {

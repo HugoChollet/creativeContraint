@@ -2,22 +2,22 @@ import {
   getDefaultProjectLanguage,
   getDefaultProjectSupportedFileType,
   getDefaultProjectTags,
+  getPrimaryProjectTag,
   normalizeProjectTags,
   ProjectLanguage,
   ProjectSupportedFileType,
   ProjectTag,
 } from "@/constants/project-metadata";
+import { getHomeProjectTypeFromTag } from "@/constants/home-projects";
+import { getProjectColor } from "@/constants/theme";
 import { Category } from "@/types/category";
 import i18n from "@/i18n";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 
-export function getRandomColor() {
-  const randomChannel = () => Math.floor(Math.random() * 256);
-
-  return `#${[randomChannel(), randomChannel(), randomChannel()]
-    .map((value) => value.toString(16).padStart(2, "0"))
-    .join("")}`;
-}
+const getProjectColorFromTags = (values?: readonly string[] | null) =>
+  getProjectColor({
+    label: getHomeProjectTypeFromTag(getPrimaryProjectTag(values)) ?? "book",
+  });
 
 interface ProjectDraftContextType {
   id: string;
@@ -54,8 +54,17 @@ export function ProjectDraftProvider({ children }: { children: ReactNode }) {
   const [supportedFileType, setSupportedFileType] =
     useState<ProjectSupportedFileType>(getDefaultProjectSupportedFileType());
   const [tags, setTags] = useState<ProjectTag[]>(getDefaultProjectTags());
-  const [projectColor, setProjectColor] = useState(getRandomColor);
+  const [projectColor, setProjectColor] = useState(() =>
+    getProjectColorFromTags(getDefaultProjectTags()),
+  );
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
+
+  const applyProjectTags = (nextTags: readonly string[]) => {
+    const normalizedTags = normalizeProjectTags(nextTags);
+
+    setTags(normalizedTags);
+    setProjectColor(getProjectColorFromTags(normalizedTags));
+  };
 
   const toggleSelectedCategory = (category: Category) => {
     setSelectedCategories((prev) => {
@@ -70,13 +79,15 @@ export function ProjectDraftProvider({ children }: { children: ReactNode }) {
   };
 
   const resetProjectDraft = () => {
+    const defaultTags = getDefaultProjectTags();
+
     setId("");
     setName("New");
     setDescription("");
     setLanguage(getDefaultProjectLanguage(i18n.language));
     setSupportedFileType(getDefaultProjectSupportedFileType());
-    setTags(getDefaultProjectTags());
-    setProjectColor(getRandomColor());
+    setTags(defaultTags);
+    setProjectColor(getProjectColorFromTags(defaultTags));
     setSelectedCategories([]);
   };
 
@@ -94,7 +105,7 @@ export function ProjectDraftProvider({ children }: { children: ReactNode }) {
         supportedFileType,
         setSupportedFileType,
         tags,
-        setTags: (nextTags) => setTags(normalizeProjectTags(nextTags)),
+        setTags: applyProjectTags,
         projectColor,
         setProjectColor,
         selectedCategories,

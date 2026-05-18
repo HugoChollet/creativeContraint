@@ -176,7 +176,6 @@ export default function ProjectBrowseScreen() {
     setLanguage,
     setSupportedFileType,
     setTags,
-    setProjectColor,
     setSelectedCategories,
     resetProjectDraft,
   } = useProjectDraft();
@@ -203,7 +202,6 @@ export default function ProjectBrowseScreen() {
       getDefaultProjectSupportedFileType(draft.supported_files),
     );
     setTags(getDefaultProjectTags(draft.tags));
-    setProjectColor(draft.color ?? "ffff");
     setSelectedCategories(draft.categories);
     setId(isForked ? "" : draft.id);
   };

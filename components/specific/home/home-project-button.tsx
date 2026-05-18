@@ -2,6 +2,7 @@ import { MainButton } from "@/components/generic/main-button";
 import {
   getHomeProjectConfig,
   getHomeProjectImageFromTags,
+  getHomeProjectTypeFromTags,
 } from "@/constants/home-projects";
 import {
   HomeContextProject,
@@ -25,9 +26,12 @@ export default function HomeProjectButton({
   const { t } = useTranslation();
   const { theme } = useStyles();
   const { setActiveProjectId } = useHomeProjects();
+  const routeImage = getHomeProjectConfig(project.routeType)?.image;
+  const tagImage = getHomeProjectImageFromTags(project.tags);
   const image =
-    getHomeProjectConfig(project.routeType)?.image ??
-    getHomeProjectImageFromTags(project.tags);
+    project.source === "official"
+      ? (routeImage ?? tagImage)
+      : (tagImage ?? routeImage);
 
   const subtitle =
     project.source === "official"
@@ -41,7 +45,10 @@ export default function HomeProjectButton({
   const cardColor =
     project.color ??
     getProjectColor({
-      label: project.routeType,
+      label:
+        project.source === "official"
+          ? project.routeType
+          : getHomeProjectTypeFromTags(project.tags),
       theme,
     });
 

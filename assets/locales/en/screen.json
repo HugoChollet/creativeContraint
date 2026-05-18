@@ -108,6 +108,7 @@
     "import_helper": "{{fileName}} • {{count}} categories ready to save",
     "import_error_title": "Import failed",
     "import_error_invalid": "Select a valid project JSON file with categories.",
+    "preview_label": "Preview",
     "add_button": "Add new category",
     "submit_button": "Save Project Generator",
     "category_list_label": "Categories of this project generator (minimum {{min}})"

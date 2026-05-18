@@ -92,8 +92,13 @@ const homeProjectImageTypeByTag: Partial<
   video: "videoInternet",
   game: "boardgame",
   character: "videoFiction",
+  localisation: "book",
+  physical: "photography",
+  numerical: "videoGame",
   photography: "photography",
+  short: "videoInternet",
   podcast: "music",
+  long: "book",
   "internet-content": "videoInternet",
   "board game": "boardgame",
   art: "photography",
@@ -156,22 +161,50 @@ export const getHomeProjectImage = (
   getHomeProjectConfig(value)?.image ??
   require("@/assets/images/projects/png/book.png");
 
-export const getHomeProjectImageFromTags = (
+export const getHomeProjectTypeFromTag = (
+  tag?: string | null,
+): HomeProjectConfig["type"] | undefined => {
+  if (!tag) {
+    return undefined;
+  }
+
+  return homeProjectImageTypeByTag[tag as ProjectTag];
+};
+
+export const getHomeProjectTypeFromTags = (
   tags?: readonly string[] | null,
-): ImageSourcePropType => {
-  const normalizedTags = new Set(normalizeProjectTags(tags));
+): HomeProjectConfig["type"] => {
+  const normalizedTags = normalizeProjectTags(tags);
 
-  for (const tag of homeProjectImagePriorityByTag) {
-    if (!normalizedTags.has(tag)) {
-      continue;
-    }
-
-    const mappedType = homeProjectImageTypeByTag[tag];
+  for (const tag of normalizedTags) {
+    const mappedType = getHomeProjectTypeFromTag(tag);
 
     if (mappedType) {
-      return getHomeProjectImage(mappedType);
+      return mappedType;
     }
   }
 
-  return getHomeProjectImage("book");
+  const normalizedTagSet = new Set(normalizedTags);
+
+  for (const tag of homeProjectImagePriorityByTag) {
+    if (!normalizedTagSet.has(tag)) {
+      continue;
+    }
+
+    const mappedType = getHomeProjectTypeFromTag(tag);
+
+    if (mappedType) {
+      return mappedType;
+    }
+  }
+
+  return "book";
 };
+
+export const getHomeProjectImageFromTag = (
+  tag?: string | null,
+): ImageSourcePropType => getHomeProjectImage(getHomeProjectTypeFromTag(tag));
+
+export const getHomeProjectImageFromTags = (
+  tags?: readonly string[] | null,
+): ImageSourcePropType => getHomeProjectImage(getHomeProjectTypeFromTags(tags));
