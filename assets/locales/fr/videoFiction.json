@@ -12,7 +12,12 @@
         { "id": 2, "value": "Action", "difficulty": 1 },
         { "id": 3, "value": "Aventure", "difficulty": 1 },
         { "id": 4, "value": "Invasion extraterrestre", "difficulty": 3 },
-        { "id": 5, "value": "Uchronie", "difficulty": 4 },
+        {
+          "id": 5,
+          "value": "Uchronie",
+          "difficulty": 4,
+          "description": "Récit situé dans une histoire alternative où un événement réel a basculé autrement."
+        },
         { "id": 6, "value": "Esthétique Anime", "difficulty": 3 },
         { "id": 7, "value": "Biopic", "difficulty": 3 },
         { "id": 8, "value": "Comédie noire", "difficulty": 4 },
@@ -24,7 +29,12 @@
         { "id": 14, "value": "Théorie du complot", "difficulty": 4 },
         { "id": 15, "value": "Horreur cosmique", "difficulty": 5 },
         { "id": 16, "value": "Policier / Crime", "difficulty": 2 },
-        { "id": 17, "value": "Cyber-Noir", "difficulty": 5 },
+        {
+          "id": 17,
+          "value": "Cyber-Noir",
+          "difficulty": 5,
+          "description": "Mélange de polar noir et de futur technologique, souvent urbain, paranoïaque et désabusé."
+        },
         { "id": 18, "value": "Cyberpunk", "difficulty": 4 },
         { "id": 19, "value": "Dark Fantasy", "difficulty": 4 },
         { "id": 20, "value": "Dieselpunk", "difficulty": 5 },
@@ -43,7 +53,12 @@
         { "id": 33, "value": "Film de gangsters", "difficulty": 3 },
         { "id": 34, "value": "Horreur gothique", "difficulty": 4 },
         { "id": 35, "value": "Romance gothique", "difficulty": 4 },
-        { "id": 36, "value": "Grimdark", "difficulty": 5 },
+        {
+          "id": 36,
+          "value": "Grimdark",
+          "difficulty": 5,
+          "description": "Univers très brutal et pessimiste où les héros ont peu d'espoir, de morale ou de répit."
+        },
         { "id": 37, "value": "Braquage / Heist", "difficulty": 2 },
         { "id": 38, "value": "High Fantasy", "difficulty": 3 },
         { "id": 39, "value": "Comédie lycéenne", "difficulty": 1 },
@@ -82,7 +97,12 @@
         { "id": 72, "value": "Slapstick (Burlesque)", "difficulty": 2 },
         { "id": 73, "value": "Slasher", "difficulty": 2 },
         { "id": 74, "value": "Tranche de vie", "difficulty": 1 },
-        { "id": 75, "value": "Solarpunk", "difficulty": 5 },
+        {
+          "id": 75,
+          "value": "Solarpunk",
+          "difficulty": 5,
+          "description": "Vision optimiste d'un futur écologique où technologie, entraide et durabilité coexistent."
+        },
         { "id": 76, "value": "Horreur spatiale", "difficulty": 5 },
         { "id": 77, "value": "Space Opera", "difficulty": 4 },
         { "id": 78, "value": "Western spatial", "difficulty": 4 },
@@ -104,7 +124,12 @@
         { "id": 94, "value": "Drame de guerre", "difficulty": 3 },
         { "id": 95, "value": "Western", "difficulty": 3 },
         { "id": 96, "value": "Whodunnit (Énigme)", "difficulty": 2 },
-        { "id": 97, "value": "Wuxia", "difficulty": 5 },
+        {
+          "id": 97,
+          "value": "Wuxia",
+          "difficulty": 5,
+          "description": "Genre chinois de fantasy martiale avec héros chevaleresques, combats stylisés et exploits presque surnaturels."
+        },
         { "id": 98, "value": "Apocalypse Zombie", "difficulty": 2 },
         { "id": 99, "value": "Avant-Garde", "difficulty": 5 },
         { "id": 100, "value": "Mélodrame", "difficulty": 3 }
@@ -115,7 +140,12 @@
       "label": "Sous-genre",
       "description": "Une couleur plus précise qui affine l'identité du projet à l'intérieur du genre principal.",
       "options": [
-        { "id": 1, "value": "Style A24", "difficulty": 5 },
+        {
+          "id": 1,
+          "value": "Style A24",
+          "difficulty": 5,
+          "description": "Référence à un cinéma indépendant intime, atmosphérique et souvent étrange, très marqué par la vision d'auteur."
+        },
         { "id": 2, "value": "Absurde", "difficulty": 5 },
         { "id": 3, "value": "Bourré d'action", "difficulty": 1 },
         { "id": 4, "value": "Anachronique", "difficulty": 5 },
@@ -169,7 +199,12 @@
         { "id": 52, "value": "Porté sur les arts martiaux", "difficulty": 2 },
         { "id": 53, "value": "Méditatif", "difficulty": 4 },
         { "id": 54, "value": "Mélodramatique", "difficulty": 3 },
-        { "id": 55, "value": "Méta", "difficulty": 5 },
+        {
+          "id": 55,
+          "value": "Méta",
+          "difficulty": 5,
+          "description": "L'œuvre joue avec sa propre fiction, ses codes ou le fait qu'elle se sait raconter une histoire."
+        },
         { "id": 56, "value": "Minimaliste", "difficulty": 3 },
         { "id": 57, "value": "Faux documentaire", "difficulty": 4 },
         { "id": 58, "value": "Musical", "difficulty": 5 },

@@ -90,7 +90,12 @@
         { "id": 14, "value": "Flanger", "difficulty": 2 },
         { "id": 15, "value": "Fuzz", "difficulty": 3 },
         { "id": 16, "value": "Gate", "difficulty": 3 },
-        { "id": 17, "value": "Granular Synthesis", "difficulty": 5 },
+        {
+          "id": 17,
+          "value": "Granular Synthesis",
+          "difficulty": 5,
+          "description": "Breaks audio into tiny grains that can be stretched, scattered, or rearranged into new textures."
+        },
         { "id": 18, "value": "Harmonizer", "difficulty": 3 },
         { "id": 19, "value": "Limiter / Maximizer", "difficulty": 2 },
         { "id": 20, "value": "Lo-fi / Vinyl Crackle", "difficulty": 2 },
@@ -102,13 +107,23 @@
         { "id": 26, "value": "Reverb (Reverse)", "difficulty": 4 },
         { "id": 27, "value": "Reverb (Room/Small)", "difficulty": 1 },
         { "id": 28, "value": "Reverb (Spring)", "difficulty": 3 },
-        { "id": 29, "value": "Ring Modulator", "difficulty": 5 },
+        {
+          "id": 29,
+          "value": "Ring Modulator",
+          "difficulty": 5,
+          "description": "Combines signals to create metallic, dissonant, bell-like tones instead of natural harmonics."
+        },
         { "id": 30, "value": "Rotary Speaker (Leslie)", "difficulty": 4 },
         { "id": 31, "value": "Saturation (Tape/Tube)", "difficulty": 2 },
         { "id": 32, "value": "Sidechain (Pumping)", "difficulty": 2 },
         { "id": 33, "value": "Stereo Widener", "difficulty": 2 },
         { "id": 34, "value": "Stutter / Glitch", "difficulty": 4 },
-        { "id": 35, "value": "Talkbox", "difficulty": 5 },
+        {
+          "id": 35,
+          "value": "Talkbox",
+          "difficulty": 5,
+          "description": "Routes an instrument through the performer's mouth so vowel shapes filter the sound."
+        },
         { "id": 36, "value": "Tremolo", "difficulty": 2 },
         { "id": 37, "value": "Vibrato", "difficulty": 2 },
         { "id": 38, "value": "Vocoder", "difficulty": 4 },
@@ -120,7 +135,12 @@
       "description": "Choices about pulse, groove, speed, and rhythmic structure.",
       "options": [
         { "id": 1, "value": "Accelerando (Speeding up)", "difficulty": 4 },
-        { "id": 2, "value": "Ametric (No clear pulse)", "difficulty": 5 },
+        {
+          "id": 2,
+          "value": "Ametric (No clear pulse)",
+          "difficulty": 5,
+          "description": "Avoids a steady beat entirely, so the music feels floating rather than countable."
+        },
         { "id": 3, "value": "Backbeat Emphasis", "difficulty": 1 },
         { "id": 4, "value": "Blast Beats (Fast Metal)", "difficulty": 4 },
         { "id": 5, "value": "Breakbeat / Amen Break", "difficulty": 2 },
@@ -142,11 +162,17 @@
         { "id": 13, "value": "Human-feel (No Quantization)", "difficulty": 3 },
         { "id": 14, "value": "Industrial Machine Loops", "difficulty": 3 },
         { "id": 15, "value": "Minimalist (Silent Gaps)", "difficulty": 4 },
-        { "id": 16, "value": "Motorik Beat (Neu! style)", "difficulty": 4 },
+        {
+          "id": 16,
+          "value": "Motorik Beat (Neu! style)",
+          "difficulty": 4,
+          "description": "A relentless, machine-like 4/4 groove with minimal variation, associated with krautrock."
+        },
         {
           "id": 17,
           "value": "Polyrhythmic Layers (3 against 4)",
-          "difficulty": 4
+          "difficulty": 4,
+          "description": "Two rhythmic groupings run at once, creating tension between different counts."
         },
         { "id": 18, "value": "Ritardando (Slowing down)", "difficulty": 4 },
         { "id": 19, "value": "Shuffle Feel", "difficulty": 2 },
@@ -181,7 +207,12 @@
         { "id": 12, "value": "Bluegrass", "difficulty": 3 },
         { "id": 13, "value": "Blues Rock", "difficulty": 2 },
         { "id": 14, "value": "Bossa Nova", "difficulty": 4 },
-        { "id": 15, "value": "Breakcore", "difficulty": 5 },
+        {
+          "id": 15,
+          "value": "Breakcore",
+          "difficulty": 5,
+          "description": "Very fast, chopped-up breakbeats mixed with distortion, chaos, and abrupt edits."
+        },
         { "id": 16, "value": "Bubblegum Pop", "difficulty": 1 },
         { "id": 17, "value": "Chamber Pop", "difficulty": 4 },
         { "id": 18, "value": "Chiptune / 8-Bit", "difficulty": 3 },
@@ -222,7 +253,12 @@
         { "id": 53, "value": "Hardcore Punk", "difficulty": 3 },
         { "id": 54, "value": "Hardstyle", "difficulty": 3 },
         { "id": 55, "value": "Hyperpop", "difficulty": 4 },
-        { "id": 56, "value": "IDM (Intelligent Dance Music)", "difficulty": 5 },
+        {
+          "id": 56,
+          "value": "IDM (Intelligent Dance Music)",
+          "difficulty": 5,
+          "description": "Experimental electronic music built more around intricate listening than straightforward club movement."
+        },
         { "id": 57, "value": "Indie Folk", "difficulty": 1 },
         { "id": 58, "value": "Indie Sleaze / Dance-Punk", "difficulty": 3 },
         { "id": 59, "value": "Industrial Techno", "difficulty": 3 },
@@ -231,7 +267,12 @@
         { "id": 62, "value": "Jungle", "difficulty": 4 },
         { "id": 63, "value": "K-Pop", "difficulty": 2 },
         { "id": 64, "value": "Lo-fi Hip Hop", "difficulty": 1 },
-        { "id": 65, "value": "Math Rock", "difficulty": 5 },
+        {
+          "id": 65,
+          "value": "Math Rock",
+          "difficulty": 5,
+          "description": "Rhythmically complex rock using odd meters, angular riffs, and tightly precise playing."
+        },
         { "id": 66, "value": "Melodic Death Metal", "difficulty": 4 },
         { "id": 67, "value": "Minimal Techno", "difficulty": 3 },
         { "id": 68, "value": "Modern Classical", "difficulty": 3 },

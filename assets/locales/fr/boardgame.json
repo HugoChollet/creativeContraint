@@ -18,7 +18,8 @@
         {
           "id": 4,
           "value": "4X (eXplore, eXpand, eXploit, eXterminate)",
-          "difficulty": 4
+          "difficulty": 4,
+          "description": "Jeu de stratégie d'expansion centré sur l'exploration, la croissance, l'exploitation de ressources et l'élimination des rivaux."
         },
         {
           "id": 5,
@@ -39,7 +40,8 @@
         {
           "id": 13,
           "value": "Legacy (évolutif et permanent)",
-          "difficulty": 5
+          "difficulty": 5,
+          "description": "Les règles, composants ou plateaux changent durablement d'une partie à l'autre."
         },
         { "id": 14, "value": "Tower Defense", "difficulty": 4 },
         { "id": 15, "value": "Escarmouche (Skirmish)", "difficulty": 3 },
@@ -193,7 +195,8 @@
         {
           "id": 4,
           "value": "Brouillard de guerre (Fog of war)",
-          "difficulty": 4
+          "difficulty": 4,
+          "description": "Une partie de la carte, des unités ou des informations reste cachée jusqu'à sa découverte."
         },
         {
           "id": 5,
@@ -232,7 +235,8 @@
         {
           "id": 19,
           "value": "Vues divergentes (Filtres de couleur)",
-          "difficulty": 5
+          "difficulty": 5,
+          "description": "Les joueurs voient des informations différentes sur les mêmes composants, souvent grâce à des filtres colorés."
         },
         { "id": 20, "value": "Historique des coups public", "difficulty": 2 },
         {
@@ -359,7 +363,12 @@
           "difficulty": 3
         },
         { "id": 10, "value": "Vote de la majorité", "difficulty": 4 },
-        { "id": 11, "value": "Atteindre un état d'équilibre", "difficulty": 5 },
+        {
+          "id": 11,
+          "value": "Atteindre un état d'équilibre",
+          "difficulty": 5,
+          "description": "On gagne en stabilisant un système fragile plutôt qu'en cherchant à maximiser un score."
+        },
         { "id": 12, "value": "S'échapper de la zone de jeu", "difficulty": 3 },
         { "id": 13, "value": "Convertir les adversaires", "difficulty": 4 },
         { "id": 14, "value": "Défendre un objet/personne", "difficulty": 3 },
@@ -420,7 +429,8 @@
         {
           "id": 8,
           "value": "Parasitisme (Lier son sort à un autre)",
-          "difficulty": 5
+          "difficulty": 5,
+          "description": "Votre survie ou votre score dépend directement d'un autre joueur, dont vous exploitez la réussite ou l'échec."
         },
         { "id": 9, "value": "Équipes changeantes", "difficulty": 4 },
         {

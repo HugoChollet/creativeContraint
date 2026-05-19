@@ -63,13 +63,23 @@
         { "id": 46, "value": "Cornmeal", "difficulty": 3 },
         { "id": 47, "value": "Corn Tortilla", "difficulty": 2 },
         { "id": 48, "value": "Grits", "difficulty": 4 },
-        { "id": 49, "value": "Hominy", "difficulty": 4 },
+        {
+          "id": 49,
+          "value": "Hominy",
+          "difficulty": 4,
+          "description": "Dried corn kernels treated with alkali, making them softer, puffier, and more savory."
+        },
         { "id": 50, "value": "Cornbread", "difficulty": 2 },
 
         { "id": 51, "value": "Oats", "difficulty": 2 },
         { "id": 52, "value": "Oatmeal", "difficulty": 1 },
         { "id": 53, "value": "Millet", "difficulty": 4 },
-        { "id": 54, "value": "Sorghum", "difficulty": 4 },
+        {
+          "id": 54,
+          "value": "Sorghum",
+          "difficulty": 4,
+          "description": "A small gluten-free grain with a mild, earthy flavor and a chewy texture when cooked."
+        },
         { "id": 55, "value": "Buckwheat", "difficulty": 3 },
 
         { "id": 56, "value": "Ravioli", "difficulty": 2 },
@@ -152,7 +162,12 @@
         { "id": 16, "value": "Tofu", "difficulty": 1 },
         { "id": 17, "value": "Tempeh", "difficulty": 3 },
         { "id": 18, "value": "Seitan", "difficulty": 4 },
-        { "id": 19, "value": "Paneer", "difficulty": 4 },
+        {
+          "id": 19,
+          "value": "Paneer",
+          "difficulty": 4,
+          "description": "A firm fresh Indian cheese that keeps its shape when grilled, fried, or simmered."
+        },
         { "id": 20, "value": "Halloumi", "difficulty": 3 },
 
         { "id": 21, "value": "Mushrooms", "difficulty": 1 },
@@ -258,7 +273,12 @@
 
         { "id": 21, "value": "Béchamel Sauce", "difficulty": 3 },
         { "id": 22, "value": "Hollandaise Sauce", "difficulty": 4 },
-        { "id": 23, "value": "Bearnaise Sauce", "difficulty": 4 },
+        {
+          "id": 23,
+          "value": "Bearnaise Sauce",
+          "difficulty": 4,
+          "description": "A butter-emulsified French sauce flavored with tarragon, shallot, and vinegar reduction."
+        },
         { "id": 24, "value": "Brown Butter", "difficulty": 3 },
         { "id": 25, "value": "Infused Oil", "difficulty": 3 },
 
@@ -341,8 +361,18 @@
 
         { "id": 36, "value": "Gochugaru", "difficulty": 4 },
         { "id": 37, "value": "Za'atar", "difficulty": 4 },
-        { "id": 38, "value": "Dukkah", "difficulty": 4 },
-        { "id": 39, "value": "Furikake", "difficulty": 4 },
+        {
+          "id": 38,
+          "value": "Dukkah",
+          "difficulty": 4,
+          "description": "An Egyptian crunchy blend of nuts, seeds, and spices used as a topping or seasoning."
+        },
+        {
+          "id": 39,
+          "value": "Furikake",
+          "difficulty": 4,
+          "description": "A Japanese dry seasoning mix, often made with seaweed, sesame, and savory flakes."
+        },
         { "id": 40, "value": "Truffle Shavings", "difficulty": 5 },
 
         { "id": 41, "value": "Microgreens", "difficulty": 3 },
@@ -355,7 +385,12 @@
         { "id": 47, "value": "Anchovy Crumbs", "difficulty": 4 },
         { "id": 48, "value": "Nori Flakes", "difficulty": 4 },
         { "id": 49, "value": "Citrus Powder", "difficulty": 4 },
-        { "id": 50, "value": "Umami Powder", "difficulty": 5 }
+        {
+          "id": 50,
+          "value": "Umami Powder",
+          "difficulty": 5,
+          "description": "A concentrated savory seasoning blend used to boost depth and meaty flavor."
+        }
       ]
     },
 
@@ -371,7 +406,12 @@
         { "id": 6, "value": "Sautéing", "difficulty": 2 },
         { "id": 7, "value": "Roasting", "difficulty": 2 },
         { "id": 8, "value": "Slow Cooking", "difficulty": 3 },
-        { "id": 9, "value": "Sous Vide", "difficulty": 4 },
+        {
+          "id": 9,
+          "value": "Sous Vide",
+          "difficulty": 4,
+          "description": "Food sealed in a bag and cooked gently in a precisely controlled water bath."
+        },
         { "id": 10, "value": "Smoking", "difficulty": 4 },
         { "id": 11, "value": "Poaching", "difficulty": 3 },
         { "id": 12, "value": "Blanching", "difficulty": 4 },

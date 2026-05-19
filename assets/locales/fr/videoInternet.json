@@ -15,7 +15,12 @@
         { "id": 4, "value": "Face caméra / Commentaire", "difficulty": 1 },
         { "id": 5, "value": "Tutoriel / Guide pratique", "difficulty": 2 },
         { "id": 6, "value": "Best-of de live (Highlights)", "difficulty": 3 },
-        { "id": 7, "value": "Micro-trottoir (Style rue)", "difficulty": 4 },
+        {
+          "id": 7,
+          "value": "Micro-trottoir (Style rue)",
+          "difficulty": 4,
+          "description": "Format d'interviews très courtes tournées dans la rue avec des inconnus ou des passants."
+        },
         { "id": 8, "value": "Unboxing / Test de produit", "difficulty": 2 }
       ]
     },
@@ -62,7 +67,8 @@
         {
           "id": 8,
           "value": "Son de texture ASMR haute qualité",
-          "difficulty": 4
+          "difficulty": 4,
+          "description": "Mettre en avant des sons proches, propres et satisfaisants comme des frottements, chuchotements ou clics."
         },
         {
           "id": 9,
@@ -273,7 +279,8 @@
         {
           "id": 2,
           "value": "Boucle parfaite : La fin de la phrase termine au début",
-          "difficulty": 4
+          "difficulty": 4,
+          "description": "La fin rejoint naturellement le début pour donner envie de revoir la vidéo en boucle."
         },
         {
           "id": 3,
@@ -531,7 +538,8 @@
         {
           "id": 6,
           "value": "Cinématique sans visage (B-Roll lourd)",
-          "difficulty": 5
+          "difficulty": 5,
+          "description": "La vidéo repose surtout sur des plans d'illustration et d'ambiance, avec peu ou pas de face caméra."
         }
       ]
     },
@@ -1092,7 +1100,8 @@
             {
               "id": 17,
               "value": "Avec une vidéo de 'Subway Surfers' en dessous",
-              "difficulty": 4
+              "difficulty": 4,
+              "description": "Format split-screen où un gameplay très stimulant occupe le bas de l'écran pendant qu'on parle."
             },
             {
               "id": 18,
@@ -1538,7 +1547,8 @@
         {
           "id": 60,
           "value": "Ambiance : Dreamcore (utilisez des lentilles floues ou de la vaseline sur les bords de l'objectif)",
-          "difficulty": 4
+          "difficulty": 4,
+          "description": "Esthétique floue, nostalgique et légèrement inquiétante, comme un rêve ou un souvenir déformé."
         },
         {
           "id": 61,
