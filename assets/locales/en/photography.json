@@ -1,7 +1,7 @@
 {
   "project_type": "Photography",
   "language": "en",
-  "tags": ["photography", "physical", "short"],
+  "tags": ["photography"],
   "categories": [
     {
       "name": "Material & Gear",
@@ -386,6 +386,7 @@
     },
     {
       "name": "Subject",
+      "description": "The person, object, place, or living element that should become the focus of the shot.",
       "options": [
         { "id": 1, "value": "Absence", "difficulty": 5 },
         { "id": 2, "value": "Abyss", "difficulty": 5 },

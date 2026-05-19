@@ -2,7 +2,7 @@
   "project_type": "Photography",
   "project_label": "Photographie",
   "language": "fr",
-  "tags": ["photography", "physical", "short"],
+  "tags": ["photography"],
   "categories": [
     {
       "name": "Material & Gear",
@@ -467,6 +467,7 @@
     {
       "name": "Subject",
       "label": "Sujet",
+      "description": "La personne, l'objet, le lieu ou l'être vivant qui doit devenir le centre de la photo.",
       "options": [
         { "id": 1, "value": "Absence", "difficulty": 5 },
         { "id": 2, "value": "Abysse", "difficulty": 5 },

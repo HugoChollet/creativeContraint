@@ -1,11 +1,12 @@
 {
   "project_type": "Board Game",
   "language": "fr",
-  "tags": ["game", "physical", "long", "character"],
+  "tags": ["board game", "game"],
   "categories": [
     {
       "name": "Game Style & Mechanics",
       "label": "Style de jeu & Mécaniques",
+      "description": "Le système central qui définit les décisions, interactions et boucles de jeu.",
       "options": [
         { "id": 1, "value": "Placement d'ouvriers", "difficulty": 2 },
         { "id": 2, "value": "Deck-building", "difficulty": 2 },
@@ -74,6 +75,7 @@
     {
       "name": "Physical Support",
       "label": "Support physique",
+      "description": "Les composants et formats matériels qui donnent sa forme concrète au jeu.",
       "options": [
         { "id": 1, "value": "Plateau modulaire (tuiles)", "difficulty": 2 },
         { "id": 2, "value": "Cartes uniquement", "difficulty": 1 },
@@ -122,6 +124,7 @@
     {
       "name": "Player Action",
       "label": "Action du joueur",
+      "description": "Les verbes principaux que les joueurs accomplissent pendant la partie.",
       "options": [
         { "id": 1, "value": "Lancer de dés", "difficulty": 1 },
         { "id": 2, "value": "Dessiner à main levée", "difficulty": 2 },
@@ -182,6 +185,7 @@
     {
       "name": "Information Flow",
       "label": "Flux d'information",
+      "description": "La manière dont les informations sont cachées, révélées, partagées ou suivies.",
       "options": [
         { "id": 1, "value": "Information complète (échecs)", "difficulty": 1 },
         { "id": 2, "value": "Rôles cachés", "difficulty": 2 },
@@ -266,6 +270,7 @@
     {
       "name": "Turn Structure",
       "label": "Structure du tour",
+      "description": "Le rythme de jeu et l'ordre dans lequel les actions et résolutions s'enchaînent.",
       "options": [
         { "id": 1, "value": "Chacun son tour (sens horaire)", "difficulty": 1 },
         { "id": 2, "value": "Temps réel (Simultané)", "difficulty": 3 },
@@ -338,6 +343,7 @@
     {
       "name": "Victory Conditions",
       "label": "Conditions de victoire",
+      "description": "Ce qu'il faut accomplir, accumuler ou surpasser pour gagner.",
       "options": [
         { "id": 1, "value": "Plus haut score (Points)", "difficulty": 1 },
         { "id": 2, "value": "Course (Premier arrivé)", "difficulty": 2 },
@@ -394,6 +400,7 @@
     {
       "name": "Player Relationship",
       "label": "Relation entre joueurs",
+      "description": "La dynamique sociale entre les participants, entre coopération, confrontation et négociation.",
       "options": [
         { "id": 1, "value": "Chacun pour soi (Compétitif)", "difficulty": 1 },
         { "id": 2, "value": "Tous ensemble (Coopératif)", "difficulty": 2 },
@@ -474,6 +481,7 @@
     {
       "name": "Setting & Universe",
       "label": "Univers & Ambiance",
+      "description": "Le thème, le monde ou l'habillage narratif qui donne son identité au jeu.",
       "options": [
         { "id": 1, "value": "Mythologie Grecque", "difficulty": 1 },
         { "id": 2, "value": "Seconde Guerre Mondiale (WW2)", "difficulty": 1 },

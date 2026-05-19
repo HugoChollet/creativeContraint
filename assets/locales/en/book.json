@@ -1,10 +1,11 @@
 {
   "project_type": "Book",
   "language": "en",
-  "tags": ["writing", "fiction", "long"],
+  "tags": ["writing", "fiction"],
   "categories": [
     {
       "name": "Genre & Setting",
+      "description": "Defines the narrative world, genre conventions, and overall backdrop of the story.",
       "options": [
         { "id": 1, "value": "Absurdist Fiction", "difficulty": 5 },
         { "id": 2, "value": "Afrofuturism", "difficulty": 4 },
@@ -119,6 +120,7 @@
     },
     {
       "name": "Core Theme",
+      "description": "The central idea, tension, or question the book keeps returning to.",
       "options": [
         { "id": 1, "value": "Artificial Intelligence Soul", "difficulty": 4 },
         { "id": 2, "value": "Atonement for Past Sins", "difficulty": 2 },
@@ -186,6 +188,7 @@
     },
     {
       "name": "Narrative Format",
+      "description": "Structural choices for how the story is told, from point of view to document style.",
       "options": [
         { "id": 1, "value": "Annotated Manuscript", "difficulty": 5 },
         { "id": 2, "value": "Collection of Short Stories", "difficulty": 3 },

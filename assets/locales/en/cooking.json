@@ -1,10 +1,11 @@
 {
   "project_type": "Cooking",
   "language": "en",
-  "tags": ["physical", "short"],
+  "tags": ["cooking"],
   "categories": [
     {
       "name": "Base / Carb",
+      "description": "The main starch or foundation ingredient that anchors the dish.",
       "options": [
         { "id": 1, "value": "Rice", "difficulty": 1 },
         { "id": 2, "value": "Pasta", "difficulty": 1 },
@@ -128,6 +129,7 @@
     },
     {
       "name": "Protein / Vegetable",
+      "description": "The primary filling element, whether animal protein, legumes, or vegetables.",
       "options": [
         { "id": 1, "value": "Chicken", "difficulty": 1 },
         { "id": 2, "value": "Beef", "difficulty": 1 },
@@ -228,6 +230,7 @@
     },
     {
       "name": "Fat / Sauce",
+      "description": "Richness, moisture, and binding elements that shape flavor and mouthfeel.",
       "options": [
         { "id": 1, "value": "Olive Oil", "difficulty": 1 },
         { "id": 2, "value": "Vegetable Oil", "difficulty": 1 },
@@ -292,6 +295,7 @@
     },
     {
       "name": "Seasoning / Flavoring / Topping",
+      "description": "Spices, aromatics, garnishes, and finishing touches that define the final profile.",
       "options": [
         { "id": 1, "value": "Salt", "difficulty": 1 },
         { "id": 2, "value": "Black Pepper", "difficulty": 1 },
@@ -357,6 +361,7 @@
 
     {
       "name": "Cooking Method / Heat",
+      "description": "How the dish is cooked, heated, or finished in the kitchen.",
       "options": [
         { "id": 1, "value": "Baking", "difficulty": 1 },
         { "id": 2, "value": "Boiling", "difficulty": 1 },
@@ -382,6 +387,7 @@
     },
     {
       "name": "Cuisine / Style / Origin",
+      "description": "Cultural inspiration, regional identity, or culinary tradition guiding the dish.",
       "options": [
         { "id": 1, "value": "French", "difficulty": 2 },
         { "id": 2, "value": "Italian", "difficulty": 1 },
@@ -407,6 +413,7 @@
     },
     {
       "name": "Dish Type / Texture / Occasion",
+      "description": "The serving format, eating experience, or moment the dish is made for.",
       "options": [
         { "id": 1, "value": "Soup", "difficulty": 1 },
         { "id": 2, "value": "Salad", "difficulty": 1 },

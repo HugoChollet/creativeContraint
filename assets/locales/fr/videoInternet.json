@@ -2,10 +2,11 @@
   "project_type": "Internet Video",
   "project_label": "Vidéo pour plateforme",
   "language": "fr",
-  "tags": ["video", "short", "character"],
+  "tags": ["video", "internet-content"],
   "categories": [
     {
       "name": "Type",
+      "description": "Le format principal ou l'archétype de créateur sur lequel repose la vidéo.",
       "disabled": true,
       "options": [
         { "id": 1, "value": "Format court (en boucle)", "difficulty": 1 },
@@ -21,6 +22,7 @@
     {
       "name": "The Hook",
       "label": "L'Accroche",
+      "description": "La promesse d'ouverture qui doit capter l'attention dès les premières secondes.",
       "options": [
         {
           "id": 1,
@@ -261,6 +263,7 @@
     {
       "name": "Algorithm & Retention Strategy",
       "label": "Algorithme & Stratégie de Rétention",
+      "description": "Les mécaniques pensées pour stimuler la rétention, la curiosité et le partage.",
       "options": [
         {
           "id": 1,
@@ -509,6 +512,7 @@
     {
       "name": "Platform & Delivery Format",
       "label": "Plateforme & Format de Diffusion",
+      "description": "Le contexte de diffusion, les codes techniques et les usages du public ciblé.",
       "disabled": true,
       "options": [
         { "id": 1, "value": "Vertical (9:16) - Natif Mobile", "difficulty": 1 },
@@ -534,12 +538,14 @@
     {
       "name": "Video Content",
       "label": "Contenu de la Vidéo",
+      "description": "Les ingrédients principaux de ce qui se passe à l'écran et maintient l'intérêt.",
       "tabs": ["Subject", "Action", "Context"],
       "tabs_label": ["Sujet", "Action", "Contexte"],
       "sub_categories": [
         {
           "name": "Subject",
           "label": "Sujet",
+          "description": "La personne, l'objet ou le thème sur lequel la vidéo se concentre.",
           "options": [
             { "id": 1, "value": "Un colis Amazon mystérieux", "difficulty": 1 },
             {
@@ -768,6 +774,7 @@
         {
           "name": "Action",
           "label": "Action",
+          "description": "Ce que l'on voit se produire, être expliqué ou être exécuté à l'écran.",
           "options": [
             {
               "id": 1,
@@ -1016,6 +1023,7 @@
         {
           "name": "Contexte",
           "label": "Context",
+          "description": "Le cadre, la situation ou la prémisse qui entoure le contenu.",
           "options": [
             { "id": 1, "value": "Dans un défi de 24 heures", "difficulty": 3 },
             { "id": 2, "value": "En chuchotant (style ASMR)", "difficulty": 4 },
@@ -1230,6 +1238,7 @@
     {
       "name": "Wildcards",
       "label": "Contraintes Atouts (Wildcards)",
+      "description": "Des contraintes surprises ou des twists de production qui rendent le concept plus singulier.",
       "options": [
         {
           "id": 1,

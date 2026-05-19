@@ -2,10 +2,11 @@
   "project_type": "Video Fiction",
   "project_label": "Vidéo de fiction",
   "language": "fr",
-  "tags": ["video", "fiction", "long", "character"],
+  "tags": ["video", "fiction", "character"],
   "categories": [
     {
       "name": "Genre",
+      "description": "Le grand registre narratif qui fixe les attentes de ton, d'enjeux et de mise en scène.",
       "options": [
         { "id": 1, "value": "Fiction absurde", "difficulty": 5 },
         { "id": 2, "value": "Action", "difficulty": 1 },
@@ -112,6 +113,7 @@
     {
       "name": "Subgenre",
       "label": "Sous-genre",
+      "description": "Une couleur plus précise qui affine l'identité du projet à l'intérieur du genre principal.",
       "options": [
         { "id": 1, "value": "Style A24", "difficulty": 5 },
         { "id": 2, "value": "Absurde", "difficulty": 5 },
@@ -218,6 +220,7 @@
     {
       "name": "Themes",
       "label": "Thèmes",
+      "description": "Les idées, conflits ou questions émotionnelles que l'histoire doit faire ressortir.",
       "options": [
         { "id": 1, "value": "Absurdité de l'existence", "difficulty": 5 },
         { "id": 2, "value": "Humanité artificielle", "difficulty": 5 },
@@ -324,12 +327,14 @@
     {
       "name": "Scene",
       "label": "Scène",
+      "description": "Les ingrédients concrets d'un moment à écrire, cadrer ou mettre en scène.",
       "tabs": ["Subject", "Action", "Context"],
       "tabs_label": ["Sujet", "Action", "Contexte"],
       "sub_categories": [
         {
           "name": "Subject",
           "label": "Sujet",
+          "description": "La personne, l'objet ou l'élément dramatique au centre de la scène.",
           "options": [
             { "id": 1, "value": "Une fée bannie", "difficulty": 4 },
             { "id": 2, "value": "Un samouraï aveugle", "difficulty": 5 },
@@ -469,6 +474,7 @@
         {
           "name": "Action",
           "label": "Action",
+          "description": "Ce qui se déroule dans la scène à travers les gestes, les événements ou le conflit.",
           "options": [
             { "id": 1, "value": "accepte un pot-de-vin", "difficulty": 3 },
             { "id": 2, "value": "attaque un garde", "difficulty": 4 },
@@ -579,6 +585,7 @@
         {
           "name": "Context",
           "label": "Contexte",
+          "description": "Le lieu, la situation ou le cadre dramatique dans lequel la scène prend place.",
           "options": [
             { "id": 1, "value": "dans un salon de beauté", "difficulty": 2 },
             { "id": 2, "value": "dans une salle de boxe", "difficulty": 3 },

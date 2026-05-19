@@ -1,10 +1,11 @@
 {
   "project_type": "Board Game",
   "language": "en",
-  "tags": ["game", "physical", "long", "character"],
+  "tags": ["board game", "game"],
   "categories": [
     {
       "name": "Game Style & Mechanics",
+      "description": "The core system that defines how players interact with rules, resources, and decisions.",
       "options": [
         { "id": 1, "value": "Worker Placement", "difficulty": 2 },
         { "id": 2, "value": "Deck-building", "difficulty": 2 },
@@ -48,6 +49,7 @@
     },
     {
       "name": "Physical Support",
+      "description": "The tabletop materials or components that give the game its physical form.",
       "options": [
         { "id": 1, "value": "Modular Board (Tiles)", "difficulty": 2 },
         { "id": 2, "value": "Cards Only", "difficulty": 1 },
@@ -91,6 +93,7 @@
     },
     {
       "name": "Player Action",
+      "description": "The main verbs players perform during play, from drafting to bluffing to negotiating.",
       "options": [
         { "id": 1, "value": "Dice Rolling", "difficulty": 1 },
         { "id": 2, "value": "Freehand Drawing", "difficulty": 2 },
@@ -130,6 +133,7 @@
     },
     {
       "name": "Information Flow",
+      "description": "How knowledge is shared, hidden, revealed, or tracked across the table.",
       "options": [
         { "id": 1, "value": "Perfect Information (Chess)", "difficulty": 1 },
         { "id": 2, "value": "Hidden Roles", "difficulty": 2 },
@@ -181,6 +185,7 @@
     },
     {
       "name": "Turn Structure",
+      "description": "The cadence of play and the order in which players act, react, and resolve effects.",
       "options": [
         { "id": 1, "value": "Sequential (Clockwise)", "difficulty": 1 },
         { "id": 2, "value": "Real-Time (Simultaneous)", "difficulty": 3 },
@@ -224,6 +229,7 @@
     },
     {
       "name": "Victory Conditions",
+      "description": "What players must achieve, collect, or outlast to win the game.",
       "options": [
         { "id": 1, "value": "High Score (Points)", "difficulty": 1 },
         { "id": 2, "value": "Race (First to Arrive)", "difficulty": 2 },
@@ -267,6 +273,7 @@
     },
     {
       "name": "Player Relationship",
+      "description": "The social dynamic between players, whether collaborative, competitive, or somewhere in between.",
       "options": [
         { "id": 1, "value": "Free-for-All (Competitive)", "difficulty": 1 },
         { "id": 2, "value": "All-Together (Cooperative)", "difficulty": 2 },
@@ -330,6 +337,7 @@
     },
     {
       "name": "Setting & Universe",
+      "description": "The theme, world, or narrative wrapper that gives the game its identity.",
       "options": [
         { "id": 1, "value": "Greek Mythology", "difficulty": 1 },
         { "id": 2, "value": "World War II (WW2)", "difficulty": 1 },

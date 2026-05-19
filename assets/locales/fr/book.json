@@ -2,11 +2,12 @@
   "project_type": "Book",
   "project_label": "Livre",
   "language": "fr",
-  "tags": ["writing", "fiction", "long"],
+  "tags": ["writing", "fiction"],
   "categories": [
     {
       "name": "Genre & Setting",
       "label": "Genre & Univers",
+      "description": "Définit le genre du récit, ses codes et le monde dans lequel l'histoire prend place.",
       "options": [
         { "id": 1, "value": "Fiction absurdiste", "difficulty": 5 },
         { "id": 2, "value": "Afrofuturisme", "difficulty": 4 },
@@ -162,6 +163,7 @@
     {
       "name": "Core Theme",
       "label": "Thème central",
+      "description": "L'idée, la tension ou la question principale que le livre explore en profondeur.",
       "options": [
         {
           "id": 1,
@@ -246,6 +248,7 @@
     {
       "name": "Narrative Format",
       "label": "Format narratif",
+      "description": "Les choix de structure et de narration qui déterminent comment l'histoire est racontée.",
       "options": [
         { "id": 1, "value": "Manuscrit annoté", "difficulty": 5 },
         { "id": 2, "value": "Recueil de nouvelles", "difficulty": 3 },

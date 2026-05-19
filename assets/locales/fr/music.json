@@ -2,7 +2,7 @@
   "project_type": "Music",
   "project_label": "Musique",
   "language": "fr",
-  "tags": ["music", "short"],
+  "tags": ["music"],
   "categories": [
     {
       "name": "Instruments",
@@ -465,6 +465,7 @@
         {
           "name": "Subject",
           "label": "Sujet",
+          "description": "La personne, l'idée ou l'objet au centre des paroles.",
           "options": [
             { "id": 1, "value": "Un chœur de statues", "difficulty": 5 },
             { "id": 2, "value": "Un astronaute en disgrâce", "difficulty": 4 },
@@ -588,6 +589,7 @@
         },
         {
           "name": "Action",
+          "description": "Ce qui se produit, se ressent ou se raconte dans les paroles.",
           "options": [
             { "id": 1, "value": "s'excusant pour tout", "difficulty": 2 },
             { "id": 2, "value": "brisant un long silence", "difficulty": 2 },
@@ -732,6 +734,7 @@
         {
           "name": "Context",
           "label": "Contexte",
+          "description": "La situation, le décor ou le point de vue qui encadre le texte.",
           "options": [
             { "id": 1, "value": "à travers une pièce bondée", "difficulty": 2 },
             { "id": 2, "value": "après le rideau final", "difficulty": 4 },

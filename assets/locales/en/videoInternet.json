@@ -1,10 +1,11 @@
 {
   "project_type": "Internet Video",
   "language": "en",
-  "tags": ["video", "short", "character"],
+  "tags": ["video", "internet-content"],
   "categories": [
     {
       "name": "Type",
+      "description": "The core format or creator archetype the video is built around.",
       "disabled": true,
       "options": [
         { "id": 1, "value": "Short-Form (Loop-based)", "difficulty": 1 },
@@ -19,6 +20,7 @@
     },
     {
       "name": "The Hook",
+      "description": "The opening promise or attention-grabber that makes someone stop scrolling.",
       "options": [
         {
           "id": 1,
@@ -226,6 +228,7 @@
     },
     {
       "name": "Algorithm & Retention Strategy",
+      "description": "Mechanics designed to boost watch time, curiosity, and replay value.",
       "options": [
         {
           "id": 1,
@@ -473,6 +476,7 @@
     },
     {
       "name": "Platform & Delivery Format",
+      "description": "The publishing context, technical framing, and audience habits the video should fit.",
       "disabled": true,
       "options": [
         {
@@ -505,10 +509,12 @@
     },
     {
       "name": "Video Content",
+      "description": "The main ingredients of what happens on screen and why it stays engaging.",
       "tabs": ["Subject", "Action", "Context"],
       "sub_categories": [
         {
           "name": "Subject",
+          "description": "Who or what the video focuses on.",
           "options": [
             { "id": 1, "value": "A mystery Amazon package", "difficulty": 1 },
             {
@@ -692,6 +698,7 @@
         },
         {
           "name": "Action",
+          "description": "What the viewer sees happening, demonstrated, or performed.",
           "options": [
             {
               "id": 1,
@@ -939,6 +946,7 @@
         },
         {
           "name": "Context",
+          "description": "The setting, premise, or situational frame around the content.",
           "options": [
             { "id": 1, "value": "In a 24-hour challenge", "difficulty": 3 },
             {
@@ -1100,6 +1108,7 @@
     },
     {
       "name": "Wildcards",
+      "description": "Extra twists, production rules, or surprise modifiers that push the concept somewhere unexpected.",
       "options": [
         {
           "id": 1,

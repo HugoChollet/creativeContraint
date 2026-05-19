@@ -7,6 +7,7 @@
     {
       "name": "Base / Carb",
       "label": "Base / Féculents",
+      "description": "L'ingrédient de base qui soutient le plat, souvent un féculent ou une structure principale.",
       "options": [
         { "id": 1, "value": "Riz", "difficulty": 1 },
         { "id": 2, "value": "Pâtes", "difficulty": 1 },
@@ -113,6 +114,7 @@
     {
       "name": "Protein / Vegetable",
       "label": "Protéines / Légumes",
+      "description": "L'élément principal du plat, qu'il s'agisse d'une protéine, d'une légumineuse ou d'un légume.",
       "options": [
         { "id": 1, "value": "Poulet", "difficulty": 1 },
         { "id": 2, "value": "Bœuf", "difficulty": 1 },
@@ -199,6 +201,7 @@
     {
       "name": "Fat / Sauce",
       "label": "Matière Grasse / Sauce",
+      "description": "Les éléments qui apportent liant, richesse et onctuosité à l'ensemble.",
       "options": [
         { "id": 1, "value": "Huile d'olive", "difficulty": 1 },
         { "id": 2, "value": "Huile végétale", "difficulty": 1 },
@@ -259,6 +262,7 @@
     {
       "name": "Seasoning / Flavoring / Topping",
       "label": "Assaisonnement / Arômes / Garniture",
+      "description": "Les épices, herbes, condiments et finitions qui signent le profil gustatif.",
       "options": [
         { "id": 1, "value": "Sel", "difficulty": 1 },
         { "id": 2, "value": "Poivre noir", "difficulty": 1 },
@@ -315,6 +319,7 @@
     {
       "name": "Cooking Method / Heat",
       "label": "Mode de cuisson / Chaleur",
+      "description": "La manière dont le plat est cuit, saisi, mijoté ou finalisé.",
       "options": [
         { "id": 1, "value": "Cuisson au four", "difficulty": 1 },
         { "id": 2, "value": "Bouillir", "difficulty": 1 },
@@ -341,6 +346,7 @@
     {
       "name": "Cuisine / Style / Origin",
       "label": "Cuisine / Style / Origine",
+      "description": "L'inspiration culturelle, régionale ou culinaire qui oriente le plat.",
       "options": [
         { "id": 1, "value": "Française", "difficulty": 2 },
         { "id": 2, "value": "Italienne", "difficulty": 1 },
@@ -367,6 +373,7 @@
     {
       "name": "Dish Type / Texture / Occasion",
       "label": "Type de plat / Texture / Occasion",
+      "description": "La forme de service, la sensation en bouche ou le moment de consommation visé.",
       "options": [
         { "id": 1, "value": "Soupe", "difficulty": 1 },
         { "id": 2, "value": "Salade", "difficulty": 1 },

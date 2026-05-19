@@ -1,10 +1,11 @@
 {
   "project_type": "Video Fiction",
   "language": "en",
-  "tags": ["video", "fiction", "long", "character"],
+  "tags": ["video", "fiction", "character"],
   "categories": [
     {
       "name": "Genre",
+      "description": "The broad storytelling lane that sets audience expectations for tone, stakes, and style.",
       "options": [
         { "id": 1, "value": "Absurdist Fiction", "difficulty": 5 },
         { "id": 2, "value": "Action", "difficulty": 1 },
@@ -110,6 +111,7 @@
     },
     {
       "name": "Subgenre",
+      "description": "A more specific creative angle that sharpens the film's identity within the main genre.",
       "options": [
         { "id": 1, "value": "A24-Style", "difficulty": 5 },
         { "id": 2, "value": "Absurdist", "difficulty": 5 },
@@ -215,6 +217,7 @@
     },
     {
       "name": "Themes",
+      "description": "Recurring ideas, conflicts, or emotional questions the story should explore.",
       "options": [
         { "id": 1, "value": "Absurdity of Existence", "difficulty": 5 },
         { "id": 2, "value": "Artificial Humanity", "difficulty": 5 },
@@ -320,10 +323,12 @@
     },
     {
       "name": "Scene",
+      "description": "The concrete ingredients of a moment to stage, shoot, or write inside the fiction.",
       "tabs": ["Subject", "Action", "Context"],
       "sub_categories": [
         {
           "name": "Subject",
+          "description": "Who or what the scene centers on visually or dramatically.",
           "options": [
             { "id": 1, "value": "A banished fairy", "difficulty": 4 },
             { "id": 2, "value": "A blind samurai", "difficulty": 5 },
@@ -426,6 +431,7 @@
         },
         {
           "name": "Action",
+          "description": "What unfolds in the scene through movement, behavior, or conflict.",
           "options": [
             { "id": 1, "value": "accepts a bribe", "difficulty": 3 },
             { "id": 2, "value": "attacks a guard", "difficulty": 4 },
@@ -527,6 +533,7 @@
         },
         {
           "name": "Context",
+          "description": "The setting, circumstances, or dramatic frame surrounding the scene.",
           "options": [
             { "id": 1, "value": "at a beauty salon", "difficulty": 2 },
             { "id": 2, "value": "at a boxing gym", "difficulty": 3 },
