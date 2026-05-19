@@ -2,22 +2,18 @@ import {
   getDefaultProjectLanguage,
   getDefaultProjectSupportedFileType,
   getDefaultProjectTags,
-  getPrimaryProjectTag,
   normalizeProjectTags,
   ProjectLanguage,
   ProjectSupportedFileType,
   ProjectTag,
 } from "@/constants/project-metadata";
-import { getHomeProjectTypeFromTag } from "@/constants/home-projects";
-import { getProjectColor } from "@/constants/theme";
+import { getHomeProjectColorFromTags } from "@/constants/home-projects";
 import { Category } from "@/types/category";
 import i18n from "@/i18n";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 
 const getProjectColorFromTags = (values?: readonly string[] | null) =>
-  getProjectColor({
-    label: getHomeProjectTypeFromTag(getPrimaryProjectTag(values)) ?? "book",
-  });
+  getHomeProjectColorFromTags(values);
 
 interface ProjectDraftContextType {
   id: string;
