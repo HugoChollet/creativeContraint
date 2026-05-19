@@ -25,7 +25,6 @@ export const PROJECT_TAGS = [
   "vlog",
   "stream",
   "dnd",
-  "object",
   "sport",
   "clothe",
   "vehicle",
