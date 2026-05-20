@@ -23,6 +23,8 @@
     "selected_project_choice": "Choose one of your saved project generators",
     "no_selected_projects": "You have no saved project generators yet",
     "no_selected_projects_hint": "Pick some project generators from the browse screen and they will appear here.",
+    "no_filtered_projects": "No saved project generators match this language yet",
+    "no_filtered_projects_hint": "Remove the language filter to see your other saved generators.",
     "project_source_official": "Official",
     "project_source_you": "Made by you",
     "project_source_user": "Made by {{username}}",

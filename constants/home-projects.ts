@@ -156,40 +156,15 @@ const homeProjectVisualsByTag: Partial<
     image: PROJECT_IMAGES.character,
     color: "#5ECCFF",
   },
-  localisation: {
-    type: "book",
-    image: PROJECT_IMAGES.book,
-    color: "rgba(27, 23, 208, 1)",
-  },
-  physical: {
-    type: "photography",
-    image: PROJECT_IMAGES.photography,
-    color: "rgba(184, 22, 128, 1)",
-  },
-  numerical: {
-    type: "videoGame",
-    image: PROJECT_IMAGES.videoGame,
-    color: "rgba(84, 35, 147, 1)",
-  },
   photography: {
     type: "photography",
     image: PROJECT_IMAGES.photography,
     color: "rgba(184, 22, 128, 1)",
   },
-  short: {
-    type: "videoInternet",
-    image: PROJECT_IMAGES.videoInternet,
-    color: "rgba(130, 200, 104, 1)",
-  },
   podcast: {
     type: "music",
     image: PROJECT_IMAGES.podcast,
     color: "#22883C",
-  },
-  long: {
-    type: "book",
-    image: PROJECT_IMAGES.book,
-    color: "rgba(27, 23, 208, 1)",
   },
   "internet-content": {
     type: "videoInternet",
@@ -235,11 +210,6 @@ const homeProjectVisualsByTag: Partial<
     type: "boardgame",
     image: PROJECT_IMAGES.dnd,
     color: "#B61400",
-  },
-  object: {
-    type: "photography",
-    image: PROJECT_IMAGES.photography,
-    color: "#88A5D9",
   },
   sport: {
     type: "videoInternet",

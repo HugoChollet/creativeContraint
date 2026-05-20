@@ -24,6 +24,8 @@
     "selected_project_choice": "Choisissez un de vos générateurs de projet sauvegardés",
     "no_selected_projects": "Vous n'avez pas encore de générateurs de projet sauvegardés",
     "no_selected_projects_hint": "Choisissez des générateurs depuis l'écran de navigation et ils apparaîtront ici.",
+    "no_filtered_projects": "Aucun générateur sauvegardé ne correspond à cette langue pour le moment",
+    "no_filtered_projects_hint": "Retirez le filtre de langue pour voir vos autres générateurs sauvegardés.",
     "project_source_official": "Officiel",
     "project_source_you": "Créé par vous",
     "project_source_user": "Créé par {{username}}",
