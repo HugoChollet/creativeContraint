@@ -2,7 +2,7 @@ import { getHomeProjectType } from "@/constants/home-projects";
 import i18n from "@/i18n";
 import { Category } from "@/types/category";
 import { ProjectJSON } from "@/types/json-objects";
-import { Project } from "@/types/projects";
+import { Project, ProjectRelation } from "@/types/projects";
 
 const DEFAULT_PROJECT_NAMESPACE = "book";
 
@@ -16,6 +16,23 @@ const projectNamespaceByType: Record<string, string> = {
   boardgame: "boardGame",
   videogame: "videoGame",
 };
+
+export const PROJECT_RELATION_SELECT = `
+  *,
+  project_category_relations (
+    categories (
+      id,
+      name,
+      description,
+      options,
+      language,
+      tags,
+      is_public,
+      owner_id,
+      source
+    )
+  )
+`;
 
 export const getProjectRouteType = (value?: string | null) => {
   const normalizedValue = value?.trim();
@@ -45,7 +62,20 @@ export const getProjectTitle = ({
 }: Pick<ProjectJSON, "project_label" | "project_type">) =>
   project_label ?? project_type;
 
-// Guest/offline flows still rely on the bundled JSON project definitions.
+export const buildProjectFromProjectRelation = (
+  projectRelation: ProjectRelation,
+): Project => {
+  const { project_category_relations, ...project } = projectRelation;
+
+  return {
+    ...project,
+    categories: project_category_relations.flatMap((relation) =>
+      relation.categories ? [relation.categories] : [],
+    ),
+  };
+};
+
+// Bundled JSON remains the fallback when no DB-backed public project is available.
 export const getBundledProjectData = ({
   projectType,
   language = i18n.language,
