@@ -113,7 +113,7 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     mediaIntegrationContainer: {
       ...baseContainer,
       borderRadius: 12,
-      backgroundColor: themes.hardContainer,
+      backgroundColor: themes.softContainer,
       borderStyle: "dashed",
       borderWidth: 2,
       alignItems: "center",

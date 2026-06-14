@@ -122,9 +122,9 @@ const homeProjectVisualsByTag: Partial<
   Record<ProjectTag, HomeProjectTagVisual>
 > = {
   all: {
-    type: "book",
+    type: "all",
     image: PROJECT_IMAGES.allOther,
-    color: "#C3C3C3",
+    color: "#9e9d9d",
   },
   fiction: {
     type: "videoFiction",
@@ -152,7 +152,7 @@ const homeProjectVisualsByTag: Partial<
     color: "rgba(23, 184, 166, 1)",
   },
   character: {
-    type: "videoFiction",
+    type: "character",
     image: PROJECT_IMAGES.character,
     color: "#5ECCFF",
   },
@@ -197,27 +197,27 @@ const homeProjectVisualsByTag: Partial<
     color: "rgba(255, 114, 94, 1)",
   },
   vlog: {
-    type: "videoInternet",
+    type: "vlog",
     image: PROJECT_IMAGES.vlog,
     color: "#A7D257",
   },
   stream: {
-    type: "videoInternet",
+    type: "stream",
     image: PROJECT_IMAGES.stream,
     color: "#9800DF",
   },
   dnd: {
-    type: "boardgame",
+    type: "dnd",
     image: PROJECT_IMAGES.dnd,
     color: "#B61400",
   },
   sport: {
-    type: "videoInternet",
+    type: "sport",
     image: PROJECT_IMAGES.sports,
     color: "#FF8433",
   },
   clothe: {
-    type: "photography",
+    type: "clothe",
     image: PROJECT_IMAGES.clothes,
     color: "#FF002B",
   },
@@ -227,44 +227,44 @@ const homeProjectVisualsByTag: Partial<
     color: "#D2B079",
   },
   business: {
-    type: "book",
+    type: "business",
     image: PROJECT_IMAGES.business,
     color: "#349C81",
   },
   product: {
-    type: "photography",
+    type: "product",
     image: PROJECT_IMAGES.product,
     color: "rgba(184, 22, 128, 1)",
   },
   website: {
-    type: "videoInternet",
+    type: "website",
     image: PROJECT_IMAGES.website,
     color: "#BEA6ED",
   },
   comic: {
-    type: "videoFiction",
+    type: "comic",
     image: PROJECT_IMAGES.comic,
     color: "#A4662A",
   },
   architecture: {
-    type: "photography",
+    type: "architecture",
     image: PROJECT_IMAGES.architecture,
     color: "#FFE5BA",
   },
   education: {
-    type: "book",
+    type: "education",
     image: PROJECT_IMAGES.education,
     color: "#92E3D5",
   },
   enigma: {
-    type: "boardgame",
+    type: "enigma",
     image: PROJECT_IMAGES.enigma,
     color: "#FF4082",
   },
   other: {
-    type: "book",
+    type: "other",
     image: PROJECT_IMAGES.allOther,
-    color: "#C3C3C3",
+    color: "#9e9d9d",
   },
 };
 
