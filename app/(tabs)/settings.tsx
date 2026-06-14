@@ -1,6 +1,7 @@
 import { Spacer } from "@/components/generic/spacer";
 import Account from "@/components/specific/account";
 import Auth from "@/components/specific/auth";
+import { TutorialSettingsButton } from "@/components/specific/tutorial/tutorial-settings-button";
 import { useStyles } from "@/hooks/use-styles";
 import { supabase } from "@/lib/supabase";
 import { Session } from "@supabase/supabase-js";
@@ -28,6 +29,8 @@ export default function SettingsScreen() {
         <View>
           {session && session.user ? <Account session={session} /> : <Auth />}
         </View>
+        <Spacer height={24} />
+        <TutorialSettingsButton />
         <Spacer height={24} />
       </ScrollView>
     </View>

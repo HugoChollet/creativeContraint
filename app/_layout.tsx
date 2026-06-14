@@ -1,6 +1,8 @@
+import { TutorialCarousel } from "@/components/specific/tutorial/tutorial-carousel";
 import { AuthProvider } from "@/contexts/auth-context";
 import { ProjectDraftProvider } from "@/contexts/project-draft-context";
 import { ThemeProvider } from "@/contexts/theme-context";
+import { TutorialProvider } from "@/contexts/tutorial-context";
 import { useStyles } from "@/hooks/use-styles";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -42,9 +44,12 @@ export default function RootLayout() {
     <ThemeProvider>
       <AuthProvider>
         <ProjectDraftProvider>
-          <SafeAreaProvider>
-            <AppLayout />
-          </SafeAreaProvider>
+          <TutorialProvider>
+            <SafeAreaProvider>
+              <AppLayout />
+              <TutorialCarousel />
+            </SafeAreaProvider>
+          </TutorialProvider>
         </ProjectDraftProvider>
       </AuthProvider>
     </ThemeProvider>
