@@ -44,8 +44,16 @@
     "language_selection": "Application Language"
   },
   "constraint_sets": {
-    "title": "My Constraints Sets",
+    "title": "Constraint Sets",
     "no_constraint_sets": "You have no Constraints Sets yet. Start by creating one!",
+    "personal_tab": "Personal",
+    "community_tab": "Community",
+    "publish_to_community": "Upload to community",
+    "published_to_community": "Already in the community",
+    "publish_success_title": "Uploaded",
+    "publish_success_message": "This constraint set is now available to the community.",
+    "publish_error_title": "Upload failed",
+    "publish_error_message": "Could not upload this constraint set. Please try again.",
     "create_button": "Create New Project",
     "delete_button": "Delete Project",
     "confirm_delete": "Are you sure you want to delete this project? This action cannot be undone.",
@@ -54,6 +62,17 @@
     "difficulty": "Difficulty",
     "refresh": "Refresh",
     "auth_required": "Please sign in to view your Constraints Sets"
+  },
+  "constraint_set_browse": {
+    "title": "Community Constraint Sets",
+    "search_placeholder": "Search by set, project, tag...",
+    "filters_label": "Filters",
+    "no_constraint_sets": "No community constraint sets match these filters yet.",
+    "save_button": "Save as my set",
+    "save_success_title": "Saved",
+    "save_success_message": "This constraint set is now in your saved sets.",
+    "save_error_title": "Save failed",
+    "save_error_message": "Could not save this constraint set. Please try again."
   },
   "submit": {
     "publish": "publish : ",

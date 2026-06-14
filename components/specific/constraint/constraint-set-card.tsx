@@ -23,11 +23,19 @@ import ShareConstraintButton from "../share-constraint-set";
 export function ConstraintsSetCard({
   item,
   deleteRecord,
+  publishRecord,
   submit,
+  submitLabel,
+  isSubmitting = false,
+  isPublishing = false,
 }: {
   item: SavedConstraintSet;
-  deleteRecord: (id: number | string) => void;
-  submit: () => void;
+  deleteRecord?: (id: number | string) => void;
+  publishRecord?: (item: SavedConstraintSet) => void;
+  submit?: () => void;
+  submitLabel?: string;
+  isSubmitting?: boolean;
+  isPublishing?: boolean;
 }) {
   const { t } = useTranslation();
   const { globalStyles, colors, theme } = useStyles();
@@ -89,9 +97,32 @@ export function ConstraintsSetCard({
             color={solidColor}
           />
 
-          <TouchableOpacity onPress={() => deleteRecord(item.id)}>
-            <Ionicons name="trash-outline" size={20} color={solidColor} />
-          </TouchableOpacity>
+          {publishRecord && (
+            <TouchableOpacity
+              onPress={() => publishRecord(item)}
+              disabled={isPublishing || item.is_public}
+              style={(isPublishing || item.is_public) && { opacity: 0.55 }}
+              accessibilityLabel={t(
+                item.is_public
+                  ? "screen:constraint_sets.published_to_community"
+                  : "screen:constraint_sets.publish_to_community",
+              )}
+            >
+              <Ionicons
+                name={
+                  item.is_public ? "cloud-done-outline" : "cloud-upload-outline"
+                }
+                size={20}
+                color={solidColor}
+              />
+            </TouchableOpacity>
+          )}
+
+          {deleteRecord && (
+            <TouchableOpacity onPress={() => deleteRecord(item.id)}>
+              <Ionicons name="trash-outline" size={20} color={solidColor} />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
 
@@ -140,17 +171,21 @@ export function ConstraintsSetCard({
         )}
       </View>
 
-      <TouchableOpacity
-        style={[
-          globalStyles.borderButton,
-          { borderColor: solidColor, marginTop: 12 },
-        ]}
-        onPress={submit}
-      >
-        <Text style={{ color: solidColor }}>
-          {t("component:constraint-set-card.upload")}
-        </Text>
-      </TouchableOpacity>
+      {submit && (
+        <TouchableOpacity
+          style={[
+            globalStyles.borderButton,
+            { borderColor: solidColor, marginTop: 12 },
+            isSubmitting && { opacity: 0.65 },
+          ]}
+          onPress={submit}
+          disabled={isSubmitting}
+        >
+          <Text style={{ color: solidColor }}>
+            {submitLabel ?? t("component:constraint-set-card.upload")}
+          </Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
