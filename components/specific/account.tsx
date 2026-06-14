@@ -13,8 +13,15 @@ import { ThemeSwitcher } from "./theme-switcher";
 const languages = [
   { label: "Français", value: "fr" },
   { label: "English", value: "en" },
-  { label: "Español", value: "es" },
 ];
+
+const getSupportedLanguage = (language?: string | null): string => {
+  const languageCode = language ?? "";
+
+  return languages.some((item) => item.value === languageCode)
+    ? languageCode
+    : "en";
+};
 
 export default function Account({ session }: { session: Session }) {
   const { t, i18n } = useTranslation();
@@ -28,6 +35,9 @@ export default function Account({ session }: { session: Session }) {
     language: "",
     theme: "",
   });
+  const selectedLanguage = getSupportedLanguage(
+    data.language || i18n.resolvedLanguage || i18n.language,
+  );
 
   return (
     <>
@@ -77,9 +87,9 @@ export default function Account({ session }: { session: Session }) {
         <ModalSelector
           label={t("screen:settings.language_selection")}
           options={languages}
-          selectedValue={data.language}
-          onValueChange={(val) => {
-            i18n.changeLanguage(val);
+          selectedValue={selectedLanguage}
+          onValueChange={async (val) => {
+            await i18n.changeLanguage(val);
             setData({ ...data, language: val });
           }}
         />

@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { HapticTab } from "@/components/haptic-tab";
 import { HomeProjectsProvider } from "@/contexts/home-projects-context";
 import { ThemeMode } from "@/contexts/theme-context";
+import { isProjectLanguage } from "@/constants/project-metadata";
 import { useProfile } from "@/hooks/use-profile";
 import { useStyles } from "@/hooks/use-styles";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,8 +20,10 @@ export default function TabLayout() {
   });
 
   useEffect(() => {
-    // Update language based on saved user preference
-    i18n.changeLanguage(data.language ?? "en");
+    if (isProjectLanguage(data.language) && data.language !== i18n.language) {
+      i18n.changeLanguage(data.language);
+    }
+
     setThemeMode((data.theme as ThemeMode) || "light");
   }, [data, i18n, setThemeMode]);
 
