@@ -13,7 +13,7 @@ export function TutorialSettingsButton() {
   return (
     <View style={globalStyles.shadeContainer}>
       <Text style={globalStyles.subtitle}>
-        {t("component:tutorial.settings_title")}
+        {t("tutorial:settings_title")}
       </Text>
       <TouchableOpacity
         onPress={replayTutorial}
@@ -28,7 +28,7 @@ export function TutorialSettingsButton() {
       >
         <Ionicons name="help-circle-outline" size={20} color={colors.tint} />
         <Text style={[globalStyles.borderButtonText, { color: colors.tint }]}>
-          {t("component:tutorial.replay_button")}
+          {t("tutorial:replay_button")}
         </Text>
       </TouchableOpacity>
     </View>

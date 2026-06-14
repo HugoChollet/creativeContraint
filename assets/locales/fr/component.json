@@ -55,34 +55,6 @@
   "tooltip": {
     "ok": "Compris"
   },
-  "tutorial": {
-    "close": "Fermer le tutoriel",
-    "finish": "Terminer",
-    "go_to_slide": "Aller à l'étape {{number}}",
-    "next": "Suivant",
-    "previous": "Précédent",
-    "replay_button": "Revoir le tutoriel",
-    "settings_title": "Tutoriel",
-    "skip": "Passer le tutoriel",
-    "slides": {
-      "welcome": {
-        "title": "Bienvenue dans Kadex",
-        "description": "Ce tutoriel d'exemple deviendra une courte visite guidée de l'application."
-      },
-      "projects": {
-        "title": "Choisissez un projet",
-        "description": "Sélectionnez un générateur de projet pour cadrer le défi créatif que vous voulez lancer."
-      },
-      "lab": {
-        "title": "Générez des contraintes",
-        "description": "Utilisez le lab pour générer des idées, parcourir les résultats et affiner votre défi."
-      },
-      "save": {
-        "title": "Gardez vos favoris",
-        "description": "Sauvegardez les sets de contraintes qui vous plaisent et retrouvez-les plus tard."
-      }
-    }
-  },
   "constraint-set-card": {
     "upload": "Soumettre un projet"
   },

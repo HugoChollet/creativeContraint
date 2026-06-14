@@ -16,23 +16,30 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-type TutorialSlideKey = "welcome" | "projects" | "lab" | "save";
+type TutorialSlideKey =
+  | "inspiration"
+  | "generator"
+  | "constraints"
+  | "publish"
+  | "customize";
 
 const tutorialSlideKeys: TutorialSlideKey[] = [
-  "welcome",
-  "projects",
-  "lab",
-  "save",
+  "inspiration",
+  "generator",
+  "constraints",
+  "publish",
+  "customize",
 ];
 
 const tutorialSlideIcons: Record<
   TutorialSlideKey,
   React.ComponentProps<typeof Ionicons>["name"]
 > = {
-  welcome: "sparkles-outline",
-  projects: "albums-outline",
-  lab: "flask-outline",
-  save: "bookmark-outline",
+  inspiration: "bulb-outline",
+  generator: "albums-outline",
+  constraints: "options-outline",
+  publish: "rocket-outline",
+  customize: "construct-outline",
 };
 
 export function TutorialCarousel() {
@@ -60,8 +67,8 @@ export function TutorialCarousel() {
       tutorialSlideKeys.map((key) => ({
         key,
         icon: tutorialSlideIcons[key],
-        title: t(`component:tutorial.slides.${key}.title`),
-        description: t(`component:tutorial.slides.${key}.description`),
+        title: t(`tutorial:slides.${key}.title`),
+        description: t(`tutorial:slides.${key}.description`),
       })),
     [t],
   );
@@ -122,7 +129,7 @@ export function TutorialCarousel() {
           ]}
         >
           <TouchableOpacity
-            accessibilityLabel={t("component:tutorial.close")}
+            accessibilityLabel={t("tutorial:close")}
             onPress={closeTutorial}
             style={[
               styles.closeButton,
@@ -169,7 +176,7 @@ export function TutorialCarousel() {
           <View style={styles.dotsRow} accessibilityRole="tablist">
             {tutorialSlideKeys.map((key, index) => (
               <Pressable
-                accessibilityLabel={t("component:tutorial.go_to_slide", {
+                accessibilityLabel={t("tutorial:go_to_slide", {
                   number: index + 1,
                 })}
                 accessibilityRole="tab"
@@ -188,7 +195,7 @@ export function TutorialCarousel() {
 
           <View style={styles.actionsRow}>
             <TouchableOpacity
-              accessibilityLabel={t("component:tutorial.previous")}
+              accessibilityLabel={t("tutorial:previous")}
               disabled={isFirstSlide}
               onPress={goToPreviousSlide}
               style={[
@@ -212,8 +219,8 @@ export function TutorialCarousel() {
                 projectColor={colors.tint}
                 label={
                   isLastSlide
-                    ? t("component:tutorial.finish")
-                    : t("component:tutorial.next")
+                    ? t("tutorial:finish")
+                    : t("tutorial:next")
                 }
                 onClick={goToNextSlide}
               />
@@ -222,7 +229,7 @@ export function TutorialCarousel() {
 
           <TouchableOpacity onPress={closeTutorial} style={styles.skipButton}>
             <Text style={[globalStyles.text, { color: colors.textDiscreet }]}>
-              {t("component:tutorial.skip")}
+              {t("tutorial:skip")}
             </Text>
           </TouchableOpacity>
         </View>

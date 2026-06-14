@@ -55,34 +55,6 @@
   "tooltip": {
     "ok": "Got it"
   },
-  "tutorial": {
-    "close": "Close tutorial",
-    "finish": "Finish",
-    "go_to_slide": "Go to slide {{number}}",
-    "next": "Next",
-    "previous": "Previous",
-    "replay_button": "Replay tutorial",
-    "settings_title": "Tutorial",
-    "skip": "Skip tutorial",
-    "slides": {
-      "welcome": {
-        "title": "Welcome to Kadex",
-        "description": "This sample tutorial will become a short guided tour of the app."
-      },
-      "projects": {
-        "title": "Pick a project",
-        "description": "Choose a project generator to shape the kind of creative challenge you want."
-      },
-      "lab": {
-        "title": "Generate constraints",
-        "description": "Use the lab to generate ideas, browse results, and refine your challenge."
-      },
-      "save": {
-        "title": "Save your favorites",
-        "description": "Keep the constraint sets you like and come back to them when you are ready."
-      }
-    }
-  },
   "constraint-set-card": {
     "upload": "Upload a project"
   },

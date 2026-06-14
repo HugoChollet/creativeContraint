@@ -1,0 +1,32 @@
+{
+  "close": "Close tutorial",
+  "finish": "Start creating",
+  "go_to_slide": "Go to slide {{number}}",
+  "next": "Next",
+  "previous": "Previous",
+  "replay_button": "Replay tutorial",
+  "settings_title": "Tutorial",
+  "skip": "Skip tutorial",
+  "slides": {
+    "inspiration": {
+      "title": "Out of ideas?",
+      "description": "Kadex turns a creative itch into a concrete challenge with constraints made to spark action."
+    },
+    "generator": {
+      "title": "Choose a generator",
+      "description": "Start with the kind of project you want to create: writing, music, video, games, photography, cooking, and more."
+    },
+    "constraints": {
+      "title": "Build your challenge",
+      "description": "Pick categories, adjust the difficulty, then generate a constraint set that gives your project a clear direction."
+    },
+    "publish": {
+      "title": "Save, create, publish",
+      "description": "Keep the constraint sets that inspire you. Once your project is done, publish the result linked to the challenge."
+    },
+    "customize": {
+      "title": "Create your own rules",
+      "description": "Make custom generators, add categories, share them with the community, and discover what other creators build."
+    }
+  }
+}
