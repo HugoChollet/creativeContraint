@@ -1,5 +1,5 @@
-import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { BottomSheet } from "@/components/generic/bottom-sheet";
+import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
@@ -92,7 +92,7 @@ export default function GeneratedConstraintsSheet({
     let count = 0;
 
     Object.values(generatedConstraintSet.constraints).forEach((option) => {
-      count += option.rarity;
+      count += option.difficulty;
     });
     return count;
   };
@@ -228,30 +228,33 @@ export default function GeneratedConstraintsSheet({
         />
 
         <ScrollView>
-          {generatedConstraintsEntries.map(([categoryName, generatedOption]) => (
-            <View
-              key={`${generatedConstraintSet.id}-${categoryName}`}
-              style={[globalStyles.card, { padding: 16 }]}
-            >
-              <Text style={globalStyles.label}>
-                {categoryLabelsByName[categoryName] ?? categoryName}
-              </Text>
-              <View style={globalStyles.elementAndDescriptorContainer}>
-                <Text style={[globalStyles.subtitle]}>
-                  {generatedOption.value ?? t("screen:lab.empty_result")}
+          {generatedConstraintsEntries.map(
+            ([categoryName, generatedOption]) => (
+              <View
+                key={`${generatedConstraintSet.id}-${categoryName}`}
+                style={[globalStyles.card, { padding: 16 }]}
+              >
+                <Text style={globalStyles.label}>
+                  {categoryLabelsByName[categoryName] ?? categoryName}
                 </Text>
-                {generatedOption.description && (
-                  <Tooltip
-                    title={categoryLabelsByName[categoryName] ?? categoryName}
-                    description={
-                      generatedOption.description ?? t("screen:lab.empty_result")
-                    }
-                    color={color}
-                  />
-                )}
+                <View style={globalStyles.elementAndDescriptorContainer}>
+                  <Text style={[globalStyles.subtitle]}>
+                    {generatedOption.value ?? t("screen:lab.empty_result")}
+                  </Text>
+                  {generatedOption.description && (
+                    <Tooltip
+                      title={categoryLabelsByName[categoryName] ?? categoryName}
+                      description={
+                        generatedOption.description ??
+                        t("screen:lab.empty_result")
+                      }
+                      color={color}
+                    />
+                  )}
+                </View>
               </View>
-            </View>
-          ))}
+            ),
+          )}
         </ScrollView>
       </BottomSheet>
       <ModalGeneric

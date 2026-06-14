@@ -1,7 +1,7 @@
 {
   "project_type": "Photography",
   "language": "en",
-  "tags": ["photography", "physical", "short"],
+  "tags": ["photography"],
   "categories": [
     {
       "name": "Material & Gear",
@@ -11,248 +11,252 @@
         {
           "id": 1,
           "value": "Action Cam (GoPro style rugged wide-angle)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 2,
           "value": "Analog Mix (One digital shot, then one film shot of the same thing)",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 3,
           "value": "Black Wrap (Use foil to create a tiny 'snoot' for your light)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 4,
           "value": "Broken Lens (Use a lens with scratches or dust)",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 5,
           "value": "Camcorder Mode (Take a still from a 4K video recording)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 6,
           "value": "CPL Filter (Rotate to maximize reflections)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 7,
           "value": "Continuous Burst (Hold shutter for 3s for every shot)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 8,
           "value": "Disposable Aesthetic (Single-use film camera)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 9,
           "value": "Double Exposure (In-camera multi-exposure setting)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 10,
           "value": "Drone POV (Shot from at least 10 feet in the air)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 11,
           "value": "External Monitor (Look only at an external screen)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 12,
           "value": "Extreme ISO (ISO 6400 or higher for heavy grain)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 13,
           "value": "Fisheye / Ultra-Wide (Widest lens possible)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 14,
           "value": "Fixed Prime (Use only a 50mm focal length)",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 15,
           "value": "Flash Only (Every shot must use harsh direct flash)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 16,
           "value": "Gimbal/Steady (Use a stabilizer for a 'floating' look)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 17,
           "value": "Handheld Long Exposure (Min. 1/2s shutter speed)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 18,
           "value": "High Aperture (Shoot everything at f/16 or higher)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 19,
           "value": "In-Camera B&W (Monochrome profile, no RAW editing)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 20,
           "value": "Infrared (IR filter or converted camera)",
-          "rarity": 5
+          "difficulty": 5
         },
-        { "id": 21, "value": "Instant Film (Instax or Polaroid)", "rarity": 3 },
+        {
+          "id": 21,
+          "value": "Instant Film (Instax or Polaroid)",
+          "difficulty": 3
+        },
         {
           "id": 22,
           "value": "Lensbaby / Tilt-Shift (Specific slice of focus)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 23,
           "value": "Low Aperture (Shoot everything at f/1.8 or lower)",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 24,
           "value": "Macro Lens (Extreme close-ups only)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 25,
           "value": "Manual Focus Only (No Autofocus allowed)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 26,
           "value": "Mirrorless Silent (Electronic shutter only)",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 27,
           "value": "ND Filter (10-stop filter in daylight)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 28,
           "value": "No LCD (Cover your screen and shoot 'blind')",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 29,
           "value": "No Viewfinder (Shoot from the hip)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 30,
           "value": "One-Handed (Cannot use second hand to steady camera)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 31,
           "value": "Pinhole (DIY pinhole cover for your sensor)",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 32,
           "value": "Prism / Glass (Shoot through glass held to the lens)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 33,
           "value": "Reflector Only (Bounced sunlight only)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 34,
           "value": "Remote Trigger (No touching the camera when it fires)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 35,
           "value": "Self-Timer (Every shot must use 10s timer)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 36,
           "value": "Single Battery (Stop once the first battery dies)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 37,
           "value": "Slow Card (Use an old, slow SD card)",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 38,
           "value": "Small Sensor (Old point-and-shoot under 10MP)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 39,
           "value": "Smartphone Only (No dedicated camera)",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 40,
           "value": "Soft Focus (Petroleum jelly on a cheap filter)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 41,
           "value": "Square Crop (Aspect ratio set to 1:1)",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 42,
           "value": "Telephoto Compression (200mm or higher)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 43,
           "value": "Tethered (Camera plugged into a laptop)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 44,
           "value": "The 24-Exposure Limit (Only 24 shutter clicks total)",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 45,
           "value": "Tripod Mandatory (Perfectly stabilized shots)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 46,
           "value": "Vertical Grip (All shots in Portrait orientation)",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 47,
           "value": "Vintage Glass (Adapted manual vintage lens)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 48,
           "value": "Waist-Level (Hold camera at belly-button height)",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 49,
           "value": "Waterproof Case (Submerged or partially wet)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 50,
           "value": "Zoom Burst (Rotate zoom ring during long exposure)",
-          "rarity": 3
+          "difficulty": 3
         }
       ]
     },
@@ -260,377 +264,386 @@
       "name": "Composition & Framing",
       "description": "Rules for how the elements are arranged within the rectangular frame.",
       "options": [
-        { "id": 1, "value": "Abstract Geometry", "rarity": 4 },
-        { "id": 2, "value": "Bird's Eye (90° Top-down)", "rarity": 3 },
-        { "id": 3, "value": "Broken Symmetry", "rarity": 4 },
-        { "id": 4, "value": "Center Weighted", "rarity": 1 },
-        { "id": 5, "value": "Chaos (Break every rule)", "rarity": 5 },
-        { "id": 6, "value": "Cinematic 2.35:1 Crop", "rarity": 3 },
-        { "id": 7, "value": "Circular Elements", "rarity": 3 },
-        { "id": 8, "value": "Color Blocking", "rarity": 3 },
-        { "id": 9, "value": "Cropped Limb (Portrait)", "rarity": 3 },
+        { "id": 1, "value": "Abstract Geometry", "difficulty": 4 },
+        { "id": 2, "value": "Bird's Eye (90° Top-down)", "difficulty": 3 },
+        { "id": 3, "value": "Broken Symmetry", "difficulty": 4 },
+        { "id": 4, "value": "Center Weighted", "difficulty": 1 },
+        { "id": 5, "value": "Chaos (Break every rule)", "difficulty": 5 },
+        { "id": 6, "value": "Cinematic 2.35:1 Crop", "difficulty": 3 },
+        { "id": 7, "value": "Circular Elements", "difficulty": 3 },
+        { "id": 8, "value": "Color Blocking", "difficulty": 3 },
+        { "id": 9, "value": "Cropped Limb (Portrait)", "difficulty": 3 },
         {
           "id": 10,
           "value": "Dead Center Symmetry (X and Y axis)",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 11, "value": "Diagonal Flow", "rarity": 3 },
-        { "id": 12, "value": "Double Horizon", "rarity": 4 },
-        { "id": 13, "value": "Dutch Angle (45° Tilt)", "rarity": 3 },
-        { "id": 14, "value": "Dynamic Tension", "rarity": 4 },
-        { "id": 15, "value": "Edge Tension", "rarity": 4 },
-        { "id": 16, "value": "Extreme Low Angle (Ground level)", "rarity": 2 },
-        { "id": 17, "value": "Filling the Frame", "rarity": 1 },
-        { "id": 18, "value": "Flat Lay (2D look)", "rarity": 2 },
-        { "id": 19, "value": "Forced Perspective", "rarity": 3 },
-        { "id": 20, "value": "Frame within a Frame", "rarity": 2 },
-        { "id": 21, "value": "Golden Spiral", "rarity": 4 },
-        { "id": 22, "value": "Headroom (Excessive)", "rarity": 2 },
-        { "id": 23, "value": "Horizon Split (Bottom 1/4th)", "rarity": 2 },
-        { "id": 24, "value": "Isolation (One point sharp)", "rarity": 2 },
-        { "id": 25, "value": "Juxtaposition", "rarity": 4 },
-        { "id": 26, "value": "Layering (3 depth planes)", "rarity": 3 },
-        { "id": 27, "value": "Leading Lines", "rarity": 1 },
-        { "id": 28, "value": "Minimalism (Max 2 objects)", "rarity": 3 },
-        { "id": 29, "value": "Negative Space (Subj < 10%)", "rarity": 3 },
-        { "id": 30, "value": "Obstructed View", "rarity": 4 },
-        { "id": 31, "value": "Odd Numbers (3, 5, 7)", "rarity": 2 },
-        { "id": 32, "value": "Overlapping Subjects", "rarity": 2 },
-        { "id": 33, "value": "Pattern & Texture", "rarity": 2 },
-        { "id": 34, "value": "Perfect Symmetry", "rarity": 2 },
-        { "id": 35, "value": "Perspective Warp", "rarity": 3 },
-        { "id": 36, "value": "Point of View (Inside an object)", "rarity": 4 },
-        { "id": 37, "value": "Reflection Only", "rarity": 3 },
-        { "id": 38, "value": "Rule of Odds", "rarity": 2 },
-        { "id": 39, "value": "Rule of Thirds", "rarity": 1 },
-        { "id": 40, "value": "Scale (Tiny vs Huge)", "rarity": 3 },
-        { "id": 41, "value": "Shadow Framing", "rarity": 3 },
-        { "id": 42, "value": "Silhouettes", "rarity": 2 },
-        { "id": 43, "value": "Submerged Framing", "rarity": 4 },
-        { "id": 44, "value": "Tight Compression (Zoom)", "rarity": 2 },
-        { "id": 45, "value": "Triangles", "rarity": 2 },
-        { "id": 46, "value": "Triptych (3 vertical slices)", "rarity": 4 },
-        { "id": 47, "value": "Unbalanced Frame", "rarity": 3 },
-        { "id": 48, "value": "Upside Down", "rarity": 5 },
-        { "id": 49, "value": "Vanishing Point", "rarity": 1 },
-        { "id": 50, "value": "Vertical Lines Only", "rarity": 4 }
+        { "id": 11, "value": "Diagonal Flow", "difficulty": 3 },
+        { "id": 12, "value": "Double Horizon", "difficulty": 4 },
+        { "id": 13, "value": "Dutch Angle (45° Tilt)", "difficulty": 3 },
+        { "id": 14, "value": "Dynamic Tension", "difficulty": 4 },
+        { "id": 15, "value": "Edge Tension", "difficulty": 4 },
+        {
+          "id": 16,
+          "value": "Extreme Low Angle (Ground level)",
+          "difficulty": 2
+        },
+        { "id": 17, "value": "Filling the Frame", "difficulty": 1 },
+        { "id": 18, "value": "Flat Lay (2D look)", "difficulty": 2 },
+        { "id": 19, "value": "Forced Perspective", "difficulty": 3 },
+        { "id": 20, "value": "Frame within a Frame", "difficulty": 2 },
+        { "id": 21, "value": "Golden Spiral", "difficulty": 4 },
+        { "id": 22, "value": "Headroom (Excessive)", "difficulty": 2 },
+        { "id": 23, "value": "Horizon Split (Bottom 1/4th)", "difficulty": 2 },
+        { "id": 24, "value": "Isolation (One point sharp)", "difficulty": 2 },
+        { "id": 25, "value": "Juxtaposition", "difficulty": 4 },
+        { "id": 26, "value": "Layering (3 depth planes)", "difficulty": 3 },
+        { "id": 27, "value": "Leading Lines", "difficulty": 1 },
+        { "id": 28, "value": "Minimalism (Max 2 objects)", "difficulty": 3 },
+        { "id": 29, "value": "Negative Space (Subj < 10%)", "difficulty": 3 },
+        { "id": 30, "value": "Obstructed View", "difficulty": 4 },
+        { "id": 31, "value": "Odd Numbers (3, 5, 7)", "difficulty": 2 },
+        { "id": 32, "value": "Overlapping Subjects", "difficulty": 2 },
+        { "id": 33, "value": "Pattern & Texture", "difficulty": 2 },
+        { "id": 34, "value": "Perfect Symmetry", "difficulty": 2 },
+        { "id": 35, "value": "Perspective Warp", "difficulty": 3 },
+        {
+          "id": 36,
+          "value": "Point of View (Inside an object)",
+          "difficulty": 4
+        },
+        { "id": 37, "value": "Reflection Only", "difficulty": 3 },
+        { "id": 38, "value": "Rule of Odds", "difficulty": 2 },
+        { "id": 39, "value": "Rule of Thirds", "difficulty": 1 },
+        { "id": 40, "value": "Scale (Tiny vs Huge)", "difficulty": 3 },
+        { "id": 41, "value": "Shadow Framing", "difficulty": 3 },
+        { "id": 42, "value": "Silhouettes", "difficulty": 2 },
+        { "id": 43, "value": "Submerged Framing", "difficulty": 4 },
+        { "id": 44, "value": "Tight Compression (Zoom)", "difficulty": 2 },
+        { "id": 45, "value": "Triangles", "difficulty": 2 },
+        { "id": 46, "value": "Triptych (3 vertical slices)", "difficulty": 4 },
+        { "id": 47, "value": "Unbalanced Frame", "difficulty": 3 },
+        { "id": 48, "value": "Upside Down", "difficulty": 5 },
+        { "id": 49, "value": "Vanishing Point", "difficulty": 1 },
+        { "id": 50, "value": "Vertical Lines Only", "difficulty": 4 }
       ]
     },
     {
       "name": "Light & Color",
       "description": "Constraints regarding the exposure, color palette, and light quality.",
       "options": [
-        { "id": 1, "value": "Analog Look (Grain/Green tint)", "rarity": 2 },
-        { "id": 2, "value": "Artificial Color Gel", "rarity": 4 },
-        { "id": 3, "value": "Blue Hour", "rarity": 3 },
-        { "id": 4, "value": "Bokehed Lights", "rarity": 1 },
-        { "id": 5, "value": "Candlelight Only", "rarity": 4 },
-        { "id": 6, "value": "Chiaroscuro", "rarity": 3 },
-        { "id": 7, "value": "Cinematic Teal", "rarity": 3 },
-        { "id": 8, "value": "Color Gradient (Natural)", "rarity": 3 },
-        { "id": 9, "value": "Complementary Colors", "rarity": 3 },
-        { "id": 10, "value": "Cool Tones (Blue/Cyan)", "rarity": 2 },
-        { "id": 11, "value": "Dappled Light", "rarity": 2 },
-        { "id": 12, "value": "Diffused Light", "rarity": 2 },
-        { "id": 13, "value": "Direct Noon Sun", "rarity": 1 },
-        { "id": 14, "value": "Double Shadow", "rarity": 3 },
-        { "id": 15, "value": "Earthy Tones", "rarity": 2 },
-        { "id": 16, "value": "Faded Blacks", "rarity": 2 },
-        { "id": 17, "value": "Glow (Mist filter look)", "rarity": 2 },
-        { "id": 18, "value": "Golden Hour", "rarity": 2 },
-        { "id": 19, "value": "Hard Shadows", "rarity": 1 },
-        { "id": 20, "value": "High Key", "rarity": 3 },
-        { "id": 21, "value": "High Saturation", "rarity": 2 },
-        { "id": 22, "value": "Incandescent Orange", "rarity": 2 },
-        { "id": 23, "value": "Infrared False Color", "rarity": 5 },
-        { "id": 24, "value": "Light Painting", "rarity": 4 },
-        { "id": 25, "value": "Light through Blinds", "rarity": 2 },
-        { "id": 26, "value": "Low Key", "rarity": 3 },
-        { "id": 27, "value": "Matching Color (Subj/BG)", "rarity": 4 },
-        { "id": 28, "value": "Midnight Long Exposure", "rarity": 4 },
-        { "id": 29, "value": "Mixed White Balance", "rarity": 4 },
-        { "id": 30, "value": "Monochromatic Color", "rarity": 4 },
-        { "id": 31, "value": "Monochrome (B&W)", "rarity": 1 },
-        { "id": 32, "value": "Muted Tones", "rarity": 2 },
-        { "id": 33, "value": "Natural Reflector", "rarity": 1 },
-        { "id": 34, "value": "Neon Lights", "rarity": 2 },
-        { "id": 35, "value": "Overpowering the Sun", "rarity": 4 },
-        { "id": 36, "value": "Pastel Colors", "rarity": 2 },
-        { "id": 37, "value": "Projector Light", "rarity": 4 },
-        { "id": 38, "value": "Pure White Backdrop", "rarity": 2 },
-        { "id": 39, "value": "Rainbow / Prism Effect", "rarity": 3 },
-        { "id": 40, "value": "Rim Light", "rarity": 2 },
-        { "id": 41, "value": "Shadow Subject", "rarity": 3 },
-        { "id": 42, "value": "Solarization", "rarity": 5 },
-        { "id": 43, "value": "Split Toning", "rarity": 2 },
-        { "id": 44, "value": "Strobe Freeze", "rarity": 3 },
-        { "id": 45, "value": "Sun Flare", "rarity": 1 },
-        { "id": 46, "value": "Triadic Colors", "rarity": 4 },
-        { "id": 47, "value": "TV / Screen Glow", "rarity": 3 },
-        { "id": 48, "value": "UV / Blacklight", "rarity": 5 },
-        { "id": 49, "value": "Vignette", "rarity": 2 },
-        { "id": 50, "value": "Warm Tones (Orange/Red)", "rarity": 2 }
+        { "id": 1, "value": "Analog Look (Grain/Green tint)", "difficulty": 2 },
+        { "id": 2, "value": "Artificial Color Gel", "difficulty": 4 },
+        { "id": 3, "value": "Blue Hour", "difficulty": 3 },
+        { "id": 4, "value": "Bokehed Lights", "difficulty": 1 },
+        { "id": 5, "value": "Candlelight Only", "difficulty": 4 },
+        { "id": 6, "value": "Chiaroscuro", "difficulty": 3 },
+        { "id": 7, "value": "Cinematic Teal", "difficulty": 3 },
+        { "id": 8, "value": "Color Gradient (Natural)", "difficulty": 3 },
+        { "id": 9, "value": "Complementary Colors", "difficulty": 3 },
+        { "id": 10, "value": "Cool Tones (Blue/Cyan)", "difficulty": 2 },
+        { "id": 11, "value": "Dappled Light", "difficulty": 2 },
+        { "id": 12, "value": "Diffused Light", "difficulty": 2 },
+        { "id": 13, "value": "Direct Noon Sun", "difficulty": 1 },
+        { "id": 14, "value": "Double Shadow", "difficulty": 3 },
+        { "id": 15, "value": "Earthy Tones", "difficulty": 2 },
+        { "id": 16, "value": "Faded Blacks", "difficulty": 2 },
+        { "id": 17, "value": "Glow (Mist filter look)", "difficulty": 2 },
+        { "id": 18, "value": "Golden Hour", "difficulty": 2 },
+        { "id": 19, "value": "Hard Shadows", "difficulty": 1 },
+        { "id": 20, "value": "High Key", "difficulty": 3 },
+        { "id": 21, "value": "High Saturation", "difficulty": 2 },
+        { "id": 22, "value": "Incandescent Orange", "difficulty": 2 },
+        { "id": 23, "value": "Infrared False Color", "difficulty": 5 },
+        { "id": 24, "value": "Light Painting", "difficulty": 4 },
+        { "id": 25, "value": "Light through Blinds", "difficulty": 2 },
+        { "id": 26, "value": "Low Key", "difficulty": 3 },
+        { "id": 27, "value": "Matching Color (Subj/BG)", "difficulty": 4 },
+        { "id": 28, "value": "Midnight Long Exposure", "difficulty": 4 },
+        { "id": 29, "value": "Mixed White Balance", "difficulty": 4 },
+        { "id": 30, "value": "Monochromatic Color", "difficulty": 4 },
+        { "id": 31, "value": "Monochrome (B&W)", "difficulty": 1 },
+        { "id": 32, "value": "Muted Tones", "difficulty": 2 },
+        { "id": 33, "value": "Natural Reflector", "difficulty": 1 },
+        { "id": 34, "value": "Neon Lights", "difficulty": 2 },
+        { "id": 35, "value": "Overpowering the Sun", "difficulty": 4 },
+        { "id": 36, "value": "Pastel Colors", "difficulty": 2 },
+        { "id": 37, "value": "Projector Light", "difficulty": 4 },
+        { "id": 38, "value": "Pure White Backdrop", "difficulty": 2 },
+        { "id": 39, "value": "Rainbow / Prism Effect", "difficulty": 3 },
+        { "id": 40, "value": "Rim Light", "difficulty": 2 },
+        { "id": 41, "value": "Shadow Subject", "difficulty": 3 },
+        { "id": 42, "value": "Solarization", "difficulty": 5 },
+        { "id": 43, "value": "Split Toning", "difficulty": 2 },
+        { "id": 44, "value": "Strobe Freeze", "difficulty": 3 },
+        { "id": 45, "value": "Sun Flare", "difficulty": 1 },
+        { "id": 46, "value": "Triadic Colors", "difficulty": 4 },
+        { "id": 47, "value": "TV / Screen Glow", "difficulty": 3 },
+        { "id": 48, "value": "UV / Blacklight", "difficulty": 5 },
+        { "id": 49, "value": "Vignette", "difficulty": 2 },
+        { "id": 50, "value": "Warm Tones (Orange/Red)", "difficulty": 2 }
       ]
     },
     {
       "name": "Subject",
+      "description": "The person, object, place, or living element that should become the focus of the shot.",
       "options": [
-        { "id": 1, "value": "Absence", "rarity": 5 },
-        { "id": 2, "value": "Abyss", "rarity": 5 },
-        { "id": 3, "value": "Adrenaline", "rarity": 4 },
-        { "id": 4, "value": "Aftermath", "rarity": 3 },
-        { "id": 5, "value": "Aging", "rarity": 3 },
-        { "id": 6, "value": "Air", "rarity": 4 },
-        { "id": 7, "value": "Alcohol", "rarity": 2 },
-        { "id": 8, "value": "Alienation", "rarity": 5 },
-        { "id": 9, "value": "Alleyway", "rarity": 2 },
-        { "id": 10, "value": "Amusement Park", "rarity": 3 },
-        { "id": 11, "value": "Ancestry", "rarity": 4 },
-        { "id": 12, "value": "Anger", "rarity": 4 },
-        { "id": 13, "value": "Anticipation", "rarity": 3 },
-        { "id": 14, "value": "Anxiety", "rarity": 5 },
-        { "id": 15, "value": "Architecture", "rarity": 2 },
-        { "id": 16, "value": "Artifacts", "rarity": 3 },
-        { "id": 17, "value": "Asymmetry", "rarity": 3 },
-        { "id": 18, "value": "Atmosphere", "rarity": 2 },
-        { "id": 19, "value": "Automobiles", "rarity": 1 },
-        { "id": 20, "value": "Autumn", "rarity": 1 },
-        { "id": 21, "value": "Awakening", "rarity": 4 },
-        { "id": 22, "value": "Balance", "rarity": 2 },
-        { "id": 23, "value": "Balloons", "rarity": 3 },
-        { "id": 24, "value": "Barriers", "rarity": 3 },
-        { "id": 25, "value": "Beauty", "rarity": 2 },
-        { "id": 26, "value": "Beneath", "rarity": 4 },
-        { "id": 27, "value": "Bicycles", "rarity": 2 },
-        { "id": 28, "value": "Birds", "rarity": 4 },
-        { "id": 29, "value": "Birth", "rarity": 5 },
-        { "id": 30, "value": "Blood", "rarity": 5 },
-        { "id": 31, "value": "Blossom", "rarity": 1 },
-        { "id": 32, "value": "Blur", "rarity": 3 },
-        { "id": 33, "value": "Body Language", "rarity": 3 },
-        { "id": 34, "value": "Books", "rarity": 1 },
-        { "id": 35, "value": "Bridges", "rarity": 2 },
-        { "id": 36, "value": "Bubbles", "rarity": 3 },
-        { "id": 37, "value": "Buttons", "rarity": 2 },
-        { "id": 38, "value": "Cage", "rarity": 4 },
-        { "id": 39, "value": "Candlelight", "rarity": 3 },
-        { "id": 40, "value": "Chaos", "rarity": 4 },
-        { "id": 41, "value": "Childhood", "rarity": 3 },
-        { "id": 42, "value": "Circles", "rarity": 2 },
-        { "id": 43, "value": "Cityscape", "rarity": 2 },
-        { "id": 44, "value": "Clocks", "rarity": 3 },
-        { "id": 45, "value": "Clouds", "rarity": 1 },
-        { "id": 46, "value": "Coffee", "rarity": 1 },
-        { "id": 47, "value": "Cold", "rarity": 3 },
-        { "id": 48, "value": "Comfort", "rarity": 2 },
-        { "id": 49, "value": "Communication", "rarity": 4 },
-        { "id": 50, "value": "Complexity", "rarity": 4 },
-        { "id": 51, "value": "Concrete", "rarity": 1 },
-        { "id": 52, "value": "Conflict", "rarity": 5 },
-        { "id": 53, "value": "Connection", "rarity": 3 },
-        { "id": 54, "value": "Contrast", "rarity": 2 },
-        { "id": 55, "value": "Crowds", "rarity": 3 },
-        { "id": 56, "value": "Crying", "rarity": 5 },
-        { "id": 57, "value": "Curiosity", "rarity": 4 },
-        { "id": 58, "value": "Curves", "rarity": 2 },
-        { "id": 59, "value": "Cyberpunk", "rarity": 4 },
-        { "id": 60, "value": "Dance", "rarity": 3 },
-        { "id": 61, "value": "Danger", "rarity": 5 },
-        { "id": 62, "value": "Darkness", "rarity": 2 },
-        { "id": 63, "value": "Dawn", "rarity": 2 },
-        { "id": 64, "value": "Decay", "rarity": 3 },
-        { "id": 65, "value": "Deep Sea", "rarity": 5 },
-        { "id": 66, "value": "Departure", "rarity": 4 },
-        { "id": 67, "value": "Despair", "rarity": 5 },
-        { "id": 68, "value": "Destruction", "rarity": 5 },
-        { "id": 69, "value": "Dinner Table", "rarity": 2 },
-        { "id": 70, "value": "Distance", "rarity": 3 },
-        { "id": 71, "value": "Dogs", "rarity": 1 },
-        { "id": 72, "value": "Doors", "rarity": 2 },
-        { "id": 73, "value": "Dreams", "rarity": 5 },
-        { "id": 74, "value": "Droplets", "rarity": 2 },
-        { "id": 75, "value": "Dust", "rarity": 3 },
-        { "id": 76, "value": "Echo", "rarity": 5 },
-        { "id": 77, "value": "Elegance", "rarity": 3 },
-        { "id": 78, "value": "Electricity", "rarity": 4 },
-        { "id": 79, "value": "Empty Spaces", "rarity": 4 },
-        { "id": 80, "value": "Energy", "rarity": 3 },
-        { "id": 81, "value": "Entropy", "rarity": 5 },
-        { "id": 82, "value": "Escape", "rarity": 4 },
-        { "id": 83, "value": "Euphoria", "rarity": 4 },
-        { "id": 84, "value": "Eyes", "rarity": 4 },
-        { "id": 85, "value": "Fabric", "rarity": 2 },
-        { "id": 86, "value": "Failure", "rarity": 5 },
-        { "id": 87, "value": "Fashion", "rarity": 2 },
-        { "id": 88, "value": "Fear", "rarity": 5 },
-        { "id": 89, "value": "Feathers", "rarity": 3 },
-        { "id": 90, "value": "Fences", "rarity": 2 },
-        { "id": 91, "value": "Fire", "rarity": 4 },
-        { "id": 92, "value": "Flight", "rarity": 4 },
-        { "id": 93, "value": "Flowers", "rarity": 1 },
-        { "id": 94, "value": "Fluidity", "rarity": 3 },
-        { "id": 95, "value": "Fog", "rarity": 3 },
-        { "id": 96, "value": "Food", "rarity": 2 },
-        { "id": 97, "value": "Forest", "rarity": 2 },
-        { "id": 98, "value": "Fragility", "rarity": 4 },
-        { "id": 99, "value": "Freedom", "rarity": 4 },
-        { "id": 100, "value": "Fruit", "rarity": 1 },
-        { "id": 101, "value": "Futurism", "rarity": 4 },
-        { "id": 102, "value": "Geometry", "rarity": 2 },
-        { "id": 103, "value": "Ghosts", "rarity": 5 },
-        { "id": 104, "value": "Glass", "rarity": 3 },
-        { "id": 105, "value": "Glitch", "rarity": 4 },
-        { "id": 106, "value": "Gloom", "rarity": 4 },
-        { "id": 107, "value": "Gold", "rarity": 3 },
-        { "id": 108, "value": "Graffiti", "rarity": 2 },
-        { "id": 109, "value": "Gravity", "rarity": 5 },
-        { "id": 110, "value": "Greed", "rarity": 5 },
-        { "id": 111, "value": "Growth", "rarity": 4 },
-        { "id": 112, "value": "Hands", "rarity": 2 },
-        { "id": 113, "value": "Happiness", "rarity": 3 },
-        { "id": 114, "value": "Hate", "rarity": 5 },
-        { "id": 115, "value": "Heat", "rarity": 4 },
-        { "id": 116, "value": "History", "rarity": 3 },
-        { "id": 117, "value": "Home", "rarity": 1 },
-        { "id": 118, "value": "Hope", "rarity": 4 },
-        { "id": 119, "value": "Horizon", "rarity": 2 },
-        { "id": 120, "value": "Humor", "rarity": 3 },
-        { "id": 121, "value": "Hunger", "rarity": 4 },
-        { "id": 122, "value": "Ice", "rarity": 3 },
-        { "id": 123, "value": "Identity", "rarity": 5 },
-        { "id": 124, "value": "Illusion", "rarity": 5 },
-        { "id": 125, "value": "Industrial", "rarity": 2 },
-        { "id": 126, "value": "Innocence", "rarity": 4 },
-        { "id": 127, "value": "Insects", "rarity": 4 },
-        { "id": 128, "value": "Intimacy", "rarity": 4 },
-        { "id": 129, "value": "Invisibility", "rarity": 5 },
-        { "id": 130, "value": "Isolation", "rarity": 3 },
-        { "id": 131, "value": "Jewelry", "rarity": 3 },
-        { "id": 132, "value": "Joy", "rarity": 3 },
-        { "id": 133, "value": "Juxtaposition", "rarity": 4 },
-        { "id": 134, "value": "Keys", "rarity": 3 },
-        { "id": 135, "value": "Kindness", "rarity": 4 },
-        { "id": 136, "value": "Kitchen", "rarity": 1 },
-        { "id": 137, "value": "Knots", "rarity": 4 },
-        { "id": 138, "value": "Labyrinth", "rarity": 5 },
-        { "id": 139, "value": "Landscape", "rarity": 1 },
-        { "id": 140, "value": "Laughter", "rarity": 3 },
-        { "id": 141, "value": "Leaves", "rarity": 1 },
-        { "id": 142, "value": "Legacy", "rarity": 4 },
-        { "id": 143, "value": "Letters", "rarity": 2 },
-        { "id": 144, "value": "Light", "rarity": 1 },
-        { "id": 145, "value": "Liminal Space", "rarity": 4 },
-        { "id": 146, "value": "Loneliness", "rarity": 4 },
-        { "id": 147, "value": "Lost", "rarity": 4 },
-        { "id": 148, "value": "Love", "rarity": 5 },
-        { "id": 149, "value": "Luxury", "rarity": 3 },
-        { "id": 150, "value": "Machinery", "rarity": 2 },
-        { "id": 151, "value": "Madness", "rarity": 5 },
-        { "id": 152, "value": "Maps", "rarity": 3 },
-        { "id": 153, "value": "Markets", "rarity": 2 },
-        { "id": 154, "value": "Masks", "rarity": 4 },
-        { "id": 155, "value": "Melancholy", "rarity": 4 },
-        { "id": 156, "value": "Memory", "rarity": 4 },
-        { "id": 157, "value": "Metal", "rarity": 1 },
-        { "id": 158, "value": "Microscope", "rarity": 5 },
-        { "id": 159, "value": "Minimalism", "rarity": 2 },
-        { "id": 160, "value": "Mirrors", "rarity": 2 },
-        { "id": 161, "value": "Mistake", "rarity": 4 },
-        { "id": 162, "value": "Modernity", "rarity": 2 },
-        { "id": 163, "value": "Moon", "rarity": 3 },
-        { "id": 164, "value": "Morning", "rarity": 2 },
-        { "id": 165, "value": "Mountains", "rarity": 2 },
-        { "id": 166, "value": "Mouth", "rarity": 4 },
-        { "id": 167, "value": "Movement", "rarity": 3 },
-        { "id": 168, "value": "Music", "rarity": 3 },
-        { "id": 169, "value": "Mystery", "rarity": 4 },
-        { "id": 170, "value": "Nails", "rarity": 2 },
-        { "id": 171, "value": "Neon", "rarity": 2 },
-        { "id": 172, "value": "Night Life", "rarity": 3 },
-        { "id": 173, "value": "Noise", "rarity": 4 },
-        { "id": 174, "value": "Nostalgia", "rarity": 4 },
-        { "id": 175, "value": "Nothingness", "rarity": 5 },
-        { "id": 176, "value": "Numbers", "rarity": 2 },
-        { "id": 177, "value": "Obsession", "rarity": 5 },
-        { "id": 178, "value": "Ocean", "rarity": 2 },
-        { "id": 179, "value": "Old Age", "rarity": 4 },
-        { "id": 180, "value": "Oppression", "rarity": 5 },
-        { "id": 181, "value": "Order", "rarity": 2 },
-        { "id": 182, "value": "Oxygen", "rarity": 5 },
-        { "id": 183, "value": "Pain", "rarity": 5 },
-        { "id": 184, "value": "Paper", "rarity": 1 },
-        { "id": 185, "value": "Parallel", "rarity": 3 },
-        { "id": 186, "value": "Parasite", "rarity": 5 },
-        { "id": 187, "value": "Passion", "rarity": 4 },
-        { "id": 188, "value": "Past", "rarity": 4 },
-        { "id": 189, "value": "Patterns", "rarity": 2 },
-        { "id": 190, "value": "Peace", "rarity": 3 },
-        { "id": 191, "value": "Perspective", "rarity": 2 },
-        { "id": 192, "value": "Plants", "rarity": 1 },
-        { "id": 193, "value": "Plastic", "rarity": 2 },
-        { "id": 194, "value": "Play", "rarity": 3 },
-        { "id": 195, "value": "Poetry", "rarity": 4 },
-        { "id": 196, "value": "Pollution", "rarity": 4 },
-        { "id": 197, "value": "Portrait", "rarity": 3 },
-        { "id": 198, "value": "Power", "rarity": 4 },
-        { "id": 199, "value": "Pride", "rarity": 5 },
-        { "id": 200, "value": "Prison", "rarity": 5 }
+        { "id": 1, "value": "Absence", "difficulty": 5 },
+        { "id": 2, "value": "Abyss", "difficulty": 5 },
+        { "id": 3, "value": "Adrenaline", "difficulty": 4 },
+        { "id": 4, "value": "Aftermath", "difficulty": 3 },
+        { "id": 5, "value": "Aging", "difficulty": 3 },
+        { "id": 6, "value": "Air", "difficulty": 4 },
+        { "id": 7, "value": "Alcohol", "difficulty": 2 },
+        { "id": 8, "value": "Alienation", "difficulty": 5 },
+        { "id": 9, "value": "Alleyway", "difficulty": 2 },
+        { "id": 10, "value": "Amusement Park", "difficulty": 3 },
+        { "id": 11, "value": "Ancestry", "difficulty": 4 },
+        { "id": 12, "value": "Anger", "difficulty": 4 },
+        { "id": 13, "value": "Anticipation", "difficulty": 3 },
+        { "id": 14, "value": "Anxiety", "difficulty": 5 },
+        { "id": 15, "value": "Architecture", "difficulty": 2 },
+        { "id": 16, "value": "Artifacts", "difficulty": 3 },
+        { "id": 17, "value": "Asymmetry", "difficulty": 3 },
+        { "id": 18, "value": "Atmosphere", "difficulty": 2 },
+        { "id": 19, "value": "Automobiles", "difficulty": 1 },
+        { "id": 20, "value": "Autumn", "difficulty": 1 },
+        { "id": 21, "value": "Awakening", "difficulty": 4 },
+        { "id": 22, "value": "Balance", "difficulty": 2 },
+        { "id": 23, "value": "Balloons", "difficulty": 3 },
+        { "id": 24, "value": "Barriers", "difficulty": 3 },
+        { "id": 25, "value": "Beauty", "difficulty": 2 },
+        { "id": 26, "value": "Beneath", "difficulty": 4 },
+        { "id": 27, "value": "Bicycles", "difficulty": 2 },
+        { "id": 28, "value": "Birds", "difficulty": 4 },
+        { "id": 29, "value": "Birth", "difficulty": 5 },
+        { "id": 30, "value": "Blood", "difficulty": 5 },
+        { "id": 31, "value": "Blossom", "difficulty": 1 },
+        { "id": 32, "value": "Blur", "difficulty": 3 },
+        { "id": 33, "value": "Body Language", "difficulty": 3 },
+        { "id": 34, "value": "Books", "difficulty": 1 },
+        { "id": 35, "value": "Bridges", "difficulty": 2 },
+        { "id": 36, "value": "Bubbles", "difficulty": 3 },
+        { "id": 37, "value": "Buttons", "difficulty": 2 },
+        { "id": 38, "value": "Cage", "difficulty": 4 },
+        { "id": 39, "value": "Candlelight", "difficulty": 3 },
+        { "id": 40, "value": "Chaos", "difficulty": 4 },
+        { "id": 41, "value": "Childhood", "difficulty": 3 },
+        { "id": 42, "value": "Circles", "difficulty": 2 },
+        { "id": 43, "value": "Cityscape", "difficulty": 2 },
+        { "id": 44, "value": "Clocks", "difficulty": 3 },
+        { "id": 45, "value": "Clouds", "difficulty": 1 },
+        { "id": 46, "value": "Coffee", "difficulty": 1 },
+        { "id": 47, "value": "Cold", "difficulty": 3 },
+        { "id": 48, "value": "Comfort", "difficulty": 2 },
+        { "id": 49, "value": "Communication", "difficulty": 4 },
+        { "id": 50, "value": "Complexity", "difficulty": 4 },
+        { "id": 51, "value": "Concrete", "difficulty": 1 },
+        { "id": 52, "value": "Conflict", "difficulty": 5 },
+        { "id": 53, "value": "Connection", "difficulty": 3 },
+        { "id": 54, "value": "Contrast", "difficulty": 2 },
+        { "id": 55, "value": "Crowds", "difficulty": 3 },
+        { "id": 56, "value": "Crying", "difficulty": 5 },
+        { "id": 57, "value": "Curiosity", "difficulty": 4 },
+        { "id": 58, "value": "Curves", "difficulty": 2 },
+        { "id": 59, "value": "Cyberpunk", "difficulty": 4 },
+        { "id": 60, "value": "Dance", "difficulty": 3 },
+        { "id": 61, "value": "Danger", "difficulty": 5 },
+        { "id": 62, "value": "Darkness", "difficulty": 2 },
+        { "id": 63, "value": "Dawn", "difficulty": 2 },
+        { "id": 64, "value": "Decay", "difficulty": 3 },
+        { "id": 65, "value": "Deep Sea", "difficulty": 5 },
+        { "id": 66, "value": "Departure", "difficulty": 4 },
+        { "id": 67, "value": "Despair", "difficulty": 5 },
+        { "id": 68, "value": "Destruction", "difficulty": 5 },
+        { "id": 69, "value": "Dinner Table", "difficulty": 2 },
+        { "id": 70, "value": "Distance", "difficulty": 3 },
+        { "id": 71, "value": "Dogs", "difficulty": 1 },
+        { "id": 72, "value": "Doors", "difficulty": 2 },
+        { "id": 73, "value": "Dreams", "difficulty": 5 },
+        { "id": 74, "value": "Droplets", "difficulty": 2 },
+        { "id": 75, "value": "Dust", "difficulty": 3 },
+        { "id": 76, "value": "Echo", "difficulty": 5 },
+        { "id": 77, "value": "Elegance", "difficulty": 3 },
+        { "id": 78, "value": "Electricity", "difficulty": 4 },
+        { "id": 79, "value": "Empty Spaces", "difficulty": 4 },
+        { "id": 80, "value": "Energy", "difficulty": 3 },
+        { "id": 81, "value": "Entropy", "difficulty": 5 },
+        { "id": 82, "value": "Escape", "difficulty": 4 },
+        { "id": 83, "value": "Euphoria", "difficulty": 4 },
+        { "id": 84, "value": "Eyes", "difficulty": 4 },
+        { "id": 85, "value": "Fabric", "difficulty": 2 },
+        { "id": 86, "value": "Failure", "difficulty": 5 },
+        { "id": 87, "value": "Fashion", "difficulty": 2 },
+        { "id": 88, "value": "Fear", "difficulty": 5 },
+        { "id": 89, "value": "Feathers", "difficulty": 3 },
+        { "id": 90, "value": "Fences", "difficulty": 2 },
+        { "id": 91, "value": "Fire", "difficulty": 4 },
+        { "id": 92, "value": "Flight", "difficulty": 4 },
+        { "id": 93, "value": "Flowers", "difficulty": 1 },
+        { "id": 94, "value": "Fluidity", "difficulty": 3 },
+        { "id": 95, "value": "Fog", "difficulty": 3 },
+        { "id": 96, "value": "Food", "difficulty": 2 },
+        { "id": 97, "value": "Forest", "difficulty": 2 },
+        { "id": 98, "value": "Fragility", "difficulty": 4 },
+        { "id": 99, "value": "Freedom", "difficulty": 4 },
+        { "id": 100, "value": "Fruit", "difficulty": 1 },
+        { "id": 101, "value": "Futurism", "difficulty": 4 },
+        { "id": 102, "value": "Geometry", "difficulty": 2 },
+        { "id": 103, "value": "Ghosts", "difficulty": 5 },
+        { "id": 104, "value": "Glass", "difficulty": 3 },
+        { "id": 105, "value": "Glitch", "difficulty": 4 },
+        { "id": 106, "value": "Gloom", "difficulty": 4 },
+        { "id": 107, "value": "Gold", "difficulty": 3 },
+        { "id": 108, "value": "Graffiti", "difficulty": 2 },
+        { "id": 109, "value": "Gravity", "difficulty": 5 },
+        { "id": 110, "value": "Greed", "difficulty": 5 },
+        { "id": 111, "value": "Growth", "difficulty": 4 },
+        { "id": 112, "value": "Hands", "difficulty": 2 },
+        { "id": 113, "value": "Happiness", "difficulty": 3 },
+        { "id": 114, "value": "Hate", "difficulty": 5 },
+        { "id": 115, "value": "Heat", "difficulty": 4 },
+        { "id": 116, "value": "History", "difficulty": 3 },
+        { "id": 117, "value": "Home", "difficulty": 1 },
+        { "id": 118, "value": "Hope", "difficulty": 4 },
+        { "id": 119, "value": "Horizon", "difficulty": 2 },
+        { "id": 120, "value": "Humor", "difficulty": 3 },
+        { "id": 121, "value": "Hunger", "difficulty": 4 },
+        { "id": 122, "value": "Ice", "difficulty": 3 },
+        { "id": 123, "value": "Identity", "difficulty": 5 },
+        { "id": 124, "value": "Illusion", "difficulty": 5 },
+        { "id": 125, "value": "Industrial", "difficulty": 2 },
+        { "id": 126, "value": "Innocence", "difficulty": 4 },
+        { "id": 127, "value": "Insects", "difficulty": 4 },
+        { "id": 128, "value": "Intimacy", "difficulty": 4 },
+        { "id": 129, "value": "Invisibility", "difficulty": 5 },
+        { "id": 130, "value": "Isolation", "difficulty": 3 },
+        { "id": 131, "value": "Jewelry", "difficulty": 3 },
+        { "id": 132, "value": "Joy", "difficulty": 3 },
+        { "id": 133, "value": "Juxtaposition", "difficulty": 4 },
+        { "id": 134, "value": "Keys", "difficulty": 3 },
+        { "id": 135, "value": "Kindness", "difficulty": 4 },
+        { "id": 136, "value": "Kitchen", "difficulty": 1 },
+        { "id": 137, "value": "Knots", "difficulty": 4 },
+        { "id": 138, "value": "Labyrinth", "difficulty": 5 },
+        { "id": 139, "value": "Landscape", "difficulty": 1 },
+        { "id": 140, "value": "Laughter", "difficulty": 3 },
+        { "id": 141, "value": "Leaves", "difficulty": 1 },
+        { "id": 142, "value": "Legacy", "difficulty": 4 },
+        { "id": 143, "value": "Letters", "difficulty": 2 },
+        { "id": 144, "value": "Light", "difficulty": 1 },
+        { "id": 145, "value": "Liminal Space", "difficulty": 4 },
+        { "id": 146, "value": "Loneliness", "difficulty": 4 },
+        { "id": 147, "value": "Lost", "difficulty": 4 },
+        { "id": 148, "value": "Love", "difficulty": 5 },
+        { "id": 149, "value": "Luxury", "difficulty": 3 },
+        { "id": 150, "value": "Machinery", "difficulty": 2 },
+        { "id": 151, "value": "Madness", "difficulty": 5 },
+        { "id": 152, "value": "Maps", "difficulty": 3 },
+        { "id": 153, "value": "Markets", "difficulty": 2 },
+        { "id": 154, "value": "Masks", "difficulty": 4 },
+        { "id": 155, "value": "Melancholy", "difficulty": 4 },
+        { "id": 156, "value": "Memory", "difficulty": 4 },
+        { "id": 157, "value": "Metal", "difficulty": 1 },
+        { "id": 158, "value": "Microscope", "difficulty": 5 },
+        { "id": 159, "value": "Minimalism", "difficulty": 2 },
+        { "id": 160, "value": "Mirrors", "difficulty": 2 },
+        { "id": 161, "value": "Mistake", "difficulty": 4 },
+        { "id": 162, "value": "Modernity", "difficulty": 2 },
+        { "id": 163, "value": "Moon", "difficulty": 3 },
+        { "id": 164, "value": "Morning", "difficulty": 2 },
+        { "id": 165, "value": "Mountains", "difficulty": 2 },
+        { "id": 166, "value": "Mouth", "difficulty": 4 },
+        { "id": 167, "value": "Movement", "difficulty": 3 },
+        { "id": 168, "value": "Music", "difficulty": 3 },
+        { "id": 169, "value": "Mystery", "difficulty": 4 },
+        { "id": 170, "value": "Nails", "difficulty": 2 },
+        { "id": 171, "value": "Neon", "difficulty": 2 },
+        { "id": 172, "value": "Night Life", "difficulty": 3 },
+        { "id": 173, "value": "Noise", "difficulty": 4 },
+        { "id": 174, "value": "Nostalgia", "difficulty": 4 },
+        { "id": 175, "value": "Nothingness", "difficulty": 5 },
+        { "id": 176, "value": "Numbers", "difficulty": 2 },
+        { "id": 177, "value": "Obsession", "difficulty": 5 },
+        { "id": 178, "value": "Ocean", "difficulty": 2 },
+        { "id": 179, "value": "Old Age", "difficulty": 4 },
+        { "id": 180, "value": "Oppression", "difficulty": 5 },
+        { "id": 181, "value": "Order", "difficulty": 2 },
+        { "id": 182, "value": "Oxygen", "difficulty": 5 },
+        { "id": 183, "value": "Pain", "difficulty": 5 },
+        { "id": 184, "value": "Paper", "difficulty": 1 },
+        { "id": 185, "value": "Parallel", "difficulty": 3 },
+        { "id": 186, "value": "Parasite", "difficulty": 5 },
+        { "id": 187, "value": "Passion", "difficulty": 4 },
+        { "id": 188, "value": "Past", "difficulty": 4 },
+        { "id": 189, "value": "Patterns", "difficulty": 2 },
+        { "id": 190, "value": "Peace", "difficulty": 3 },
+        { "id": 191, "value": "Perspective", "difficulty": 2 },
+        { "id": 192, "value": "Plants", "difficulty": 1 },
+        { "id": 193, "value": "Plastic", "difficulty": 2 },
+        { "id": 194, "value": "Play", "difficulty": 3 },
+        { "id": 195, "value": "Poetry", "difficulty": 4 },
+        { "id": 196, "value": "Pollution", "difficulty": 4 },
+        { "id": 197, "value": "Portrait", "difficulty": 3 },
+        { "id": 198, "value": "Power", "difficulty": 4 },
+        { "id": 199, "value": "Pride", "difficulty": 5 },
+        { "id": 200, "value": "Prison", "difficulty": 5 }
       ]
     },
     {
       "name": "Emotion",
       "description": "The specific feeling or psychological state the viewer should experience",
       "options": [
-        { "id": 1, "value": "Adoration", "rarity": 2 },
-        { "id": 2, "value": "Alienation", "rarity": 4 },
-        { "id": 3, "value": "Amusement", "rarity": 2 },
-        { "id": 4, "value": "Anger", "rarity": 4 },
-        { "id": 5, "value": "Anxiety", "rarity": 4 },
-        { "id": 6, "value": "Apathy", "rarity": 5 },
-        { "id": 7, "value": "Awe", "rarity": 3 },
-        { "id": 8, "value": "Bittersweetness", "rarity": 4 },
-        { "id": 9, "value": "Calmness", "rarity": 1 },
-        { "id": 10, "value": "Claustrophobia", "rarity": 4 },
-        { "id": 11, "value": "Confusion", "rarity": 3 },
-        { "id": 12, "value": "Contempt", "rarity": 5 },
-        { "id": 13, "value": "Curiosity", "rarity": 2 },
-        { "id": 14, "value": "Despair", "rarity": 5 },
-        { "id": 15, "value": "Disgust", "rarity": 5 },
-        { "id": 16, "value": "Dread", "rarity": 4 },
-        { "id": 17, "value": "Empathy", "rarity": 3 },
-        { "id": 18, "value": "Envy", "rarity": 4 },
-        { "id": 19, "value": "Euphoria", "rarity": 4 },
-        { "id": 20, "value": "Fear", "rarity": 4 },
-        { "id": 21, "value": "Gratitude", "rarity": 3 },
-        { "id": 22, "value": "Guilt", "rarity": 5 },
-        { "id": 23, "value": "Hope", "rarity": 3 },
-        { "id": 24, "value": "Hostility", "rarity": 5 },
-        { "id": 25, "value": "Insignificance", "rarity": 4 },
-        { "id": 26, "value": "Inspiration", "rarity": 2 },
-        { "id": 27, "value": "Intimacy", "rarity": 3 },
-        { "id": 28, "value": "Isolation", "rarity": 4 },
-        { "id": 29, "value": "Jealousy", "rarity": 5 },
-        { "id": 30, "value": "Joy", "rarity": 1 },
-        { "id": 31, "value": "Loneliness", "rarity": 3 },
-        { "id": 32, "value": "Lust", "rarity": 4 },
-        { "id": 33, "value": "Melancholy", "rarity": 3 },
-        { "id": 34, "value": "Nostalgia", "rarity": 2 },
-        { "id": 35, "value": "Overwhelmed", "rarity": 4 },
-        { "id": 36, "value": "Paranoia", "rarity": 5 },
-        { "id": 37, "value": "Peace", "rarity": 1 },
-        { "id": 38, "value": "Pity", "rarity": 4 },
-        { "id": 39, "value": "Pride", "rarity": 3 },
-        { "id": 40, "value": "Regret", "rarity": 4 },
-        { "id": 41, "value": "Relief", "rarity": 3 },
-        { "id": 42, "value": "Resentment", "rarity": 5 },
-        { "id": 43, "value": "Sadness", "rarity": 2 },
-        { "id": 44, "value": "Satisfaction", "rarity": 2 },
-        { "id": 45, "value": "Serenity", "rarity": 2 },
-        { "id": 46, "value": "Shame", "rarity": 5 },
-        { "id": 47, "value": "Shock", "rarity": 4 },
-        { "id": 48, "value": "Tenderness", "rarity": 3 },
-        { "id": 49, "value": "Uncomfortableness", "rarity": 4 },
-        { "id": 50, "value": "Wonder", "rarity": 2 }
+        { "id": 1, "value": "Adoration", "difficulty": 2 },
+        { "id": 2, "value": "Alienation", "difficulty": 4 },
+        { "id": 3, "value": "Amusement", "difficulty": 2 },
+        { "id": 4, "value": "Anger", "difficulty": 4 },
+        { "id": 5, "value": "Anxiety", "difficulty": 4 },
+        { "id": 6, "value": "Apathy", "difficulty": 5 },
+        { "id": 7, "value": "Awe", "difficulty": 3 },
+        { "id": 8, "value": "Bittersweetness", "difficulty": 4 },
+        { "id": 9, "value": "Calmness", "difficulty": 1 },
+        { "id": 10, "value": "Claustrophobia", "difficulty": 4 },
+        { "id": 11, "value": "Confusion", "difficulty": 3 },
+        { "id": 12, "value": "Contempt", "difficulty": 5 },
+        { "id": 13, "value": "Curiosity", "difficulty": 2 },
+        { "id": 14, "value": "Despair", "difficulty": 5 },
+        { "id": 15, "value": "Disgust", "difficulty": 5 },
+        { "id": 16, "value": "Dread", "difficulty": 4 },
+        { "id": 17, "value": "Empathy", "difficulty": 3 },
+        { "id": 18, "value": "Envy", "difficulty": 4 },
+        { "id": 19, "value": "Euphoria", "difficulty": 4 },
+        { "id": 20, "value": "Fear", "difficulty": 4 },
+        { "id": 21, "value": "Gratitude", "difficulty": 3 },
+        { "id": 22, "value": "Guilt", "difficulty": 5 },
+        { "id": 23, "value": "Hope", "difficulty": 3 },
+        { "id": 24, "value": "Hostility", "difficulty": 5 },
+        { "id": 25, "value": "Insignificance", "difficulty": 4 },
+        { "id": 26, "value": "Inspiration", "difficulty": 2 },
+        { "id": 27, "value": "Intimacy", "difficulty": 3 },
+        { "id": 28, "value": "Isolation", "difficulty": 4 },
+        { "id": 29, "value": "Jealousy", "difficulty": 5 },
+        { "id": 30, "value": "Joy", "difficulty": 1 },
+        { "id": 31, "value": "Loneliness", "difficulty": 3 },
+        { "id": 32, "value": "Lust", "difficulty": 4 },
+        { "id": 33, "value": "Melancholy", "difficulty": 3 },
+        { "id": 34, "value": "Nostalgia", "difficulty": 2 },
+        { "id": 35, "value": "Overwhelmed", "difficulty": 4 },
+        { "id": 36, "value": "Paranoia", "difficulty": 5 },
+        { "id": 37, "value": "Peace", "difficulty": 1 },
+        { "id": 38, "value": "Pity", "difficulty": 4 },
+        { "id": 39, "value": "Pride", "difficulty": 3 },
+        { "id": 40, "value": "Regret", "difficulty": 4 },
+        { "id": 41, "value": "Relief", "difficulty": 3 },
+        { "id": 42, "value": "Resentment", "difficulty": 5 },
+        { "id": 43, "value": "Sadness", "difficulty": 2 },
+        { "id": 44, "value": "Satisfaction", "difficulty": 2 },
+        { "id": 45, "value": "Serenity", "difficulty": 2 },
+        { "id": 46, "value": "Shame", "difficulty": 5 },
+        { "id": 47, "value": "Shock", "difficulty": 4 },
+        { "id": 48, "value": "Tenderness", "difficulty": 3 },
+        { "id": 49, "value": "Uncomfortableness", "difficulty": 4 },
+        { "id": 50, "value": "Wonder", "difficulty": 2 }
       ]
     },
     {
@@ -640,497 +653,497 @@
         {
           "id": 1,
           "value": "Absence: Take a photo where the subject was just present but is now gone.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 2,
           "value": "Acrobat: Take the shot while standing on one leg.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 3,
           "value": "Afterlife: Edit the photo to look like a ghostly apparition.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 4,
           "value": "Ambidextrous: Switch your trigger hand (if possible) or use your non-dominant hand.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 5,
           "value": "Anachronism: Include one modern object in a vintage-style scene.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 6,
           "value": "Architect: Frame the subject using only man-made structures.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 7,
           "value": "Aviator: Get as high as possible (ladder, chair, hill).",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 8,
           "value": "Back-to-Back: Take two photos of the exact same thing but with opposite lighting.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 9,
           "value": "Behind the Scenes: Take a photo of your own camera or gear in the environment.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 10,
           "value": "Blind Shot: Close your eyes, count to three, and press the shutter.",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 11,
           "value": "Blurry Vision: The subject must be out of focus, while the background is sharp.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 12,
           "value": "Breathe: Take the shot at the exact peak of a deep inhalation.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 13,
           "value": "Broken Mirror: Capture the subject through a cracked or distorted surface.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 14,
           "value": "Camouflage: Make the subject blend perfectly into the background.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 15,
           "value": "Candid: Shoot a person without them noticing.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 16,
           "value": "Ceiling Fan: Point the camera straight up and spin in a circle while shooting.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 17,
           "value": "Chameleon: The colors in your photo must match the clothes you are wearing.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 18,
           "value": "Cinematographer: Every shot for the next 10 minutes must be in 21:9 aspect ratio.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 19,
           "value": "Clockwork: You can only take one photo every 60 seconds for the next 10 minutes.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 20,
           "value": "Cold Snap: Every photo must have a blue tint or feel freezing.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 21,
           "value": "Color Thief: Pick one color in the room; that is the ONLY color allowed to be vibrant.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 22,
           "value": "Contortionist: Take the shot from between your own legs.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 23,
           "value": "Cover Art: Frame the photo as if it were an album cover for a jazz band.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 24,
           "value": "Crawl: Take the next 5 shots while your stomach is touching the ground.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 25,
           "value": "Dance Macabre: Capture a subject that represents 'death' or 'ending'.",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 26,
           "value": "Deja Vu: Find a photo you took earlier today and recreate it exactly.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 27,
           "value": "Detective: Find a 'clue' or a small detail that tells a story of what happened here.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 28,
           "value": "Dirty Lens: Put a small fingerprint or smudge on the edge of your lens/filter.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 29,
           "value": "Discovery: Shoot something you have never noticed in this location before.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 30,
           "value": "Distance Runner: Take a photo, then run 50 meters and take another.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 31,
           "value": "Double Life: Use a reflection to show two sides of the same subject.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 32,
           "value": "Downpour: Use water (spray bottle or rain) to add droplets to your lens.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 33,
           "value": "Duality: Compose a shot that is perfectly split between light and dark.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 34,
           "value": "Echo: Capture a repeating pattern that fades into the distance.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 35,
           "value": "Eclipse: Partially block your lens with your hand to create a custom flare.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 36,
           "value": "Empty Grave: Shoot a hole, a container, or a space that should be full but isn't.",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 37,
           "value": "Exhibitionist: Ask a total stranger if you can take their portrait.",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 38,
           "value": "Eye Contact: If the subject is a person/animal, they must stare directly into the lens.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 39,
           "value": "False Advertising: Shoot a mundane object to look like a luxury product.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 40,
           "value": "Fast Forward: Use a slow shutter speed to turn people into ghosts.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 41,
           "value": "Firewall: Include a source of heat or light at the very edge of the frame.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 42,
           "value": "First Person: Hold an object in one hand so it looks like it's in the shot 'POV' style.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 43,
           "value": "Flash Bang: Use the highest power flash possible, even if it's daylight.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 44,
           "value": "Floating: Capture an object while it is mid-air (toss it and shoot).",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 45,
           "value": "Forensics: Shoot a texture so close it looks like evidence under a microscope.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 46,
           "value": "Forgotten: Find an object that has been abandoned or left behind.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 47,
           "value": "Framed: You must find a physical 'hole' (window, fence, leaves) to shoot through.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 48,
           "value": "Gatling Gun: Set your camera to burst mode and fire 20 shots in one second.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 49,
           "value": "Giant: Shoot from a high angle, make the world look like a toy through effect.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 50,
           "value": "Glitch: Shake the camera violently during a 1/2 second exposure.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 51,
           "value": "Golden Ticket: Find something yellow or gold; it must be the center of your shot.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 52,
           "value": "Gravity: Capture something falling or being pulled downward.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 53,
           "value": "Guerrilla: You have 5 seconds to take a shot, then you must move to a new room.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 54,
           "value": "Heavy Metal: Every subject in your next 3 shots must be made of metal.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 55,
           "value": "Hiding: Only show 25% of your subject; hide the rest behind something.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 56,
           "value": "High Noon: Use only light provided by the night.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 57,
           "value": "Hitchcock: Perform a 'dolly zoom' (zoom in while moving the camera back).",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 58,
           "value": "Human Tripod: Lean against a wall or another person to stabilize a 1s shot.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 59,
           "value": "Imposter: Take a photo in the style of a famous photographer you know.",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 60,
           "value": "Inception: Take a photo of a photo (on a phone, a print, or a screen).",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 61,
           "value": "Infrared: Post-process your next shot to make all greens turn white or red.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 62,
           "value": "Interrogation: Light your subject from directly underneath.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 63,
           "value": "Inversion: Turn your camera upside down for the next 3 shots.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 64,
           "value": "Invisible Man: Capture a piece of clothing as if someone is wearing it.",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 65,
           "value": "Jailbreak: Shoot through a grid, bars, or a mesh fence.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 66,
           "value": "Keyhole: Cup your hands around the lens to create a tunnel effect.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 67,
           "value": "Last Stand: You have one shot left on your 'roll'. Make it count.",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 68,
           "value": "Lighthouse: Use your phone's flashlight as the only light source in the shot.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 69,
           "value": "Liminal: Shoot a hallway, doorway, or stairs with no people in them.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 70,
           "value": "Long Distance: Stand as far away as possible from your subject and use max zoom.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 71,
           "value": "Low Battery: You must finish the challenge in the next 2 minutes.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 72,
           "value": "Magnetism: Two subjects must be touching or 'stuck' together.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 73,
           "value": "Masterpiece: Recreate a famous classical painting using objects around you.",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 74,
           "value": "Microscope: Get so close the viewer can't tell what the object is.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 75,
           "value": "Midas Touch: Everything in the frame must be the same color.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 76,
           "value": "Minimalist: There can only be two distinct colors in the entire photo.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 77,
           "value": "Mirror Dimension: Use a puddle or glass to create a perfect vertical symmetry.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 78,
           "value": "Monolith: Center a single, vertical object perfectly in the frame.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 79,
           "value": "Muffled: Capture the feeling of 'silence'.",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 80,
           "value": "Z-Axis: Focus on something in the extreme foreground, leaving the rest to bokeh.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 81,
           "value": "Naturalist: No artificial objects (plastic, metal, tech) allowed in the frame.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 82,
           "value": "Negative: Invert the colors of your photo in post-processing.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 83,
           "value": "Neon Demon: Find the most saturated light source nearby and use it as a rim light.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 84,
           "value": "No Hands: Place the camera on the ground and use the timer; don't touch it.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 85,
           "value": "Noir: High contrast Black & White; no gray tones allowed.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 86,
           "value": "Obscura: Shoot in a room that is almost pitch black.",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 87,
           "value": "Overload: Include as many different textures as possible in one frame.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 88,
           "value": "Oxygen: Capture something that looks like it's breathing (wind in leaves, etc).",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 89,
           "value": "Paper Plane: Include a piece of paper (note, trash, plane) in the composition.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 90,
           "value": "Parallel: Every line in your photo must be perfectly horizontal or vertical.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 91,
           "value": "Paranoia: Peek around a corner to take the shot.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 92,
           "value": "Phantom: Capture your own shadow in the shot.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 93,
           "value": "Pioneer: Shoot an object to make it look like it's from the 1800s.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 94,
           "value": "Prophet: Take a photo that predicts what will happen in this room in 1 hour.",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 95,
           "value": "Puddle Jumper: Get the camera lens within 2 inches of a liquid surface.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 96,
           "value": "Quickdraw: You have 3 seconds to frame and shoot from the moment you see a subject.",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 97,
           "value": "Radioactive: Edit the photo with extreme, glowing saturation.",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 98,
           "value": "Red Light: For the next 5 minutes, every photo must contain the color red.",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 99,
           "value": "Symmetry: Find a reflection and shoot so the real and reflected worlds are equal.",
-          "rarity": 2
+          "difficulty": 2
         }
       ]
     }

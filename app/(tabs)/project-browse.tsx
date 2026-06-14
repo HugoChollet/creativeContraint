@@ -2,12 +2,15 @@ import { AddButton } from "@/components/generic/add-button";
 import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { Header } from "@/components/generic/header";
 import { ModalGeneric } from "@/components/generic/modal-generic";
+import ProjectLanguageFilter from "@/components/generic/project-language-filter";
 import Auth from "@/components/specific/auth";
 import ProjectSection from "@/components/specific/project/project-section";
 import {
   getDefaultProjectLanguage,
   getDefaultProjectSupportedFileType,
   getDefaultProjectTags,
+  matchesProjectLanguage,
+  ProjectLanguage,
 } from "@/constants/project-metadata";
 import { useAuth } from "@/contexts/auth-context";
 import { useProjectDraft } from "@/contexts/project-draft-context";
@@ -34,6 +37,9 @@ export default function ProjectBrowseScreen() {
   const { session } = useAuth();
   const { t, i18n } = useTranslation();
   const headerHeight = useHeaderHeight();
+  const [languageFilter, setLanguageFilter] = useState<ProjectLanguage | null>(
+    () => getDefaultProjectLanguage(i18n.language),
+  );
 
   const userId = session?.user?.id;
 
@@ -91,33 +97,41 @@ export default function ProjectBrowseScreen() {
     }, [refresh, refreshSelectedProjects]),
   );
 
+  const filteredProjects = useMemo(
+    () =>
+      parsedProjects.filter((project) =>
+        matchesProjectLanguage(project.language, languageFilter),
+      ),
+    [languageFilter, parsedProjects],
+  );
+
   const personalProjects = useMemo(
     () =>
-      parsedProjects.filter(
+      filteredProjects.filter(
         (item) => item.owner_id === userId && item.is_public === false,
       ),
-    [parsedProjects, userId],
+    [filteredProjects, userId],
   );
 
   const publishedProjects = useMemo(
     () =>
-      parsedProjects.filter(
+      filteredProjects.filter(
         (item) => item.owner_id === userId && item.is_public === true,
       ),
-    [parsedProjects, userId],
+    [filteredProjects, userId],
   );
 
   const officialProjects = useMemo(
-    () => parsedProjects.filter((item) => item.source === "official"),
-    [parsedProjects],
+    () => filteredProjects.filter((item) => item.source === "official"),
+    [filteredProjects],
   );
 
   const communityProjects = useMemo(
     () =>
-      parsedProjects.filter(
+      filteredProjects.filter(
         (item) => item.source === "community" && item.owner_id !== userId,
       ),
-    [parsedProjects, userId],
+    [filteredProjects, userId],
   );
 
   const persistedSelectedIds = useMemo(() => {
@@ -133,6 +147,10 @@ export default function ProjectBrowseScreen() {
   useEffect(() => {
     setSelectedProjectIds(persistedSelectedIds);
   }, [persistedSelectedIds]);
+
+  useEffect(() => {
+    setLanguageFilter(getDefaultProjectLanguage(i18n.language));
+  }, [i18n.language]);
 
   const hasSelectionChanges = useMemo(() => {
     if (selectedProjectIds.length !== persistedSelectedIds.length) {
@@ -176,7 +194,6 @@ export default function ProjectBrowseScreen() {
     setLanguage,
     setSupportedFileType,
     setTags,
-    setProjectColor,
     setSelectedCategories,
     resetProjectDraft,
   } = useProjectDraft();
@@ -203,7 +220,6 @@ export default function ProjectBrowseScreen() {
       getDefaultProjectSupportedFileType(draft.supported_files),
     );
     setTags(getDefaultProjectTags(draft.tags));
-    setProjectColor(draft.color ?? "ffff");
     setSelectedCategories(draft.categories);
     setId(isForked ? "" : draft.id);
   };
@@ -318,6 +334,14 @@ export default function ProjectBrowseScreen() {
       <Header
         title={t("screen:project_browse.title", { type: projectLabel })}
       />
+      <View style={{ marginTop: 16, marginBottom: 8 }}>
+        <ProjectLanguageFilter
+          label={t("component:metadata.language_label")}
+          selectedLanguage={languageFilter}
+          onChange={setLanguageFilter}
+          color={colors.tint}
+        />
+      </View>
       {loading ? (
         <View
           style={[globalStyles.screenContainer, { justifyContent: "center" }]}

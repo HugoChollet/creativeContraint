@@ -1,938 +1,1106 @@
 {
   "project_type": "Internet Video",
   "language": "en",
-  "tags": ["video", "short", "character"],
+  "tags": ["video", "internet-content"],
   "categories": [
     {
       "name": "Type",
+      "description": "The core format or creator archetype the video is built around.",
       "disabled": true,
       "options": [
-        { "id": 1, "value": "Short-Form (Loop-based)", "rarity": 1 },
-        { "id": 2, "value": "Video Essay / Explainer", "rarity": 3 },
-        { "id": 3, "value": "Personal Vlog", "rarity": 2 },
-        { "id": 4, "value": "Talking Head / Commentary", "rarity": 1 },
-        { "id": 5, "value": "Tutorial / How-To", "rarity": 2 },
-        { "id": 6, "value": "Livestream Highlights", "rarity": 3 },
-        { "id": 7, "value": "Micro-Interview (Street Style)", "rarity": 4 },
-        { "id": 8, "value": "Product Unboxing / Review", "rarity": 2 }
+        { "id": 1, "value": "Short-Form (Loop-based)", "difficulty": 1 },
+        { "id": 2, "value": "Video Essay / Explainer", "difficulty": 3 },
+        { "id": 3, "value": "Personal Vlog", "difficulty": 2 },
+        { "id": 4, "value": "Talking Head / Commentary", "difficulty": 1 },
+        { "id": 5, "value": "Tutorial / How-To", "difficulty": 2 },
+        { "id": 6, "value": "Livestream Highlights", "difficulty": 3 },
+        { "id": 7, "value": "Micro-Interview (Street Style)", "difficulty": 4 },
+        { "id": 8, "value": "Product Unboxing / Review", "difficulty": 2 }
       ]
     },
     {
       "name": "The Hook",
+      "description": "The opening promise or attention-grabber that makes someone stop scrolling.",
       "options": [
         {
           "id": 1,
           "value": "Start with: 'I can't believe I'm showing you this'",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 2,
           "value": "Show the 'Fail' or 'End Result' first",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 3,
           "value": "A polarizing 'Yes/No' question overlay",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 4,
           "value": "Silent visual hook (unexpected movement)",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 5, "value": "The 'Wait for it' text overlay", "rarity": 1 },
+        { "id": 5, "value": "The 'Wait for it' text overlay", "difficulty": 1 },
         {
           "id": 6,
           "value": "Aggressive, loud sound effect (Siren/Ding)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 7,
           "value": "Start with: 'Stop scrolling if you want to...'",
-          "rarity": 2
+          "difficulty": 2
         },
-        { "id": 8, "value": "ASMR high-quality texture sound", "rarity": 4 },
+        {
+          "id": 8,
+          "value": "ASMR high-quality texture sound",
+          "difficulty": 4
+        },
         {
           "id": 9,
           "value": "Holding a microphone extremely close to the mouth",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 10,
           "value": "A zoomed-in extreme close-up of your eye",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 11,
           "value": "Start mid-sentence: '...and that's why I did it'",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 12,
           "value": "Displaying a large, controversial number (e.g. '$50,000')",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 13,
           "value": "Dropping a glass or something loud",
-          "rarity": 3
+          "difficulty": 3
         },
-        { "id": 14, "value": "A 'Search History' reveal", "rarity": 3 },
+        { "id": 14, "value": "A 'Search History' reveal", "difficulty": 3 },
         {
           "id": 15,
           "value": "Rapid-fire montage (5 clips in 1 second)",
-          "rarity": 2
+          "difficulty": 2
         },
-        { "id": 16, "value": "Whispering a secret", "rarity": 3 },
+        { "id": 16, "value": "Whispering a secret", "difficulty": 3 },
         {
           "id": 17,
           "value": "Pointing at a text box that disappears",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 18,
           "value": "An 'unpopular opinion' text bubble",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 19,
           "value": "Starting while crying or laughing hysterically",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 20, "value": "A 'Red Flag' emoji warning", "rarity": 1 },
-        { "id": 21, "value": "Using a voice filter immediately", "rarity": 2 },
+        { "id": 20, "value": "A 'Red Flag' emoji warning", "difficulty": 1 },
+        {
+          "id": 21,
+          "value": "Using a voice filter immediately",
+          "difficulty": 2
+        },
         {
           "id": 22,
           "value": "Eating something crunchy on camera",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 23,
           "value": "Showing a countdown timer starting at 0:05",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 24,
           "value": "Start with: 'Don't buy this product until...'",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 25,
           "value": "A 'Life Hack' reveal (Before/After split)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 26,
           "value": "Staring blankly at the camera for 2 seconds",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 27,
           "value": "A 'Trigger Warning' for something silly",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 28, "value": "Splashing water on the lens", "rarity": 4 },
-        { "id": 29, "value": "Holding up a handwritten sign", "rarity": 3 },
+        { "id": 28, "value": "Splashing water on the lens", "difficulty": 4 },
+        { "id": 29, "value": "Holding up a handwritten sign", "difficulty": 3 },
         {
           "id": 30,
           "value": "Start with: 'My parents are going to kill me'",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 31,
           "value": "A Green Screen of a viral news headline",
-          "rarity": 2
+          "difficulty": 2
         },
-        { "id": 32, "value": "Tearing a piece of paper in half", "rarity": 3 },
-        { "id": 33, "value": "The 'Pov: You're my boss' caption", "rarity": 1 },
+        {
+          "id": 32,
+          "value": "Tearing a piece of paper in half",
+          "difficulty": 3
+        },
+        {
+          "id": 33,
+          "value": "The 'Pov: You're my boss' caption",
+          "difficulty": 1
+        },
         {
           "id": 34,
           "value": "Starting the video while upside down",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 35,
           "value": "Using a thermal/infrared camera filter",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 36,
           "value": "Showing a physical 'Secret' folder",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 37,
           "value": "Start with: 'This is day 1 of trying to...'",
-          "rarity": 2
+          "difficulty": 2
         },
-        { "id": 38, "value": "A 'Forbidden' door or box", "rarity": 3 },
+        { "id": 38, "value": "A 'Forbidden' door or box", "difficulty": 3 },
         {
           "id": 39,
           "value": "Starting a fire (Match/Lighter visual)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 40,
           "value": "An 'X Days since my last...' counter",
-          "rarity": 3
+          "difficulty": 3
         },
-        { "id": 41, "value": "A 'Gatekeeping' joke", "rarity": 3 },
-        { "id": 42, "value": "Pouring a liquid satisfyingly", "rarity": 2 },
-        { "id": 43, "value": "Opening a door to a new location", "rarity": 3 },
+        { "id": 41, "value": "A 'Gatekeeping' joke", "difficulty": 3 },
+        { "id": 42, "value": "Pouring a liquid satisfyingly", "difficulty": 2 },
+        {
+          "id": 43,
+          "value": "Opening a door to a new location",
+          "difficulty": 3
+        },
         {
           "id": 44,
           "value": "Start with: 'The algorithm brought you here because...'",
-          "rarity": 5
+          "difficulty": 5
         },
-        { "id": 45, "value": "A 'Leaked' DM screenshot", "rarity": 4 },
-        { "id": 46, "value": "A 'Challenge' announcement", "rarity": 1 },
+        { "id": 45, "value": "A 'Leaked' DM screenshot", "difficulty": 4 },
+        { "id": 46, "value": "A 'Challenge' announcement", "difficulty": 1 },
         {
           "id": 47,
           "value": "Pointing to your 'Bio' link immediately",
-          "rarity": 2
+          "difficulty": 2
         },
-        { "id": 48, "value": "Starting with a loud clap", "rarity": 2 },
+        { "id": 48, "value": "Starting with a loud clap", "difficulty": 2 },
         {
           "id": 49,
           "value": "Start with: 'I regret to inform you...'",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 50, "value": "Throwing an object at the camera", "rarity": 3 }
+        {
+          "id": 50,
+          "value": "Throwing an object at the camera",
+          "difficulty": 3
+        }
       ]
     },
     {
       "name": "Algorithm & Retention Strategy",
+      "description": "Mechanics designed to boost watch time, curiosity, and replay value.",
       "options": [
         {
           "id": 1,
           "value": "Pattern Interrupt: Change camera angle every 2s",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 2,
           "value": "Perfect Loop: End sentence starts the beginning",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 3,
           "value": "Comment Bait: Mispronounce a common word",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 4,
           "value": "Save Bait: Show a list too fast to read",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 5,
           "value": "Speed-up: Edit out every single breath",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 6,
           "value": "Split-Screen: Satisfying slime/sand footage below",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 7,
           "value": "Keyword focus: Large auto-captions in center",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 8,
           "value": "Mid-roll CTA: 'If you've seen this far, comment a 🍎'",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 9,
           "value": "Visual Noise: Background changes color every scene",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 10, "value": "The 'Invisible' transition", "rarity": 3 },
+        { "id": 10, "value": "The 'Invisible' transition", "difficulty": 3 },
         {
           "id": 11,
           "value": "Using a trending audio at 5% volume",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 12,
           "value": "The 'Slow Zoom' throughout the entire video",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 13,
           "value": "Subliminal: Flash a meme for 1 frame",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 14,
           "value": "Interactive: 'Tap the screen to pause and see your fate'",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 15,
           "value": "Multiple characters: All played by you with different hats",
-          "rarity": 2
+          "difficulty": 2
         },
-        { "id": 16, "value": "Handheld 'Authenticity' shaky cam", "rarity": 1 },
+        {
+          "id": 16,
+          "value": "Handheld 'Authenticity' shaky cam",
+          "difficulty": 1
+        },
         {
           "id": 17,
           "value": "No-Music: Only high-boosted room noise",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 18,
           "value": "The 'Storytime' cliffhanger (Part 1/2)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 19,
           "value": "Dual Tasking: Talking while doing a complex task",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 20,
           "value": "Reaction: Add a 'Face-cam' in the corner",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 21,
           "value": "B-Roll: Never show the same clip for more than 1.5s",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 22,
           "value": "The 'Sticker' hack: Cover a word with an emoji",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 23,
           "value": "Sound-to-Cut: Every edit happens on the drum beat",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 24,
           "value": "Deliberate 'Glitch' effect to catch the eye",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 25,
           "value": "The 'Easter Egg': Hide a small object in the background",
-          "rarity": 5
+          "difficulty": 5
         },
-        { "id": 26, "value": "Aggressive Zoom-ins on punchlines", "rarity": 1 },
+        {
+          "id": 26,
+          "value": "Aggressive Zoom-ins on punchlines",
+          "difficulty": 1
+        },
         {
           "id": 27,
           "value": "Comment Bait: Ask for advice on something obvious",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 28,
           "value": "Flash Warning: High-energy light transitions",
-          "rarity": 3
+          "difficulty": 3
         },
-        { "id": 29, "value": "The 'No-Context' intro", "rarity": 4 },
+        { "id": 29, "value": "The 'No-Context' intro", "difficulty": 4 },
         {
           "id": 30,
           "value": "Color Shift: The video turns B&W when you're sad",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 31,
           "value": "Subtitle 'Typos' to trigger corrections",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 32,
           "value": "The 'Teleport' transition (walking through a door)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 33,
           "value": "Audio-Swap: Voiceover doesn't match the mouth",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 34,
           "value": "Mirroring: The video is flipped horizontally halfway",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 35,
           "value": "The 'Progress Bar' at the bottom (manual edit)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 36,
           "value": "Ending with a 'Wait for Part 2' text",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 37,
           "value": "Rapid 'Yes/No' text flashes across screen",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 38,
           "value": "Doing the video in one continuous take",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 39,
           "value": "Using a 'Fish-eye' lens effect on your face",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 40,
           "value": "Low-Frame-Rate: Looks like a stop-motion film",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 41,
           "value": "The 'Siri' or 'Alexa' voiceover narration",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 42,
           "value": "Adding 'Static' or 'Film Grain' for 'vibes'",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 43,
           "value": "Including a 'Behind the Scenes' snippet at the end",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 44,
           "value": "Using a 'Wide Angle' lens for comedy",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 45,
           "value": "The 'Silent' response (just pointing at text)",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 46,
           "value": "Slow-Motion on the climax of the video",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 47,
           "value": "The 'Floating Text' that moves with your head",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 48,
           "value": "Green screen: Putting yourself inside a meme",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 49,
           "value": "The 'Speed Ramp': Fast, then slow, then fast",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 50,
           "value": "Ending the video with an unanswered question",
-          "rarity": 1
+          "difficulty": 1
         }
       ]
     },
     {
       "name": "Platform & Delivery Format",
+      "description": "The publishing context, technical framing, and audience habits the video should fit.",
       "disabled": true,
       "options": [
-        { "id": 1, "value": "Vertical (9:16) - Native Mobile", "rarity": 1 },
-        { "id": 2, "value": "Square (1:1) - Aesthetic Feed", "rarity": 3 },
+        {
+          "id": 1,
+          "value": "Vertical (9:16) - Native Mobile",
+          "difficulty": 1
+        },
+        { "id": 2, "value": "Square (1:1) - Aesthetic Feed", "difficulty": 3 },
         {
           "id": 3,
           "value": "No-Audio friendly (Text-only storytelling)",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 4, "value": "POV (Point of View) perspective", "rarity": 2 },
-        { "id": 5, "value": "Handheld 'Authentic' Selfie style", "rarity": 1 },
+        {
+          "id": 4,
+          "value": "POV (Point of View) perspective",
+          "difficulty": 2
+        },
+        {
+          "id": 5,
+          "value": "Handheld 'Authentic' Selfie style",
+          "difficulty": 1
+        },
         {
           "id": 6,
           "value": "Cinematic B-Roll heavy (No face-cam)",
-          "rarity": 5
+          "difficulty": 5
         }
       ]
     },
     {
       "name": "Video Content",
+      "description": "The main ingredients of what happens on screen and why it stays engaging.",
       "tabs": ["Subject", "Action", "Context"],
       "sub_categories": [
         {
           "name": "Subject",
+          "description": "Who or what the video focuses on.",
           "options": [
-            { "id": 1, "value": "A mystery Amazon package", "rarity": 1 },
-            { "id": 2, "value": "A 'cursed' thrift store find", "rarity": 3 },
-            { "id": 3, "value": "Your most expensive mistake", "rarity": 2 },
+            { "id": 1, "value": "A mystery Amazon package", "difficulty": 1 },
+            {
+              "id": 2,
+              "value": "A 'cursed' thrift store find",
+              "difficulty": 3
+            },
+            {
+              "id": 3,
+              "value": "Your most expensive mistake",
+              "difficulty": 2
+            },
             {
               "id": 4,
               "value": "Outdated tech (Old iPhone/Gameboy)",
-              "rarity": 2
+              "difficulty": 2
             },
-            { "id": 5, "value": "A local urban legend location", "rarity": 4 },
-            { "id": 6, "value": "A hyper-realistic cake", "rarity": 3 },
+            {
+              "id": 5,
+              "value": "A local urban legend location",
+              "difficulty": 4
+            },
+            { "id": 6, "value": "A hyper-realistic cake", "difficulty": 3 },
             {
               "id": 7,
               "value": "A 'Day in the Life' of a fake persona",
-              "rarity": 5
+              "difficulty": 5
             },
             {
               "id": 8,
               "value": "The contents of your junk drawer",
-              "rarity": 1
+              "difficulty": 1
             },
             {
               "id": 9,
               "value": "A trending product everyone hates",
-              "rarity": 2
+              "difficulty": 2
             },
-            { "id": 10, "value": "An unedited selfie from 2012", "rarity": 4 },
-            { "id": 11, "value": "A messy PC/Desk setup", "rarity": 3 },
-            { "id": 12, "value": "A DIY project gone wrong", "rarity": 2 },
+            {
+              "id": 10,
+              "value": "An unedited selfie from 2012",
+              "difficulty": 4
+            },
+            { "id": 11, "value": "A messy PC/Desk setup", "difficulty": 3 },
+            { "id": 12, "value": "A DIY project gone wrong", "difficulty": 2 },
             {
               "id": 13,
               "value": "Your Spotify Wrapped / Search history",
-              "rarity": 2
+              "difficulty": 2
             },
             {
               "id": 14,
               "value": "A single piece of expensive fruit",
-              "rarity": 4
+              "difficulty": 4
             },
-            { "id": 15, "value": "A random stranger's outfit", "rarity": 3 },
+            {
+              "id": 15,
+              "value": "A random stranger's outfit",
+              "difficulty": 3
+            },
             {
               "id": 16,
               "value": "The oldest item in your fridge",
-              "rarity": 1
+              "difficulty": 1
             },
             {
               "id": 17,
               "value": "A viral 'TikTok made me buy it' tool",
-              "rarity": 1
+              "difficulty": 1
             },
-            { "id": 18, "value": "An abandoned building", "rarity": 4 },
-            { "id": 19, "value": "A massive pile of laundry", "rarity": 1 },
+            { "id": 18, "value": "An abandoned building", "difficulty": 4 },
+            { "id": 19, "value": "A massive pile of laundry", "difficulty": 1 },
             {
               "id": 20,
               "value": "A high-end mechanical keyboard",
-              "rarity": 3
+              "difficulty": 3
             },
-            { "id": 21, "value": "A receipt from 5 years ago", "rarity": 4 },
-            { "id": 22, "value": "Your most used emoji", "rarity": 1 },
-            { "id": 23, "value": "A failed Pinterest recipe", "rarity": 2 },
+            {
+              "id": 21,
+              "value": "A receipt from 5 years ago",
+              "difficulty": 4
+            },
+            { "id": 22, "value": "Your most used emoji", "difficulty": 1 },
+            { "id": 23, "value": "A failed Pinterest recipe", "difficulty": 2 },
             {
               "id": 24,
               "value": "A 1-star rated restaurant meal",
-              "rarity": 3
+              "difficulty": 3
             },
-            { "id": 25, "value": "A bag of 50 cent snacks", "rarity": 2 },
+            { "id": 25, "value": "A bag of 50 cent snacks", "difficulty": 2 },
             {
               "id": 26,
               "value": "A 'smart' home device that's stupid",
-              "rarity": 3
+              "difficulty": 3
             },
-            { "id": 27, "value": "Your childhood bedroom", "rarity": 3 },
-            { "id": 28, "value": "A fake 'luxury' watch", "rarity": 4 },
-            { "id": 29, "value": "A giant plush toy", "rarity": 2 },
+            { "id": 27, "value": "Your childhood bedroom", "difficulty": 3 },
+            { "id": 28, "value": "A fake 'luxury' watch", "difficulty": 4 },
+            { "id": 29, "value": "A giant plush toy", "difficulty": 2 },
             {
               "id": 30,
               "value": "A handwritten letter from an ex",
-              "rarity": 5
+              "difficulty": 5
             },
             {
               "id": 31,
               "value": "An AI-generated portrait of you",
-              "rarity": 2
+              "difficulty": 2
             },
-            { "id": 32, "value": "A plant you’re trying to save", "rarity": 1 },
+            {
+              "id": 32,
+              "value": "A plant you’re trying to save",
+              "difficulty": 1
+            },
             {
               "id": 33,
               "value": "The cheapest item on Wish/Temu",
-              "rarity": 1
+              "difficulty": 1
             },
-            { "id": 34, "value": "A weirdly specific collection", "rarity": 3 },
+            {
+              "id": 34,
+              "value": "A weirdly specific collection",
+              "difficulty": 3
+            },
             {
               "id": 35,
               "value": "Your unfinished 'work in progress'",
-              "rarity": 2
+              "difficulty": 2
             },
-            { "id": 36, "value": "A 'blind bag' or mystery box", "rarity": 2 },
-            { "id": 37, "value": "An outfit designed by an AI", "rarity": 4 },
-            { "id": 38, "value": "A very loud mechanical object", "rarity": 3 },
+            {
+              "id": 36,
+              "value": "A 'blind bag' or mystery box",
+              "difficulty": 2
+            },
+            {
+              "id": 37,
+              "value": "An outfit designed by an AI",
+              "difficulty": 4
+            },
+            {
+              "id": 38,
+              "value": "A very loud mechanical object",
+              "difficulty": 3
+            },
             {
               "id": 39,
               "value": "A celebrity-owned brand product",
-              "rarity": 2
+              "difficulty": 2
             },
             {
               "id": 40,
               "value": "The view from your window at 3 AM",
-              "rarity": 4
+              "difficulty": 4
             },
-            { "id": 41, "value": "A DIY 'life-hack' gadget", "rarity": 2 },
-            { "id": 42, "value": "A vintage film camera", "rarity": 3 },
-            { "id": 43, "value": "A stack of unread books", "rarity": 1 },
-            { "id": 44, "value": "A 'haunted' doll or toy", "rarity": 5 },
+            { "id": 41, "value": "A DIY 'life-hack' gadget", "difficulty": 2 },
+            { "id": 42, "value": "A vintage film camera", "difficulty": 3 },
+            { "id": 43, "value": "A stack of unread books", "difficulty": 1 },
+            { "id": 44, "value": "A 'haunted' doll or toy", "difficulty": 5 },
             {
               "id": 45,
               "value": "A total stranger's lunch choice",
-              "rarity": 4
+              "difficulty": 4
             },
-            { "id": 46, "value": "A pair of dirty sneakers", "rarity": 1 },
+            { "id": 46, "value": "A pair of dirty sneakers", "difficulty": 1 },
             {
               "id": 47,
               "value": "A crypto/NFT purchase you regret",
-              "rarity": 5
+              "difficulty": 5
             },
-            { "id": 48, "value": "A high-tech kitchen appliance", "rarity": 2 },
-            { "id": 49, "value": "A 1000-piece puzzle half-done", "rarity": 3 },
-            { "id": 50, "value": "Your 'comfort' snack", "rarity": 1 }
+            {
+              "id": 48,
+              "value": "A high-tech kitchen appliance",
+              "difficulty": 2
+            },
+            {
+              "id": 49,
+              "value": "A 1000-piece puzzle half-done",
+              "difficulty": 3
+            },
+            { "id": 50, "value": "Your 'comfort' snack", "difficulty": 1 }
           ]
         },
         {
           "name": "Action",
+          "description": "What the viewer sees happening, demonstrated, or performed.",
           "options": [
             {
               "id": 1,
               "value": "Reviewing it with brutal honesty",
-              "rarity": 1
+              "difficulty": 1
             },
             {
               "id": 2,
               "value": "Attempting to fix it with a life hack",
-              "rarity": 2
+              "difficulty": 2
             },
             {
               "id": 3,
               "value": "Comparing Expectation vs Reality",
-              "rarity": 1
+              "difficulty": 1
             },
             {
               "id": 4,
               "value": "Giving it an aesthetic makeover",
-              "rarity": 3
+              "difficulty": 3
             },
             {
               "id": 5,
               "value": "Reacting to it for the first time",
-              "rarity": 1
+              "difficulty": 1
             },
-            { "id": 6, "value": "Destroying it in slow motion", "rarity": 4 },
+            {
+              "id": 6,
+              "value": "Destroying it in slow motion",
+              "difficulty": 4
+            },
             {
               "id": 7,
               "value": "Explaining the 'deep lore' behind it",
-              "rarity": 4
+              "difficulty": 4
             },
             {
               "id": 8,
               "value": "Trying to sell it to a stranger",
-              "rarity": 5
+              "difficulty": 5
             },
             {
               "id": 9,
               "value": "Using it for something it wasn't made for",
-              "rarity": 3
+              "difficulty": 3
             },
             {
               "id": 10,
               "value": "Rating it on a scale of 'vibes'",
-              "rarity": 2
+              "difficulty": 2
             },
             {
               "id": 11,
               "value": "Turning it into a musical instrument",
-              "rarity": 5
+              "difficulty": 5
             },
             {
               "id": 12,
               "value": "Testing if it's actually 'waterproof'",
-              "rarity": 3
+              "difficulty": 3
             },
             {
               "id": 13,
               "value": "Asking a Boomer to identify it",
-              "rarity": 4
+              "difficulty": 4
             },
             {
               "id": 14,
               "value": "Styling it in 5 different ways",
-              "rarity": 2
+              "difficulty": 2
             },
             {
               "id": 15,
               "value": "Trying to break it with your hands",
-              "rarity": 3
+              "difficulty": 3
             },
             {
               "id": 16,
               "value": "Customizing it with stickers/paint",
-              "rarity": 2
+              "difficulty": 2
             },
             {
               "id": 17,
               "value": "Comparing the cheap vs expensive version",
-              "rarity": 1
+              "difficulty": 1
             },
             {
               "id": 18,
               "value": "Doing a silent review using only facial expressions",
-              "rarity": 4
+              "difficulty": 4
             },
-            { "id": 19, "value": "Unboxing it with one hand", "rarity": 3 },
+            { "id": 19, "value": "Unboxing it with one hand", "difficulty": 3 },
             {
               "id": 20,
               "value": "Finding its original price on eBay",
-              "rarity": 2
+              "difficulty": 2
             },
-            { "id": 21, "value": "Seeing how many you can stack", "rarity": 3 },
-            { "id": 22, "value": "Pranking a friend with it", "rarity": 2 },
+            {
+              "id": 21,
+              "value": "Seeing how many you can stack",
+              "difficulty": 3
+            },
+            { "id": 22, "value": "Pranking a friend with it", "difficulty": 2 },
             {
               "id": 23,
               "value": "Debunking a viral myth about it",
-              "rarity": 3
+              "difficulty": 3
             },
             {
               "id": 24,
               "value": "Creating a 'Cinematic' ad for it",
-              "rarity": 4
+              "difficulty": 4
             },
-            { "id": 25, "value": "Rating it based on the smell", "rarity": 3 },
+            {
+              "id": 25,
+              "value": "Rating it based on the smell",
+              "difficulty": 3
+            },
             {
               "id": 26,
               "value": "Seeing if it fits in a microwave (Don't turn it on)",
-              "rarity": 5
+              "difficulty": 5
             },
             {
               "id": 27,
               "value": "Giving it a backstory as a hero",
-              "rarity": 5
+              "difficulty": 5
             },
             {
               "id": 28,
               "value": "Seeing if it survives a 2-story drop",
-              "rarity": 4
+              "difficulty": 4
             },
             {
               "id": 29,
               "value": "Testing the 'ASMR' potential of it",
-              "rarity": 3
+              "difficulty": 3
             },
             {
               "id": 30,
               "value": "Reading the worst reviews for it aloud",
-              "rarity": 2
+              "difficulty": 2
             },
-            { "id": 31, "value": "Asking ChatGPT to describe it", "rarity": 2 },
-            { "id": 32, "value": "Hiding it in a public place", "rarity": 4 },
-            { "id": 33, "value": "Using it while blindfolded", "rarity": 4 },
-            { "id": 34, "value": "Polishing it until it shines", "rarity": 3 },
+            {
+              "id": 31,
+              "value": "Asking ChatGPT to describe it",
+              "difficulty": 2
+            },
+            {
+              "id": 32,
+              "value": "Hiding it in a public place",
+              "difficulty": 4
+            },
+            {
+              "id": 33,
+              "value": "Using it while blindfolded",
+              "difficulty": 4
+            },
+            {
+              "id": 34,
+              "value": "Polishing it until it shines",
+              "difficulty": 3
+            },
             {
               "id": 35,
               "value": "Counting how many are in the bag",
-              "rarity": 1
+              "difficulty": 1
             },
             {
               "id": 36,
               "value": "Tasting it (if edible, or just the air near it)",
-              "rarity": 4
+              "difficulty": 4
             },
-            { "id": 37, "value": "Doing a 'Deep Clean' of it", "rarity": 2 },
-            { "id": 38, "value": "Explaining it to a toddler", "rarity": 3 },
+            {
+              "id": 37,
+              "value": "Doing a 'Deep Clean' of it",
+              "difficulty": 2
+            },
+            {
+              "id": 38,
+              "value": "Explaining it to a toddler",
+              "difficulty": 3
+            },
             {
               "id": 39,
               "value": "Measuring it with weird objects (e.g. bananas)",
-              "rarity": 3
+              "difficulty": 3
             },
             {
               "id": 40,
               "value": "Seeing how long it takes to melt/freeze",
-              "rarity": 4
+              "difficulty": 4
             },
             {
               "id": 41,
               "value": "Applying a 'vintage' filter to it",
-              "rarity": 1
+              "difficulty": 1
             },
             {
               "id": 42,
               "value": "Making it look 'luxury' with lighting",
-              "rarity": 4
+              "difficulty": 4
             },
             {
               "id": 43,
               "value": "Using it to start a conversation with a stranger",
-              "rarity": 5
+              "difficulty": 5
             },
             {
               "id": 44,
               "value": "Showing 'the exact moment I regretted it'",
-              "rarity": 2
+              "difficulty": 2
             },
             {
               "id": 45,
               "value": "Trying to eat it with chopsticks",
-              "rarity": 3
+              "difficulty": 3
             },
             {
               "id": 46,
               "value": "Comparing it to the 1990s version",
-              "rarity": 4
+              "difficulty": 4
             },
             {
               "id": 47,
               "value": "Putting it in a blender (Visuals only)",
-              "rarity": 5
+              "difficulty": 5
             },
-            { "id": 48, "value": "Giving it a 30-second eulogy", "rarity": 4 },
+            {
+              "id": 48,
+              "value": "Giving it a 30-second eulogy",
+              "difficulty": 4
+            },
             {
               "id": 49,
               "value": "Seeing if it can 'run Crysis' / play games",
-              "rarity": 4
+              "difficulty": 4
             },
             {
               "id": 50,
               "value": "Just staring at it for 15 seconds",
-              "rarity": 5
+              "difficulty": 5
             }
           ]
         },
         {
           "name": "Context",
+          "description": "The setting, premise, or situational frame around the content.",
           "options": [
-            { "id": 1, "value": "In a 24-hour challenge", "rarity": 3 },
-            { "id": 2, "value": "While whispering (ASMR style)", "rarity": 4 },
-            { "id": 3, "value": "During a power outage", "rarity": 5 },
+            { "id": 1, "value": "In a 24-hour challenge", "difficulty": 3 },
+            {
+              "id": 2,
+              "value": "While whispering (ASMR style)",
+              "difficulty": 4
+            },
+            { "id": 3, "value": "During a power outage", "difficulty": 5 },
             {
               "id": 4,
               "value": "Under a 'Cores' aesthetic (Cottagecore/Gorpcore)",
-              "rarity": 3
+              "difficulty": 3
             },
-            { "id": 5, "value": "In a crowded mall", "rarity": 4 },
+            { "id": 5, "value": "In a crowded mall", "difficulty": 4 },
             {
               "id": 6,
               "value": "While drinking an excessively large coffee",
-              "rarity": 2
+              "difficulty": 2
             },
-            { "id": 7, "value": "Using only a GoPro", "rarity": 3 },
-            { "id": 8, "value": "On a $0 budget", "rarity": 2 },
-            { "id": 9, "value": "After a week of no sleep", "rarity": 5 },
+            { "id": 7, "value": "Using only a GoPro", "difficulty": 3 },
+            { "id": 8, "value": "On a $0 budget", "difficulty": 2 },
+            { "id": 9, "value": "After a week of no sleep", "difficulty": 5 },
             {
               "id": 10,
               "value": "In the passenger seat of a car",
-              "rarity": 1
+              "difficulty": 1
             },
-            { "id": 11, "value": "With way too many jump cuts", "rarity": 2 },
+            {
+              "id": 11,
+              "value": "With way too many jump cuts",
+              "difficulty": 2
+            },
             {
               "id": 12,
               "value": "Filtered through vintage VHS effects",
-              "rarity": 3
+              "difficulty": 3
             },
-            { "id": 13, "value": "While wearing a mascot suit", "rarity": 5 },
-            { "id": 14, "value": "In your bathroom at 2 AM", "rarity": 2 },
+            {
+              "id": 13,
+              "value": "While wearing a mascot suit",
+              "difficulty": 5
+            },
+            { "id": 14, "value": "In your bathroom at 2 AM", "difficulty": 2 },
             {
               "id": 15,
               "value": "Using only the 'Green Screen' effect",
-              "rarity": 2
+              "difficulty": 2
             },
-            { "id": 16, "value": "At 2x speed", "rarity": 1 },
+            { "id": 16, "value": "At 2x speed", "difficulty": 1 },
             {
               "id": 17,
               "value": "With 'subway surfers' footage underneath",
-              "rarity": 4
+              "difficulty": 4
             },
             {
               "id": 18,
               "value": "While trying not to wake up your parents",
-              "rarity": 3
+              "difficulty": 3
             },
             {
               "id": 19,
               "value": "In a completely empty parking lot",
-              "rarity": 4
+              "difficulty": 4
             },
-            { "id": 20, "value": "Using a drone camera", "rarity": 5 },
-            { "id": 21, "value": "While raining outside", "rarity": 2 },
-            { "id": 22, "value": "With an AI voiceover", "rarity": 1 },
-            { "id": 23, "value": "In a messy kitchen", "rarity": 1 },
+            { "id": 20, "value": "Using a drone camera", "difficulty": 5 },
+            { "id": 21, "value": "While raining outside", "difficulty": 2 },
+            { "id": 22, "value": "With an AI voiceover", "difficulty": 1 },
+            { "id": 23, "value": "In a messy kitchen", "difficulty": 1 },
             {
               "id": 24,
               "value": "Under very dramatic red lighting",
-              "rarity": 3
+              "difficulty": 3
             },
-            { "id": 25, "value": "While treadmill walking", "rarity": 3 },
-            { "id": 26, "value": "In the middle of a forest", "rarity": 4 },
-            { "id": 27, "value": "Using a fisheye lens", "rarity": 4 },
+            { "id": 25, "value": "While treadmill walking", "difficulty": 3 },
+            { "id": 26, "value": "In the middle of a forest", "difficulty": 4 },
+            { "id": 27, "value": "Using a fisheye lens", "difficulty": 4 },
             {
               "id": 28,
               "value": "With a high-pitched voice filter",
-              "rarity": 2
+              "difficulty": 2
             },
             {
               "id": 29,
               "value": "While holding a serious 'news' tone",
-              "rarity": 4
+              "difficulty": 4
             },
             {
               "id": 30,
               "value": "With a 'Top 10' countdown format",
-              "rarity": 2
+              "difficulty": 2
             },
-            { "id": 31, "value": "In a public library", "rarity": 5 },
-            { "id": 32, "value": "Using 1940s slang", "rarity": 5 },
+            { "id": 31, "value": "In a public library", "difficulty": 5 },
+            { "id": 32, "value": "Using 1940s slang", "difficulty": 5 },
             {
               "id": 33,
               "value": "While the world is 'ending' (Green screen)",
-              "rarity": 4
+              "difficulty": 4
             },
-            { "id": 34, "value": "With aggressive subtitles", "rarity": 1 },
-            { "id": 35, "value": "Inside a tent", "rarity": 3 },
+            { "id": 34, "value": "With aggressive subtitles", "difficulty": 1 },
+            { "id": 35, "value": "Inside a tent", "difficulty": 3 },
             {
               "id": 36,
               "value": "In a 'Wes Anderson' style shot",
-              "rarity": 4
+              "difficulty": 4
             },
-            { "id": 37, "value": "While eating spicy noodles", "rarity": 3 },
-            { "id": 38, "value": "On the roof of a building", "rarity": 4 },
+            {
+              "id": 37,
+              "value": "While eating spicy noodles",
+              "difficulty": 3
+            },
+            { "id": 38, "value": "On the roof of a building", "difficulty": 4 },
             {
               "id": 39,
               "value": "During a 'Get Ready With Me' session",
-              "rarity": 2
+              "difficulty": 2
             },
             {
               "id": 40,
               "value": "In a monochromatic room (one color)",
-              "rarity": 4
+              "difficulty": 4
             },
-            { "id": 41, "value": "Without blinking", "rarity": 5 },
+            { "id": 41, "value": "Without blinking", "difficulty": 5 },
             {
               "id": 42,
               "value": "While pets are distracting you",
-              "rarity": 1
+              "difficulty": 1
             },
-            { "id": 43, "value": "In an elevator", "rarity": 4 },
-            { "id": 44, "value": "With a 'Lofi hip hop' vibe", "rarity": 2 },
-            { "id": 45, "value": "Under a desk", "rarity": 4 },
-            { "id": 46, "value": "While doing a handstand", "rarity": 5 },
+            { "id": 43, "value": "In an elevator", "difficulty": 4 },
+            {
+              "id": 44,
+              "value": "With a 'Lofi hip hop' vibe",
+              "difficulty": 2
+            },
+            { "id": 45, "value": "Under a desk", "difficulty": 4 },
+            { "id": 46, "value": "While doing a handstand", "difficulty": 5 },
             {
               "id": 47,
               "value": "In the style of a 1990s infomercial",
-              "rarity": 4
+              "difficulty": 4
             },
-            { "id": 48, "value": "With a face-distorting filter", "rarity": 2 },
+            {
+              "id": 48,
+              "value": "With a face-distorting filter",
+              "difficulty": 2
+            },
             {
               "id": 49,
               "value": "While a timer is visible on screen",
-              "rarity": 3
+              "difficulty": 3
             },
             {
               "id": 50,
               "value": "In your 'natural habitat' (messy bed)",
-              "rarity": 1
+              "difficulty": 1
             }
           ]
         }
@@ -940,502 +1108,507 @@
     },
     {
       "name": "Wildcards",
+      "description": "Extra twists, production rules, or surprise modifiers that push the concept somewhere unexpected.",
       "options": [
         {
           "id": 1,
           "value": "1920s Silent Film Style (B&W, Title cards, piano music)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 2,
           "value": "Props: A single tea bag must be the hero of a shot",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 3,
           "value": "Filmed entirely on a front-facing selfie camera",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 4,
           "value": "Deadline: Must be edited and published by Midnight tonight",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 5,
           "value": "Dedication: The video must be dedicated to your best friend",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 6,
           "value": "Wardrobe: Wear every piece of clothing inside-out",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 7,
           "value": "Sound: You must provide all sound effects using only your mouth",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 8,
           "value": "Location: The entire video must be shot inside a bathroom",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 9,
           "value": "Constraint: You cannot show your own face",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 10,
           "value": "Dialogue: Every sentence must start with the letter 'S'",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 11,
           "value": "VHS Aesthetic: Make it look like a 1990s home video",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 12,
           "value": "Props: Use a kitchen utensil as a fashion accessory",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 13,
           "value": "Action: You must be eating something spicy during the video",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 14,
           "value": "Technical: The camera must be on the floor for every shot",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 15,
           "value": "Crossover: Act as if you are a character from a different genre",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 16,
           "value": "Editing: No cuts allowed (One continuous 60s take)",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 17,
           "value": "Social: Mention a random celebrity and act like they are your cousin",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 18,
           "value": "Vibe: Extreme 'Liminal Space' energy (empty, eerie rooms)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 19,
           "value": "Color: The video must be entirely Monochromatic (pick one color)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 20,
           "value": "Prop: A rubber duck must be visible in every single shot",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 21, "value": "Dialogue: Speak only in questions", "rarity": 4 },
+        {
+          "id": 21,
+          "value": "Dialogue: Speak only in questions",
+          "difficulty": 4
+        },
         {
           "id": 22,
           "value": "Motion: You must be spinning or moving in a circle",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 23,
           "value": "Lighting: Use only a flashlight or phone light in a dark room",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 24,
           "value": "Technical: Record the audio separately and lip-sync to yourself",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 25,
           "value": "Style: Investigative Journalist style (very serious/dramatic)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 26,
           "value": "Constraint: You cannot use any words (Physical acting only)",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 27,
           "value": "Prop: Incorporate a roll of toilet paper as a key plot point",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 28,
           "value": "Style: Early 2000s 'Webcam' aesthetic (low res, bad lighting)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 29,
           "value": "Action: Whisper the entire video as if you're hiding",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 30,
           "value": "Perspective: Tape the phone to a ceiling fan or moving object",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 31,
           "value": "Social: The video must end with a sincere apology for nothing",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 32,
           "value": "Technical: Use a 'Mirror' effect for the entire duration",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 33,
           "value": "Style: Anime Opening style (fast cuts, dramatic poses)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 34,
           "value": "Prop: Wear a hat made out of aluminum foil",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 35,
           "value": "Constraint: Every cut must be exactly 1 second long",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 36,
           "value": "Dialogue: You must have a fake, over-the-top accent",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 37,
           "value": "Lighting: Record only during the 'Blue Hour' (just after sunset)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 38,
           "value": "Style: Security Camera POV (Top corner, grainy, static)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 39,
           "value": "Action: Pretend there is an invisible person in the room with you",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 40,
           "value": "Prop: Use a laundry basket as a 'vehicle'",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 41,
           "value": "Social: Tag the first person you see on your 'following' list",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 42,
           "value": "Style: Nature Documentary (narrate your actions like an animal)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 43,
           "value": "Motion: The camera must be 'falling' at least once",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 44,
           "value": "Vibe: Cyberpunk (use only pink and blue household lights)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 45,
           "value": "Prop: You must be wearing sunglasses indoors the whole time",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 46,
           "value": "Constraint: You must hold your breath while speaking",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 47,
           "value": "Technical: Flip the video upside down at the climax",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 48,
           "value": "Style: 1950s TV Commercial (overly polite/enthusiastic)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 49,
           "value": "Action: Do a 'transition' using a door that leads to nowhere",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 50,
           "value": "Prop: Use a potato as a 'phone' throughout the video",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 51,
           "value": "Deadline: Finish the entire script in 5 minutes",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 52,
           "value": "Constraint: No blinking for the first 30 seconds",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 53,
           "value": "Style: Horror Movie found-footage (breathing, night vision)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 54,
           "value": "Technical: Use only the 'Green Screen' background of a desert",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 55,
           "value": "Action: Slowly add layers of clothing as the video progresses",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 56,
           "value": "Prop: Incorporate a glass of water that you never drink",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 57,
           "value": "Dialogue: You must speak in rhymes",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 58,
           "value": "Location: Film inside your closet or under a bed",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 59,
           "value": "Technical: The video must be in slow-motion, but audio is normal speed",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 60,
           "value": "Vibe: Dreamcore (use blurry lenses or Vaseline on the edge of the lens)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 61,
           "value": "Social: Reply to the last hate comment you received (real or fake)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 62,
           "value": "Prop: Use a stuffed animal as your co-host",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 63,
           "value": "Style: Video Game HUD (add health bars/inventory to the screen)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 64,
           "value": "Constraint: You cannot use your hands to hold the camera",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 65,
           "value": "Action: Start the video by waking up from a nap",
-          "rarity": 1
+          "difficulty": 1
         },
         {
           "id": 66,
           "value": "Technical: 4:3 Aspect Ratio (Square/Old TV style)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 67,
           "value": "Style: ASMR but 'aggressive' and loud",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 68,
           "value": "Prop: Use a flashlight as a 'Lightsaber'",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 69,
           "value": "Dialogue: Every time you say a noun, you must clap",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 70,
           "value": "Vibe: Noir (heavy shadows, dramatic jazz, trench coat)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 71,
           "value": "Action: Brush your teeth while explaining the topic",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 72,
           "value": "Technical: The video must end exactly on a beat drop",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 73,
           "value": "Social: Pretend you are being held hostage by a cat",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 74,
           "value": "Prop: A candle must be the only source of light",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 75,
           "value": "Style: YouTuber 'Apology' video style (sighing, no makeup, grey hoodie)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 76,
           "value": "Constraint: You must record the video in a public place without being seen",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 77,
           "value": "Dialogue: Mention 'The Incident' three times but never explain it",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 78,
           "value": "Action: Do the entire video while standing on one leg",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 79,
           "value": "Style: Powerpoint Presentation style (but handheld)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 80,
           "value": "Prop: Carry a suitcase as if it’s full of cash",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 81,
           "value": "Vibe: Wes Anderson (centered framing, pastel colors, deadpan delivery)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 82,
           "value": "Technical: Change your outfit for every single cut",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 83,
           "value": "Action: End the video by walking into a body of water (or shower)",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 84,
           "value": "Dialogue: Use a different movie quote to start every paragraph",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 85,
           "value": "Prop: Wear your shoes on your hands",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 86,
           "value": "Style: Infomercial (BUT WAIT, THERE'S MORE!)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 87,
           "value": "Action: Keep a straight face while someone tries to make you laugh",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 88,
           "value": "Location: Shoot the entire video through a window from outside",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 89,
           "value": "Technical: No digital effects allowed (all 'magic' must be practical)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 90,
           "value": "Constraint: You must stay 10 feet away from the camera at all times",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 91,
           "value": "Social: Dedicate the video to 'The person who just scrolled'",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 92,
           "value": "Prop: Use an umbrella indoors for no reason",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 93,
           "value": "Style: Stop-Motion (capture only 1 frame every 5 seconds)",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 94,
           "value": "Action: Draw on your face with a washable marker as you talk",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 95,
           "value": "Vibe: 80s Aerobics Video (neon spandex, high energy, synth music)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 96,
           "value": "Technical: Record with the phone in your pocket (audio only start)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 97,
           "value": "Dialogue: You can only use words with two syllables or less",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 98,
           "value": "Action: Pet a dog or cat during the climax of the video",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 99,
           "value": "Style: Lo-Fi Study Girl (chill music, loop of you writing)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 100,
           "value": "The 'Ultimate Trump': Delete the first 3 versions and post the 4th",
-          "rarity": 5
+          "difficulty": 5
         }
       ]
     }

@@ -2,261 +2,312 @@
   "project_type": "Book",
   "project_label": "Livre",
   "language": "fr",
-  "tags": ["writing", "fiction", "long"],
+  "tags": ["writing", "fiction"],
   "categories": [
     {
       "name": "Genre & Setting",
       "label": "Genre & Univers",
+      "description": "Définit le genre du récit, ses codes et le monde dans lequel l'histoire prend place.",
       "options": [
-        { "id": 1, "value": "Fiction absurdiste", "rarity": 5 },
-        { "id": 2, "value": "Afrofuturisme", "rarity": 4 },
-        { "id": 3, "value": "Uchronie (Steampunk)", "rarity": 3 },
-        { "id": 4, "value": "Uchronie (Seconde Guerre mondiale)", "rarity": 4 },
-        { "id": 5, "value": "Dystopie anarchiste", "rarity": 5 },
-        { "id": 6, "value": "Fantasy égyptienne antique", "rarity": 4 },
-        { "id": 7, "value": "Horreur de survie arctique", "rarity": 4 },
-        { "id": 8, "value": "Légende arthurienne (moderne)", "rarity": 3 },
-        { "id": 9, "value": "Fiction biographique", "rarity": 4 },
-        { "id": 10, "value": "Biopunk (génie génétique)", "rarity": 5 },
-        { "id": 11, "value": "Body Horror (horreur corporelle)", "rarity": 4 },
-        { "id": 12, "value": "Mystère cosy britannique", "rarity": 2 },
-        { "id": 13, "value": "Thriller de captivité", "rarity": 3 },
-        { "id": 14, "value": "Cassette Futurism", "rarity": 5 },
-        { "id": 15, "value": "Fiction chrétienne", "rarity": 2 },
-        { "id": 16, "value": "Whodunnit classique", "rarity": 1 },
-        { "id": 17, "value": "Récit d'apprentissage (sombre)", "rarity": 2 },
-        { "id": 18, "value": "Horreur cosmique (lovecraftienne)", "rarity": 4 },
-        { "id": 19, "value": "Cyberpunk Noir", "rarity": 3 },
-        { "id": 20, "value": "Dark Academia", "rarity": 3 },
-        { "id": 21, "value": "Dark Fantasy", "rarity": 2 },
+        { "id": 1, "value": "Fiction absurdiste", "difficulty": 5 },
+        { "id": 2, "value": "Afrofuturisme", "difficulty": 4 },
+        { "id": 3, "value": "Uchronie (Steampunk)", "difficulty": 3 },
+        {
+          "id": 4,
+          "value": "Uchronie (Seconde Guerre mondiale)",
+          "difficulty": 4
+        },
+        { "id": 5, "value": "Dystopie anarchiste", "difficulty": 5 },
+        { "id": 6, "value": "Fantasy égyptienne antique", "difficulty": 4 },
+        { "id": 7, "value": "Horreur de survie arctique", "difficulty": 4 },
+        { "id": 8, "value": "Légende arthurienne (moderne)", "difficulty": 3 },
+        { "id": 9, "value": "Fiction biographique", "difficulty": 4 },
+        { "id": 10, "value": "Biopunk (génie génétique)", "difficulty": 5 },
+        {
+          "id": 11,
+          "value": "Body Horror (horreur corporelle)",
+          "difficulty": 4
+        },
+        { "id": 12, "value": "Mystère cosy britannique", "difficulty": 2 },
+        { "id": 13, "value": "Thriller de captivité", "difficulty": 3 },
+        { "id": 14, "value": "Cassette Futurism", "difficulty": 5 },
+        { "id": 15, "value": "Fiction chrétienne", "difficulty": 2 },
+        { "id": 16, "value": "Whodunnit classique", "difficulty": 1 },
+        {
+          "id": 17,
+          "value": "Récit d'apprentissage (sombre)",
+          "difficulty": 2
+        },
+        {
+          "id": 18,
+          "value": "Horreur cosmique (lovecraftienne)",
+          "difficulty": 4
+        },
+        { "id": 19, "value": "Cyberpunk Noir", "difficulty": 3 },
+        { "id": 20, "value": "Dark Academia", "difficulty": 3 },
+        { "id": 21, "value": "Dark Fantasy", "difficulty": 2 },
         {
           "id": 22,
           "value": "Science-fiction de planète déserte",
-          "rarity": 3
+          "difficulty": 3
         },
-        { "id": 23, "value": "Dieselpunk", "rarity": 5 },
-        { "id": 24, "value": "Thriller domestique", "rarity": 2 },
-        { "id": 25, "value": "Dreamcore / Weirdcore", "rarity": 5 },
-        { "id": 26, "value": "Dystopie Young Adult", "rarity": 1 },
-        { "id": 27, "value": "Éco-fiction", "rarity": 4 },
-        { "id": 28, "value": "Western fantastique (Eldritch)", "rarity": 5 },
-        { "id": 29, "value": "Epic High Fantasy", "rarity": 1 },
-        { "id": 30, "value": "Romance érotique", "rarity": 2 },
-        { "id": 31, "value": "Fiction existentialiste", "rarity": 5 },
-        { "id": 32, "value": "Méta-fiction expérimentale", "rarity": 5 },
-        { "id": 33, "value": "Réécriture de conte de fées", "rarity": 2 },
-        { "id": 34, "value": "Folk Horror", "rarity": 4 },
+        { "id": 23, "value": "Dieselpunk", "difficulty": 5 },
+        { "id": 24, "value": "Thriller domestique", "difficulty": 2 },
+        { "id": 25, "value": "Dreamcore / Weirdcore", "difficulty": 5 },
+        { "id": 26, "value": "Dystopie Young Adult", "difficulty": 1 },
+        { "id": 27, "value": "Éco-fiction", "difficulty": 4 },
+        {
+          "id": 28,
+          "value": "Western fantastique (Eldritch)",
+          "difficulty": 5
+        },
+        { "id": 29, "value": "Epic High Fantasy", "difficulty": 1 },
+        { "id": 30, "value": "Romance érotique", "difficulty": 2 },
+        { "id": 31, "value": "Fiction existentialiste", "difficulty": 5 },
+        { "id": 32, "value": "Méta-fiction expérimentale", "difficulty": 5 },
+        { "id": 33, "value": "Réécriture de conte de fées", "difficulty": 2 },
+        { "id": 34, "value": "Folk Horror", "difficulty": 4 },
         {
           "id": 35,
           "value": "Comédie dramatique (famille choisie)",
-          "rarity": 2
+          "difficulty": 2
         },
-        { "id": 36, "value": "Found Footage (écrit)", "rarity": 4 },
-        { "id": 37, "value": "Gaslamp Fantasy", "rarity": 4 },
-        { "id": 38, "value": "Romance gothique", "rarity": 3 },
-        { "id": 39, "value": "Grimdark Fantasy", "rarity": 4 },
-        { "id": 40, "value": "Hard Science-Fiction", "rarity": 3 },
-        { "id": 41, "value": "Récit de braquage", "rarity": 3 },
-        { "id": 42, "value": "Aventure en haute mer", "rarity": 3 },
-        { "id": 43, "value": "Fiction historique (victorienne)", "rarity": 2 },
-        { "id": 44, "value": "Romance historique (Régence)", "rarity": 1 },
-        { "id": 45, "value": "Hopepunk", "rarity": 4 },
-        { "id": 46, "value": "Isekai (Portal Fantasy)", "rarity": 2 },
-        { "id": 47, "value": "Survie sur une île", "rarity": 3 },
-        { "id": 48, "value": "Cyberpunk japonais", "rarity": 4 },
-        { "id": 49, "value": "Littérature jeunesse", "rarity": 1 },
-        { "id": 50, "value": "Fiction d'attaque de Kaiju", "rarity": 4 },
-        { "id": 51, "value": "Drame juridique", "rarity": 2 },
-        { "id": 52, "value": "LitRPG", "rarity": 3 },
-        { "id": 53, "value": "Aventure en monde perdu", "rarity": 4 },
-        { "id": 54, "value": "Low Fantasy", "rarity": 2 },
-        { "id": 55, "value": "Réalisme magique", "rarity": 4 },
-        { "id": 56, "value": "Mystère de manoir", "rarity": 2 },
-        { "id": 57, "value": "Colonisation de Mars", "rarity": 3 },
-        { "id": 58, "value": "Thriller médical", "rarity": 3 },
-        { "id": 59, "value": "Drame de guerre médiéval", "rarity": 3 },
-        { "id": 60, "value": "Science-fiction militaire", "rarity": 2 },
-        { "id": 61, "value": "Fiction minimaliste", "rarity": 5 },
-        { "id": 62, "value": "Noir moderne", "rarity": 3 },
-        { "id": 63, "value": "Multivers / Mondes parallèles", "rarity": 4 },
-        { "id": 64, "value": "Fiction mythique", "rarity": 3 },
-        { "id": 65, "value": "Horreur nautique", "rarity": 4 },
-        { "id": 66, "value": "Néo-Western", "rarity": 3 },
-        { "id": 67, "value": "New Weird", "rarity": 5 },
-        { "id": 68, "value": "Romance paranormale", "rarity": 1 },
-        { "id": 69, "value": "Fiction philosophique", "rarity": 5 },
-        { "id": 70, "value": "Roman picaresque", "rarity": 5 },
-        { "id": 71, "value": "Fiction de peste / pandémie", "rarity": 3 },
-        { "id": 72, "value": "Satire politique", "rarity": 4 },
-        { "id": 73, "value": "Survie post-apocalyptique", "rarity": 2 },
-        { "id": 74, "value": "Post-Cyberpunk", "rarity": 4 },
-        { "id": 75, "value": "Fiction préhistorique", "rarity": 5 },
-        { "id": 76, "value": "Horreur psychologique", "rarity": 3 },
-        { "id": 77, "value": "Thriller psychologique", "rarity": 2 },
-        { "id": 78, "value": "Aventure Pulp", "rarity": 3 },
-        { "id": 79, "value": "Raygun Gothic", "rarity": 5 },
-        { "id": 80, "value": "Thriller religieux", "rarity": 4 },
-        { "id": 81, "value": "Drame de Road Trip", "rarity": 2 },
-        { "id": 82, "value": "Comédie romantique", "rarity": 1 },
-        { "id": 83, "value": "Rural Noir", "rarity": 4 },
-        { "id": 84, "value": "Fiction de samouraï", "rarity": 4 },
-        { "id": 85, "value": "Noir scandinave", "rarity": 3 },
-        { "id": 86, "value": "Comédie slapstick (burlesque)", "rarity": 4 },
-        { "id": 87, "value": "Slasher", "rarity": 2 },
-        { "id": 88, "value": "Slice of Life (tranche de vie)", "rarity": 2 },
-        { "id": 89, "value": "Solarpunk", "rarity": 4 },
-        { "id": 90, "value": "Gothique méridional", "rarity": 3 },
-        { "id": 91, "value": "Space Opera", "rarity": 2 },
-        { "id": 92, "value": "Espionnage", "rarity": 2 },
-        { "id": 93, "value": "Fiction de super-héros", "rarity": 2 },
-        { "id": 94, "value": "Thriller surnaturel", "rarity": 2 },
-        { "id": 95, "value": "Fiction surréaliste", "rarity": 5 },
-        { "id": 96, "value": "Sword & Sorcery", "rarity": 3 },
-        { "id": 97, "value": "Techno-thriller", "rarity": 3 },
-        { "id": 98, "value": "Romance temporelle", "rarity": 3 },
-        { "id": 99, "value": "Science-fiction transhumaniste", "rarity": 5 },
-        { "id": 100, "value": "Urban Fantasy", "rarity": 1 },
-        { "id": 101, "value": "Fiction utopique", "rarity": 5 },
-        { "id": 102, "value": "Chroniques de vampires", "rarity": 1 },
-        { "id": 103, "value": "Western (classique)", "rarity": 2 },
+        { "id": 36, "value": "Found Footage (écrit)", "difficulty": 4 },
+        { "id": 37, "value": "Gaslamp Fantasy", "difficulty": 4 },
+        { "id": 38, "value": "Romance gothique", "difficulty": 3 },
+        { "id": 39, "value": "Grimdark Fantasy", "difficulty": 4 },
+        { "id": 40, "value": "Hard Science-Fiction", "difficulty": 3 },
+        { "id": 41, "value": "Récit de braquage", "difficulty": 3 },
+        { "id": 42, "value": "Aventure en haute mer", "difficulty": 3 },
+        {
+          "id": 43,
+          "value": "Fiction historique (victorienne)",
+          "difficulty": 2
+        },
+        { "id": 44, "value": "Romance historique (Régence)", "difficulty": 1 },
+        { "id": 45, "value": "Hopepunk", "difficulty": 4 },
+        { "id": 46, "value": "Isekai (Portal Fantasy)", "difficulty": 2 },
+        { "id": 47, "value": "Survie sur une île", "difficulty": 3 },
+        { "id": 48, "value": "Cyberpunk japonais", "difficulty": 4 },
+        { "id": 49, "value": "Littérature jeunesse", "difficulty": 1 },
+        { "id": 50, "value": "Fiction d'attaque de Kaiju", "difficulty": 4 },
+        { "id": 51, "value": "Drame juridique", "difficulty": 2 },
+        { "id": 52, "value": "LitRPG", "difficulty": 3 },
+        { "id": 53, "value": "Aventure en monde perdu", "difficulty": 4 },
+        { "id": 54, "value": "Low Fantasy", "difficulty": 2 },
+        { "id": 55, "value": "Réalisme magique", "difficulty": 4 },
+        { "id": 56, "value": "Mystère de manoir", "difficulty": 2 },
+        { "id": 57, "value": "Colonisation de Mars", "difficulty": 3 },
+        { "id": 58, "value": "Thriller médical", "difficulty": 3 },
+        { "id": 59, "value": "Drame de guerre médiéval", "difficulty": 3 },
+        { "id": 60, "value": "Science-fiction militaire", "difficulty": 2 },
+        { "id": 61, "value": "Fiction minimaliste", "difficulty": 5 },
+        { "id": 62, "value": "Noir moderne", "difficulty": 3 },
+        { "id": 63, "value": "Multivers / Mondes parallèles", "difficulty": 4 },
+        { "id": 64, "value": "Fiction mythique", "difficulty": 3 },
+        { "id": 65, "value": "Horreur nautique", "difficulty": 4 },
+        { "id": 66, "value": "Néo-Western", "difficulty": 3 },
+        { "id": 67, "value": "New Weird", "difficulty": 5 },
+        { "id": 68, "value": "Romance paranormale", "difficulty": 1 },
+        { "id": 69, "value": "Fiction philosophique", "difficulty": 5 },
+        { "id": 70, "value": "Roman picaresque", "difficulty": 5 },
+        { "id": 71, "value": "Fiction de peste / pandémie", "difficulty": 3 },
+        { "id": 72, "value": "Satire politique", "difficulty": 4 },
+        { "id": 73, "value": "Survie post-apocalyptique", "difficulty": 2 },
+        { "id": 74, "value": "Post-Cyberpunk", "difficulty": 4 },
+        { "id": 75, "value": "Fiction préhistorique", "difficulty": 5 },
+        { "id": 76, "value": "Horreur psychologique", "difficulty": 3 },
+        { "id": 77, "value": "Thriller psychologique", "difficulty": 2 },
+        { "id": 78, "value": "Aventure Pulp", "difficulty": 3 },
+        { "id": 79, "value": "Raygun Gothic", "difficulty": 5 },
+        { "id": 80, "value": "Thriller religieux", "difficulty": 4 },
+        { "id": 81, "value": "Drame de Road Trip", "difficulty": 2 },
+        { "id": 82, "value": "Comédie romantique", "difficulty": 1 },
+        { "id": 83, "value": "Rural Noir", "difficulty": 4 },
+        { "id": 84, "value": "Fiction de samouraï", "difficulty": 4 },
+        { "id": 85, "value": "Noir scandinave", "difficulty": 3 },
+        { "id": 86, "value": "Comédie slapstick (burlesque)", "difficulty": 4 },
+        { "id": 87, "value": "Slasher", "difficulty": 2 },
+        {
+          "id": 88,
+          "value": "Slice of Life (tranche de vie)",
+          "difficulty": 2
+        },
+        { "id": 89, "value": "Solarpunk", "difficulty": 4 },
+        { "id": 90, "value": "Gothique méridional", "difficulty": 3 },
+        { "id": 91, "value": "Space Opera", "difficulty": 2 },
+        { "id": 92, "value": "Espionnage", "difficulty": 2 },
+        { "id": 93, "value": "Fiction de super-héros", "difficulty": 2 },
+        { "id": 94, "value": "Thriller surnaturel", "difficulty": 2 },
+        { "id": 95, "value": "Fiction surréaliste", "difficulty": 5 },
+        { "id": 96, "value": "Sword & Sorcery", "difficulty": 3 },
+        { "id": 97, "value": "Techno-thriller", "difficulty": 3 },
+        { "id": 98, "value": "Romance temporelle", "difficulty": 3 },
+        {
+          "id": 99,
+          "value": "Science-fiction transhumaniste",
+          "difficulty": 5
+        },
+        { "id": 100, "value": "Urban Fantasy", "difficulty": 1 },
+        { "id": 101, "value": "Fiction utopique", "difficulty": 5 },
+        { "id": 102, "value": "Chroniques de vampires", "difficulty": 1 },
+        { "id": 103, "value": "Western (classique)", "difficulty": 2 },
         {
           "id": 104,
           "value": "Drame de la Première Guerre mondiale",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 105, "value": "Apocalypse zombie", "rarity": 2 }
+        { "id": 105, "value": "Apocalypse zombie", "difficulty": 2 }
       ]
     },
     {
       "name": "Core Theme",
       "label": "Thème central",
+      "description": "L'idée, la tension ou la question principale que le livre explore en profondeur.",
       "options": [
         {
           "id": 1,
           "value": "L'âme de l'intelligence artificielle",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 2, "value": "Expiation des péchés passés", "rarity": 2 },
-        { "id": 3, "value": "Trahison par un être cher", "rarity": 1 },
-        { "id": 4, "value": "Briser le cycle de la violence", "rarity": 3 },
-        { "id": 5, "value": "Chaos vs Ordre", "rarity": 2 },
-        { "id": 6, "value": "Lutte des classes", "rarity": 3 },
-        { "id": 7, "value": "Grandir en zone de guerre", "rarity": 4 },
-        { "id": 8, "value": "Corruption du pouvoir", "rarity": 2 },
-        { "id": 9, "value": "La mort comme nouveau départ", "rarity": 4 },
+        { "id": 2, "value": "Expiation des péchés passés", "difficulty": 2 },
+        { "id": 3, "value": "Trahison par un être cher", "difficulty": 1 },
+        { "id": 4, "value": "Briser le cycle de la violence", "difficulty": 3 },
+        { "id": 5, "value": "Chaos vs Ordre", "difficulty": 2 },
+        { "id": 6, "value": "Lutte des classes", "difficulty": 3 },
+        { "id": 7, "value": "Grandir en zone de guerre", "difficulty": 4 },
+        { "id": 8, "value": "Corruption du pouvoir", "difficulty": 2 },
+        { "id": 9, "value": "La mort comme nouveau départ", "difficulty": 4 },
         {
           "id": 10,
           "value": "Découverte de la magie dans le quotidien",
-          "rarity": 2
+          "difficulty": 2
         },
-        { "id": 11, "value": "Double identité (Le Masque)", "rarity": 2 },
-        { "id": 12, "value": "Renaissance environnementale", "rarity": 4 },
-        { "id": 13, "value": "Échapper au passé", "rarity": 1 },
+        { "id": 11, "value": "Double identité (Le Masque)", "difficulty": 2 },
+        { "id": 12, "value": "Renaissance environnementale", "difficulty": 4 },
+        { "id": 13, "value": "Échapper au passé", "difficulty": 1 },
         {
           "id": 14,
           "value": "Angoisse existentielle d'un grille-pain",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 15,
           "value": "Souvenirs défaillants de la maison",
-          "rarity": 3
+          "difficulty": 3
         },
-        { "id": 16, "value": "Peur de l'inconnu", "rarity": 1 },
-        { "id": 17, "value": "Savoir interdit", "rarity": 4 },
-        { "id": 18, "value": "Deuil et résilience", "rarity": 1 },
-        { "id": 19, "value": "Monde caché au sein du nôtre", "rarity": 2 },
-        { "id": 20, "value": "L'homme contre la machine", "rarity": 2 },
-        { "id": 21, "value": "Identité et secrets cachés", "rarity": 1 },
-        { "id": 22, "value": "L'illusion du choix", "rarity": 5 },
-        { "id": 23, "value": "Inévitabilité du destin", "rarity": 4 },
-        { "id": 24, "value": "L'héritage d'une malédiction", "rarity": 3 },
-        { "id": 25, "value": "Justice vs Vengeance", "rarity": 2 },
-        { "id": 26, "value": "L'héritage des ancêtres", "rarity": 3 },
-        { "id": 27, "value": "Solitude dans une ville bondée", "rarity": 3 },
-        { "id": 28, "value": "Perte de l'innocence", "rarity": 1 },
-        { "id": 29, "value": "L'amour qui transcende le temps", "rarity": 2 },
-        { "id": 30, "value": "L'homme contre la nature", "rarity": 2 },
-        { "id": 31, "value": "Le sens d'être humain", "rarity": 3 },
-        { "id": 32, "value": "La nature reprend ses droits", "rarity": 4 },
-        { "id": 33, "value": "Nécessité du mensonge", "rarity": 5 },
-        { "id": 34, "value": "Obsession et folie", "rarity": 4 },
-        { "id": 35, "value": "Vies parallèles", "rarity": 4 },
-        { "id": 36, "value": "Attentes parentales", "rarity": 2 },
-        { "id": 37, "value": "Le prix de la liberté", "rarity": 3 },
-        { "id": 38, "value": "Le prix de l'immortalité", "rarity": 4 },
-        { "id": 39, "value": "Rébellion contre l'autorité", "rarity": 2 },
-        { "id": 40, "value": "Rédemption pour crimes passés", "rarity": 2 },
-        { "id": 41, "value": "Relativisme de la vérité", "rarity": 5 },
-        { "id": 42, "value": "Sacrifice pour le bien commun", "rarity": 3 },
-        { "id": 43, "value": "Quête d'un foyer perdu", "rarity": 2 },
+        { "id": 16, "value": "Peur de l'inconnu", "difficulty": 1 },
+        { "id": 17, "value": "Savoir interdit", "difficulty": 4 },
+        { "id": 18, "value": "Deuil et résilience", "difficulty": 1 },
+        { "id": 19, "value": "Monde caché au sein du nôtre", "difficulty": 2 },
+        { "id": 20, "value": "L'homme contre la machine", "difficulty": 2 },
+        { "id": 21, "value": "Identité et secrets cachés", "difficulty": 1 },
+        { "id": 22, "value": "L'illusion du choix", "difficulty": 5 },
+        { "id": 23, "value": "Inévitabilité du destin", "difficulty": 4 },
+        { "id": 24, "value": "L'héritage d'une malédiction", "difficulty": 3 },
+        { "id": 25, "value": "Justice vs Vengeance", "difficulty": 2 },
+        { "id": 26, "value": "L'héritage des ancêtres", "difficulty": 3 },
+        {
+          "id": 27,
+          "value": "Solitude dans une ville bondée",
+          "difficulty": 3
+        },
+        { "id": 28, "value": "Perte de l'innocence", "difficulty": 1 },
+        {
+          "id": 29,
+          "value": "L'amour qui transcende le temps",
+          "difficulty": 2
+        },
+        { "id": 30, "value": "L'homme contre la nature", "difficulty": 2 },
+        { "id": 31, "value": "Le sens d'être humain", "difficulty": 3 },
+        { "id": 32, "value": "La nature reprend ses droits", "difficulty": 4 },
+        { "id": 33, "value": "Nécessité du mensonge", "difficulty": 5 },
+        { "id": 34, "value": "Obsession et folie", "difficulty": 4 },
+        { "id": 35, "value": "Vies parallèles", "difficulty": 4 },
+        { "id": 36, "value": "Attentes parentales", "difficulty": 2 },
+        { "id": 37, "value": "Le prix de la liberté", "difficulty": 3 },
+        { "id": 38, "value": "Le prix de l'immortalité", "difficulty": 4 },
+        { "id": 39, "value": "Rébellion contre l'autorité", "difficulty": 2 },
+        { "id": 40, "value": "Rédemption pour crimes passés", "difficulty": 2 },
+        { "id": 41, "value": "Relativisme de la vérité", "difficulty": 5 },
+        { "id": 42, "value": "Sacrifice pour le bien commun", "difficulty": 3 },
+        { "id": 43, "value": "Quête d'un foyer perdu", "difficulty": 2 },
         {
           "id": 44,
           "value": "Isolation sociale à l'ère numérique",
-          "rarity": 3
+          "difficulty": 3
         },
-        { "id": 45, "value": "Lutte pour la survie", "rarity": 1 },
-        { "id": 46, "value": "Terreur du quotidien", "rarity": 4 },
-        { "id": 47, "value": "Le fardeau du génie", "rarity": 4 },
-        { "id": 48, "value": "La chute du héros", "rarity": 3 },
-        { "id": 49, "value": "Contrôle totalitaire", "rarity": 2 },
-        { "id": 50, "value": "Obsession non partagée", "rarity": 3 }
+        { "id": 45, "value": "Lutte pour la survie", "difficulty": 1 },
+        { "id": 46, "value": "Terreur du quotidien", "difficulty": 4 },
+        { "id": 47, "value": "Le fardeau du génie", "difficulty": 4 },
+        { "id": 48, "value": "La chute du héros", "difficulty": 3 },
+        { "id": 49, "value": "Contrôle totalitaire", "difficulty": 2 },
+        { "id": 50, "value": "Obsession non partagée", "difficulty": 3 }
       ]
     },
     {
       "name": "Narrative Format",
       "label": "Format narratif",
+      "description": "Les choix de structure et de narration qui déterminent comment l'histoire est racontée.",
       "options": [
-        { "id": 1, "value": "Manuscrit annoté", "rarity": 5 },
-        { "id": 2, "value": "Recueil de nouvelles", "rarity": 3 },
+        { "id": 1, "value": "Manuscrit annoté", "difficulty": 5 },
+        { "id": 2, "value": "Recueil de nouvelles", "difficulty": 3 },
         {
           "id": 3,
           "value": "Scènes uniquement composées de dialogues",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 4,
           "value": "Double protagoniste (changement de point de vue)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 5,
           "value": "Épistolaire (lettres/emails/fichiers)",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 6,
           "value": "Première personne (narrateur peu fiable)",
-          "rarity": 3
+          "difficulty": 3
         },
-        { "id": 7, "value": "Structure basée sur des flashbacks", "rarity": 2 },
+        {
+          "id": 7,
+          "value": "Structure basée sur des flashbacks",
+          "difficulty": 2
+        },
         {
           "id": 8,
           "value": "Style académique riche en notes de bas de page",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 9,
           "value": "Récit-cadre (histoire dans l'histoire)",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 10, "value": "Perspectives interconnectées", "rarity": 3 },
-        { "id": 11, "value": "Journal intime / Carnets", "rarity": 2 },
-        { "id": 12, "value": "Point de vue limité", "rarity": 1 },
-        { "id": 13, "value": "Saga multigénérationnelle", "rarity": 4 },
-        { "id": 14, "value": "Chronologie non linéaire", "rarity": 4 },
-        { "id": 15, "value": "Style d'histoire orale", "rarity": 4 },
-        { "id": 16, "value": "POV d'univers parallèles", "rarity": 4 },
+        { "id": 10, "value": "Perspectives interconnectées", "difficulty": 3 },
+        { "id": 11, "value": "Journal intime / Carnets", "difficulty": 2 },
+        { "id": 12, "value": "Point de vue limité", "difficulty": 1 },
+        { "id": 13, "value": "Saga multigénérationnelle", "difficulty": 4 },
+        { "id": 14, "value": "Chronologie non linéaire", "difficulty": 4 },
+        { "id": 15, "value": "Style d'histoire orale", "difficulty": 4 },
+        { "id": 16, "value": "POV d'univers parallèles", "difficulty": 4 },
         {
           "id": 17,
           "value": "Présent de l'indicatif (axé sur l'action)",
-          "rarity": 2
+          "difficulty": 2
         },
-        { "id": 18, "value": "Ordre chronologique inversé", "rarity": 5 },
-        { "id": 19, "value": "Deuxième personne ('Tu/Vous')", "rarity": 5 },
-        { "id": 20, "value": "Flux de conscience", "rarity": 5 },
-        { "id": 21, "value": "Troisième personne omnisciente", "rarity": 1 },
-        { "id": 22, "value": "Vers / Prose poétique", "rarity": 5 }
+        { "id": 18, "value": "Ordre chronologique inversé", "difficulty": 5 },
+        { "id": 19, "value": "Deuxième personne ('Tu/Vous')", "difficulty": 5 },
+        { "id": 20, "value": "Flux de conscience", "difficulty": 5 },
+        {
+          "id": 21,
+          "value": "Troisième personne omnisciente",
+          "difficulty": 1
+        },
+        { "id": 22, "value": "Vers / Prose poétique", "difficulty": 5 }
       ]
     },
     {
@@ -267,241 +318,241 @@
         {
           "id": 1,
           "value": "Lipogramme",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Écrire sans utiliser une lettre spécifique (généralement le 'e')."
         },
         {
           "id": 2,
           "value": "Monovocalisme",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Utiliser une seule voyelle tout au long du texte."
         },
         {
           "id": 3,
           "value": "Épistolaire",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Récit raconté via des lettres, des emails ou des journaux intimes."
         },
         {
           "id": 4,
           "value": "Allitératif",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Usage intensif de mots commençant par la même consonne."
         },
         {
           "id": 5,
           "value": "Sans Adjectifs",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Se concentrer uniquement sur des verbes forts et des noms précis."
         },
         {
           "id": 6,
           "value": "Vocabulaire Restreint",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Se limiter aux 1 000 mots les plus courants de la langue."
         },
         {
           "id": 7,
           "value": "Micro-Fiction",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "L'histoire doit faire exactement 100 mots."
         },
         {
           "id": 8,
           "value": "Prose Rimée",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Prose qui suit un rythme et un schéma de rimes."
         },
         {
           "id": 9,
           "value": "Présent de l'Indicatif Uniquement",
-          "rarity": 1,
+          "difficulty": 1,
           "description": "Tout se passe dans l'immédiat, sans regard vers le passé."
         },
         {
           "id": 10,
           "value": "Jargon Technique",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Utiliser massivement le vocabulaire d'un domaine professionnel précis."
         },
         {
           "id": 11,
           "value": "Sans Verbes de Pensée",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Interdiction d'utiliser : 'penser', 'ressentir', 'savoir', 'croire'."
         },
         {
           "id": 12,
           "value": "Privation Sensorielle",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Décrire tout sauf en utilisant un sens spécifique (ex: pas de vue)."
         },
         {
           "id": 13,
           "value": "Dialogue Uniquement",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "L'histoire est racontée à 100% via des conversations parlées."
         },
         {
           "id": 14,
           "value": "Sans Dialogue",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "L'histoire ne comporte aucune parole prononcée."
         },
         {
           "id": 15,
           "value": "Voix Passive Uniquement",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Tout est décrit comme arrivant aux sujets (subi)."
         },
         {
           "id": 16,
           "value": "Futur de l'Indicatif",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Le récit est raconté comme s'il allait arriver ('Tu iras...')."
         },
         {
           "id": 17,
           "value": "Prose en Haïku",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Les phrases suivent un rythme de syllabes en 5-7-5."
         },
         {
           "id": 18,
           "value": "Sans Ponctuation",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Écrire sans aucune virgule, point ou signe de ponctuation."
         },
         {
           "id": 19,
           "value": "Style Télégraphique",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Phrases extrêmement courtes et hachées pour l'urgence."
         },
         {
           "id": 20,
           "value": "Métaphores Mathématiques",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Chaque métaphore doit être liée aux maths ou à la géométrie."
         },
         {
           "id": 21,
           "value": "Sans Pronoms Genrés",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Éviter d'utiliser 'il', 'elle', 'lui' ou 'elle'."
         },
         {
           "id": 22,
           "value": "Notes de Bas de Page",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "L'histoire réelle se déroule dans les notes d'un texte factice."
         },
         {
           "id": 23,
           "value": "Obsession Parenthétique",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Utiliser des parenthèses dans chaque phrase."
         },
         {
           "id": 24,
           "value": "Chaîne de Synonymes",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Ne jamais utiliser deux fois le même nom dans tout le texte."
         },
         {
           "id": 25,
           "value": "Langage Chromatique",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Chaque paragraphe doit mentionner au moins un nom de couleur."
         },
         {
           "id": 26,
           "value": "Verbes Animaliers",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Les humains agissent uniquement via des verbes liés aux animaux (ramper, bondir)."
         },
         {
           "id": 27,
           "value": "Français Archaïque",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Utiliser un vocabulaire obsolète et des tournures anciennes."
         },
         {
           "id": 28,
           "value": "Définitions de Dictionnaire",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Commencer chaque section par une définition liée à l'intrigue."
         },
         {
           "id": 29,
           "value": "Inclusion Numérique",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Chaque paragraphe doit inclure un nombre ou une mesure."
         },
         {
           "id": 30,
           "value": "Polysyndète",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Surutilisation des conjonctions (et, mais, ou) pour le rythme."
         },
         {
           "id": 31,
           "value": "Asyndète",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Suppression de toutes les conjonctions pour un rythme rapide et saccadé."
         },
         {
           "id": 32,
           "value": "Euphémismes Permanents",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Décrire la violence ou le tragique uniquement avec des mots doux."
         },
         {
           "id": 33,
           "value": "Limite de Syllabes",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Aucun mot utilisé ne peut dépasser deux syllabes."
         },
         {
           "id": 34,
           "value": "Onomatopéique",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Se concentrer sur des mots dont le son suggère le sens."
         },
         {
           "id": 35,
           "value": "Informations de Seconde Main",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Chaque phrase commence par 'On dit que...' ou 'J'ai entendu...'."
         },
         {
           "id": 36,
           "value": "Interrogatif",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "L'histoire est composée exclusivement de questions."
         },
         {
           "id": 37,
           "value": "Impératif",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Le récit est écrit comme une série d'ordres ou d'instructions."
         },
         {
           "id": 38,
           "value": "Paragraphes-Palindromes",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Le thème du premier paragraphe est inversé dans le dernier."
         },
         {
           "id": 39,
           "value": "Sans Répétition",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Un mot-clé spécifique ne peut être utilisé qu'une seule fois."
         },
         {
           "id": 40,
           "value": "Double Négation",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Utiliser des tournures 'pas impossible' pour un ton hésitant."
         }
       ]
@@ -514,241 +565,241 @@
         {
           "id": 1,
           "value": "Narrateur Non Fiable",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Le narrateur ment, est fou ou se trompe fondamentalement."
         },
         {
           "id": 2,
           "value": "POV Non-Humain",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Raconté par un animal, un objet ou une intelligence artificielle."
         },
         {
           "id": 3,
           "value": "Voix Collective",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "L'histoire est racontée par un 'Nous', représentant une communauté."
         },
         {
           "id": 4,
           "value": "Narrateur Périphérique",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Un témoin raconte l'histoire du héros depuis les lignes de touche."
         },
         {
           "id": 5,
           "value": "Regard d'Enfant",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Raconté par quelqu'un qui ne comprend pas les enjeux des adultes."
         },
         {
           "id": 6,
           "value": "Deuxième Personne",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Utilise le 'Tu' ou 'Vous' pour mettre le lecteur à la place du héros."
         },
         {
           "id": 7,
           "value": "Narrateur Mourant",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "L'histoire est racontée dans les derniers instants de vie du narrateur."
         },
         {
           "id": 8,
           "value": "Commère Omnisciente",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Un narrateur qui sait tout et juge ouvertement les choix des personnages."
         },
         {
           "id": 9,
           "value": "Flux de Conscience",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Pensées brutes et non filtrées sans structure classique."
         },
         {
           "id": 10,
           "value": "POV de l'Antagoniste",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "L'histoire est racontée du point de vue du méchant."
         },
         {
           "id": 11,
           "value": "Narrateur Fantôme",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Le narrateur est mort et observe le monde des vivants."
         },
         {
           "id": 12,
           "value": "Perspectives Duales",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Alternance entre deux personnages qui se détestent."
         },
         {
           "id": 13,
           "value": "Moi Futur",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Le personnage raconte son histoire à son 'moi' plus jeune."
         },
         {
           "id": 14,
           "value": "Le Fanatique",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Narrateur obsédé par un seul hobby, une religion ou une personne."
         },
         {
           "id": 15,
           "value": "Personnalités Multiples",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "La voix et la personnalité du narrateur changent en milieu de chapitre."
         },
         {
           "id": 16,
           "value": "Témoin Innocent",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Quelqu'un pris entre deux feux dans un complot qui ne l'intéresse pas."
         },
         {
           "id": 17,
           "value": "Le Traducteur",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "L'histoire est présentée comme un texte traduit avec des 'notes du traducteur'."
         },
         {
           "id": 18,
           "value": "Journal d'Enquêteur",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Narration clinique, objective et basée sur les preuves."
         },
         {
           "id": 19,
           "value": "Le Marginal",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Raconté par la seule personne incapable d'accomplir une action spécifique dans sa société."
         },
         {
           "id": 20,
           "value": "L'Amnésique",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Le narrateur découvre l'intrigue en même temps que le lecteur."
         },
         {
           "id": 21,
           "value": "L'Historien",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Analyse de l'intrigue 500 ans après les faits."
         },
         {
           "id": 22,
           "value": "Caméra de Surveillance",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Observation froide, détachée et purement visuelle."
         },
         {
           "id": 23,
           "value": "L'Animal de Compagnie",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Un animal domestique interprétant mal le drame humain."
         },
         {
           "id": 24,
           "value": "Complexe de Dieu",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Un narrateur qui croit contrôler les personnages."
         },
         {
           "id": 25,
           "value": "Gardien de Secrets",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Le narrateur ne s'adresse qu'à un seul 'Auditeur Silencieux'."
         },
         {
           "id": 26,
           "value": "Le Rival",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "L'histoire d'un héros racontée par son plus grand concurrent."
         },
         {
           "id": 27,
           "value": "Narrateur Sénile",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Les souvenirs et la chronologie s'embrouillent dans le récit."
         },
         {
           "id": 28,
           "value": "Narrateur Ivre",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Les détails sensoriels sont déformés par l'ébriété."
         },
         {
           "id": 29,
           "value": "Esprit Artificiel",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Perspective purement logique et basée sur les données."
         },
         {
           "id": 30,
           "value": "L'Oracle",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Le narrateur connaît la fin et ne cesse de la 'divulgâcher'."
         },
         {
           "id": 31,
           "value": "Le Passager Clandestin",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Narrateur caché en arrière-plan de chaque scène."
         },
         {
           "id": 32,
           "value": "Le Mentor",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Raconté par un vieux maître regardant son élève échouer."
         },
         {
           "id": 33,
           "value": "La Partie du Corps",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Raconté par la main, le cœur ou le cerveau d'un personnage."
         },
         {
           "id": 34,
           "value": "Le Sceptique",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Un narrateur dans un monde fantasy qui refuse de croire à la magie."
         },
         {
           "id": 35,
           "value": "Le Lâche",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "L'histoire porte sur l'évitement du conflit plutôt que sur sa résolution."
         },
         {
           "id": 36,
           "value": "La Célébrité",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Chaque action est réalisée pour un public imaginaire."
         },
         {
           "id": 37,
           "value": "Le Prisonnier",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Raconté depuis une cellule, basé uniquement sur les sons entendus."
         },
         {
           "id": 38,
           "value": "L'Archiviste",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "L'histoire est racontée via l'organisation d'une bibliothèque ou de dossiers."
         },
         {
           "id": 39,
           "value": "Le Touriste Alien",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Les concepts humains basiques sont décrits comme bizarres et exotiques."
         },
         {
           "id": 40,
           "value": "Le Chœur",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Un groupe de spectateurs commentant l'action comme une tragédie grecque."
         }
       ]
@@ -761,241 +812,241 @@
         {
           "id": 1,
           "value": "Chronologie Inversée",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Commence par la fin et remonte vers le début."
         },
         {
           "id": 2,
           "value": "In Media Res",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Commence en plein milieu d'un point culminant sans introduction."
         },
         {
           "id": 3,
           "value": "Règle des 24 Heures",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Toute l'histoire doit se dérouler sur une seule journée."
         },
         {
           "id": 4,
           "value": "Lignes Temporelles Parallèles",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Deux époques distinctes qui finissent par converger."
         },
         {
           "id": 5,
           "value": "Huis Clos (Bottle Story)",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Toute l'histoire se déroule dans une seule pièce."
         },
         {
           "id": 6,
           "value": "Récit Emboîté",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Une histoire à l'intérieur d'une histoire (récit-cadre)."
         },
         {
           "id": 7,
           "value": "Boucle Temporelle",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Les événements se répètent avec des variations cruciales."
         },
         {
           "id": 8,
           "value": "Temps Réel",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Le temps de lecture correspond exactement au temps passé dans l'intrigue."
         },
         {
           "id": 9,
           "value": "Flash-Forward Omniprésent",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Aperçus constants du destin futur du protagoniste."
         },
         {
           "id": 10,
           "value": "Triptyque",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Trois histoires courtes reliées par un seul objet."
         },
         {
           "id": 11,
           "value": "Le Compte à Rebours",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Chaque titre de chapitre est un nombre décroissant de minutes."
         },
         {
           "id": 12,
           "value": "Ancre Géographique",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Le récit ne quitte jamais un rayon de 5 mètres autour d'un objet."
         },
         {
           "id": 13,
           "value": "Miroir Brisé",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Des douzaines de micro-scènes dans un désordre chronologique total."
         },
         {
           "id": 14,
           "value": "Une Seule Phrase",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Toute l'histoire (ou chapitre) est une seule et longue phrase."
         },
         {
           "id": 15,
           "value": "Structure de Dictionnaire",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "L'histoire est racontée via une série d'entrées alphabétiques."
         },
         {
           "id": 16,
           "value": "Cycle des Saisons",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Le récit doit passer précisément par le Printemps, l'Été, l'Automne et l'Hiver."
         },
         {
           "id": 17,
           "value": "Le Voyage",
-          "rarity": 1,
+          "difficulty": 1,
           "description": "Les personnages doivent toujours être en mouvement; ils ne s'arrêtent jamais."
         },
         {
           "id": 18,
           "value": "L'Ellipse Majeure",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "La scène la plus importante est intentionnellement omise."
         },
         {
           "id": 19,
           "value": "Structure Binaire",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Chaque chapitre est divisé en deux : 'Avant' et 'Après'."
         },
         {
           "id": 20,
           "value": "L'Échelle Grandissante",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "La première page concerne une personne, la dernière l'univers entier."
         },
         {
           "id": 21,
           "value": "Récit d'Inventaire",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Histoire racontée via la liste des objets trouvés dans un sac à dos."
         },
         {
           "id": 22,
           "value": "L'Interrogatoire",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Histoire présentée comme la transcription d'une déposition de police."
         },
         {
           "id": 23,
           "value": "Choix Multiples",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Le lecteur reçoit des 'options' à la fin de chaque paragraphe."
         },
         {
           "id": 24,
           "value": "L'Intrigue Horlogère",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Les événements se produisent exactement à la même heure chaque jour."
         },
         {
           "id": 25,
           "value": "La Spirale",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Chaque chapitre est 10% plus court que le précédent."
         },
         {
           "id": 26,
           "value": "Conversation Unilatérale",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "On n'entend qu'une seule personne parler au téléphone/radio."
         },
         {
           "id": 27,
           "value": "Tracé Cartographique",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "La narration suit la disposition physique d'une carte."
         },
         {
           "id": 28,
           "value": "L'Attente",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Le protagoniste attend quelque chose qui n'arrive jamais."
         },
         {
           "id": 29,
           "value": "La Liste d'Invités",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Chaque scène introduit exactement un nouveau personnage."
         },
         {
           "id": 30,
           "value": "L'Album Photo",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Chaque section est la description d'une photographie fixe."
         },
         {
           "id": 31,
           "value": "La Recette",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "L'intrigue suit les étapes d'une recette de cuisine."
         },
         {
           "id": 32,
           "value": "L'Intrigue Miroir",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "La seconde moitié de l'histoire est la première moitié inversée."
         },
         {
           "id": 33,
           "value": "Le Procès",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "L'histoire est racontée via les plaidoiries au tribunal."
         },
         {
           "id": 34,
           "value": "Combustion Lente",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Le conflit principal n'est mentionné qu'à la toute dernière page."
         },
         {
           "id": 35,
           "value": "La Descente",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Le cadre devient physiquement plus profond (souterrain) au fil de l'intrigue."
         },
         {
           "id": 36,
           "value": "L'Ascension",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "L'intrigue monte plus haut (montagne/gratte-ciel) au fil du récit."
         },
         {
           "id": 37,
           "value": "L'Encyclopédie",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Le world-building est fait via de fausses entrées wiki."
         },
         {
           "id": 38,
           "value": "Narration Mourante",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "L'écriture devient plus incohérente à mesure que le personnage s'éteint."
         },
         {
           "id": 39,
           "value": "La Répétition",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Les personnages répètent un plan qui échoue à l'acte final."
         },
         {
           "id": 40,
           "value": "La Nécrologie",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "L'histoire est écrite comme un hommage à un personnage décédé."
         }
       ]
@@ -1008,241 +1059,241 @@
         {
           "id": 1,
           "value": "Nihiliste",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Les actions n'ont aucun sens et la justice n'existe pas."
         },
         {
           "id": 2,
           "value": "Fantaisiste / Surréaliste",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "La logique est secondaire par rapport à l'émerveillement onirique."
         },
         {
           "id": 3,
           "value": "Claustrophobe",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Un sentiment étouffant d'être piégé ou observé."
         },
         {
           "id": 4,
           "value": "Satirique",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Moque les normes sociales ou les institutions."
         },
         {
           "id": 5,
           "value": "Mélancolique",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Une tristesse douce et persistante ou un sentiment de perte."
         },
         {
           "id": 6,
           "value": "Hard-Boiled",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Cynique, dur et dénué de sentimentalisme."
         },
         {
           "id": 7,
           "value": "Hopepunk",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "La gentillesse radicale comme forme de rébellion."
         },
         {
           "id": 8,
           "value": "Absurdiste",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Actions dénuées de sens traitées avec un sérieux imperturbable."
         },
         {
           "id": 9,
           "value": "Étrange / Inquiétante Étrangeté",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Quelque chose de normal semble légèrement et dangereusement 'faux'."
         },
         {
           "id": 10,
           "value": "Humour Noir",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Comédie trouvée dans des situations tragiques ou morbides."
         },
         {
           "id": 11,
           "value": "Nostalgique",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Un désir douloureux pour un passé qui n'a peut-être pas existé."
         },
         {
           "id": 12,
           "value": "Hystérique",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Énergie débordante, chaotique et frôlant la panique."
         },
         {
           "id": 13,
           "value": "Stoïque",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Narration totalement dénuée d'émotion et détachée."
         },
         {
           "id": 14,
           "value": "Romantique",
-          "rarity": 1,
+          "difficulty": 1,
           "description": "Idéaliste, passionné et concentré sur la beauté."
         },
         {
           "id": 15,
           "value": "Gothique",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Sombre, décadent et émotionnellement lourd."
         },
         {
           "id": 16,
           "value": "Pastoral",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Paisible, lent et concentré sur la beauté de la nature."
         },
         {
           "id": 17,
           "value": "Paranoïaque",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Le narrateur ne fait confiance à personne et voit des complots partout."
         },
         {
           "id": 18,
           "value": "Sidéré",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Le personnage se sent minuscule face aux événements qui se déroulent."
         },
         {
           "id": 19,
           "value": "Amer-Sucre",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Un mélange de victoire et de perte personnelle significative."
         },
         {
           "id": 20,
           "value": "Clinique",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Froid, scientifique et dénué d'empathie."
         },
         {
           "id": 21,
           "value": "Indigné",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Colère vertueuse face à une situation injuste."
         },
         {
           "id": 22,
           "value": "Apathique",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Le narrateur se moque de vivre ou de mourir."
         },
         {
           "id": 23,
           "value": "Grimdark",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Laid, violent et moralement en faillite."
         },
         {
           "id": 24,
           "value": "Cérébral",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Intellectuel, froid et concentré sur les idées plutôt que les sentiments."
         },
         {
           "id": 25,
           "value": "Triomphant",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Un sentiment de victoire contre des obstacles impossibles."
         },
         {
           "id": 26,
           "value": "Désespéré",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Une énergie frénétique de 'dernière chance'."
         },
         {
           "id": 27,
           "value": "Espiègle",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Enjoué, malicieux et intentionnellement agaçant."
         },
         {
           "id": 28,
           "value": "Frénétique",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Rythme rapide et énergie mentalement épuisante."
         },
         {
           "id": 29,
           "value": "Solennel",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Calme, respectueux et très sérieux."
         },
         {
           "id": 30,
           "value": "Sardonique",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Humour sombrement moqueur ou cynique."
         },
         {
           "id": 31,
           "value": "Mélancolique",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Vague désir ou réflexion pleine de regrets."
         },
         {
           "id": 32,
           "value": "Apologétique",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Le narrateur tente constamment de justifier ses actions."
         },
         {
           "id": 33,
           "value": "Grotesque",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Concentré sur le distordu, le laid et le bizarre."
         },
         {
           "id": 34,
           "value": "Minimaliste",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "En dire le plus possible avec le moins de mots possible."
         },
         {
           "id": 35,
           "value": "Agressif",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Ton hostile qui attaque le lecteur ou les personnages."
         },
         {
           "id": 36,
           "value": "Euphorique",
-          "rarity": 5,
+          "difficulty": 5,
           "description": "Bonheur accablant, presque dangereux."
         },
         {
           "id": 37,
           "value": "Désillusionné",
-          "rarity": 3,
+          "difficulty": 3,
           "description": "Perte de foi en un héros ou un système."
         },
         {
           "id": 38,
           "value": "Prophétique",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Grandioses, bibliques et lourds de destin."
         },
         {
           "id": 39,
           "value": "Énigmatique",
-          "rarity": 4,
+          "difficulty": 4,
           "description": "Intentionnellement vague et mystérieux."
         },
         {
           "id": 40,
           "value": "Domestique",
-          "rarity": 2,
+          "difficulty": 2,
           "description": "Concentré sur les détails douillets ou mondains de la vie au foyer."
         }
       ]

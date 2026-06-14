@@ -8,7 +8,7 @@ import { ProjectRelation } from "./projects";
 export interface Option {
   id: number;
   value: string;
-  rarity: number;
+  difficulty: number;
   description?: string;
 }
 

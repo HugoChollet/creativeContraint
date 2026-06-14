@@ -71,6 +71,7 @@ export default function CategoryBrowseScreen() {
   const headerHeight = useHeaderHeight();
 
   const userId = session?.user?.id;
+  const scopedUserId = userId ?? "__anonymous__";
   const browseMode = mode ?? selectionMode;
   const isCreation = browseMode === "creation";
   const {
@@ -171,7 +172,7 @@ export default function CategoryBrowseScreen() {
     loading: loadingProjectSelections,
   } = useCollection<UserProjectSelection>("user_project_selections", {
     filterColumn: "owner_id",
-    filterValue: userId,
+    filterValue: scopedUserId,
   });
   const {
     fetchCollection: fetchProjectCategoryRelations,

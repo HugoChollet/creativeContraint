@@ -1,17 +1,17 @@
 {
   "expo": {
-    "name": "creativeContraint",
-    "slug": "creativeContraint",
+    "name": "Kadex",
+    "slug": "kadex",
     "version": "1.0.0",
     "orientation": "portrait",
     "softwareKeyboardLayoutMode": "pan",
-    "icon": "./assets/images/icon.png",
-    "scheme": "creativecontraint",
+    "icon": "./assets/images/logo.png",
+    "scheme": "kadex",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.samuelatruelle.creativeContraint",
+      "bundleIdentifier": "com.samuelatruelle.kadex",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -25,7 +25,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.samuelatruelle.creativeContraint",
+      "package": "com.samuelatruelle.kadex",
       "permissions": ["android.permission.RECORD_AUDIO"]
     },
     "web": {

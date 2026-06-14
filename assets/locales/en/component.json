@@ -62,6 +62,8 @@
     "language_label": "Language",
     "supported_files_label": "Supported publication format",
     "tags_label": "Tags",
+    "visual_tag_label": "Project look",
+    "visual_tag_helper": "Choose which tag drives the image and accent color",
     "tags_limit": "{{count}} / {{max}} selected",
     "tags_range": "{{count}} selected (minimum {{min}}, maximum {{max}})",
     "selection_min": "{{count}} selected (minimum {{min}})",

@@ -1,489 +1,703 @@
 {
   "project_type": "Board Game",
   "language": "fr",
-  "tags": ["game", "physical", "long", "character"],
+  "tags": ["board game", "game"],
   "categories": [
     {
       "name": "Game Style & Mechanics",
       "label": "Style de jeu & Mécaniques",
+      "description": "Le système central qui définit les décisions, interactions et boucles de jeu.",
       "options": [
-        { "id": 1, "value": "Placement d'ouvriers", "rarity": 2 },
-        { "id": 2, "value": "Deck-building", "rarity": 2 },
+        { "id": 1, "value": "Placement d'ouvriers", "difficulty": 2 },
+        { "id": 2, "value": "Deck-building", "difficulty": 2 },
         {
           "id": 3,
           "value": "Exploration de donjon (Dungeon Crawler)",
-          "rarity": 2
+          "difficulty": 2
         },
         {
           "id": 4,
           "value": "4X (eXplore, eXpand, eXploit, eXterminate)",
-          "rarity": 4
+          "difficulty": 4,
+          "description": "Jeu de stratégie d'expansion centré sur l'exploration, la croissance, l'exploitation de ressources et l'élimination des rivaux."
         },
-        { "id": 5, "value": "Gestion de ressources (Eurogame)", "rarity": 1 },
-        { "id": 6, "value": "Jeu de plis (Trick-taking)", "rarity": 2 },
-        { "id": 7, "value": "Abstrait (type Échecs/Go)", "rarity": 3 },
-        { "id": 8, "value": "Draft de cartes", "rarity": 2 },
-        { "id": 9, "value": "Contrôle de territoire", "rarity": 2 },
-        { "id": 10, "value": "Enquêtes et déduction", "rarity": 3 },
-        { "id": 11, "value": "Roll and Write (Lancer et écrire)", "rarity": 2 },
-        { "id": 12, "value": "Narratif à embranchements", "rarity": 4 },
-        { "id": 13, "value": "Legacy (évolutif et permanent)", "rarity": 5 },
-        { "id": 14, "value": "Tower Defense", "rarity": 4 },
-        { "id": 15, "value": "Escarmouche (Skirmish)", "rarity": 3 },
+        {
+          "id": 5,
+          "value": "Gestion de ressources (Eurogame)",
+          "difficulty": 1
+        },
+        { "id": 6, "value": "Jeu de plis (Trick-taking)", "difficulty": 2 },
+        { "id": 7, "value": "Abstrait (type Échecs/Go)", "difficulty": 3 },
+        { "id": 8, "value": "Draft de cartes", "difficulty": 2 },
+        { "id": 9, "value": "Contrôle de territoire", "difficulty": 2 },
+        { "id": 10, "value": "Enquêtes et déduction", "difficulty": 3 },
+        {
+          "id": 11,
+          "value": "Roll and Write (Lancer et écrire)",
+          "difficulty": 2
+        },
+        { "id": 12, "value": "Narratif à embranchements", "difficulty": 4 },
+        {
+          "id": 13,
+          "value": "Legacy (évolutif et permanent)",
+          "difficulty": 5,
+          "description": "Les règles, composants ou plateaux changent durablement d'une partie à l'autre."
+        },
+        { "id": 14, "value": "Tower Defense", "difficulty": 4 },
+        { "id": 15, "value": "Escarmouche (Skirmish)", "difficulty": 3 },
         {
           "id": 16,
           "value": "Jeu de société d'ambiance (Party Game)",
-          "rarity": 1
+          "difficulty": 1
         },
-        { "id": 17, "value": "Bluff et rôles cachés", "rarity": 2 },
-        { "id": 18, "value": "Course (Racing)", "rarity": 2 },
-        { "id": 19, "value": "Mouvement caché", "rarity": 4 },
-        { "id": 20, "value": "Wargame historique", "rarity": 4 },
-        { "id": 21, "value": "Enchères (Auction)", "rarity": 3 },
-        { "id": 22, "value": "Stop ou encore (Push your luck)", "rarity": 2 },
+        { "id": 17, "value": "Bluff et rôles cachés", "difficulty": 2 },
+        { "id": 18, "value": "Course (Racing)", "difficulty": 2 },
+        { "id": 19, "value": "Mouvement caché", "difficulty": 4 },
+        { "id": 20, "value": "Wargame historique", "difficulty": 4 },
+        { "id": 21, "value": "Enchères (Auction)", "difficulty": 3 },
+        {
+          "id": 22,
+          "value": "Stop ou encore (Push your luck)",
+          "difficulty": 2
+        },
         {
           "id": 23,
           "value": "Construction de moteur (Engine Building)",
-          "rarity": 3
+          "difficulty": 3
         },
-        { "id": 24, "value": "Pick-up and Deliver", "rarity": 3 },
-        { "id": 25, "value": "Puzzle / Tile-placement", "rarity": 2 },
-        { "id": 26, "value": "Jeu de dextérité", "rarity": 3 },
-        { "id": 27, "value": "Simulation économique", "rarity": 4 },
-        { "id": 28, "value": "Social Deduction", "rarity": 2 },
-        { "id": 29, "value": "Asymétrie totale", "rarity": 5 },
-        { "id": 30, "value": "Combat de cartes (CCG style)", "rarity": 2 }
+        { "id": 24, "value": "Pick-up and Deliver", "difficulty": 3 },
+        { "id": 25, "value": "Puzzle / Tile-placement", "difficulty": 2 },
+        { "id": 26, "value": "Jeu de dextérité", "difficulty": 3 },
+        { "id": 27, "value": "Simulation économique", "difficulty": 4 },
+        { "id": 28, "value": "Social Deduction", "difficulty": 2 },
+        { "id": 29, "value": "Asymétrie totale", "difficulty": 5 },
+        { "id": 30, "value": "Combat de cartes (CCG style)", "difficulty": 2 }
       ]
     },
     {
       "name": "Physical Support",
       "label": "Support physique",
+      "description": "Les composants et formats matériels qui donnent sa forme concrète au jeu.",
       "options": [
-        { "id": 1, "value": "Plateau modulaire (tuiles)", "rarity": 2 },
-        { "id": 2, "value": "Cartes uniquement", "rarity": 1 },
-        { "id": 3, "value": "Dés personnalisés", "rarity": 3 },
-        { "id": 4, "value": "Figurines en plastique", "rarity": 2 },
-        { "id": 5, "value": "Meeples en bois", "rarity": 1 },
-        { "id": 6, "value": "Tissu / Tapis de jeu", "rarity": 4 },
-        { "id": 7, "value": "Composants en métal (pièces)", "rarity": 4 },
-        { "id": 8, "value": "Application mobile intégrée", "rarity": 4 },
-        { "id": 9, "value": "Sablier ou chronomètre", "rarity": 2 },
-        { "id": 10, "value": "Papiers à déchirer / consommer", "rarity": 5 },
-        { "id": 11, "value": "Écrans de joueur (secret)", "rarity": 2 },
-        { "id": 12, "value": "Plateau vertical / 3D", "rarity": 5 },
-        { "id": 13, "value": "Jetons de poker (clay)", "rarity": 3 },
-        { "id": 14, "value": "Éléments magnétiques", "rarity": 5 },
-        { "id": 15, "value": "Crayons et gommes", "rarity": 2 },
-        { "id": 16, "value": "Sac en tissu (Bag-building)", "rarity": 3 },
-        { "id": 17, "value": "Transparents (overlays)", "rarity": 4 },
-        { "id": 18, "value": "Matériel de récupération", "rarity": 5 },
-        { "id": 19, "value": "Marqueurs effaçables", "rarity": 2 },
-        { "id": 20, "value": "Lumière (LED ou phosphorescence)", "rarity": 5 },
-        { "id": 21, "value": "Boussole ou outils de mesure", "rarity": 5 },
-        { "id": 22, "value": "Livret dont vous êtes le héros", "rarity": 4 },
-        { "id": 23, "value": "Engrenages physiques", "rarity": 5 },
-        { "id": 24, "value": "Enveloppes scellées", "rarity": 4 },
-        { "id": 25, "value": "Cartes perforées", "rarity": 5 },
-        { "id": 26, "value": "Plateau double-couche", "rarity": 3 },
-        { "id": 27, "value": "Ressources en résine réaliste", "rarity": 3 },
-        { "id": 28, "value": "Pion unique partagé", "rarity": 4 },
-        { "id": 29, "value": "Miroirs", "rarity": 5 },
-        { "id": 30, "value": "Audio (vinyle ou cassette)", "rarity": 5 }
+        { "id": 1, "value": "Plateau modulaire (tuiles)", "difficulty": 2 },
+        { "id": 2, "value": "Cartes uniquement", "difficulty": 1 },
+        { "id": 3, "value": "Dés personnalisés", "difficulty": 3 },
+        { "id": 4, "value": "Figurines en plastique", "difficulty": 2 },
+        { "id": 5, "value": "Meeples en bois", "difficulty": 1 },
+        { "id": 6, "value": "Tissu / Tapis de jeu", "difficulty": 4 },
+        { "id": 7, "value": "Composants en métal (pièces)", "difficulty": 4 },
+        { "id": 8, "value": "Application mobile intégrée", "difficulty": 4 },
+        { "id": 9, "value": "Sablier ou chronomètre", "difficulty": 2 },
+        {
+          "id": 10,
+          "value": "Papiers à déchirer / consommer",
+          "difficulty": 5
+        },
+        { "id": 11, "value": "Écrans de joueur (secret)", "difficulty": 2 },
+        { "id": 12, "value": "Plateau vertical / 3D", "difficulty": 5 },
+        { "id": 13, "value": "Jetons de poker (clay)", "difficulty": 3 },
+        { "id": 14, "value": "Éléments magnétiques", "difficulty": 5 },
+        { "id": 15, "value": "Crayons et gommes", "difficulty": 2 },
+        { "id": 16, "value": "Sac en tissu (Bag-building)", "difficulty": 3 },
+        { "id": 17, "value": "Transparents (overlays)", "difficulty": 4 },
+        { "id": 18, "value": "Matériel de récupération", "difficulty": 5 },
+        { "id": 19, "value": "Marqueurs effaçables", "difficulty": 2 },
+        {
+          "id": 20,
+          "value": "Lumière (LED ou phosphorescence)",
+          "difficulty": 5
+        },
+        { "id": 21, "value": "Boussole ou outils de mesure", "difficulty": 5 },
+        {
+          "id": 22,
+          "value": "Livret dont vous êtes le héros",
+          "difficulty": 4
+        },
+        { "id": 23, "value": "Engrenages physiques", "difficulty": 5 },
+        { "id": 24, "value": "Enveloppes scellées", "difficulty": 4 },
+        { "id": 25, "value": "Cartes perforées", "difficulty": 5 },
+        { "id": 26, "value": "Plateau double-couche", "difficulty": 3 },
+        { "id": 27, "value": "Ressources en résine réaliste", "difficulty": 3 },
+        { "id": 28, "value": "Pion unique partagé", "difficulty": 4 },
+        { "id": 29, "value": "Miroirs", "difficulty": 5 },
+        { "id": 30, "value": "Audio (vinyle ou cassette)", "difficulty": 5 }
       ]
     },
     {
       "name": "Player Action",
       "label": "Action du joueur",
+      "description": "Les verbes principaux que les joueurs accomplissent pendant la partie.",
       "options": [
-        { "id": 1, "value": "Lancer de dés", "rarity": 1 },
-        { "id": 2, "value": "Dessiner à main levée", "rarity": 2 },
-        { "id": 3, "value": "Découper du papier", "rarity": 5 },
-        { "id": 4, "value": "Assembler des pièces", "rarity": 3 },
-        { "id": 5, "value": "Mimer une action", "rarity": 2 },
-        { "id": 6, "value": "Négocier oralement", "rarity": 2 },
-        { "id": 7, "value": "Pousser des jetons (Flicking)", "rarity": 3 },
-        { "id": 8, "value": "Empiler des objets (Equilibre)", "rarity": 3 },
-        { "id": 9, "value": "Mémoriser des positions", "rarity": 2 },
-        { "id": 10, "value": "Chuchoter des secrets", "rarity": 4 },
-        { "id": 11, "value": "Pointer du doigt simultanément", "rarity": 3 },
-        { "id": 12, "value": "Plier du papier (Origami)", "rarity": 5 },
-        { "id": 13, "value": "Voter secrètement", "rarity": 2 },
-        { "id": 14, "value": "Chercher un objet dans un sac", "rarity": 3 },
-        { "id": 15, "value": "Tapoter le plus vite possible", "rarity": 4 },
-        { "id": 16, "value": "Faire des calculs mentaux", "rarity": 3 },
-        { "id": 17, "value": "Décrire une image sans la nommer", "rarity": 2 },
-        { "id": 18, "value": "Parier des ressources", "rarity": 2 },
-        { "id": 19, "value": "Échanger des cartes physiquement", "rarity": 1 },
-        { "id": 20, "value": "Masquer ses yeux", "rarity": 4 },
-        { "id": 21, "value": "Souffler sur des composants", "rarity": 5 },
-        { "id": 22, "value": "Lancer un objet (visée)", "rarity": 4 },
-        { "id": 23, "value": "Toucher sans regarder (tactile)", "rarity": 4 },
-        { "id": 24, "value": "Siffler ou fredonner", "rarity": 5 },
-        { "id": 25, "value": "Se lever ou bouger de sa chaise", "rarity": 4 },
-        { "id": 26, "value": "Ecrire un texte court", "rarity": 2 },
-        { "id": 27, "value": "Tourner une roue", "rarity": 3 },
-        { "id": 28, "value": "Saisir un objet central au vol", "rarity": 2 },
-        { "id": 29, "value": "Faire des grimaces", "rarity": 5 },
-        { "id": 30, "value": "Prendre une photo", "rarity": 4 }
+        { "id": 1, "value": "Lancer de dés", "difficulty": 1 },
+        { "id": 2, "value": "Dessiner à main levée", "difficulty": 2 },
+        { "id": 3, "value": "Découper du papier", "difficulty": 5 },
+        { "id": 4, "value": "Assembler des pièces", "difficulty": 3 },
+        { "id": 5, "value": "Mimer une action", "difficulty": 2 },
+        { "id": 6, "value": "Négocier oralement", "difficulty": 2 },
+        { "id": 7, "value": "Pousser des jetons (Flicking)", "difficulty": 3 },
+        { "id": 8, "value": "Empiler des objets (Equilibre)", "difficulty": 3 },
+        { "id": 9, "value": "Mémoriser des positions", "difficulty": 2 },
+        { "id": 10, "value": "Chuchoter des secrets", "difficulty": 4 },
+        {
+          "id": 11,
+          "value": "Pointer du doigt simultanément",
+          "difficulty": 3
+        },
+        { "id": 12, "value": "Plier du papier (Origami)", "difficulty": 5 },
+        { "id": 13, "value": "Voter secrètement", "difficulty": 2 },
+        { "id": 14, "value": "Chercher un objet dans un sac", "difficulty": 3 },
+        { "id": 15, "value": "Tapoter le plus vite possible", "difficulty": 4 },
+        { "id": 16, "value": "Faire des calculs mentaux", "difficulty": 3 },
+        {
+          "id": 17,
+          "value": "Décrire une image sans la nommer",
+          "difficulty": 2
+        },
+        { "id": 18, "value": "Parier des ressources", "difficulty": 2 },
+        {
+          "id": 19,
+          "value": "Échanger des cartes physiquement",
+          "difficulty": 1
+        },
+        { "id": 20, "value": "Masquer ses yeux", "difficulty": 4 },
+        { "id": 21, "value": "Souffler sur des composants", "difficulty": 5 },
+        { "id": 22, "value": "Lancer un objet (visée)", "difficulty": 4 },
+        {
+          "id": 23,
+          "value": "Toucher sans regarder (tactile)",
+          "difficulty": 4
+        },
+        { "id": 24, "value": "Siffler ou fredonner", "difficulty": 5 },
+        {
+          "id": 25,
+          "value": "Se lever ou bouger de sa chaise",
+          "difficulty": 4
+        },
+        { "id": 26, "value": "Ecrire un texte court", "difficulty": 2 },
+        { "id": 27, "value": "Tourner une roue", "difficulty": 3 },
+        {
+          "id": 28,
+          "value": "Saisir un objet central au vol",
+          "difficulty": 2
+        },
+        { "id": 29, "value": "Faire des grimaces", "difficulty": 5 },
+        { "id": 30, "value": "Prendre une photo", "difficulty": 4 }
       ]
     },
     {
       "name": "Information Flow",
       "label": "Flux d'information",
+      "description": "La manière dont les informations sont cachées, révélées, partagées ou suivies.",
       "options": [
-        { "id": 1, "value": "Information complète (échecs)", "rarity": 1 },
-        { "id": 2, "value": "Rôles cachés", "rarity": 2 },
-        { "id": 3, "value": "Main de cartes privée", "rarity": 1 },
-        { "id": 4, "value": "Brouillard de guerre (Fog of war)", "rarity": 4 },
-        { "id": 5, "value": "Communication limitée (silence)", "rarity": 4 },
-        { "id": 6, "value": "Un contre tous (Asymétrie d'info)", "rarity": 3 },
-        { "id": 7, "value": "Mémoire pure", "rarity": 2 },
-        { "id": 8, "value": "Objectifs secrets", "rarity": 2 },
-        { "id": 9, "value": "Indices partagés", "rarity": 3 },
-        { "id": 10, "value": "Savoir uniquement tactile", "rarity": 5 },
-        { "id": 11, "value": "Cartes visibles par tous sauf soi", "rarity": 4 },
+        { "id": 1, "value": "Information complète (échecs)", "difficulty": 1 },
+        { "id": 2, "value": "Rôles cachés", "difficulty": 2 },
+        { "id": 3, "value": "Main de cartes privée", "difficulty": 1 },
+        {
+          "id": 4,
+          "value": "Brouillard de guerre (Fog of war)",
+          "difficulty": 4,
+          "description": "Une partie de la carte, des unités ou des informations reste cachée jusqu'à sa découverte."
+        },
+        {
+          "id": 5,
+          "value": "Communication limitée (silence)",
+          "difficulty": 4
+        },
+        {
+          "id": 6,
+          "value": "Un contre tous (Asymétrie d'info)",
+          "difficulty": 3
+        },
+        { "id": 7, "value": "Mémoire pure", "difficulty": 2 },
+        { "id": 8, "value": "Objectifs secrets", "difficulty": 2 },
+        { "id": 9, "value": "Indices partagés", "difficulty": 3 },
+        { "id": 10, "value": "Savoir uniquement tactile", "difficulty": 5 },
+        {
+          "id": 11,
+          "value": "Cartes visibles par tous sauf soi",
+          "difficulty": 4
+        },
         {
           "id": 12,
           "value": "Révélation progressive de la carte",
-          "rarity": 3
+          "difficulty": 3
         },
-        { "id": 13, "value": "Traître potentiel (Inconnu)", "rarity": 3 },
-        { "id": 14, "value": "Chuchotements autorisés", "rarity": 4 },
-        { "id": 15, "value": "Codage/Décodage de messages", "rarity": 5 },
-        { "id": 16, "value": "Appel et réponse (Signaux)", "rarity": 4 },
-        { "id": 17, "value": "Fausse information intégrée", "rarity": 5 },
-        { "id": 18, "value": "Conditions de victoire cachées", "rarity": 5 },
+        { "id": 13, "value": "Traître potentiel (Inconnu)", "difficulty": 3 },
+        { "id": 14, "value": "Chuchotements autorisés", "difficulty": 4 },
+        { "id": 15, "value": "Codage/Décodage de messages", "difficulty": 5 },
+        { "id": 16, "value": "Appel et réponse (Signaux)", "difficulty": 4 },
+        { "id": 17, "value": "Fausse information intégrée", "difficulty": 5 },
+        {
+          "id": 18,
+          "value": "Conditions de victoire cachées",
+          "difficulty": 5
+        },
         {
           "id": 19,
           "value": "Vues divergentes (Filtres de couleur)",
-          "rarity": 5
+          "difficulty": 5,
+          "description": "Les joueurs voient des informations différentes sur les mêmes composants, souvent grâce à des filtres colorés."
         },
-        { "id": 20, "value": "Historique des coups public", "rarity": 2 },
-        { "id": 21, "value": "Vision limitée par un accessoire", "rarity": 5 },
-        { "id": 22, "value": "Rumeurs (Info incertaine)", "rarity": 4 },
-        { "id": 23, "value": "Partage d'info payant", "rarity": 3 },
+        { "id": 20, "value": "Historique des coups public", "difficulty": 2 },
+        {
+          "id": 21,
+          "value": "Vision limitée par un accessoire",
+          "difficulty": 5
+        },
+        { "id": 22, "value": "Rumeurs (Info incertaine)", "difficulty": 4 },
+        { "id": 23, "value": "Partage d'info payant", "difficulty": 3 },
         {
           "id": 24,
           "value": "Savoir ancestral (Cartes défaussées)",
-          "rarity": 3
+          "difficulty": 3
         },
-        { "id": 25, "value": "Identités changeantes", "rarity": 4 },
-        { "id": 26, "value": "Information temporelle (Future)", "rarity": 5 },
-        { "id": 27, "value": "Détection de mensonge mécanique", "rarity": 5 },
-        { "id": 28, "value": "Zone de silence physique", "rarity": 5 },
-        { "id": 29, "value": "Documents classifiés (Enveloppes)", "rarity": 4 },
-        { "id": 30, "value": "Savoir basé sur le placement", "rarity": 3 }
+        { "id": 25, "value": "Identités changeantes", "difficulty": 4 },
+        {
+          "id": 26,
+          "value": "Information temporelle (Future)",
+          "difficulty": 5
+        },
+        {
+          "id": 27,
+          "value": "Détection de mensonge mécanique",
+          "difficulty": 5
+        },
+        { "id": 28, "value": "Zone de silence physique", "difficulty": 5 },
+        {
+          "id": 29,
+          "value": "Documents classifiés (Enveloppes)",
+          "difficulty": 4
+        },
+        { "id": 30, "value": "Savoir basé sur le placement", "difficulty": 3 }
       ]
     },
     {
       "name": "Turn Structure",
       "label": "Structure du tour",
+      "description": "Le rythme de jeu et l'ordre dans lequel les actions et résolutions s'enchaînent.",
       "options": [
-        { "id": 1, "value": "Chacun son tour (sens horaire)", "rarity": 1 },
-        { "id": 2, "value": "Temps réel (Simultané)", "rarity": 3 },
-        { "id": 3, "value": "Points d'action à dépenser", "rarity": 2 },
-        { "id": 4, "value": "Initiative (Vitesse)", "rarity": 2 },
-        { "id": 5, "value": "Le dernier sur la piste joue", "rarity": 4 },
-        { "id": 6, "value": "Phases simultanées", "rarity": 2 },
-        { "id": 7, "value": "Sablier (Temps limité)", "rarity": 3 },
-        { "id": 8, "value": "Interruption possible (Réaction)", "rarity": 3 },
-        { "id": 9, "value": "File d'attente d'actions", "rarity": 4 },
-        { "id": 10, "value": "Tour déterminé par un dé", "rarity": 3 },
+        { "id": 1, "value": "Chacun son tour (sens horaire)", "difficulty": 1 },
+        { "id": 2, "value": "Temps réel (Simultané)", "difficulty": 3 },
+        { "id": 3, "value": "Points d'action à dépenser", "difficulty": 2 },
+        { "id": 4, "value": "Initiative (Vitesse)", "difficulty": 2 },
+        { "id": 5, "value": "Le dernier sur la piste joue", "difficulty": 4 },
+        { "id": 6, "value": "Phases simultanées", "difficulty": 2 },
+        { "id": 7, "value": "Sablier (Temps limité)", "difficulty": 3 },
+        {
+          "id": 8,
+          "value": "Interruption possible (Réaction)",
+          "difficulty": 3
+        },
+        { "id": 9, "value": "File d'attente d'actions", "difficulty": 4 },
+        { "id": 10, "value": "Tour déterminé par un dé", "difficulty": 3 },
         {
           "id": 11,
           "value": "Passage de flambeau (Choix du suivant)",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 12, "value": "Actions programmées à l'avance", "rarity": 3 },
-        { "id": 13, "value": "Rounds avec nettoyage", "rarity": 1 },
-        { "id": 14, "value": "Tours imbriqués", "rarity": 5 },
-        { "id": 15, "value": "Cycle de jour et de nuit", "rarity": 3 },
-        { "id": 16, "value": "Actions bonus en cascade", "rarity": 4 },
-        { "id": 17, "value": "Pas de tours (Flux libre)", "rarity": 5 },
-        { "id": 18, "value": "Enchères pour l'ordre du tour", "rarity": 3 },
-        { "id": 19, "value": "Tours de plus en plus courts", "rarity": 4 },
-        { "id": 20, "value": "Phase d'événement mondiale", "rarity": 2 },
+        {
+          "id": 12,
+          "value": "Actions programmées à l'avance",
+          "difficulty": 3
+        },
+        { "id": 13, "value": "Rounds avec nettoyage", "difficulty": 1 },
+        { "id": 14, "value": "Tours imbriqués", "difficulty": 5 },
+        { "id": 15, "value": "Cycle de jour et de nuit", "difficulty": 3 },
+        { "id": 16, "value": "Actions bonus en cascade", "difficulty": 4 },
+        { "id": 17, "value": "Pas de tours (Flux libre)", "difficulty": 5 },
+        { "id": 18, "value": "Enchères pour l'ordre du tour", "difficulty": 3 },
+        { "id": 19, "value": "Tours de plus en plus courts", "difficulty": 4 },
+        { "id": 20, "value": "Phase d'événement mondiale", "difficulty": 2 },
         {
           "id": 21,
           "value": "Action forcée par un timer externe",
-          "rarity": 5
+          "difficulty": 5
         },
-        { "id": 22, "value": "Draft d'ordre de tour", "rarity": 3 },
+        { "id": 22, "value": "Draft d'ordre de tour", "difficulty": 3 },
         {
           "id": 23,
           "value": "Tours asymétriques (Durées variées)",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 24, "value": "Interruption par un traître", "rarity": 4 },
-        { "id": 25, "value": "Pause stratégique obligatoire", "rarity": 5 },
-        { "id": 26, "value": "Tour lié à la respiration/pouls", "rarity": 5 },
+        { "id": 24, "value": "Interruption par un traître", "difficulty": 4 },
+        { "id": 25, "value": "Pause stratégique obligatoire", "difficulty": 5 },
+        {
+          "id": 26,
+          "value": "Tour lié à la respiration/pouls",
+          "difficulty": 5
+        },
         {
           "id": 27,
           "value": "Actions déclenchées par l'adversaire",
-          "rarity": 3
+          "difficulty": 3
         },
-        { "id": 28, "value": "Système de 'Mana' pour rejouer", "rarity": 2 },
-        { "id": 29, "value": "Mouvements en miroir", "rarity": 4 },
-        { "id": 30, "value": "Fin de tour subite (Mort subite)", "rarity": 3 }
+        {
+          "id": 28,
+          "value": "Système de 'Mana' pour rejouer",
+          "difficulty": 2
+        },
+        { "id": 29, "value": "Mouvements en miroir", "difficulty": 4 },
+        {
+          "id": 30,
+          "value": "Fin de tour subite (Mort subite)",
+          "difficulty": 3
+        }
       ]
     },
     {
       "name": "Victory Conditions",
       "label": "Conditions de victoire",
+      "description": "Ce qu'il faut accomplir, accumuler ou surpasser pour gagner.",
       "options": [
-        { "id": 1, "value": "Plus haut score (Points)", "rarity": 1 },
-        { "id": 2, "value": "Course (Premier arrivé)", "rarity": 2 },
-        { "id": 3, "value": "Élimination des adversaires", "rarity": 2 },
-        { "id": 4, "value": "Contrôle de zones clés", "rarity": 2 },
-        { "id": 5, "value": "Collection de sets complète", "rarity": 2 },
-        { "id": 6, "value": "Dernier survivant", "rarity": 3 },
-        { "id": 7, "value": "Résoudre une énigme", "rarity": 4 },
-        { "id": 8, "value": "Accumuler une richesse cible", "rarity": 2 },
-        { "id": 9, "value": "Éviter une condition de défaite", "rarity": 3 },
-        { "id": 10, "value": "Vote de la majorité", "rarity": 4 },
-        { "id": 11, "value": "Atteindre un état d'équilibre", "rarity": 5 },
-        { "id": 12, "value": "S'échapper de la zone de jeu", "rarity": 3 },
-        { "id": 13, "value": "Convertir les adversaires", "rarity": 4 },
-        { "id": 14, "value": "Défendre un objet/personne", "rarity": 3 },
-        { "id": 15, "value": "Vider sa main en premier", "rarity": 2 },
-        { "id": 16, "value": "Construire une merveille", "rarity": 3 },
+        { "id": 1, "value": "Plus haut score (Points)", "difficulty": 1 },
+        { "id": 2, "value": "Course (Premier arrivé)", "difficulty": 2 },
+        { "id": 3, "value": "Élimination des adversaires", "difficulty": 2 },
+        { "id": 4, "value": "Contrôle de zones clés", "difficulty": 2 },
+        { "id": 5, "value": "Collection de sets complète", "difficulty": 2 },
+        { "id": 6, "value": "Dernier survivant", "difficulty": 3 },
+        { "id": 7, "value": "Résoudre une énigme", "difficulty": 4 },
+        { "id": 8, "value": "Accumuler une richesse cible", "difficulty": 2 },
+        {
+          "id": 9,
+          "value": "Éviter une condition de défaite",
+          "difficulty": 3
+        },
+        { "id": 10, "value": "Vote de la majorité", "difficulty": 4 },
+        {
+          "id": 11,
+          "value": "Atteindre un état d'équilibre",
+          "difficulty": 5,
+          "description": "On gagne en stabilisant un système fragile plutôt qu'en cherchant à maximiser un score."
+        },
+        { "id": 12, "value": "S'échapper de la zone de jeu", "difficulty": 3 },
+        { "id": 13, "value": "Convertir les adversaires", "difficulty": 4 },
+        { "id": 14, "value": "Défendre un objet/personne", "difficulty": 3 },
+        { "id": 15, "value": "Vider sa main en premier", "difficulty": 2 },
+        { "id": 16, "value": "Construire une merveille", "difficulty": 3 },
         {
           "id": 17,
           "value": "Maintenir la paix (Score collectif)",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 18, "value": "Remplir un contrat secret", "rarity": 3 },
-        { "id": 19, "value": "Démasquer le traître", "rarity": 3 },
-        { "id": 20, "value": "Posséder l'artefact à la fin", "rarity": 3 },
-        { "id": 21, "value": "Plus petit score (Inversé)", "rarity": 5 },
-        { "id": 22, "value": "Sacrifice nécessaire", "rarity": 5 },
+        { "id": 18, "value": "Remplir un contrat secret", "difficulty": 3 },
+        { "id": 19, "value": "Démasquer le traître", "difficulty": 3 },
+        { "id": 20, "value": "Posséder l'artefact à la fin", "difficulty": 3 },
+        { "id": 21, "value": "Plus petit score (Inversé)", "difficulty": 5 },
+        { "id": 22, "value": "Sacrifice nécessaire", "difficulty": 5 },
         {
           "id": 23,
           "value": "Atteindre une destination ensemble",
-          "rarity": 3
+          "difficulty": 3
         },
-        { "id": 24, "value": "Domination technologique", "rarity": 3 },
-        { "id": 25, "value": "Gagner par trahison uniquement", "rarity": 4 },
-        { "id": 26, "value": "Compléter un pattern visuel", "rarity": 3 },
-        { "id": 27, "value": "Faire capituler l'autre", "rarity": 2 },
+        { "id": 24, "value": "Domination technologique", "difficulty": 3 },
+        {
+          "id": 25,
+          "value": "Gagner par trahison uniquement",
+          "difficulty": 4
+        },
+        { "id": 26, "value": "Compléter un pattern visuel", "difficulty": 3 },
+        { "id": 27, "value": "Faire capituler l'autre", "difficulty": 2 },
         {
           "id": 28,
           "value": "Finir avec exactement X ressources",
-          "rarity": 5
+          "difficulty": 5
         },
-        { "id": 29, "value": "Influence politique maximale", "rarity": 4 },
-        { "id": 30, "value": "Mourir avec le plus de gloire", "rarity": 5 }
+        { "id": 29, "value": "Influence politique maximale", "difficulty": 4 },
+        { "id": 30, "value": "Mourir avec le plus de gloire", "difficulty": 5 }
       ]
     },
     {
       "name": "Player Relationship",
       "label": "Relation entre joueurs",
+      "description": "La dynamique sociale entre les participants, entre coopération, confrontation et négociation.",
       "options": [
-        { "id": 1, "value": "Chacun pour soi (Compétitif)", "rarity": 1 },
-        { "id": 2, "value": "Tous ensemble (Coopératif)", "rarity": 2 },
-        { "id": 3, "value": "Équipes fixes", "rarity": 2 },
+        { "id": 1, "value": "Chacun pour soi (Compétitif)", "difficulty": 1 },
+        { "id": 2, "value": "Tous ensemble (Coopératif)", "difficulty": 2 },
+        { "id": 3, "value": "Équipes fixes", "difficulty": 2 },
         {
           "id": 4,
           "value": "Semi-coopératif (Un seul vainqueur)",
-          "rarity": 3
+          "difficulty": 3
         },
-        { "id": 5, "value": "Un traître caché", "rarity": 3 },
+        { "id": 5, "value": "Un traître caché", "difficulty": 3 },
         {
           "id": 6,
           "value": "Partenaires temporaires (Alliances)",
-          "rarity": 3
+          "difficulty": 3
         },
-        { "id": 7, "value": "Maître et apprentis", "rarity": 4 },
+        { "id": 7, "value": "Maître et apprentis", "difficulty": 4 },
         {
           "id": 8,
           "value": "Parasitisme (Lier son sort à un autre)",
-          "rarity": 5
+          "difficulty": 5,
+          "description": "Votre survie ou votre score dépend directement d'un autre joueur, dont vous exploitez la réussite ou l'échec."
         },
-        { "id": 9, "value": "Équipes changeantes", "rarity": 4 },
-        { "id": 10, "value": "Relation Parent/Enfant (In-game)", "rarity": 5 },
-        { "id": 11, "value": "Rivaux amoureux (Thématique)", "rarity": 4 },
-        { "id": 12, "value": "Interdépendance des ressources", "rarity": 3 },
-        { "id": 13, "value": "L'un joue le rôle du jeu (MJ)", "rarity": 4 },
+        { "id": 9, "value": "Équipes changeantes", "difficulty": 4 },
+        {
+          "id": 10,
+          "value": "Relation Parent/Enfant (In-game)",
+          "difficulty": 5
+        },
+        { "id": 11, "value": "Rivaux amoureux (Thématique)", "difficulty": 4 },
+        {
+          "id": 12,
+          "value": "Interdépendance des ressources",
+          "difficulty": 3
+        },
+        { "id": 13, "value": "L'un joue le rôle du jeu (MJ)", "difficulty": 4 },
         {
           "id": 14,
           "value": "Symbiose (Score commun de deux joueurs)",
-          "rarity": 5
+          "difficulty": 5
         },
-        { "id": 15, "value": "Négociation agressive", "rarity": 2 },
-        { "id": 16, "value": "Mimétisme (Copier l'autre)", "rarity": 4 },
-        { "id": 17, "value": "Garde du corps et Cible", "rarity": 4 },
-        { "id": 18, "value": "Vengeance (Cible spécifique)", "rarity": 3 },
-        { "id": 19, "value": "Esclavage/Dette in-game", "rarity": 5 },
+        { "id": 15, "value": "Négociation agressive", "difficulty": 2 },
+        { "id": 16, "value": "Mimétisme (Copier l'autre)", "difficulty": 4 },
+        { "id": 17, "value": "Garde du corps et Cible", "difficulty": 4 },
+        { "id": 18, "value": "Vengeance (Cible spécifique)", "difficulty": 3 },
+        { "id": 19, "value": "Esclavage/Dette in-game", "difficulty": 5 },
         {
           "id": 20,
           "value": "Coopération forcée (Menace commune)",
-          "rarity": 3
+          "difficulty": 3
         },
         {
           "id": 21,
           "value": "Échange de corps (Changement de siège)",
-          "rarity": 5
+          "difficulty": 5
         },
         {
           "id": 22,
           "value": "Communication par un intermédiaire",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 23, "value": "Partage de main de cartes", "rarity": 3 },
-        { "id": 24, "value": "Amis-ennemis (Frenemies)", "rarity": 4 },
+        { "id": 23, "value": "Partage de main de cartes", "difficulty": 3 },
+        { "id": 24, "value": "Amis-ennemis (Frenemies)", "difficulty": 4 },
         {
           "id": 25,
           "value": "Lien télépathique (Interdit de parler)",
-          "rarity": 4
+          "difficulty": 4
         },
         {
           "id": 26,
           "value": "Héritage (Prendre la suite d'un mort)",
-          "rarity": 5
+          "difficulty": 5
         },
-        { "id": 27, "value": "Compétition de générosité", "rarity": 5 },
-        { "id": 28, "value": "Duel d'honneur", "rarity": 3 },
-        { "id": 29, "value": "Multitude contre un Géant", "rarity": 4 },
-        { "id": 30, "value": "Solitaire à plusieurs", "rarity": 2 }
+        { "id": 27, "value": "Compétition de générosité", "difficulty": 5 },
+        { "id": 28, "value": "Duel d'honneur", "difficulty": 3 },
+        { "id": 29, "value": "Multitude contre un Géant", "difficulty": 4 },
+        { "id": 30, "value": "Solitaire à plusieurs", "difficulty": 2 }
       ]
     },
     {
       "name": "Setting & Universe",
       "label": "Univers & Ambiance",
+      "description": "Le thème, le monde ou l'habillage narratif qui donne son identité au jeu.",
       "options": [
-        { "id": 1, "value": "Mythologie Grecque", "rarity": 1 },
-        { "id": 2, "value": "Seconde Guerre Mondiale (WW2)", "rarity": 1 },
-        { "id": 3, "value": "Médiéval Fantastique Classique", "rarity": 1 },
-        { "id": 4, "value": "Conquête Spatiale (NASA Punk)", "rarity": 2 },
-        { "id": 5, "value": "Égypte Antique", "rarity": 2 },
-        { "id": 6, "value": "Cyberpunk / Haute technologie", "rarity": 2 },
-        { "id": 7, "value": "Far West / Western", "rarity": 2 },
-        { "id": 8, "value": "Horreur Lovecraftienne", "rarity": 3 },
-        { "id": 9, "value": "Empire Romain", "rarity": 2 },
-        { "id": 10, "value": "Japon Féodal (Samouraïs)", "rarity": 2 },
+        { "id": 1, "value": "Mythologie Grecque", "difficulty": 1 },
+        { "id": 2, "value": "Seconde Guerre Mondiale (WW2)", "difficulty": 1 },
+        { "id": 3, "value": "Médiéval Fantastique Classique", "difficulty": 1 },
+        { "id": 4, "value": "Conquête Spatiale (NASA Punk)", "difficulty": 2 },
+        { "id": 5, "value": "Égypte Antique", "difficulty": 2 },
+        { "id": 6, "value": "Cyberpunk / Haute technologie", "difficulty": 2 },
+        { "id": 7, "value": "Far West / Western", "difficulty": 2 },
+        { "id": 8, "value": "Horreur Lovecraftienne", "difficulty": 3 },
+        { "id": 9, "value": "Empire Romain", "difficulty": 2 },
+        { "id": 10, "value": "Japon Féodal (Samouraïs)", "difficulty": 2 },
         {
           "id": 11,
           "value": "Post-Apocalyptique (Mad Max style)",
-          "rarity": 2
+          "difficulty": 2
         },
-        { "id": 12, "value": "Steampunk (Vapeur et Engrenages)", "rarity": 3 },
-        { "id": 13, "value": "Âge d'or de la Piraterie", "rarity": 2 },
-        { "id": 14, "value": "Mythologie Nordique (Vikings)", "rarity": 1 },
-        { "id": 15, "value": "Exploration Sous-Marine", "rarity": 3 },
-        { "id": 16, "value": "Préhistoire (Dinosaures)", "rarity": 3 },
-        { "id": 17, "value": "Ère Victorienne / Sherlock Holmes", "rarity": 2 },
-        { "id": 18, "value": "Guerre Froide / Espionnage", "rarity": 3 },
-        { "id": 19, "value": "Folklore Slave (Baba Yaga)", "rarity": 4 },
-        { "id": 20, "value": "Mythologie Aztèque / Maya", "rarity": 3 },
-        { "id": 21, "value": "Contes de Fées Sombres", "rarity": 2 },
-        { "id": 22, "value": "Alice au Pays des Merveilles", "rarity": 3 },
-        { "id": 23, "value": "Empire Chinois (Dynastie Han)", "rarity": 3 },
-        { "id": 24, "value": "Cyber-Espace / Monde Digital", "rarity": 4 },
-        { "id": 25, "value": "Parc d'Attractions Abandonné", "rarity": 4 },
-        { "id": 26, "value": "Microscopique (Insects/Cellules)", "rarity": 4 },
-        { "id": 27, "value": "Solarpunk (Futur Écologique)", "rarity": 4 },
-        { "id": 28, "value": "Guerre de Sécession", "rarity": 3 },
-        { "id": 29, "value": "La Renaissance Italienne", "rarity": 2 },
-        { "id": 30, "value": "Manoir Hanté Classique", "rarity": 2 },
-        { "id": 31, "value": "Station Spatiale Abandonnée", "rarity": 3 },
-        { "id": 32, "value": "Mythologie Hindoue", "rarity": 4 },
-        { "id": 33, "value": "Uchronie (L'Allemagne a gagné)", "rarity": 4 },
-        { "id": 34, "value": "Cinéma Noir des années 40", "rarity": 3 },
-        { "id": 35, "value": "Fête Foraine / Cirque", "rarity": 3 },
-        { "id": 36, "value": "Monde des Rêves / Onirisme", "rarity": 4 },
-        { "id": 37, "value": "Biopunk (Mutations Organiques)", "rarity": 5 },
-        { "id": 38, "value": "Dieselpunk", "rarity": 4 },
-        { "id": 39, "value": "Le Nouveau Monde (Colonisation)", "rarity": 3 },
-        { "id": 40, "value": "L'Enfer / Divine Comédie", "rarity": 4 },
-        { "id": 41, "value": "Univers de Bonbons et Sucreries", "rarity": 2 },
-        { "id": 42, "value": "L'Espace Lointain (Aliens)", "rarity": 2 },
-        { "id": 43, "value": "La Révolution Française", "rarity": 3 },
-        { "id": 44, "value": "Cité Perdue de l'Atlantide", "rarity": 3 },
-        { "id": 45, "value": "Super-Héros Urbains", "rarity": 2 },
+        {
+          "id": 12,
+          "value": "Steampunk (Vapeur et Engrenages)",
+          "difficulty": 3
+        },
+        { "id": 13, "value": "Âge d'or de la Piraterie", "difficulty": 2 },
+        { "id": 14, "value": "Mythologie Nordique (Vikings)", "difficulty": 1 },
+        { "id": 15, "value": "Exploration Sous-Marine", "difficulty": 3 },
+        { "id": 16, "value": "Préhistoire (Dinosaures)", "difficulty": 3 },
+        {
+          "id": 17,
+          "value": "Ère Victorienne / Sherlock Holmes",
+          "difficulty": 2
+        },
+        { "id": 18, "value": "Guerre Froide / Espionnage", "difficulty": 3 },
+        { "id": 19, "value": "Folklore Slave (Baba Yaga)", "difficulty": 4 },
+        { "id": 20, "value": "Mythologie Aztèque / Maya", "difficulty": 3 },
+        { "id": 21, "value": "Contes de Fées Sombres", "difficulty": 2 },
+        { "id": 22, "value": "Alice au Pays des Merveilles", "difficulty": 3 },
+        { "id": 23, "value": "Empire Chinois (Dynastie Han)", "difficulty": 3 },
+        { "id": 24, "value": "Cyber-Espace / Monde Digital", "difficulty": 4 },
+        { "id": 25, "value": "Parc d'Attractions Abandonné", "difficulty": 4 },
+        {
+          "id": 26,
+          "value": "Microscopique (Insects/Cellules)",
+          "difficulty": 4
+        },
+        { "id": 27, "value": "Solarpunk (Futur Écologique)", "difficulty": 4 },
+        { "id": 28, "value": "Guerre de Sécession", "difficulty": 3 },
+        { "id": 29, "value": "La Renaissance Italienne", "difficulty": 2 },
+        { "id": 30, "value": "Manoir Hanté Classique", "difficulty": 2 },
+        { "id": 31, "value": "Station Spatiale Abandonnée", "difficulty": 3 },
+        { "id": 32, "value": "Mythologie Hindoue", "difficulty": 4 },
+        {
+          "id": 33,
+          "value": "Uchronie (L'Allemagne a gagné)",
+          "difficulty": 4
+        },
+        { "id": 34, "value": "Cinéma Noir des années 40", "difficulty": 3 },
+        { "id": 35, "value": "Fête Foraine / Cirque", "difficulty": 3 },
+        { "id": 36, "value": "Monde des Rêves / Onirisme", "difficulty": 4 },
+        {
+          "id": 37,
+          "value": "Biopunk (Mutations Organiques)",
+          "difficulty": 5
+        },
+        { "id": 38, "value": "Dieselpunk", "difficulty": 4 },
+        {
+          "id": 39,
+          "value": "Le Nouveau Monde (Colonisation)",
+          "difficulty": 3
+        },
+        { "id": 40, "value": "L'Enfer / Divine Comédie", "difficulty": 4 },
+        {
+          "id": 41,
+          "value": "Univers de Bonbons et Sucreries",
+          "difficulty": 2
+        },
+        { "id": 42, "value": "L'Espace Lointain (Aliens)", "difficulty": 2 },
+        { "id": 43, "value": "La Révolution Française", "difficulty": 3 },
+        { "id": 44, "value": "Cité Perdue de l'Atlantide", "difficulty": 3 },
+        { "id": 45, "value": "Super-Héros Urbains", "difficulty": 2 },
         {
           "id": 46,
           "value": "Mythologie Égyptienne Intergalactique",
-          "rarity": 5
+          "difficulty": 5
         },
-        { "id": 47, "value": "Le Monde des Jouets", "rarity": 3 },
+        { "id": 47, "value": "Le Monde des Jouets", "difficulty": 3 },
         {
           "id": 48,
           "value": "Cuisine de Grand Chef / Restauration",
-          "rarity": 2
+          "difficulty": 2
         },
-        { "id": 49, "value": "Grandes Découvertes (Exploration)", "rarity": 2 },
-        { "id": 50, "value": "Alchimie Médiévale", "rarity": 3 },
-        { "id": 51, "value": "Guerre de Cent Ans", "rarity": 3 },
-        { "id": 52, "value": "L'Olympe (Dieux et Déesses)", "rarity": 1 },
-        { "id": 53, "value": "Jungle Amazonienne", "rarity": 3 },
-        { "id": 54, "value": "Banlieue Américaine des années 50", "rarity": 3 },
-        { "id": 55, "value": "Monde Souterrain / Grottes", "rarity": 3 },
-        { "id": 56, "value": "Mythologie Africaine (Orishas)", "rarity": 4 },
-        { "id": 57, "value": "Guerre des Tranchées (WW1)", "rarity": 4 },
-        { "id": 58, "value": "Laboratoire de Savant Fou", "rarity": 3 },
-        { "id": 59, "value": "Magie Urbaine Moderne", "rarity": 3 },
-        { "id": 60, "value": "Vampires vs Loups-Garous", "rarity": 2 },
-        { "id": 61, "value": "Inquisition Espagnole", "rarity": 4 },
-        { "id": 62, "value": "Commerce sur la Route de la Soie", "rarity": 3 },
-        { "id": 63, "value": "Abysses et Créatures Marines", "rarity": 3 },
-        { "id": 64, "value": "Station Polaire Arctique", "rarity": 4 },
+        {
+          "id": 49,
+          "value": "Grandes Découvertes (Exploration)",
+          "difficulty": 2
+        },
+        { "id": 50, "value": "Alchimie Médiévale", "difficulty": 3 },
+        { "id": 51, "value": "Guerre de Cent Ans", "difficulty": 3 },
+        { "id": 52, "value": "L'Olympe (Dieux et Déesses)", "difficulty": 1 },
+        { "id": 53, "value": "Jungle Amazonienne", "difficulty": 3 },
+        {
+          "id": 54,
+          "value": "Banlieue Américaine des années 50",
+          "difficulty": 3
+        },
+        { "id": 55, "value": "Monde Souterrain / Grottes", "difficulty": 3 },
+        {
+          "id": 56,
+          "value": "Mythologie Africaine (Orishas)",
+          "difficulty": 4
+        },
+        { "id": 57, "value": "Guerre des Tranchées (WW1)", "difficulty": 4 },
+        { "id": 58, "value": "Laboratoire de Savant Fou", "difficulty": 3 },
+        { "id": 59, "value": "Magie Urbaine Moderne", "difficulty": 3 },
+        { "id": 60, "value": "Vampires vs Loups-Garous", "difficulty": 2 },
+        { "id": 61, "value": "Inquisition Espagnole", "difficulty": 4 },
+        {
+          "id": 62,
+          "value": "Commerce sur la Route de la Soie",
+          "difficulty": 3
+        },
+        { "id": 63, "value": "Abysses et Créatures Marines", "difficulty": 3 },
+        { "id": 64, "value": "Station Polaire Arctique", "difficulty": 4 },
         {
           "id": 65,
           "value": "Le Monde après l'Humanité (Animaux)",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 66, "value": "L'Âge du Bronze", "rarity": 3 },
-        { "id": 67, "value": "Univers de Papier / Origami", "rarity": 5 },
-        { "id": 68, "value": "Cité dans les Nuages", "rarity": 4 },
-        { "id": 69, "value": "Légendes Arthuriennes", "rarity": 2 },
-        { "id": 70, "value": "Le Paris de la Belle Époque", "rarity": 3 },
-        { "id": 71, "value": "Survie sur une Île Déserte", "rarity": 2 },
-        { "id": 72, "value": "Campus Universitaire Magique", "rarity": 2 },
-        { "id": 73, "value": "Guerre de Religions", "rarity": 4 },
-        { "id": 74, "value": "Route 66 / Road Trip", "rarity": 3 },
+        { "id": 66, "value": "L'Âge du Bronze", "difficulty": 3 },
+        { "id": 67, "value": "Univers de Papier / Origami", "difficulty": 5 },
+        { "id": 68, "value": "Cité dans les Nuages", "difficulty": 4 },
+        { "id": 69, "value": "Légendes Arthuriennes", "difficulty": 2 },
+        { "id": 70, "value": "Le Paris de la Belle Époque", "difficulty": 3 },
+        { "id": 71, "value": "Survie sur une Île Déserte", "difficulty": 2 },
+        { "id": 72, "value": "Campus Universitaire Magique", "difficulty": 2 },
+        { "id": 73, "value": "Guerre de Religions", "difficulty": 4 },
+        { "id": 74, "value": "Route 66 / Road Trip", "difficulty": 3 },
         {
           "id": 75,
           "value": "Mythologie Slave (Les dieux oubliés)",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 76, "value": "Jardin Potager Géant", "rarity": 4 },
-        { "id": 77, "value": "Économie de Marché Médiéval", "rarity": 2 },
-        { "id": 78, "value": "Conquête de l'Ouest", "rarity": 2 },
-        { "id": 79, "value": "Apocalypse Zombie Urbaine", "rarity": 2 },
-        { "id": 80, "value": "Ère Meiji (Industrialisation)", "rarity": 4 },
+        { "id": 76, "value": "Jardin Potager Géant", "difficulty": 4 },
+        { "id": 77, "value": "Économie de Marché Médiéval", "difficulty": 2 },
+        { "id": 78, "value": "Conquête de l'Ouest", "difficulty": 2 },
+        { "id": 79, "value": "Apocalypse Zombie Urbaine", "difficulty": 2 },
+        { "id": 80, "value": "Ère Meiji (Industrialisation)", "difficulty": 4 },
         {
           "id": 81,
           "value": "Voyage dans le Temps (Époques mixtes)",
-          "rarity": 4
+          "difficulty": 4
         },
-        { "id": 82, "value": "Le Mythe de Cthulhu", "rarity": 3 },
-        { "id": 83, "value": "Course Automobile Futuriste", "rarity": 3 },
-        { "id": 84, "value": "Forêt Enchantée", "rarity": 2 },
-        { "id": 85, "value": "Prisons de Haute Sécurité", "rarity": 4 },
-        { "id": 86, "value": "Archéologie Interdite", "rarity": 3 },
-        { "id": 87, "value": "Monde de Glace / Ère Glaciaire", "rarity": 3 },
-        { "id": 88, "value": "Bourse de Wall Street / Finance", "rarity": 3 },
-        { "id": 89, "value": "Guerre de l'Information / Hackers", "rarity": 4 },
-        { "id": 90, "value": "Les Croisades", "rarity": 3 },
-        { "id": 91, "value": "Monde Flottant (Archipels)", "rarity": 3 },
-        { "id": 92, "value": "Mythologie Polynésienne", "rarity": 5 },
-        { "id": 93, "value": "High Fantasy Epique", "rarity": 1 },
-        { "id": 94, "value": "Low Fantasy (Boue et Sang)", "rarity": 3 },
-        { "id": 95, "value": "Vaudou et Bayous de Louisiane", "rarity": 4 },
+        { "id": 82, "value": "Le Mythe de Cthulhu", "difficulty": 3 },
+        { "id": 83, "value": "Course Automobile Futuriste", "difficulty": 3 },
+        { "id": 84, "value": "Forêt Enchantée", "difficulty": 2 },
+        { "id": 85, "value": "Prisons de Haute Sécurité", "difficulty": 4 },
+        { "id": 86, "value": "Archéologie Interdite", "difficulty": 3 },
+        {
+          "id": 87,
+          "value": "Monde de Glace / Ère Glaciaire",
+          "difficulty": 3
+        },
+        {
+          "id": 88,
+          "value": "Bourse de Wall Street / Finance",
+          "difficulty": 3
+        },
+        {
+          "id": 89,
+          "value": "Guerre de l'Information / Hackers",
+          "difficulty": 4
+        },
+        { "id": 90, "value": "Les Croisades", "difficulty": 3 },
+        { "id": 91, "value": "Monde Flottant (Archipels)", "difficulty": 3 },
+        { "id": 92, "value": "Mythologie Polynésienne", "difficulty": 5 },
+        { "id": 93, "value": "High Fantasy Epique", "difficulty": 1 },
+        { "id": 94, "value": "Low Fantasy (Boue et Sang)", "difficulty": 3 },
+        { "id": 95, "value": "Vaudou et Bayous de Louisiane", "difficulty": 4 },
         {
           "id": 96,
           "value": "Surnaturel de petite ville (Stranger Things)",
-          "rarity": 3
+          "difficulty": 3
         },
-        { "id": 97, "value": "Guerre de l'Opium", "rarity": 5 },
-        { "id": 98, "value": "Raygun Gothic (SF des années 50)", "rarity": 5 },
-        { "id": 99, "value": "Mythologie Mésopotamienne (Sumer)", "rarity": 4 },
-        { "id": 100, "value": "Monde de l'Art / Musées", "rarity": 3 },
-        { "id": 101, "value": "Lutte des Classes Ouvrière", "rarity": 4 },
-        { "id": 102, "value": "Opéra de l'Espace (Space Opera)", "rarity": 2 },
-        { "id": 103, "value": "Invasion Alien (Contemporain)", "rarity": 3 },
-        { "id": 104, "value": "Désert Infini / Nomades", "rarity": 3 },
-        { "id": 105, "value": "Légendes Urbaines Japonaises", "rarity": 4 }
+        { "id": 97, "value": "Guerre de l'Opium", "difficulty": 5 },
+        {
+          "id": 98,
+          "value": "Raygun Gothic (SF des années 50)",
+          "difficulty": 5
+        },
+        {
+          "id": 99,
+          "value": "Mythologie Mésopotamienne (Sumer)",
+          "difficulty": 4
+        },
+        { "id": 100, "value": "Monde de l'Art / Musées", "difficulty": 3 },
+        { "id": 101, "value": "Lutte des Classes Ouvrière", "difficulty": 4 },
+        {
+          "id": 102,
+          "value": "Opéra de l'Espace (Space Opera)",
+          "difficulty": 2
+        },
+        {
+          "id": 103,
+          "value": "Invasion Alien (Contemporain)",
+          "difficulty": 3
+        },
+        { "id": 104, "value": "Désert Infini / Nomades", "difficulty": 3 },
+        { "id": 105, "value": "Légendes Urbaines Japonaises", "difficulty": 4 }
       ]
     }
   ]
