@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "softwareKeyboardLayoutMode": "pan",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logo.png",
     "scheme": "kadex",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
