@@ -5,6 +5,7 @@ import { ConstraintSetCommunityList } from "@/components/specific/constraint/con
 import { ConstraintSetPersonalList } from "@/components/specific/constraint/constraint-set-personal-list";
 import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
+import { useLikes } from "@/hooks/use-likes";
 import { useStyles } from "@/hooks/use-styles";
 import {
   CONSTRAINT_SET_SELECT,
@@ -58,6 +59,15 @@ export default function ConstraintSetsScreen() {
   const [publishingConstraintSetId, setPublishingConstraintSetId] = useState<
     string | number | null
   >(null);
+  const constraintSetIds = useMemo(
+    () => constraintSets.map((item) => item.id),
+    [constraintSets],
+  );
+  const {
+    summaries: constraintSetLikeSummaries,
+    pendingId: pendingConstraintSetLikeId,
+    toggleLike: toggleConstraintSetLike,
+  } = useLikes("constraint_set", constraintSetIds, userId);
   const personalConstraintSets = useMemo(
     () => constraintSets.filter((item) => item.owner_id === userId),
     [constraintSets, userId],
@@ -181,8 +191,13 @@ export default function ConstraintSetsScreen() {
             <ConstraintSetCommunityList
               constraintSets={constraintSets}
               currentUserId={userId}
+              likeSummaries={constraintSetLikeSummaries}
+              pendingLikeId={pendingConstraintSetLikeId}
               loading={loading}
               savingConstraintSetId={savingConstraintSetId}
+              onToggleLike={(item) => {
+                void toggleConstraintSetLike(item.id);
+              }}
               onSave={handleSaveConstraintSet}
               onRefresh={refresh}
             />

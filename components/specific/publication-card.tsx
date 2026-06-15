@@ -1,3 +1,4 @@
+import { LikeButton } from "@/components/generic/like-button";
 import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import { getConstraintSetProjectLabel } from "@/lib/constraint-set-data";
@@ -10,9 +11,19 @@ import { DifficultyIndicator } from "./difficulty-indicator";
 
 interface PublicationCardProps {
   publication: Publication;
+  likeCount?: number;
+  isLiked?: boolean;
+  isLikePending?: boolean;
+  onToggleLike?: () => void;
 }
 
-export const PublicationCard = ({ publication }: PublicationCardProps) => {
+export const PublicationCard = ({
+  publication,
+  likeCount = 0,
+  isLiked = false,
+  isLikePending = false,
+  onToggleLike,
+}: PublicationCardProps) => {
   const { globalStyles, colors, theme } = useStyles();
   const constraintSet = publication.generated_constraints ?? null;
   const fallbackProjectLabel = publication.project_type;
@@ -78,6 +89,16 @@ export const PublicationCard = ({ publication }: PublicationCardProps) => {
           </Text>
         </View>
         <View style={styles.headerLeft}>
+          {onToggleLike && (
+            <LikeButton
+              count={likeCount}
+              isLiked={isLiked}
+              color={projectColor}
+              isLoading={isLikePending}
+              onPress={onToggleLike}
+            />
+          )}
+
           <DifficultyIndicator
             isLabel={isConstraintsVisible}
             difficultyIndicator={difficulty}
@@ -149,7 +170,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     justifyContent: "flex-end",
-    maxWidth: 70,
+    maxWidth: 116,
     gap: 8,
   },
   image: { width: 24, height: 24, borderRadius: 20 },

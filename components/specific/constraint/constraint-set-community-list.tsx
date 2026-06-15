@@ -8,6 +8,7 @@ import {
   ProjectTag,
 } from "@/constants/project-metadata";
 import { useStyles } from "@/hooks/use-styles";
+import { LikeSummary } from "@/hooks/use-likes";
 import {
   getConstraintSetName,
   getConstraintSetProjectLanguage,
@@ -24,8 +25,11 @@ import { ConstraintsSetCard } from "./constraint-set-card";
 interface ConstraintSetCommunityListProps {
   constraintSets: SavedConstraintSet[];
   currentUserId?: string;
+  likeSummaries: Record<string, LikeSummary>;
+  pendingLikeId: string | null;
   loading: boolean;
   savingConstraintSetId: string | number | null;
+  onToggleLike: (item: SavedConstraintSet) => void;
   onSave: (item: SavedConstraintSet) => void;
   onRefresh: () => void;
 }
@@ -35,8 +39,11 @@ const normalizeSearchText = (value: string) => value.trim().toLowerCase();
 export function ConstraintSetCommunityList({
   constraintSets,
   currentUserId,
+  likeSummaries,
+  pendingLikeId,
   loading,
   savingConstraintSetId,
+  onToggleLike,
   onSave,
   onRefresh,
 }: ConstraintSetCommunityListProps) {
@@ -106,14 +113,26 @@ export function ConstraintSetCommunityList({
       data={communityConstraintSets}
       keyExtractor={(item) => item.id.toString()}
       ListHeaderComponent={renderHeader}
-      renderItem={({ item }) => (
-        <ConstraintsSetCard
-          item={item}
-          submitLabel={t("screen:constraint_set_browse.save_button")}
-          submit={() => onSave(item)}
-          isSubmitting={savingConstraintSetId === item.id}
-        />
-      )}
+      renderItem={({ item }) => {
+        const itemKey = item.id.toString();
+        const likeSummary = likeSummaries[itemKey] ?? {
+          count: 0,
+          isLiked: false,
+        };
+
+        return (
+          <ConstraintsSetCard
+            item={item}
+            likeCount={likeSummary.count}
+            isLiked={likeSummary.isLiked}
+            isLikePending={pendingLikeId === itemKey}
+            onToggleLike={() => onToggleLike(item)}
+            submitLabel={t("screen:constraint_set_browse.save_button")}
+            submit={() => onSave(item)}
+            isSubmitting={savingConstraintSetId === item.id}
+          />
+        );
+      }}
       onRefresh={onRefresh}
       refreshing={loading}
       contentContainerStyle={{ paddingBottom: 24 }}

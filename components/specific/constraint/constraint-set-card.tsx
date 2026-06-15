@@ -1,4 +1,5 @@
 import MetadataBadges from "@/components/generic/metadata-badges";
+import { LikeButton } from "@/components/generic/like-button";
 import { getProjectColor } from "@/constants/theme";
 import { useProjectTranslations } from "@/hooks/use-project-translations";
 import { useStyles } from "@/hooks/use-styles";
@@ -28,6 +29,10 @@ export function ConstraintsSetCard({
   submitLabel,
   isSubmitting = false,
   isPublishing = false,
+  likeCount = 0,
+  isLiked = false,
+  isLikePending = false,
+  onToggleLike,
 }: {
   item: SavedConstraintSet;
   deleteRecord?: (id: number | string) => void;
@@ -36,6 +41,10 @@ export function ConstraintsSetCard({
   submitLabel?: string;
   isSubmitting?: boolean;
   isPublishing?: boolean;
+  likeCount?: number;
+  isLiked?: boolean;
+  isLikePending?: boolean;
+  onToggleLike?: () => void;
 }) {
   const { t } = useTranslation();
   const { globalStyles, colors, theme } = useStyles();
@@ -90,6 +99,16 @@ export function ConstraintsSetCard({
         </View>
 
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          {onToggleLike && (
+            <LikeButton
+              count={likeCount}
+              isLiked={isLiked}
+              color={solidColor}
+              isLoading={isLikePending}
+              onPress={onToggleLike}
+            />
+          )}
+
           <ShareConstraintButton
             projectLabel={projectLabel}
             constraints={translatedConstraints}
