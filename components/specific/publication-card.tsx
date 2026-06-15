@@ -1,13 +1,11 @@
-import { LikeButton } from "@/components/generic/like-button";
+import { ContentHeader } from "@/components/generic/content-header";
 import { getProjectColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import { getConstraintSetProjectLabel } from "@/lib/constraint-set-data";
 import { Publication } from "@/types/publication";
-import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 import { ConstraintsTags } from "./constraint/constraint-tags";
-import { DifficultyIndicator } from "./difficulty-indicator";
 
 interface PublicationCardProps {
   publication: Publication;
@@ -15,6 +13,9 @@ interface PublicationCardProps {
   isLiked?: boolean;
   isLikePending?: boolean;
   onToggleLike?: () => void;
+  commentCount?: number;
+  onOpenComments?: () => void;
+  onOpenDetails?: () => void;
 }
 
 export const PublicationCard = ({
@@ -23,6 +24,9 @@ export const PublicationCard = ({
   isLiked = false,
   isLikePending = false,
   onToggleLike,
+  commentCount = 0,
+  onOpenComments,
+  onOpenDetails,
 }: PublicationCardProps) => {
   const { globalStyles, colors, theme } = useStyles();
   const constraintSet = publication.generated_constraints ?? null;
@@ -45,80 +49,36 @@ export const PublicationCard = ({
 
   return (
     <View style={[globalStyles.card]}>
-      <View
-        style={[
-          globalStyles.headerRow,
-          {
-            backgroundColor: projectBackgroundColor,
-            justifyContent: "space-between",
-            gap: 8,
-            height: 72,
-          },
-        ]}
-      >
-        <View style={{ flexDirection: "column", alignItems: "center" }}>
-          <Image
-            source={
-              publication.profile?.avatar_url
-                ? { uri: publication.profile.avatar_url }
-                : require("@/assets/images/blank-avatar.jpg")
-            }
-            style={styles.image}
-          />
-          <Text
-            numberOfLines={1}
-            style={[
-              styles.userText,
-              {
-                color: colors.text,
-              },
-            ]}
-          >
-            {publication.profile?.username}
-          </Text>
-        </View>
-        <View style={{ flex: 1, alignItems: "center" }}>
-          <Text
-            style={{ color: projectColor, fontWeight: "bold", fontSize: 16 }}
-            numberOfLines={1}
-          >
-            {publication.title}
-          </Text>
-          <Text style={{ color: colors.textDiscreet, fontSize: 11 }}>
-            {projectLabel}
-          </Text>
-        </View>
-        <View style={styles.headerLeft}>
-          {onToggleLike && (
-            <LikeButton
-              count={likeCount}
-              isLiked={isLiked}
-              color={projectColor}
-              isLoading={isLikePending}
-              onPress={onToggleLike}
-            />
-          )}
-
-          <DifficultyIndicator
-            isLabel={isConstraintsVisible}
-            difficultyIndicator={difficulty}
-          />
-          {canToggleConstraints && (
-            <TouchableOpacity
-              onPress={() => setIsConstraintsVisible((prev) => !prev)}
-            >
-              <Ionicons
-                name={isConstraintsVisible ? "chevron-up" : "chevron-down"}
-                size={20}
-                color={projectColor}
-              />
-            </TouchableOpacity>
-          )}
-        </View>
-      </View>
+      <ContentHeader
+        title={publication.title}
+        subtitle={projectLabel}
+        avatarUrl={publication.profile?.avatar_url}
+        username={publication.profile?.username}
+        createdAt={publication.created_at}
+        difficulty={difficulty}
+        color={projectColor}
+        backgroundColor={projectBackgroundColor}
+        textColor={colors.text}
+        discreetTextColor={colors.textDiscreet}
+        likeCount={likeCount}
+        isLiked={isLiked}
+        isLikePending={isLikePending}
+        onToggleLike={onToggleLike}
+        commentCount={commentCount}
+        onOpenComments={onOpenComments}
+        onPress={onOpenDetails}
+        isExpanded={isConstraintsVisible}
+        onToggleExpanded={
+          canToggleConstraints
+            ? () => setIsConstraintsVisible((prev) => !prev)
+            : undefined
+        }
+      />
 
       {isConstraintsVisible && publication.description && (
-        <View
+        <Pressable
+          onPress={onOpenDetails}
+          disabled={!onOpenDetails}
           style={{
             backgroundColor: projectBackgroundColor,
           }}
@@ -139,39 +99,27 @@ export const PublicationCard = ({
               {publication.description}
             </Text>
           </View>
-        </View>
+        </Pressable>
       )}
       {constraintSet && isConstraintsVisible && (
         <ConstraintsTags constraintSet={constraintSet} />
       )}
 
       {publication.media_type === "image" && publication.media_url && (
-        <Image
-          source={{ uri: publication.media_url }}
-          style={{ width: "100%", height: 200, borderRadius: 8 }}
-        />
+        <Pressable onPress={onOpenDetails} disabled={!onOpenDetails}>
+          <Image
+            source={{ uri: publication.media_url }}
+            style={{ width: "100%", height: 200, borderRadius: 8 }}
+          />
+        </Pressable>
       )}
       {publication.media_type === "book_text" && publication.content_text && (
-        <Text style={{ margin: 10, color: projectColor }}>
-          {publication.content_text}
-        </Text>
+        <Pressable onPress={onOpenDetails} disabled={!onOpenDetails}>
+          <Text style={{ margin: 10, color: projectColor }}>
+            {publication.content_text}
+          </Text>
+        </Pressable>
       )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  userText: {
-    fontSize: 10,
-    maxWidth: 70,
-  },
-  headerLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    flex: 1,
-    justifyContent: "flex-end",
-    maxWidth: 116,
-    gap: 8,
-  },
-  image: { width: 24, height: 24, borderRadius: 20 },
-});

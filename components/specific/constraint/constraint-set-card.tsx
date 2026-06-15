@@ -1,3 +1,4 @@
+import { CommentButton } from "@/components/generic/comment-button";
 import MetadataBadges from "@/components/generic/metadata-badges";
 import { LikeButton } from "@/components/generic/like-button";
 import { getProjectColor } from "@/constants/theme";
@@ -33,6 +34,10 @@ export function ConstraintsSetCard({
   isLiked = false,
   isLikePending = false,
   onToggleLike,
+  commentCount = 0,
+  onOpenComments,
+  onOpenDetails,
+  hideHeader = false,
 }: {
   item: SavedConstraintSet;
   deleteRecord?: (id: number | string) => void;
@@ -45,6 +50,10 @@ export function ConstraintsSetCard({
   isLiked?: boolean;
   isLikePending?: boolean;
   onToggleLike?: () => void;
+  commentCount?: number;
+  onOpenComments?: () => void;
+  onOpenDetails?: () => void;
+  hideHeader?: boolean;
 }) {
   const { t } = useTranslation();
   const { globalStyles, colors, theme } = useStyles();
@@ -77,7 +86,10 @@ export function ConstraintsSetCard({
   );
 
   return (
-    <View
+    <TouchableOpacity
+      activeOpacity={onOpenDetails ? 0.86 : 1}
+      onPress={onOpenDetails}
+      disabled={!onOpenDetails}
       style={[
         globalStyles.shadeContainer,
         {
@@ -87,63 +99,75 @@ export function ConstraintsSetCard({
         },
       ]}
     >
-      <View style={styles.headerContainer}>
-        <DifficultyIndicator difficultyIndicator={item.difficulty} />
-        <View style={styles.titleBlock}>
-          <Text style={[styles.constraintSetTitle, { color: solidColor }]}>
-            {constraintSetName}
-          </Text>
-          <Text style={[globalStyles.discreetText, styles.projectLabelText]}>
-            {projectLabel}
-          </Text>
-        </View>
+      {!hideHeader && (
+        <View style={styles.headerContainer}>
+          <DifficultyIndicator difficultyIndicator={item.difficulty} />
+          <View style={styles.titleBlock}>
+            <Text style={[styles.constraintSetTitle, { color: solidColor }]}>
+              {constraintSetName}
+            </Text>
+            <Text style={[globalStyles.discreetText, styles.projectLabelText]}>
+              {projectLabel}
+            </Text>
+          </View>
 
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          {onToggleLike && (
-            <LikeButton
-              count={likeCount}
-              isLiked={isLiked}
-              color={solidColor}
-              isLoading={isLikePending}
-              onPress={onToggleLike}
-            />
-          )}
-
-          <ShareConstraintButton
-            projectLabel={projectLabel}
-            constraints={translatedConstraints}
-            difficulty={item.difficulty}
-            color={solidColor}
-          />
-
-          {publishRecord && (
-            <TouchableOpacity
-              onPress={() => publishRecord(item)}
-              disabled={isPublishing || item.is_public}
-              style={(isPublishing || item.is_public) && { opacity: 0.55 }}
-              accessibilityLabel={t(
-                item.is_public
-                  ? "screen:constraint_sets.published_to_community"
-                  : "screen:constraint_sets.publish_to_community",
-              )}
-            >
-              <Ionicons
-                name={
-                  item.is_public ? "cloud-done-outline" : "cloud-upload-outline"
-                }
-                size={20}
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+            {onOpenComments && (
+              <CommentButton
+                count={commentCount}
                 color={solidColor}
+                onPress={onOpenComments}
               />
-            </TouchableOpacity>
-          )}
+            )}
 
-          {deleteRecord && (
-            <TouchableOpacity onPress={() => deleteRecord(item.id)}>
-              <Ionicons name="trash-outline" size={20} color={solidColor} />
-            </TouchableOpacity>
-          )}
+            {onToggleLike && (
+              <LikeButton
+                count={likeCount}
+                isLiked={isLiked}
+                color={solidColor}
+                isLoading={isLikePending}
+                onPress={onToggleLike}
+              />
+            )}
+
+            <ShareConstraintButton
+              projectLabel={projectLabel}
+              constraints={translatedConstraints}
+              difficulty={item.difficulty}
+              color={solidColor}
+            />
+
+            {publishRecord && (
+              <TouchableOpacity
+                onPress={() => publishRecord(item)}
+                disabled={isPublishing || item.is_public}
+                style={(isPublishing || item.is_public) && { opacity: 0.55 }}
+                accessibilityLabel={t(
+                  item.is_public
+                    ? "screen:constraint_sets.published_to_community"
+                    : "screen:constraint_sets.publish_to_community",
+                )}
+              >
+                <Ionicons
+                  name={
+                    item.is_public
+                      ? "cloud-done-outline"
+                      : "cloud-upload-outline"
+                  }
+                  size={20}
+                  color={solidColor}
+                />
+              </TouchableOpacity>
+            )}
+
+            {deleteRecord && (
+              <TouchableOpacity onPress={() => deleteRecord(item.id)}>
+                <Ionicons name="trash-outline" size={20} color={solidColor} />
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
-      </View>
+      )}
 
       <View
         style={[
@@ -205,7 +229,7 @@ export function ConstraintsSetCard({
           </Text>
         </TouchableOpacity>
       )}
-    </View>
+    </TouchableOpacity>
   );
 }
 

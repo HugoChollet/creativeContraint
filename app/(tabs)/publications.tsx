@@ -1,10 +1,12 @@
 import { Header } from "@/components/generic/header";
 import { PublicationCard } from "@/components/specific/publication-card";
 import { useAuth } from "@/contexts/auth-context";
+import { useComments } from "@/hooks/use-comments";
 import { useLikes } from "@/hooks/use-likes";
 import { useStyles } from "@/hooks/use-styles";
 import { publicationService } from "@/services/publication.service";
 import { Publication } from "@/types/publication";
+import { router } from "expo-router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
@@ -29,6 +31,9 @@ export default function PublicationsScreen() {
     pendingId: pendingPublicationLikeId,
     toggleLike: togglePublicationLike,
   } = useLikes("publication", publicationIds, currentUserId);
+  const {
+    summaries: publicationCommentSummaries,
+  } = useComments("publication", publicationIds, currentUserId);
 
   const loadFeed = useCallback(async () => {
     try {
@@ -67,6 +72,9 @@ export default function PublicationsScreen() {
             count: 0,
             isLiked: false,
           };
+          const commentSummary = publicationCommentSummaries[item.id] ?? {
+            count: 0,
+          };
           const canLike = Boolean(currentUserId && item.user_id !== currentUserId);
 
           return (
@@ -77,6 +85,19 @@ export default function PublicationsScreen() {
               isLikePending={pendingPublicationLikeId === item.id}
               onToggleLike={
                 canLike ? () => void togglePublicationLike(item.id) : undefined
+              }
+              commentCount={commentSummary.count}
+              onOpenComments={() =>
+                router.push({
+                  pathname: "/publication-detail",
+                  params: { id: item.id },
+                })
+              }
+              onOpenDetails={() =>
+                router.push({
+                  pathname: "/publication-detail",
+                  params: { id: item.id },
+                })
               }
             />
           );

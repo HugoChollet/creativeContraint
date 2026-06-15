@@ -13,7 +13,7 @@ type LikeButtonProps = {
   color: string;
   disabled?: boolean;
   isLoading?: boolean;
-  onPress: () => void;
+  onPress?: () => void;
 };
 
 export function LikeButton({
@@ -27,8 +27,11 @@ export function LikeButton({
   return (
     <TouchableOpacity
       onPress={onPress}
-      disabled={disabled || isLoading}
-      style={[styles.button, (disabled || isLoading) && styles.disabled]}
+      disabled={disabled || isLoading || !onPress}
+      style={[
+        styles.button,
+        (disabled || isLoading || !onPress) && styles.disabled,
+      ]}
       accessibilityRole="button"
       accessibilityLabel={isLiked ? "Unlike" : "Like"}
     >
@@ -37,7 +40,7 @@ export function LikeButton({
       ) : (
         <Ionicons
           name={isLiked ? "heart" : "heart-outline"}
-          size={20}
+          size={18}
           color={color}
         />
       )}
@@ -48,12 +51,12 @@ export function LikeButton({
 
 const styles = StyleSheet.create({
   button: {
-    minWidth: 42,
+    minWidth: 36,
     height: 28,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 4,
+    gap: 3,
   },
   count: {
     fontSize: 12,

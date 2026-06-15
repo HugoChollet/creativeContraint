@@ -7,6 +7,7 @@ import {
   ProjectLanguage,
   ProjectTag,
 } from "@/constants/project-metadata";
+import { CommentSummary } from "@/hooks/use-comments";
 import { useStyles } from "@/hooks/use-styles";
 import { LikeSummary } from "@/hooks/use-likes";
 import {
@@ -27,9 +28,12 @@ interface ConstraintSetCommunityListProps {
   currentUserId?: string;
   likeSummaries: Record<string, LikeSummary>;
   pendingLikeId: string | null;
+  commentSummaries: Record<string, CommentSummary>;
   loading: boolean;
   savingConstraintSetId: string | number | null;
   onToggleLike: (item: SavedConstraintSet) => void;
+  onOpenComments: (item: SavedConstraintSet) => void;
+  onOpenDetails: (item: SavedConstraintSet) => void;
   onSave: (item: SavedConstraintSet) => void;
   onRefresh: () => void;
 }
@@ -41,9 +45,12 @@ export function ConstraintSetCommunityList({
   currentUserId,
   likeSummaries,
   pendingLikeId,
+  commentSummaries,
   loading,
   savingConstraintSetId,
   onToggleLike,
+  onOpenComments,
+  onOpenDetails,
   onSave,
   onRefresh,
 }: ConstraintSetCommunityListProps) {
@@ -119,6 +126,9 @@ export function ConstraintSetCommunityList({
           count: 0,
           isLiked: false,
         };
+        const commentSummary = commentSummaries[itemKey] ?? {
+          count: 0,
+        };
 
         return (
           <ConstraintsSetCard
@@ -127,6 +137,9 @@ export function ConstraintSetCommunityList({
             isLiked={likeSummary.isLiked}
             isLikePending={pendingLikeId === itemKey}
             onToggleLike={() => onToggleLike(item)}
+            commentCount={commentSummary.count}
+            onOpenComments={() => onOpenComments(item)}
+            onOpenDetails={() => onOpenDetails(item)}
             submitLabel={t("screen:constraint_set_browse.save_button")}
             submit={() => onSave(item)}
             isSubmitting={savingConstraintSetId === item.id}

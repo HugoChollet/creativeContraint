@@ -4,6 +4,7 @@ import Auth from "@/components/specific/auth";
 import { ConstraintSetCommunityList } from "@/components/specific/constraint/constraint-set-community-list";
 import { ConstraintSetPersonalList } from "@/components/specific/constraint/constraint-set-personal-list";
 import { useAuth } from "@/contexts/auth-context";
+import { useComments } from "@/hooks/use-comments";
 import { useCollection } from "@/hooks/use-collection";
 import { useLikes } from "@/hooks/use-likes";
 import { useStyles } from "@/hooks/use-styles";
@@ -16,7 +17,7 @@ import {
   getConstraintSetProjectTags,
 } from "@/lib/constraint-set-data";
 import { SavedConstraintSet } from "@/types/constraints";
-import { useFocusEffect } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Alert, Text, View } from "react-native";
@@ -68,6 +69,9 @@ export default function ConstraintSetsScreen() {
     pendingId: pendingConstraintSetLikeId,
     toggleLike: toggleConstraintSetLike,
   } = useLikes("constraint_set", constraintSetIds, userId);
+  const {
+    summaries: constraintSetCommentSummaries,
+  } = useComments("constraint_set", constraintSetIds, userId);
   const personalConstraintSets = useMemo(
     () => constraintSets.filter((item) => item.owner_id === userId),
     [constraintSets, userId],
@@ -193,10 +197,23 @@ export default function ConstraintSetsScreen() {
               currentUserId={userId}
               likeSummaries={constraintSetLikeSummaries}
               pendingLikeId={pendingConstraintSetLikeId}
+              commentSummaries={constraintSetCommentSummaries}
               loading={loading}
               savingConstraintSetId={savingConstraintSetId}
               onToggleLike={(item) => {
                 void toggleConstraintSetLike(item.id);
+              }}
+              onOpenComments={(item) => {
+                router.push({
+                  pathname: "/constraint-set-detail",
+                  params: { id: item.id.toString() },
+                });
+              }}
+              onOpenDetails={(item) => {
+                router.push({
+                  pathname: "/constraint-set-detail",
+                  params: { id: item.id.toString() },
+                });
               }}
               onSave={handleSaveConstraintSet}
               onRefresh={refresh}
