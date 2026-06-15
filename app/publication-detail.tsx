@@ -6,9 +6,13 @@ import { useAuth } from "@/contexts/auth-context";
 import { useComments } from "@/hooks/use-comments";
 import { useLikes } from "@/hooks/use-likes";
 import { useStyles } from "@/hooks/use-styles";
-import { getConstraintSetProjectLabel } from "@/lib/constraint-set-data";
+import {
+  getConstraintSetName,
+  getConstraintSetProjectLabel,
+} from "@/lib/constraint-set-data";
 import { publicationService } from "@/services/publication.service";
 import { Publication } from "@/types/publication";
+import { Ionicons } from "@expo/vector-icons";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -17,6 +21,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -141,7 +146,32 @@ export default function PublicationDetailScreen() {
             </Text>
           )}
 
-          {constraintSet && <ConstraintsTags constraintSet={constraintSet} />}
+          {constraintSet && (
+            <>
+              <TouchableOpacity
+                style={styles.constraintSetLink}
+                onPress={() =>
+                  router.push({
+                    pathname: "/constraint-set-detail",
+                    params: { id: constraintSet.id.toString() },
+                  })
+                }
+              >
+                <Text
+                  style={[styles.constraintSetLinkText, { color: projectColor }]}
+                  numberOfLines={1}
+                >
+                  {getConstraintSetName(constraintSet)}
+                </Text>
+                <Ionicons
+                  name="arrow-forward"
+                  size={14}
+                  color={projectColor}
+                />
+              </TouchableOpacity>
+              <ConstraintsTags constraintSet={constraintSet} />
+            </>
+          )}
 
           {publication.media_type === "image" && publication.media_url && (
             <Image
@@ -206,5 +236,16 @@ const styles = StyleSheet.create({
   contentText: {
     fontSize: 15,
     lineHeight: 22,
+  },
+  constraintSetLink: {
+    alignSelf: "flex-start",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  constraintSetLinkText: {
+    fontSize: 14,
+    fontWeight: "700",
+    textDecorationLine: "underline",
   },
 });

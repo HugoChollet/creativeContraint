@@ -91,20 +91,6 @@ export default function TabLayout() {
             title: "Submit Publication",
           }}
         />
-        <Tabs.Screen
-          name="publication-detail"
-          options={{
-            href: null,
-            title: "Publication Detail",
-          }}
-        />
-        <Tabs.Screen
-          name="constraint-set-detail"
-          options={{
-            href: null,
-            title: "Constraint Set Detail",
-          }}
-        />
 
         <Tabs.Screen
           name="project-browse"
