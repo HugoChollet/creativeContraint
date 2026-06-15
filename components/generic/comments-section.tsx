@@ -79,12 +79,12 @@ export function CommentsSection({
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={[styles.sectionTitle, { color }]}>
+    <View style={globalStyles.sectionBlock}>
+      <Text style={[globalStyles.sectionTitle, { color }]}>
         Comments
       </Text>
 
-      <View style={styles.inputRow}>
+      <View style={[globalStyles.rowCenter, styles.inputRow]}>
         <TextInput
           value={body}
           onChangeText={setBody}
@@ -107,7 +107,7 @@ export function CommentsSection({
           onPress={handleAddComment}
           disabled={!canSubmit || submitting}
           style={[
-            styles.sendButton,
+            globalStyles.circularIconButton,
             {
               backgroundColor: canSubmit ? color : colors.disable,
             },
@@ -143,23 +143,23 @@ export function CommentsSection({
             const isPending = pendingCommentId === item.id;
 
             return (
-              <View style={styles.commentRow}>
+              <View style={globalStyles.rowStart}>
                 <Image
                   source={
                     item.profile?.avatar_url
                       ? { uri: item.profile.avatar_url }
                       : require("@/assets/images/blank-avatar.jpg")
                   }
-                  style={styles.avatar}
+                  style={globalStyles.avatarLarge}
                 />
 
                 <View
                   style={[
-                    styles.commentBubble,
+                    globalStyles.roundedBubble,
                     { backgroundColor: colors.shadeContainer },
                   ]}
                 >
-                  <View style={styles.commentHeader}>
+                  <View style={globalStyles.rowBetweenCenter}>
                     <Text style={[styles.username, { color }]}>
                       {item.profile?.username ?? "User"}
                     </Text>
@@ -187,7 +187,7 @@ export function CommentsSection({
                   )}
 
                   {isOwnComment && (
-                    <View style={styles.commentActions}>
+                    <View style={globalStyles.rowEndCenter}>
                       {isEditing ? (
                         <>
                           <TouchableOpacity
@@ -263,14 +263,6 @@ export function CommentsSection({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: 14,
-    paddingTop: 18,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: "700",
-  },
   loadingContainer: {
     minHeight: 120,
     justifyContent: "center",
@@ -283,28 +275,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginVertical: 24,
   },
-  commentRow: {
-    flexDirection: "row",
-    gap: 10,
-    alignItems: "flex-start",
-  },
-  avatar: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-  },
-  commentBubble: {
-    flex: 1,
-    borderRadius: 12,
-    padding: 12,
-    gap: 6,
-  },
-  commentHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 8,
-  },
   username: {
     fontSize: 12,
     fontWeight: "700",
@@ -313,11 +283,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
   },
-  commentActions: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    gap: 12,
-  },
   editInput: {
     minHeight: 72,
     height: undefined,
@@ -325,9 +290,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
   },
   inputRow: {
-    flexDirection: "row",
     alignItems: "flex-end",
-    gap: 10,
   },
   input: {
     flex: 1,
@@ -336,12 +299,5 @@ const styles = StyleSheet.create({
     maxHeight: 108,
     paddingTop: 12,
     textAlignVertical: "top",
-  },
-  sendButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    alignItems: "center",
-    justifyContent: "center",
   },
 });

@@ -132,7 +132,9 @@ export default function ConstraintSetDetailScreen() {
 
   if (loading) {
     return (
-      <View style={[globalStyles.backgroundColor, styles.root, styles.centered]}>
+      <View
+        style={[globalStyles.backgroundColor, globalStyles.root, globalStyles.centered]}
+      >
         <ActivityIndicator color={colors.tint} />
       </View>
     );
@@ -140,14 +142,16 @@ export default function ConstraintSetDetailScreen() {
 
   if (!constraintSet || !id) {
     return (
-      <View style={[globalStyles.backgroundColor, styles.root, styles.centered]}>
+      <View
+        style={[globalStyles.backgroundColor, globalStyles.root, globalStyles.centered]}
+      >
         <Text style={globalStyles.subtitle}>Constraint set not found.</Text>
       </View>
     );
   }
 
   return (
-    <View style={[globalStyles.backgroundColor, styles.root]}>
+    <View style={[globalStyles.backgroundColor, globalStyles.root]}>
       <Stack.Screen options={{ headerShown: false }} />
       <ContentHeader
         variant="detail"
@@ -172,7 +176,7 @@ export default function ConstraintSetDetailScreen() {
 
       <ScrollView
         ref={scrollRef}
-        contentContainerStyle={styles.content}
+        contentContainerStyle={globalStyles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.cardWrap}>
@@ -199,17 +203,6 @@ export default function ConstraintSetDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-  },
-  centered: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  content: {
-    paddingHorizontal: 24,
-    paddingBottom: 40,
-  },
   cardWrap: {
     paddingTop: 10,
   },

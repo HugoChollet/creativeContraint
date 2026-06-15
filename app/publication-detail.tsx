@@ -90,7 +90,9 @@ export default function PublicationDetailScreen() {
 
   if (loading) {
     return (
-      <View style={[globalStyles.backgroundColor, styles.root, styles.centered]}>
+      <View
+        style={[globalStyles.backgroundColor, globalStyles.root, globalStyles.centered]}
+      >
         <ActivityIndicator color={colors.tint} />
       </View>
     );
@@ -98,14 +100,16 @@ export default function PublicationDetailScreen() {
 
   if (!publication || !id) {
     return (
-      <View style={[globalStyles.backgroundColor, styles.root, styles.centered]}>
+      <View
+        style={[globalStyles.backgroundColor, globalStyles.root, globalStyles.centered]}
+      >
         <Text style={globalStyles.subtitle}>Publication not found.</Text>
       </View>
     );
   }
 
   return (
-    <View style={[globalStyles.backgroundColor, styles.root]}>
+    <View style={[globalStyles.backgroundColor, globalStyles.root]}>
       <Stack.Screen options={{ headerShown: false }} />
       <ContentHeader
         variant="detail"
@@ -130,7 +134,7 @@ export default function PublicationDetailScreen() {
 
       <ScrollView
         ref={scrollRef}
-        contentContainerStyle={styles.content}
+        contentContainerStyle={globalStyles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
         <View
@@ -149,7 +153,7 @@ export default function PublicationDetailScreen() {
           {constraintSet && (
             <>
               <TouchableOpacity
-                style={styles.constraintSetLink}
+                style={globalStyles.inlineLink}
                 onPress={() =>
                   router.push({
                     pathname: "/constraint-set-detail",
@@ -158,7 +162,7 @@ export default function PublicationDetailScreen() {
                 }
               >
                 <Text
-                  style={[styles.constraintSetLinkText, { color: projectColor }]}
+                  style={[globalStyles.inlineLinkText, { color: projectColor }]}
                   numberOfLines={1}
                 >
                   {getConstraintSetName(constraintSet)}
@@ -208,17 +212,6 @@ export default function PublicationDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-  },
-  centered: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  content: {
-    paddingHorizontal: 24,
-    paddingBottom: 40,
-  },
   publicationPanel: {
     marginTop: 10,
     marginBottom: 4,
@@ -236,16 +229,5 @@ const styles = StyleSheet.create({
   contentText: {
     fontSize: 15,
     lineHeight: 22,
-  },
-  constraintSetLink: {
-    alignSelf: "flex-start",
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-  },
-  constraintSetLinkText: {
-    fontSize: 14,
-    fontWeight: "700",
-    textDecorationLine: "underline",
   },
 });

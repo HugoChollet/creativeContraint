@@ -111,7 +111,7 @@ export function ConstraintsSetCard({
             </Text>
           </View>
 
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <View style={globalStyles.rowCenter}>
             {onOpenComments && (
               <CommentButton
                 count={commentCount}
@@ -187,7 +187,7 @@ export function ConstraintsSetCard({
         />
       </View>
 
-      <View style={styles.tagContainer}>
+      <View style={globalStyles.wrapRow}>
         {translatedConstraints.map(({ label, displayValue, description }) => (
           <View key={label} style={globalStyles.tag}>
             <Text style={{ fontSize: 12, color: colors.textDiscreet }}>
@@ -234,7 +234,6 @@ export function ConstraintsSetCard({
 }
 
 export const styles = StyleSheet.create({
-  tagContainer: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
