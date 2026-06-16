@@ -105,11 +105,37 @@ export function HomeGeneratorsProvider({ children }: { children: ReactNode }) {
     filterValue: userId,
   });
 
+  const uniqueSelections = useMemo(() => {
+    const selectionsByProject = new Map<string, HomeGeneratorSelectionRecord>();
+
+    selections.forEach((selection) => {
+      const previousSelection = selectionsByProject.get(selection.project_id);
+
+      if (!previousSelection) {
+        selectionsByProject.set(selection.project_id, selection);
+        return;
+      }
+
+      selectionsByProject.set(selection.project_id, {
+        ...previousSelection,
+        project: previousSelection.project ?? selection.project,
+        selected_category_ids: Array.from(
+          new Set([
+            ...previousSelection.selected_category_ids,
+            ...selection.selected_category_ids,
+          ]),
+        ),
+      });
+    });
+
+    return Array.from(selectionsByProject.values());
+  }, [selections]);
+
   const ownerIds = useMemo(
     () =>
       Array.from(
         new Set(
-          selections
+          uniqueSelections
             .map((selection) => selection.project)
             .filter((project): project is HomeGeneratorRelation =>
               Boolean(project),
@@ -122,7 +148,7 @@ export function HomeGeneratorsProvider({ children }: { children: ReactNode }) {
             .map((project) => project.owner_id),
         ),
       ),
-    [selections, session?.user.id],
+    [uniqueSelections, session?.user.id],
   );
 
   const { data: ownerProfiles, loading: loadingProfiles } =
@@ -144,7 +170,7 @@ export function HomeGeneratorsProvider({ children }: { children: ReactNode }) {
 
   const generators = useMemo<HomeContextGenerator[]>(
     () =>
-      selections.flatMap((selection) => {
+      uniqueSelections.flatMap((selection) => {
         if (!selection.project) {
           return [];
         }
@@ -178,7 +204,7 @@ export function HomeGeneratorsProvider({ children }: { children: ReactNode }) {
 
         return [baseProject];
       }),
-    [ownerProfilesById, selections],
+    [ownerProfilesById, uniqueSelections],
   );
 
   const activeGenerator = useMemo(
