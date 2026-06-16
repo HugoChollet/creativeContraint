@@ -160,7 +160,7 @@
     "title": "YouTube Integration",
     "placeholder": "https://www.youtube.com/watch?v=...",
     "invalid_error": "Please enter a valid YouTube link.",
-    "note": "Note: Your video must be 'Public' or 'Unlisted' to be visible on CreativeConstraint."
+    "note": "Note: Your video must be 'Public' or 'Unlisted' to be visible on Kadex."
   },
   "book-picker": {
     "label": "Book Content",

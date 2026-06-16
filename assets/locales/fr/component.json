@@ -160,7 +160,7 @@
     "title": "Intégration YouTube",
     "placeholder": "https://www.youtube.com/watch?v=...",
     "invalid_error": "Veuillez entrer un lien YouTube valide.",
-    "note": "Note : Votre vidéo doit être en mode 'Publique' ou 'Non répertoriée' pour être visible sur CreativeConstraint."
+    "note": "Note : Votre vidéo doit être en mode 'Publique' ou 'Non répertoriée' pour être visible sur Kadex."
   },
   "book-picker": {
     "label": "Contenu du livre",
