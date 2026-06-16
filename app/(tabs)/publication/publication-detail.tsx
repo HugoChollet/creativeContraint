@@ -1,14 +1,14 @@
 import { CommentsSection } from "@/components/generic/comments-section";
 import { ContentHeader } from "@/components/generic/content-header";
 import { ConstraintsTags } from "@/components/specific/constraint/constraint-tags";
-import { getProjectColor } from "@/constants/theme";
+import { getGeneratorColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
 import { useComments } from "@/hooks/use-comments";
 import { useLikes } from "@/hooks/use-likes";
 import { useStyles } from "@/hooks/use-styles";
 import {
   getConstraintSetName,
-  getConstraintSetProjectLabel,
+  getConstraintSetGeneratorLabel,
 } from "@/lib/constraint-set-data";
 import { publicationService } from "@/services/publication.service";
 import { Publication } from "@/types/publication";
@@ -67,13 +67,13 @@ export default function PublicationDetailScreen() {
 
   const constraintSet = publication?.generated_constraints ?? null;
   const projectLabel = constraintSet
-    ? getConstraintSetProjectLabel(constraintSet)
+    ? getConstraintSetGeneratorLabel(constraintSet)
     : (publication?.project_type ?? "");
-  const projectColor = getProjectColor({
+  const generatorColor = getGeneratorColor({
     color: constraintSet?.color?.toString(),
     theme,
   });
-  const projectBackgroundColor = getProjectColor({
+  const projectBackgroundColor = getGeneratorColor({
     color: constraintSet?.color?.toString(),
     opacity: 0.1,
     theme,
@@ -127,7 +127,7 @@ export default function PublicationDetailScreen() {
         username={publication.profile?.username}
         createdAt={publication.created_at}
         difficulty={constraintSet?.difficulty}
-        color={projectColor}
+        color={generatorColor}
         backgroundColor={projectBackgroundColor}
         textColor={colors.text}
         discreetTextColor={colors.textDiscreet}
@@ -170,12 +170,12 @@ export default function PublicationDetailScreen() {
                 }
               >
                 <Text
-                  style={[globalStyles.inlineLinkText, { color: projectColor }]}
+                  style={[globalStyles.inlineLinkText, { color: generatorColor }]}
                   numberOfLines={1}
                 >
                   {getConstraintSetName(constraintSet)}
                 </Text>
-                <Ionicons name="arrow-forward" size={14} color={projectColor} />
+                <Ionicons name="arrow-forward" size={14} color={generatorColor} />
               </TouchableOpacity>
               <ConstraintsTags constraintSet={constraintSet} />
             </>
@@ -199,7 +199,7 @@ export default function PublicationDetailScreen() {
         <View onLayout={(event) => setCommentsY(event.nativeEvent.layout.y)}>
           <CommentsSection
             itemId={id}
-            color={projectColor}
+            color={generatorColor}
             comments={commentsByItem[id] ?? []}
             currentUserId={currentUserId}
             loading={loadingItemId === id}

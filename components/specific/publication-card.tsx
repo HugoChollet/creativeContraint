@@ -1,7 +1,7 @@
 import { ContentHeader } from "@/components/generic/content-header";
-import { getProjectColor } from "@/constants/theme";
+import { getGeneratorColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
-import { getConstraintSetProjectLabel } from "@/lib/constraint-set-data";
+import { getConstraintSetGeneratorLabel } from "@/lib/constraint-set-data";
 import { Publication } from "@/types/publication";
 import React, { useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
@@ -30,15 +30,15 @@ export const PublicationCard = ({
 }: PublicationCardProps) => {
   const { globalStyles, colors, theme } = useStyles();
   const constraintSet = publication.generated_constraints ?? null;
-  const fallbackProjectLabel = publication.project_type;
+  const fallbackGeneratorLabel = publication.project_type;
   const projectLabel = constraintSet
-    ? getConstraintSetProjectLabel(constraintSet)
-    : fallbackProjectLabel;
-  const projectColor = getProjectColor({
+    ? getConstraintSetGeneratorLabel(constraintSet)
+    : fallbackGeneratorLabel;
+  const generatorColor = getGeneratorColor({
     color: constraintSet?.color?.toString(),
     theme,
   });
-  const projectBackgroundColor = getProjectColor({
+  const projectBackgroundColor = getGeneratorColor({
     color: constraintSet?.color?.toString(),
     opacity: 0.1,
     theme,
@@ -56,7 +56,7 @@ export const PublicationCard = ({
         username={publication.profile?.username}
         createdAt={publication.created_at}
         difficulty={difficulty}
-        color={projectColor}
+        color={generatorColor}
         backgroundColor={projectBackgroundColor}
         textColor={colors.text}
         discreetTextColor={colors.textDiscreet}
@@ -88,7 +88,7 @@ export const PublicationCard = ({
               marginHorizontal: 12,
               padding: 12,
               borderRadius: 12,
-              backgroundColor: getProjectColor({
+              backgroundColor: getGeneratorColor({
                 color: constraintSet?.color?.toString(),
                 opacity: 0.15,
                 theme,
@@ -115,7 +115,7 @@ export const PublicationCard = ({
       )}
       {publication.media_type === "book_text" && publication.content_text && (
         <Pressable onPress={onOpenDetails} disabled={!onOpenDetails}>
-          <Text style={{ margin: 10, color: projectColor }}>
+          <Text style={{ margin: 10, color: generatorColor }}>
             {publication.content_text}
           </Text>
         </Pressable>

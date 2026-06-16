@@ -1,35 +1,35 @@
 {
   "layout": {
     "Home": "Home",
-    "Lab": "Lab",
+    "Generators": "Generators",
     "Settings": "Settings",
     "constraint_sets": "Constraint Sets",
     "Publication_Feed": "Publication Feed"
   },
-  "lab": {
-    "lab_title": "{{type}} Lab",
+  "generators": {
+    "generator_title": "{{type}} Generator",
     "generate_button": "Generate {{type}} Idea",
     "latest_result_button": "Show latest result",
-    "back_button": "Back to Lab",
+    "back_button": "Back to Generators",
     "empty_result": "-",
     "add-button": {
       "label-category": "Add a category",
-      "label-project": "Add a project generator"
+      "label-generator": "Add a generator"
     }
   },
   "home": {
-    "project_choice": "Choose a project to start",
-    "selected_project_choice": "Choose one of your saved project generators",
-    "no_selected_projects": "You have no saved project generators yet",
-    "no_selected_projects_hint": "Pick some project generators from the browse screen and they will appear here.",
-    "no_filtered_projects": "No saved project generators match this language yet",
-    "no_filtered_projects_hint": "Remove the language filter to see your other saved generators.",
-    "no_official_projects": "No official project generators match this language yet",
-    "no_official_projects_hint": "Remove the language filter to explore the other official generators.",
-    "project_source_official": "Official",
-    "project_source_you": "Made by you",
-    "project_source_user": "Made by {{username}}",
-    "manage_projects_button": "Manage project generators",
+    "generator_choice": "Choose a generator to start",
+    "selected_generator_choice": "Choose one of your saved generators",
+    "no_selected_generators": "You have no saved generators yet",
+    "no_selected_generators_hint": "Pick some generators from the browse screen and they will appear here.",
+    "no_filtered_generators": "No saved generators match this language yet",
+    "no_filtered_generators_hint": "Remove the language filter to see your other saved generators.",
+    "no_official_generators": "No official generators match this language yet",
+    "no_official_generators_hint": "Remove the language filter to explore the other official generators.",
+    "generator_source_official": "Official",
+    "generator_source_you": "Made by you",
+    "generator_source_user": "Made by {{username}}",
+    "manage_generators_button": "Manage generators",
     "book_button": "Write a Fiction Book",
     "music_button": "Compose a song",
     "videointernet_button": "Create Video Content",
@@ -54,9 +54,9 @@
     "publish_success_message": "This constraint set is now available to the community.",
     "publish_error_title": "Upload failed",
     "publish_error_message": "Could not upload this constraint set. Please try again.",
-    "create_button": "Create New Project",
-    "delete_button": "Delete Project",
-    "confirm_delete": "Are you sure you want to delete this project? This action cannot be undone.",
+    "create_button": "Create New Generator",
+    "delete_button": "Delete Generator",
+    "confirm_delete": "Are you sure you want to delete this generator? This action cannot be undone.",
     "cancel_button": "Cancel",
     "confirm_button": "Confirm",
     "difficulty": "Difficulty",
@@ -65,7 +65,7 @@
   },
   "constraint_set_browse": {
     "title": "Community Constraint Sets",
-    "search_placeholder": "Search by set, project, tag...",
+    "search_placeholder": "Search by set, generator, tag...",
     "filters_label": "Filters",
     "no_constraint_sets": "No community constraint sets match these filters yet.",
     "save_button": "Save as my set",
@@ -100,7 +100,7 @@
   },
   "category_browse": {
     "title": "Browse {{type}} Categories",
-    "filters_label": "Matching your project filters",
+    "filters_label": "Matching your generator filters",
     "personal_section": "Personal",
     "published_section": "Published by you",
     "community_section": "Community",
@@ -109,30 +109,30 @@
     "add_button": "Create your own category",
     "confirm_button": "Confirm selection"
   },
-  "project_browse": {
-    "title": "Browse {{type}} Project Generators",
+  "generator_browse": {
+    "title": "Browse {{type}} Generators",
     "personal_section": "Personal",
     "published_section": "Published by you",
     "community_section": "Community",
     "official_section": "Official",
-    "add_button": "Create your own project generator",
-    "no_projects": "There is no project generator yet here",
-    "create_button": "Save new project generator",
+    "add_button": "Create your own generator",
+    "no_projects": "There is no generator yet here",
+    "create_button": "Save new generator",
     "confirm_button": "Confirm selection"
   },
-  "project_form": {
-    "title": "New project generator for {{type}}",
-    "name_label": "Project Name",
-    "name_placeholder": "Enter project name",
+  "generator_form": {
+    "title": "New generator for {{type}}",
+    "name_label": "Generator Name",
+    "name_placeholder": "Enter generator name",
     "description_label": "Description",
-    "description_placeholder": "Describe the project generator",
+    "description_placeholder": "Describe the generator",
     "import_button": "Import from JSON",
     "import_helper": "{{fileName}} • {{count}} categories ready to save",
     "import_error_title": "Import failed",
-    "import_error_invalid": "Select a valid project JSON file with categories.",
+    "import_error_invalid": "Select a valid generator JSON file with categories.",
     "preview_label": "Preview",
     "add_button": "Add new category",
-    "submit_button": "Save Project Generator",
-    "category_list_label": "Categories of this project generator (minimum {{min}})"
+    "submit_button": "Save Generator",
+    "category_list_label": "Categories of this generator (minimum {{min}})"
   }
 }

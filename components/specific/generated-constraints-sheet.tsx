@@ -12,7 +12,7 @@ import {
   GeneratedConstraintSet,
   SavedConstraintSet,
 } from "@/types/constraints";
-import { ProjectJSON } from "@/types/json-objects";
+import { GeneratorJSON } from "@/types/json-objects";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, TextInput, View } from "react-native";
@@ -26,7 +26,7 @@ type GeneratedConstraintsSheetProps = {
   setModalVisible: (visible: boolean) => void;
   generatedConstraintSet: GeneratedConstraintSet;
   color: string;
-  dataSource: ProjectJSON;
+  dataSource: GeneratorJSON;
   historyCount: number;
   currentHistoryIndex: number;
   canGenerateAnother?: boolean;
@@ -198,7 +198,7 @@ export default function GeneratedConstraintsSheet({
             ? "component:result-modal-header.remove_button"
             : "component:result-modal-header.save_button",
         )}
-        labelCancel={t("screen:lab.back_button")}
+        labelCancel={t("screen:generators.back_button")}
         isConfirmActive={isSaved || generatedConstraintsEntries.length > 0}
         isConfirmLoading={isSaving}
       >
@@ -239,14 +239,14 @@ export default function GeneratedConstraintsSheet({
                 </Text>
                 <View style={globalStyles.elementAndDescriptorContainer}>
                   <Text style={[globalStyles.subtitle]}>
-                    {generatedOption.value ?? t("screen:lab.empty_result")}
+                    {generatedOption.value ?? t("screen:generators.empty_result")}
                   </Text>
                   {generatedOption.description && (
                     <Tooltip
                       title={categoryLabelsByName[categoryName] ?? categoryName}
                       description={
                         generatedOption.description ??
-                        t("screen:lab.empty_result")
+                        t("screen:generators.empty_result")
                       }
                       color={color}
                     />

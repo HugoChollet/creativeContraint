@@ -1,17 +1,17 @@
 import {
-  getCategoryTagsFromProject,
-  getDefaultProjectLanguage,
-  getDefaultProjectSupportedFileType,
-  isProjectSupportedFileType,
-  normalizeProjectTags,
-  ProjectLanguage,
-  ProjectSupportedFileType,
-  ProjectTag,
-} from "@/constants/project-metadata";
+  getCategoryTagsFromGenerator,
+  getDefaultGeneratorLanguage,
+  getDefaultGeneratorSupportedFileType,
+  isGeneratorSupportedFileType,
+  normalizeGeneratorTags,
+  GeneratorLanguage,
+  GeneratorSupportedFileType,
+  GeneratorTag,
+} from "@/constants/generator-metadata";
 import { useStyles } from "@/hooks/use-styles";
 import { Category, Source as CategorySource } from "@/types/category";
 import { Option } from "@/types/constraints";
-import { ProjectJSON } from "@/types/json-objects";
+import { GeneratorJSON } from "@/types/json-objects";
 import { Ionicons } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system/legacy";
@@ -30,19 +30,19 @@ export const IMPORTED_CATEGORY_PREFIX = "imported-json:";
 export const isImportedDraftCategory = (category: Category) =>
   category.id.startsWith(IMPORTED_CATEGORY_PREFIX);
 
-interface ImportedProjectDraft {
+interface ImportedGeneratorDraft {
   name?: string;
   description: string;
-  language: ProjectLanguage;
-  supportedFileType: ProjectSupportedFileType;
-  tags: ProjectTag[];
+  language: GeneratorLanguage;
+  supportedFileType: GeneratorSupportedFileType;
+  tags: GeneratorTag[];
   categories: Category[];
 }
 
-interface ProjectJsonImporterProps {
-  projectColor: string;
+interface GeneratorJsonImporterProps {
+  generatorColor: string;
   fallbackProjectName: string;
-  onImported: (draft: ImportedProjectDraft) => void;
+  onImported: (draft: ImportedGeneratorDraft) => void;
   onImportingChange?: (isImporting: boolean) => void;
 }
 
@@ -62,8 +62,8 @@ const normalizeOptions = (options?: Option[]) =>
     }))
     .filter((option) => option.value.length > 0);
 
-const normalizeImportedProject = (rawFileContent: string): ProjectJSON => {
-  const parsed = JSON.parse(rawFileContent) as Partial<ProjectJSON>;
+const normalizeImportedProject = (rawFileContent: string): GeneratorJSON => {
+  const parsed = JSON.parse(rawFileContent) as Partial<GeneratorJSON>;
 
   if (!parsed || !Array.isArray(parsed.categories)) {
     throw new Error("Invalid project JSON");
@@ -82,7 +82,7 @@ const normalizeImportedProject = (rawFileContent: string): ProjectJSON => {
     language: typeof parsed.language === "string" ? parsed.language : undefined,
     supported_files:
       typeof parsed.supported_files === "string" &&
-      isProjectSupportedFileType(parsed.supported_files)
+      isGeneratorSupportedFileType(parsed.supported_files)
         ? parsed.supported_files
         : undefined,
     tags: Array.isArray(parsed.tags)
@@ -117,18 +117,18 @@ const readImportedFileContent = async (
   return FileSystem.readAsStringAsync(asset.uri);
 };
 
-const buildImportedDraftCategories = (importedProject: ProjectJSON) => {
-  const projectLanguage = getDefaultProjectLanguage(importedProject.language);
-  const projectTags = normalizeProjectTags(importedProject.tags);
+const buildImportedDraftCategories = (importedProject: GeneratorJSON) => {
+  const projectLanguage = getDefaultGeneratorLanguage(importedProject.language);
+  const projectTags = normalizeGeneratorTags(importedProject.tags);
   const normalizedCategories = importedProject.categories.flatMap(
     (category) => {
       const categoryName = (category.label ?? category.name ?? "").trim();
       const categoryDescription = category.description?.trim() ?? "";
       const categoryOptions = normalizeOptions(category.options);
-      const categoryLanguage = getDefaultProjectLanguage(
+      const categoryLanguage = getDefaultGeneratorLanguage(
         category.language ?? importedProject.language,
       );
-      const categoryTags = getCategoryTagsFromProject(
+      const categoryTags = getCategoryTagsFromGenerator(
         category.tags && category.tags.length > 0 ? category.tags : projectTags,
       );
 
@@ -175,19 +175,19 @@ const buildImportedDraftCategories = (importedProject: ProjectJSON) => {
     description: category.description,
     options: category.options,
     language: category.language ?? projectLanguage,
-    tags: category.tags ?? getCategoryTagsFromProject(projectTags),
+    tags: category.tags ?? getCategoryTagsFromGenerator(projectTags),
     is_public: false,
     owner_id: "",
     source: CategorySource.User,
   }));
 };
 
-export default function ProjectJsonImporter({
-  projectColor,
+export default function GeneratorJsonImporter({
+  generatorColor,
   fallbackProjectName,
   onImported,
   onImportingChange,
-}: ProjectJsonImporterProps) {
+}: GeneratorJsonImporterProps) {
   const { globalStyles } = useStyles();
   const { t } = useTranslation();
   const [isImporting, setIsImporting] = useState(false);
@@ -230,11 +230,11 @@ export default function ProjectJsonImporter({
           importedProject.project_type?.trim() ||
           fallbackProjectName,
         description: importedProject.description?.trim() ?? "",
-        language: getDefaultProjectLanguage(importedProject.language),
-        supportedFileType: getDefaultProjectSupportedFileType(
+        language: getDefaultGeneratorLanguage(importedProject.language),
+        supportedFileType: getDefaultGeneratorSupportedFileType(
           importedProject.supported_files,
         ),
-        tags: normalizeProjectTags(importedProject.tags),
+        tags: normalizeGeneratorTags(importedProject.tags),
         categories: importedCategories,
       });
 
@@ -245,8 +245,8 @@ export default function ProjectJsonImporter({
     } catch (error) {
       console.error("Failed to import project JSON", error);
       Alert.alert(
-        t("screen:project_form.import_error_title"),
-        t("screen:project_form.import_error_invalid"),
+        t("screen:generator_form.import_error_title"),
+        t("screen:generator_form.import_error_invalid"),
       );
     } finally {
       setImporting(false);
@@ -256,13 +256,13 @@ export default function ProjectJsonImporter({
   return (
     <>
       <Text style={globalStyles.label}>
-        {t("screen:project_form.import_button")}
+        {t("screen:generator_form.import_button")}
       </Text>
       <TouchableOpacity
         style={[
           globalStyles.mediaIntegrationContainer,
           {
-            borderColor: projectColor,
+            borderColor: generatorColor,
             opacity: isImporting ? 0.7 : 1,
             marginBottom: 8,
           },
@@ -271,22 +271,22 @@ export default function ProjectJsonImporter({
         disabled={isImporting}
       >
         {isImporting ? (
-          <ActivityIndicator color={projectColor} />
+          <ActivityIndicator color={generatorColor} />
         ) : (
           <Ionicons
             name="document-attach-outline"
             size={32}
-            color={projectColor}
+            color={generatorColor}
           />
         )}
         <Text
-          style={[globalStyles.text, { color: projectColor, marginTop: 8 }]}
+          style={[globalStyles.text, { color: generatorColor, marginTop: 8 }]}
         >
-          {t("screen:project_form.import_button")}
+          {t("screen:generator_form.import_button")}
         </Text>
         {importSummary && (
           <Text style={globalStyles.discreetText}>
-            {t("screen:project_form.import_helper", importSummary)}
+            {t("screen:generator_form.import_helper", importSummary)}
           </Text>
         )}
       </TouchableOpacity>

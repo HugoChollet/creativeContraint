@@ -1,33 +1,33 @@
 import { MainButton } from "@/components/generic/main-button";
 import {
-  getHomeProjectColorFromTags,
-  getHomeProjectConfig,
-  getHomeProjectImageFromTags,
-} from "@/constants/home-projects";
+  getHomeGeneratorColorFromTags,
+  getHomeGeneratorConfig,
+  getHomeGeneratorImageFromTags,
+} from "@/constants/home-generators";
 import {
-  HomeContextProject,
-  useHomeProjects,
-} from "@/contexts/home-projects-context";
-import { getProjectColor } from "@/constants/theme";
+  HomeContextGenerator,
+  useHomeGenerators,
+} from "@/contexts/home-generators-context";
+import { getGeneratorColor } from "@/constants/theme";
 import { useStyles } from "@/hooks/use-styles";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 
-interface HomeProjectButtonProps {
-  project: HomeContextProject;
+interface HomeGeneratorButtonProps {
+  project: HomeContextGenerator;
   currentUserId?: string;
 }
 
-export default function HomeProjectButton({
+export default function HomeGeneratorButton({
   project,
   currentUserId,
-}: HomeProjectButtonProps) {
+}: HomeGeneratorButtonProps) {
   const router = useRouter();
   const { t } = useTranslation();
   const { theme } = useStyles();
-  const { setActiveProjectId } = useHomeProjects();
-  const routeImage = getHomeProjectConfig(project.routeType)?.image;
-  const tagImage = getHomeProjectImageFromTags(project.tags);
+  const { setActiveGeneratorId } = useHomeGenerators();
+  const routeImage = getHomeGeneratorConfig(project.routeType)?.image;
+  const tagImage = getHomeGeneratorImageFromTags(project.tags);
   const image =
     project.source === "official"
       ? (routeImage ?? tagImage)
@@ -35,21 +35,21 @@ export default function HomeProjectButton({
 
   const subtitle =
     project.source === "official"
-      ? t("screen:home.project_source_official")
+      ? t("screen:home.generator_source_official")
       : project.owner_id === currentUserId
-        ? t("screen:home.project_source_you")
-        : t("screen:home.project_source_user", {
+        ? t("screen:home.generator_source_you")
+        : t("screen:home.generator_source_user", {
             username: project.ownerUsername ?? project.owner_id.slice(0, 8),
           });
 
   const cardColor =
     project.color ??
     (project.source === "official"
-      ? getProjectColor({
+      ? getGeneratorColor({
           label: project.routeType,
           theme,
         })
-      : getHomeProjectColorFromTags(project.tags));
+      : getHomeGeneratorColorFromTags(project.tags));
 
   return (
     <MainButton
@@ -60,10 +60,10 @@ export default function HomeProjectButton({
       color={cardColor}
       image={image}
       onPress={() => {
-        // Lab is a sibling route, so we store the selected project in shared context first.
-        setActiveProjectId(project.id);
+        // Generators is a sibling route, so we store the selected generator in shared context first.
+        setActiveGeneratorId(project.id);
         router.push({
-          pathname: "/lab",
+          pathname: "/generators",
           params: { id: project.id, type: project.routeType },
         });
       }}

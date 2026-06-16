@@ -1,4 +1,4 @@
-import { ProjectLanguage, ProjectTag } from "@/constants/project-metadata";
+import { GeneratorLanguage, GeneratorTag } from "@/constants/generator-metadata";
 import { Option } from "@/types/constraints";
 
 export enum Source {
@@ -12,8 +12,8 @@ export interface Category {
   name: string;
   description: string;
   options: Option[];
-  language?: ProjectLanguage | null;
-  tags?: ProjectTag[] | null;
+  language?: GeneratorLanguage | null;
+  tags?: GeneratorTag[] | null;
   is_public: boolean;
   owner_id: string;
   source: Source;

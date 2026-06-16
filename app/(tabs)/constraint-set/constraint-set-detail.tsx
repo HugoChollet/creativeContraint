@@ -1,7 +1,7 @@
 import { CommentsSection } from "@/components/generic/comments-section";
 import { ContentHeader } from "@/components/generic/content-header";
 import { ConstraintsSetCard } from "@/components/specific/constraint/constraint-set-card";
-import { getProjectColor } from "@/constants/theme";
+import { getGeneratorColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
 import { useComments } from "@/hooks/use-comments";
 import { useLikes } from "@/hooks/use-likes";
@@ -9,8 +9,8 @@ import { useStyles } from "@/hooks/use-styles";
 import {
   CONSTRAINT_SET_SELECT,
   getConstraintSetName,
-  getConstraintSetProjectColor,
-  getConstraintSetProjectLabel,
+  getConstraintSetGeneratorColor,
+  getConstraintSetGeneratorLabel,
 } from "@/lib/constraint-set-data";
 import { supabase } from "@/lib/supabase";
 import { SavedConstraintSet } from "@/types/constraints";
@@ -104,17 +104,17 @@ export default function ConstraintSetDetailScreen() {
   }, [fetchComments, id]);
 
   const title = constraintSet ? getConstraintSetName(constraintSet) : "";
-  const projectColor = constraintSet
-    ? getConstraintSetProjectColor({ constraintSet, theme })
+  const generatorColor = constraintSet
+    ? getConstraintSetGeneratorColor({ constraintSet, theme })
     : colors.tint;
   const projectBackgroundColor = constraintSet
     ? constraintSet.color
-      ? getProjectColor({
+      ? getGeneratorColor({
           color: constraintSet.color,
           opacity: 0.1,
           theme,
         })
-      : getProjectColor({
+      : getGeneratorColor({
           label: constraintSet.project?.name ?? constraintSet.project_label,
           opacity: 0.1,
           theme,
@@ -156,12 +156,12 @@ export default function ConstraintSetDetailScreen() {
       <ContentHeader
         variant="detail"
         title={title}
-        subtitle={getConstraintSetProjectLabel(constraintSet)}
+        subtitle={getConstraintSetGeneratorLabel(constraintSet)}
         avatarUrl={ownerProfile?.avatar_url}
         username={ownerProfile?.username}
         createdAt={constraintSet.created_at}
         difficulty={constraintSet.difficulty}
-        color={projectColor}
+        color={generatorColor}
         backgroundColor={projectBackgroundColor}
         textColor={colors.text}
         discreetTextColor={colors.textDiscreet}
@@ -186,7 +186,7 @@ export default function ConstraintSetDetailScreen() {
         <View onLayout={(event) => setCommentsY(event.nativeEvent.layout.y)}>
           <CommentsSection
             itemId={id}
-            color={projectColor}
+            color={generatorColor}
             comments={commentsByItem[id] ?? []}
             currentUserId={currentUserId}
             loading={loadingItemId === id}

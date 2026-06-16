@@ -11,10 +11,10 @@ import { useStyles } from "@/hooks/use-styles";
 import {
   CONSTRAINT_SET_SELECT,
   getConstraintSetName,
-  getConstraintSetProjectLabel,
-  getConstraintSetProjectLanguage,
-  getConstraintSetProjectSupportedFile,
-  getConstraintSetProjectTags,
+  getConstraintSetGeneratorLabel,
+  getConstraintSetGeneratorLanguage,
+  getConstraintSetGeneratorSupportedFile,
+  getConstraintSetGeneratorTags,
 } from "@/lib/constraint-set-data";
 import { SavedConstraintSet } from "@/types/constraints";
 import { router, useFocusEffect } from "expo-router";
@@ -27,10 +27,10 @@ type ConstraintSetTab = "personal" | "community";
 const buildSavedConstraintSetPayload = (item: SavedConstraintSet) => ({
   name: getConstraintSetName(item),
   project_id: item.project_id ?? item.project?.id ?? null,
-  project_label: getConstraintSetProjectLabel(item),
-  language: getConstraintSetProjectLanguage(item),
-  supported_files: getConstraintSetProjectSupportedFile(item),
-  tags: getConstraintSetProjectTags(item),
+  project_label: getConstraintSetGeneratorLabel(item),
+  language: getConstraintSetGeneratorLanguage(item),
+  supported_files: getConstraintSetGeneratorSupportedFile(item),
+  tags: getConstraintSetGeneratorTags(item),
   color: item.color ?? item.project?.color ?? null,
   difficulty: item.difficulty,
   constraints: item.constraints,

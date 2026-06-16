@@ -14,7 +14,7 @@ export interface CategoryJSON {
   tags?: string[] | null;
 }
 
-export interface ProjectJSON {
+export interface GeneratorJSON {
   project_type: string;
   project_label?: string;
   id: string;

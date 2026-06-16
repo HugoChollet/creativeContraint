@@ -216,7 +216,7 @@ export function TutorialCarousel() {
 
             <View style={styles.mainAction}>
               <ConfirmButton
-                projectColor={colors.tint}
+                generatorColor={colors.tint}
                 label={
                   isLastSlide
                     ? t("tutorial:finish")

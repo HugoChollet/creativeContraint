@@ -8,14 +8,14 @@ import { View } from "react-native";
 interface ConstraintSelectorFormProps {
   onDelete: () => void;
   onEdit: () => void;
-  projectColor: string;
+  generatorColor: string;
   option: Option;
 }
 
 export default function ConstraintCrud({
   onDelete,
   onEdit,
-  projectColor,
+  generatorColor,
   option,
 }: ConstraintSelectorFormProps) {
   const { globalStyles } = useStyles();
@@ -34,14 +34,14 @@ export default function ConstraintCrud({
           t("component:constraint-selector.difficulty") + option.difficulty
         }
         description={option.description}
-        color={projectColor}
+        color={generatorColor}
       />
       <Crud
         actions={[
           { action: Action.EDIT, onPress: onEdit },
           { action: Action.DELETE, onPress: onDelete },
         ]}
-        color={projectColor}
+        color={generatorColor}
       />
     </View>
   );

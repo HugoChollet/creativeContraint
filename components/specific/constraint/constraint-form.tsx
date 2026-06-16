@@ -9,16 +9,16 @@ import { NumberPicker } from "../../generic/number-picker";
 interface ConstraintSelectorFormProps {
   submit: (option: Option) => void;
   editedOption?: Option;
-  projectColor: string;
+  generatorColor: string;
 }
 
 export default function ConstraintSelectorForm({
   submit,
-  projectColor,
+  generatorColor,
   editedOption,
 }: ConstraintSelectorFormProps) {
   const { globalStyles, colors } = useStyles();
-  const projectColorSoft = projectColor.replace(/[\d.]+\)$/g, `0.2)`);
+  const generatorColorSoft = generatorColor.replace(/[\d.]+\)$/g, `0.2)`);
   const { t } = useTranslation();
   const [isDescExpanded, setIsDescExpanded] = useState(false);
 
@@ -43,7 +43,7 @@ export default function ConstraintSelectorForm({
             style={[
               globalStyles.input,
               styles.nameInput,
-              { borderColor: projectColorSoft },
+              { borderColor: generatorColorSoft },
             ]}
             placeholder={t("component:constraint_option_form.name_placeholder")}
             placeholderTextColor={colors.placeholder}
@@ -58,7 +58,7 @@ export default function ConstraintSelectorForm({
             <Ionicons
               name={isDescExpanded ? "chevron-up" : "chevron-down"}
               size={32}
-              color={projectColor}
+              color={generatorColor}
             />
           </TouchableOpacity>
 
@@ -88,7 +88,7 @@ export default function ConstraintSelectorForm({
           <Ionicons
             name="add"
             size={32}
-            color={option.value === "" ? colors.disable : projectColor}
+            color={option.value === "" ? colors.disable : generatorColor}
           />
         </TouchableOpacity>
       </View>
@@ -99,7 +99,7 @@ export default function ConstraintSelectorForm({
           placeholder={t(
             "component:constraint_option_form.description_placeholder",
           )}
-          projectColor={projectColor}
+          generatorColor={generatorColor}
           height={86}
         />
       )}

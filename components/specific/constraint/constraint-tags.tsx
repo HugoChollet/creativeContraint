@@ -1,7 +1,7 @@
-import { getProjectColor } from "@/constants/theme";
-import { useProjectTranslations } from "@/hooks/use-project-translations";
+import { getGeneratorColor } from "@/constants/theme";
+import { useGeneratorTranslations } from "@/hooks/use-generator-translations";
 import { useStyles } from "@/hooks/use-styles";
-import { getConstraintSetProjectDataSource } from "@/lib/constraint-set-data";
+import { getConstraintSetGeneratorDataSource } from "@/lib/constraint-set-data";
 import { SavedConstraintSet } from "@/types/constraints";
 import { useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -13,17 +13,17 @@ export function ConstraintsTags({
   constraintSet: SavedConstraintSet;
 }) {
   const { globalStyles, colors, theme } = useStyles();
-  const solidColor = getProjectColor({
+  const solidColor = getGeneratorColor({
     color: constraintSet.color?.toString(),
     theme,
     opacity: 0.1,
   });
 
   const dataSource = useMemo(() => {
-    return getConstraintSetProjectDataSource({ constraintSet: constraintSet });
+    return getConstraintSetGeneratorDataSource({ constraintSet: constraintSet });
   }, [constraintSet]);
 
-  const translatedConstraints = useProjectTranslations(
+  const translatedConstraints = useGeneratorTranslations(
     constraintSet.constraints,
     dataSource?.categories,
   );

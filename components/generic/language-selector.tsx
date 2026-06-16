@@ -1,9 +1,9 @@
 import { getContrastingColor } from "@/constants/theme";
 import {
-  getProjectLanguageFlag,
-  PROJECT_LANGUAGES,
-  ProjectLanguage,
-} from "@/constants/project-metadata";
+  getGeneratorLanguageFlag,
+  GENERATOR_LANGUAGES,
+  GeneratorLanguage,
+} from "@/constants/generator-metadata";
 import { useStyles } from "@/hooks/use-styles";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -11,8 +11,8 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 interface LanguageSelectorProps {
   label: string;
-  selectedLanguage?: ProjectLanguage | null;
-  onChange: (language: ProjectLanguage) => void;
+  selectedLanguage?: GeneratorLanguage | null;
+  onChange: (language: GeneratorLanguage) => void;
   color?: string;
 }
 
@@ -31,7 +31,7 @@ export default function LanguageSelector({
       <Text style={globalStyles.label}>{label}</Text>
 
       <View style={styles.optionsRow}>
-        {PROJECT_LANGUAGES.map((language) => {
+        {GENERATOR_LANGUAGES.map((language) => {
           const isSelected = language === selectedLanguage;
 
           return (
@@ -46,7 +46,7 @@ export default function LanguageSelector({
                 },
               ]}
             >
-              <Text style={styles.flag}>{getProjectLanguageFlag(language)}</Text>
+              <Text style={styles.flag}>{getGeneratorLanguageFlag(language)}</Text>
               <Text
                 style={[
                   globalStyles.text,

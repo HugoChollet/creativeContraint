@@ -8,13 +8,13 @@ import GeneratedConstraintsSheet from "@/components/specific/generated-constrain
 import QuickSelector from "@/components/specific/quick-selector";
 import { PresetMode } from "@/components/specific/status-selector";
 import {
-  isProjectLanguage,
-  isProjectSupportedFileType,
-  normalizeProjectTags,
-} from "@/constants/project-metadata";
-import { getProjectColor } from "@/constants/theme";
+  isGeneratorLanguage,
+  isGeneratorSupportedFileType,
+  normalizeGeneratorTags,
+} from "@/constants/generator-metadata";
+import { getGeneratorColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
-import { useHomeProjects } from "@/contexts/home-projects-context";
+import { useHomeGenerators } from "@/contexts/home-generators-context";
 import { useStyles } from "@/hooks/use-styles";
 import {
   getConstraintCategoryIdentifier,
@@ -23,19 +23,19 @@ import {
   getDefaultConstraintSetName,
 } from "@/lib/constraint-set-data";
 import {
-  LAB_GENERATION_HISTORY_LIMIT,
-  loadLabGenerationHistory,
-  saveLabGenerationHistory,
-} from "@/lib/lab-generation-history";
-import { getBundledProjectData, getProjectTitle } from "@/lib/project-data";
+  GENERATORS_HISTORY_LIMIT,
+  loadGeneratorsHistory,
+  saveGeneratorsHistory,
+} from "@/lib/generators-generation-history";
+import { getBundledGeneratorData, getGeneratorTitle } from "@/lib/generator-data";
 import {
   GeneratedConstraintSet,
   Option,
   SelectedState,
 } from "@/types/constraints";
-import { CategoryJSON, ProjectJSON } from "@/types/json-objects";
+import { CategoryJSON, GeneratorJSON } from "@/types/json-objects";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
@@ -44,11 +44,11 @@ import {
   View,
 } from "react-native";
 
-const buildInitialSelectedState = (projectData: ProjectJSON): SelectedState => {
+const buildInitialSelectedState = (projectData: GeneratorJSON): SelectedState => {
   const activeCategories: Record<string, boolean> = {};
   const selectedOptions: Record<string, boolean> = {};
 
-  // Lab keeps its toggles separate from the source project, so everything starts enabled here.
+  // Generators keep their toggles separate from the source generator, so everything starts enabled here.
   projectData.categories.forEach((category: CategoryJSON) => {
     activeCategories[getConstraintCategoryIdentifier(category)] =
       !category.disabled;
@@ -80,9 +80,9 @@ const createGeneratedConstraintSetId = () =>
   `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 
 const buildGeneratedConstraintSet = (
-  projectData: ProjectJSON,
+  projectData: GeneratorJSON,
   selectedItems: SelectedState,
-  projectSnapshot: Pick<
+  generatorSnapshot: Pick<
     GeneratedConstraintSet,
     | "projectId"
     | "projectLabel"
@@ -164,8 +164,8 @@ const buildGeneratedConstraintSet = (
 
   return {
     id: createGeneratedConstraintSetId(),
-    name: getDefaultConstraintSetName(projectSnapshot.projectLabel),
-    ...projectSnapshot,
+    name: getDefaultConstraintSetName(generatorSnapshot.projectLabel),
+    ...generatorSnapshot,
     generatedAt: new Date().toISOString(),
     constraints: results,
     constraintIds: ids,
@@ -173,7 +173,7 @@ const buildGeneratedConstraintSet = (
   };
 };
 
-export default function LabScreen() {
+export default function GeneratorsScreen() {
   const { id, type } = useLocalSearchParams<{ id?: string; type?: string }>();
   const [modalVisible, setModalVisible] = useState(false);
   const [visibleLogin, setVisibleLogin] = useState(false);
@@ -187,88 +187,90 @@ export default function LabScreen() {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const { t, i18n } = useTranslation();
   const { session } = useAuth();
-  const { activeProject, projects, loading, setActiveProjectId } =
-    useHomeProjects();
+  const { activeGenerator, generators, loading, setActiveGeneratorId } =
+    useHomeGenerators();
   const { globalStyles, theme, colors } = useStyles();
   const router = useRouter();
-  const routeProjectId = Array.isArray(id) ? id[0] : id;
+  const routeGeneratorId = Array.isArray(id) ? id[0] : id;
   const routeType = Array.isArray(type) ? type[0] : type;
 
-  const contextProject = useMemo(() => {
+  const contextGenerator = useMemo(() => {
     // Prefer the DB-backed project selected on Home, but keep route-based fallback support.
-    if (routeProjectId && routeProjectId !== "1") {
-      return projects.find((project) => project.id === routeProjectId) ?? null;
+    if (routeGeneratorId && routeGeneratorId !== "1") {
+      return (
+        generators.find((generator) => generator.id === routeGeneratorId) ?? null
+      );
     }
 
-    return activeProject;
-  }, [activeProject, projects, routeProjectId]);
+    return activeGenerator;
+  }, [activeGenerator, generators, routeGeneratorId]);
 
   useEffect(() => {
-    if (contextProject && contextProject.id !== activeProject?.id) {
-      setActiveProjectId(contextProject.id);
+    if (contextGenerator && contextGenerator.id !== activeGenerator?.id) {
+      setActiveGeneratorId(contextGenerator.id);
     }
-  }, [activeProject?.id, contextProject, setActiveProjectId]);
+  }, [activeGenerator?.id, contextGenerator, setActiveGeneratorId]);
 
   const shouldWaitForContextProject =
-    routeProjectId !== undefined &&
-    routeProjectId !== "1" &&
+    routeGeneratorId !== undefined &&
+    routeGeneratorId !== "1" &&
     loading &&
-    !contextProject;
+    !contextGenerator;
 
-  const fallbackProjectData = useMemo(
+  const fallbackGeneratorData = useMemo(
     () =>
-      getBundledProjectData({
-        projectType: routeType,
+      getBundledGeneratorData({
+        generatorType: routeType,
         language: i18n.language,
       }),
     [i18n.language, routeType],
   );
 
-  const dataSource = contextProject?.dataSource ?? fallbackProjectData;
-  const projectTitle = getProjectTitle(dataSource);
-  const projectSnapshot = useMemo(
+  const dataSource = contextGenerator?.dataSource ?? fallbackGeneratorData;
+  const generatorTitle = getGeneratorTitle(dataSource);
+  const generatorSnapshot = useMemo(
     () => ({
-      projectId: contextProject?.id ?? null,
-      projectLabel: contextProject?.name ?? projectTitle,
+      projectId: contextGenerator?.id ?? null,
+      projectLabel: contextGenerator?.name ?? generatorTitle,
       language:
-        contextProject?.language ??
-        (isProjectLanguage(dataSource.language) ? dataSource.language : null),
+        contextGenerator?.language ??
+        (isGeneratorLanguage(dataSource.language) ? dataSource.language : null),
       supportedFiles:
-        contextProject?.supported_files ??
-        (isProjectSupportedFileType(dataSource.supported_files)
+        contextGenerator?.supported_files ??
+        (isGeneratorSupportedFileType(dataSource.supported_files)
           ? dataSource.supported_files
           : null),
-      tags: contextProject?.tags ?? normalizeProjectTags(dataSource.tags),
-      color: contextProject?.color ?? null,
+      tags: contextGenerator?.tags ?? normalizeGeneratorTags(dataSource.tags),
+      color: contextGenerator?.color ?? null,
     }),
     [
-      contextProject?.color,
-      contextProject?.id,
-      contextProject?.language,
-      contextProject?.name,
-      contextProject?.supported_files,
-      contextProject?.tags,
+      contextGenerator?.color,
+      contextGenerator?.id,
+      contextGenerator?.language,
+      contextGenerator?.name,
+      contextGenerator?.supported_files,
+      contextGenerator?.tags,
       dataSource.language,
       dataSource.supported_files,
       dataSource.tags,
-      projectTitle,
+      generatorTitle,
     ],
   );
-  const projectHistoryKey = useMemo(() => {
-    if (contextProject?.id) {
-      return `project:${contextProject.id}`;
+  const generatorHistoryKey = useMemo(() => {
+    if (contextGenerator?.id) {
+      return `project:${contextGenerator.id}`;
     }
 
     return `bundled:${routeType ?? dataSource.project_type}:${i18n.language}`;
-  }, [contextProject?.id, dataSource.project_type, i18n.language, routeType]);
+  }, [contextGenerator?.id, dataSource.project_type, i18n.language, routeType]);
 
-  const projectColor = contextProject?.color
-    ? getProjectColor({
-        color: contextProject.color,
+  const generatorColor = contextGenerator?.color
+    ? getGeneratorColor({
+        color: contextGenerator.color,
         theme,
       })
-    : getProjectColor({
-        label: contextProject?.routeType ?? dataSource.project_type,
+    : getGeneratorColor({
+        label: contextGenerator?.routeType ?? dataSource.project_type,
         theme,
       });
 
@@ -288,19 +290,19 @@ export default function LabScreen() {
       ? null
       : (generationHistory[currentHistoryIndex] ?? null);
 
-  const openCategoryBrowse = () => {
+  const openCategoryBrowse = useCallback(() => {
     router.push({
       pathname: "/category-browse",
       params: {
         mode: "edition",
       },
     });
-  };
+  }, [router]);
 
   useEffect(() => {
     let isMounted = true;
 
-    // Switching project source resets the Lab toggles, then rehydrates the local history for that project.
+    // Switching generator source resets the toggles, then rehydrates the local history for that generator.
     setSelectedItems(initialSelectedItems);
     setGenerationHistory([]);
     setCurrentHistoryIndex(null);
@@ -309,7 +311,7 @@ export default function LabScreen() {
     setModalVisible(false);
 
     const hydrateGenerationHistory = async () => {
-      const storedHistory = await loadLabGenerationHistory(projectHistoryKey);
+      const storedHistory = await loadGeneratorsHistory(generatorHistoryKey);
 
       if (!isMounted) {
         return;
@@ -327,7 +329,7 @@ export default function LabScreen() {
     return () => {
       isMounted = false;
     };
-  }, [initialSelectedItems, projectHistoryKey]);
+  }, [initialSelectedItems, generatorHistoryKey]);
 
   useEffect(() => {
     if (!session?.user || !visibleLogin) {
@@ -343,8 +345,8 @@ export default function LabScreen() {
       return;
     }
 
-    void saveLabGenerationHistory(projectHistoryKey, generationHistory);
-  }, [generationHistory, isHistoryHydrated, projectHistoryKey]);
+    void saveGeneratorsHistory(generatorHistoryKey, generationHistory);
+  }, [generationHistory, isHistoryHydrated, generatorHistoryKey]);
 
   const toggleCategory = (categoryKey: string) => {
     setSelectedItems((prev) => ({
@@ -377,12 +379,12 @@ export default function LabScreen() {
     const nextGeneratedConstraintSet = buildGeneratedConstraintSet(
       dataSource,
       selectedItems,
-      projectSnapshot,
+      generatorSnapshot,
     );
     const nextGenerationHistory = [
       ...generationHistory,
       nextGeneratedConstraintSet,
-    ].slice(-LAB_GENERATION_HISTORY_LIMIT);
+    ].slice(-GENERATORS_HISTORY_LIMIT);
 
     setGenerationHistory(nextGenerationHistory);
     setCurrentHistoryIndex(nextGenerationHistory.length - 1);
@@ -445,10 +447,10 @@ export default function LabScreen() {
   return (
     <>
       <Header
-        title={t("screen:lab.lab_title", {
-          type: projectTitle,
+        title={t("screen:generators.generator_title", {
+          type: generatorTitle,
         })}
-        color={projectColor}
+        color={generatorColor}
       />
       <View style={[globalStyles.screenContainer]}>
         <ScrollView>
@@ -462,12 +464,12 @@ export default function LabScreen() {
               onBulkUpdate={bulkUpdateOptions}
               isExpanded={expandedCategory === cat.name}
               onExpand={() => handleToggleExpand(cat.name)}
-              color={projectColor}
+              color={generatorColor}
             />
           ))}
           <AddButton
-            projectColor={projectColor}
-            label={t("screen:lab.add-button.label-category")}
+            generatorColor={generatorColor}
+            label={t("screen:generators.add-button.label-category")}
             onClick={() => {
               if (!session?.user) {
                 setVisibleLogin(true);
@@ -481,11 +483,11 @@ export default function LabScreen() {
         </ScrollView>
 
         <ConfirmCancelButton
-          color={projectColor}
-          labelConfirm={t("screen:lab.generate_button", {
-            type: projectTitle,
+          color={generatorColor}
+          labelConfirm={t("screen:generators.generate_button", {
+            type: generatorTitle,
           })}
-          accessibilityLabelCancel={t("screen:lab.latest_result_button")}
+          accessibilityLabelCancel={t("screen:generators.latest_result_button")}
           iconCancel="arrow-up-outline"
           isActive={hasSelectedCategories}
           isCancelActive={hasGeneratedConstraints}
@@ -498,7 +500,7 @@ export default function LabScreen() {
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
             generatedConstraintSet={currentGeneratedConstraintSet}
-            color={projectColor}
+            color={generatorColor}
             dataSource={dataSource}
             historyCount={generationHistory.length}
             currentHistoryIndex={currentHistoryIndex ?? 0}

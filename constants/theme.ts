@@ -68,7 +68,7 @@ export const Themes = {
   },
 } as const;
 
-export const ProjectsColors = {
+export const GeneratorsColors = {
   light: {
     book: "rgba(27, 23, 208, 1)",
     music: "rgba(23, 184, 166, 1)",
@@ -91,17 +91,17 @@ export const ProjectsColors = {
   },
 } as const;
 
-export type ProjectKey = keyof typeof ProjectsColors.light;
-export type ProjectLabel = ProjectKey | string;
-export type ProjectColorValue = string;
-interface GetProjectColorParams {
-  label?: ProjectLabel;
-  color?: ProjectColorValue;
+export type GeneratorKey = keyof typeof GeneratorsColors.light;
+export type GeneratorLabel = GeneratorKey | string;
+export type GeneratorColorValue = string;
+interface GetGeneratorColorParams {
+  label?: GeneratorLabel;
+  color?: GeneratorColorValue;
   opacity?: number;
   theme?: AppTheme;
 }
 
-const projectKeyMap: Record<string, ProjectKey> = {
+const generatorKeyMap: Record<string, GeneratorKey> = {
   book: "book",
   music: "music",
   photography: "photography",
@@ -116,13 +116,13 @@ const projectKeyMap: Record<string, ProjectKey> = {
   videogame: "videogame",
 };
 
-export const getProjectColor = ({
+export const getGeneratorColor = ({
   label,
   color,
   opacity = 1,
   theme = "light",
-}: GetProjectColorParams = {}): string => {
-  const map: Record<string, ProjectKey> = {
+}: GetGeneratorColorParams = {}): string => {
+  const map: Record<string, GeneratorKey> = {
     Book: "book",
     Music: "music",
     Photography: "photography",
@@ -135,8 +135,8 @@ export const getProjectColor = ({
 
   if (label) {
     const normalizedLabel = label.trim().toLowerCase();
-    const key = map[label] || projectKeyMap[normalizedLabel] || "book";
-    const baseColor = ProjectsColors[theme][key];
+    const key = map[label] || generatorKeyMap[normalizedLabel] || "book";
+    const baseColor = GeneratorsColors[theme][key];
     return withOpacity(baseColor, opacity);
   }
 

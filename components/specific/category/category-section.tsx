@@ -11,7 +11,7 @@ interface CategorySectionProps {
   onFork?: (category: Category) => void;
   onPublish?: (cat: Category) => void;
   onToggleCategory: (category: Category) => void;
-  projectColor: string;
+  generatorColor: string;
   section: CategorySectionData;
 }
 
@@ -21,7 +21,7 @@ export default function CategorySection({
   onFork,
   onPublish,
   onToggleCategory,
-  projectColor,
+  generatorColor,
   section,
 }: CategorySectionProps) {
   const { globalStyles, colors } = useStyles();
@@ -51,7 +51,7 @@ export default function CategorySection({
             onEdit={onEdit}
             onFork={onFork}
             onPublish={() => onPublish?.(cat)}
-            projectColor={projectColor}
+            generatorColor={generatorColor}
             category={cat}
             selected={section.selected.includes(cat.id)}
             onToggleCategory={onToggleCategory}

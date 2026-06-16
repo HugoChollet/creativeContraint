@@ -1,16 +1,16 @@
 import { useAuth } from "@/contexts/auth-context";
 import { useCollection } from "@/hooks/use-collection";
 import {
-  buildProjectJsonFromProject,
-  getProjectRouteType,
-} from "@/lib/project-data";
+  buildGeneratorJsonFromGenerator,
+  getGeneratorRouteType,
+} from "@/lib/generator-data";
 import { Category } from "@/types/category";
-import { ProjectJSON } from "@/types/json-objects";
+import { GeneratorJSON } from "@/types/json-objects";
 import {
-  Project,
-  ProjectRelation,
-  UserProjectSelection,
-} from "@/types/projects";
+  Generator,
+  GeneratorRelation,
+  UserGeneratorSelection,
+} from "@/types/generators";
 import React, {
   createContext,
   ReactNode,
@@ -21,14 +21,14 @@ import React, {
   useState,
 } from "react";
 
-interface HomeProjectRelation extends ProjectRelation {
+interface HomeGeneratorRelation extends GeneratorRelation {
   project_category_relations: {
     categories: Category | null;
   }[];
 }
 
-interface HomeProjectSelectionRecord extends UserProjectSelection {
-  project: HomeProjectRelation | null;
+interface HomeGeneratorSelectionRecord extends UserGeneratorSelection {
+  project: HomeGeneratorRelation | null;
 }
 
 interface ProfileRecord {
@@ -36,37 +36,37 @@ interface ProfileRecord {
   username: string | null;
 }
 
-export interface HomeContextProject extends Project {
+export interface HomeContextGenerator extends Generator {
   selected_category_ids: string[];
   routeType: string;
   ownerUsername?: string | null;
-  dataSource: ProjectJSON;
+  dataSource: GeneratorJSON;
 }
 
-interface HomeProjectsContextType {
-  projects: HomeContextProject[];
-  activeProject: HomeContextProject | null;
-  activeProjectId: string | null;
-  setActiveProjectId: (projectId: string | null) => void;
-  clearActiveProject: () => void;
-  refreshProjects: () => Promise<void>;
+interface HomeGeneratorsContextType {
+  generators: HomeContextGenerator[];
+  activeGenerator: HomeContextGenerator | null;
+  activeGeneratorId: string | null;
+  setActiveGeneratorId: (projectId: string | null) => void;
+  clearActiveGenerator: () => void;
+  refreshGenerators: () => Promise<void>;
   loading: boolean;
 }
 
-const HomeProjectsContext = createContext<HomeProjectsContextType | undefined>(
+const HomeGeneratorsContext = createContext<HomeGeneratorsContextType | undefined>(
   undefined,
 );
 
-export function HomeProjectsProvider({ children }: { children: ReactNode }) {
+export function HomeGeneratorsProvider({ children }: { children: ReactNode }) {
   const { session } = useAuth();
-  const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
+  const [activeGeneratorId, setActiveGeneratorId] = useState<string | null>(null);
   const userId = session?.user.id;
 
   const {
     data: selections,
     loading: loadingSelections,
     refresh,
-  } = useCollection<HomeProjectSelectionRecord>("user_project_selections", {
+  } = useCollection<HomeGeneratorSelectionRecord>("user_project_selections", {
     select: `
         id,
         owner_id,
@@ -111,7 +111,7 @@ export function HomeProjectsProvider({ children }: { children: ReactNode }) {
         new Set(
           selections
             .map((selection) => selection.project)
-            .filter((project): project is HomeProjectRelation =>
+            .filter((project): project is HomeGeneratorRelation =>
               Boolean(project),
             )
             .filter(
@@ -142,7 +142,7 @@ export function HomeProjectsProvider({ children }: { children: ReactNode }) {
     [ownerProfiles],
   );
 
-  const projects = useMemo<HomeContextProject[]>(
+  const generators = useMemo<HomeContextGenerator[]>(
     () =>
       selections.flatMap((selection) => {
         if (!selection.project) {
@@ -155,19 +155,19 @@ export function HomeProjectsProvider({ children }: { children: ReactNode }) {
           relation.categories ? [relation.categories] : [],
         );
         const selectedCategoryIdSet = new Set(selection.selected_category_ids);
-        // Home/Lab should only see the categories the user explicitly selected for this project.
+        // Home/generators should only see the categories the user explicitly selected for this generator.
         const categories = allCategories.filter((category) =>
           selectedCategoryIdSet.has(category.id),
         );
-        const routeType = getProjectRouteType(projectRecord.name);
-        const baseProject: HomeContextProject = {
+        const routeType = getGeneratorRouteType(projectRecord.name);
+        const baseProject: HomeContextGenerator = {
           ...projectRecord,
           categories,
           selected_category_ids: selection.selected_category_ids,
           routeType,
           ownerUsername: ownerProfilesById.get(projectRecord.owner_id),
-          // Lab still consumes the legacy ProjectJSON shape, even when the source is the DB.
-          dataSource: buildProjectJsonFromProject(
+          // Generators still consume the legacy GeneratorJSON shape, even when the source is the DB.
+          dataSource: buildGeneratorJsonFromGenerator(
             {
               ...projectRecord,
               categories,
@@ -181,14 +181,15 @@ export function HomeProjectsProvider({ children }: { children: ReactNode }) {
     [ownerProfilesById, selections],
   );
 
-  const activeProject = useMemo(
-    () => projects.find((project) => project.id === activeProjectId) ?? null,
-    [activeProjectId, projects],
+  const activeGenerator = useMemo(
+    () =>
+      generators.find((generator) => generator.id === activeGeneratorId) ?? null,
+    [activeGeneratorId, generators],
   );
 
   useEffect(() => {
-    // Clear stale selections after logout or after a refresh removed the active project.
-    setActiveProjectId((currentProjectId) => {
+    // Clear stale selections after logout or after a refresh removed the active generator.
+    setActiveGeneratorId((currentProjectId) => {
       if (!session?.user.id) {
         return null;
       }
@@ -197,39 +198,39 @@ export function HomeProjectsProvider({ children }: { children: ReactNode }) {
         return currentProjectId;
       }
 
-      return projects.some((project) => project.id === currentProjectId)
+      return generators.some((generator) => generator.id === currentProjectId)
         ? currentProjectId
         : null;
     });
-  }, [projects, session?.user.id]);
+  }, [generators, session?.user.id]);
 
-  const refreshProjects = useCallback(async () => {
+  const refreshGenerators = useCallback(async () => {
     await refresh();
   }, [refresh]);
 
   return (
-    <HomeProjectsContext.Provider
+    <HomeGeneratorsContext.Provider
       value={{
-        projects,
-        activeProject,
-        activeProjectId,
-        setActiveProjectId,
-        clearActiveProject: () => setActiveProjectId(null),
-        refreshProjects,
+        generators,
+        activeGenerator,
+        activeGeneratorId,
+        setActiveGeneratorId,
+        clearActiveGenerator: () => setActiveGeneratorId(null),
+        refreshGenerators,
         loading: loadingSelections || loadingProfiles,
       }}
     >
       {children}
-    </HomeProjectsContext.Provider>
+    </HomeGeneratorsContext.Provider>
   );
 }
 
-export function useHomeProjects() {
-  const context = useContext(HomeProjectsContext);
+export function useHomeGenerators() {
+  const context = useContext(HomeGeneratorsContext);
 
   if (!context) {
     throw new Error(
-      "useHomeProjects must be used within a HomeProjectsProvider",
+      "useHomeGenerators must be used within a HomeGeneratorsProvider",
     );
   }
 

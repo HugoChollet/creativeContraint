@@ -9,19 +9,19 @@ import TagSelector, {
 import ConstraintCrud from "@/components/specific/constraint/constraint-crud";
 import ConstraintForm from "@/components/specific/constraint/constraint-form";
 import {
-  getCategoryTagsFromProject,
-  getDefaultProjectLanguage,
-  normalizeProjectTags,
-  PROJECT_TAGS,
-  ProjectLanguage,
-  ProjectTag,
-  toggleProjectTag,
-} from "@/constants/project-metadata";
-import { getProjectColor } from "@/constants/theme";
-import { useHomeProjects } from "@/contexts/home-projects-context";
+  getCategoryTagsFromGenerator,
+  getDefaultGeneratorLanguage,
+  normalizeGeneratorTags,
+  GENERATOR_TAGS,
+  GeneratorLanguage,
+  GeneratorTag,
+  toggleGeneratorTag,
+} from "@/constants/generator-metadata";
+import { getGeneratorColor } from "@/constants/theme";
+import { useHomeGenerators } from "@/contexts/home-generators-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
-import { getProjectTitle } from "@/lib/project-data";
+import { getGeneratorTitle } from "@/lib/generator-data";
 import { Category } from "@/types/category";
 import { Option } from "@/types/constraints";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -60,14 +60,14 @@ const cleanCategoryDraft = ({
   name: string;
   description: string;
   options: Option[];
-  language: ProjectLanguage;
+  language: GeneratorLanguage;
   tags: readonly string[];
 }) => ({
   name: name.trim(),
   description: description.trim(),
   options: cleanCategoryOptions(options),
-  language: getDefaultProjectLanguage(language),
-  tags: normalizeProjectTags(tags),
+  language: getDefaultGeneratorLanguage(language),
+  tags: normalizeGeneratorTags(tags),
 });
 
 export default function CategoryFormScreen() {
@@ -81,53 +81,53 @@ export default function CategoryFormScreen() {
   const { globalStyles, colors, theme } = useStyles();
   const { t, i18n } = useTranslation();
   const headerHeight = useHeaderHeight();
-  const { activeProject, loading: loadingHomeProjects } = useHomeProjects();
+  const { activeGenerator, loading: loadingHomeGenerators } = useHomeGenerators();
   const {
     addRecord,
     updateRecord,
     fetchCollection,
     loading: isSaving,
   } = useCollection<Category>("categories");
-  const initialProjectLanguage = getDefaultProjectLanguage(
-    activeProject?.language ?? i18n.language,
+  const initialGeneratorLanguage = getDefaultGeneratorLanguage(
+    activeGenerator?.language ?? i18n.language,
   );
-  const initialProjectTags = getCategoryTagsFromProject(activeProject?.tags);
+  const initialGeneratorTags = getCategoryTagsFromGenerator(activeGenerator?.tags);
   const isEditMode = categoryAction === "edit";
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [language, setLanguage] = useState<ProjectLanguage>(
-    initialProjectLanguage,
+  const [language, setLanguage] = useState<GeneratorLanguage>(
+    initialGeneratorLanguage,
   );
-  const [tags, setTags] = useState<ProjectTag[]>(initialProjectTags);
+  const [tags, setTags] = useState<GeneratorTag[]>(initialGeneratorTags);
   const [editedOption, setEditedOption] = useState<Option | undefined>();
   const [options, setOptions] = useState<Option[]>([]);
   const [isHydratingCategory, setIsHydratingCategory] = useState(
     Boolean(categoryId),
   );
 
-  const projectTitle = activeProject
-    ? getProjectTitle(activeProject.dataSource)
-    : "Project";
-  const projectColor = activeProject?.color
-    ? getProjectColor({
-        color: activeProject.color,
+  const generatorTitle = activeGenerator
+    ? getGeneratorTitle(activeGenerator.dataSource)
+    : "Generator";
+  const generatorColor = activeGenerator?.color
+    ? getGeneratorColor({
+        color: activeGenerator.color,
         theme,
       })
-    : getProjectColor({
-        label: activeProject?.routeType,
+    : getGeneratorColor({
+        label: activeGenerator?.routeType,
         theme,
       });
-  const projectColorSoft = getProjectColor({
-    ...(activeProject?.color
-      ? { color: activeProject.color }
-      : { label: activeProject?.routeType }),
+  const generatorColorSoft = getGeneratorColor({
+    ...(activeGenerator?.color
+      ? { color: activeGenerator.color }
+      : { label: activeGenerator?.routeType }),
     opacity: 0.2,
     theme,
   });
   const tagOptions = useMemo<TagSelectorOption[]>(
     () =>
-      PROJECT_TAGS.map((value) => ({
+      GENERATOR_TAGS.map((value) => ({
         value,
         label: t(`component:metadata.tag_values.${value}`),
       })),
@@ -150,9 +150,9 @@ export default function CategoryFormScreen() {
       return;
     }
 
-    setLanguage(initialProjectLanguage);
-    setTags(initialProjectTags);
-  }, [categoryId, initialProjectLanguage, initialProjectTags]);
+    setLanguage(initialGeneratorLanguage);
+    setTags(initialGeneratorTags);
+  }, [categoryId, initialGeneratorLanguage, initialGeneratorTags]);
 
   useEffect(() => {
     let isActive = true;
@@ -185,9 +185,9 @@ export default function CategoryFormScreen() {
       setName(category.name);
       setDescription(category.description);
       setLanguage(
-        getDefaultProjectLanguage(category.language ?? activeProject?.language),
+        getDefaultGeneratorLanguage(category.language ?? activeGenerator?.language),
       );
-      setTags(getCategoryTagsFromProject(category.tags ?? activeProject?.tags));
+      setTags(getCategoryTagsFromGenerator(category.tags ?? activeGenerator?.tags));
       setOptions(category.options ?? []);
       setEditedOption(undefined);
       setIsHydratingCategory(false);
@@ -199,8 +199,8 @@ export default function CategoryFormScreen() {
       isActive = false;
     };
   }, [
-    activeProject?.language,
-    activeProject?.tags,
+    activeGenerator?.language,
+    activeGenerator?.tags,
     categoryId,
     fetchCollection,
   ]);
@@ -237,7 +237,7 @@ export default function CategoryFormScreen() {
     cleanedDraft.options.length >= ConstraintRequire.MIN_OPTIONS &&
     !isHydratingCategory;
 
-  if (loadingHomeProjects && !activeProject) {
+  if (loadingHomeGenerators && !activeGenerator) {
     return (
       <View
         style={[globalStyles.screenContainer, { justifyContent: "center" }]}
@@ -250,8 +250,8 @@ export default function CategoryFormScreen() {
   return (
     <>
       <Header
-        title={t("screen:category_form.title", { type: projectTitle })}
-        color={projectColor}
+        title={t("screen:category_form.title", { type: generatorTitle })}
+        color={generatorColor}
       />
       <View style={globalStyles.screenContainer}>
         <KeyboardAvoidingView
@@ -271,7 +271,7 @@ export default function CategoryFormScreen() {
                 {t("screen:category_form.name_label") + " *"}
               </Text>
               <TextInput
-                style={[globalStyles.input, { borderColor: projectColorSoft }]}
+                style={[globalStyles.input, { borderColor: generatorColorSoft }]}
                 placeholder={t("screen:category_form.name_placeholder")}
                 placeholderTextColor={colors.placeholder}
                 value={name}
@@ -288,7 +288,7 @@ export default function CategoryFormScreen() {
                 description={description}
                 setDescription={setDescription}
                 placeholder={t("screen:category_form.description_placeholder")}
-                projectColor={projectColor}
+                generatorColor={generatorColor}
                 isLoading={isHydratingCategory}
               />
             </View>
@@ -297,7 +297,7 @@ export default function CategoryFormScreen() {
               label={t("component:metadata.language_label")}
               selectedLanguage={language}
               onChange={setLanguage}
-              color={projectColor}
+              color={generatorColor}
             />
 
             <TagSelector
@@ -306,20 +306,20 @@ export default function CategoryFormScreen() {
               selectedValues={tags}
               onChange={(values) => {
                 const latestValue = values.find(
-                  (value): value is ProjectTag =>
-                    PROJECT_TAGS.includes(value as ProjectTag) &&
-                    !tags.includes(value as ProjectTag),
+                  (value): value is GeneratorTag =>
+                    GENERATOR_TAGS.includes(value as GeneratorTag) &&
+                    !tags.includes(value as GeneratorTag),
                 );
 
                 if (!latestValue) {
-                  setTags(normalizeProjectTags(values));
+                  setTags(normalizeGeneratorTags(values));
                   return;
                 }
 
                 setTags(
-                  toggleProjectTag(
+                  toggleGeneratorTag(
                     tags,
-                    latestValue as ProjectTag,
+                    latestValue as GeneratorTag,
                     CATEGORY_TAG_LIMIT,
                   ),
                 );
@@ -328,7 +328,7 @@ export default function CategoryFormScreen() {
                 count: tags.length,
                 max: CATEGORY_TAG_LIMIT,
               })}
-              color={projectColor}
+              color={generatorColor}
               maxSelections={CATEGORY_TAG_LIMIT}
               alwaysEnabledValues={["all"]}
             />
@@ -343,7 +343,7 @@ export default function CategoryFormScreen() {
                 setOptions([...options, option]);
                 setEditedOption(undefined);
               }}
-              projectColor={projectColor}
+              generatorColor={generatorColor}
               editedOption={editedOption}
             />
             <View>
@@ -361,11 +361,11 @@ export default function CategoryFormScreen() {
                           setEditedOption(opt);
                           setOptions(options.filter((o) => o.id !== opt.id));
                         }}
-                        projectColor={projectColor}
+                        generatorColor={generatorColor}
                       />
                       {opt.id !== options[options.length - 1].id && (
                         <>
-                          <Spacer divider={true} color={projectColorSoft} />
+                          <Spacer divider={true} color={generatorColorSoft} />
                           <Spacer height={8} />
                         </>
                       )}
@@ -377,7 +377,7 @@ export default function CategoryFormScreen() {
         </KeyboardAvoidingView>
 
         <ConfirmCancelButton
-          color={projectColor}
+          color={generatorColor}
           labelConfirm={t("screen:category_form.submit_button")}
           isActive={isFormValid}
           isLoading={isSaving || isHydratingCategory}

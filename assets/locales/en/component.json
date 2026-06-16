@@ -56,13 +56,13 @@
     "ok": "Got it"
   },
   "constraint-set-card": {
-    "upload": "Upload a project"
+    "upload": "Upload a generator"
   },
   "metadata": {
     "language_label": "Language",
     "supported_files_label": "Supported publication format",
     "tags_label": "Tags",
-    "visual_tag_label": "Project look",
+    "visual_tag_label": "Generator look",
     "visual_tag_helper": "Choose which tag drives the image and accent color",
     "tags_limit": "{{count}} / {{max}} selected",
     "tags_range": "{{count}} selected (minimum {{min}}, maximum {{max}})",
@@ -116,15 +116,15 @@
       "long": "Long"
     }
   },
-  "project_form": {
-    "title": "Create your project generator",
-    "name_label": "Project type name",
-    "name_placeholder": "My awesome project",
-    "description_label": "Project description",
-    "description_placeholder": "Describe your project to inspire creators",
-    "submit_button": "Save this project"
+  "generator_form": {
+    "title": "Create your generator",
+    "name_label": "Generator type name",
+    "name_placeholder": "My awesome generator",
+    "description_label": "Generator description",
+    "description_placeholder": "Describe your generator to inspire creators",
+    "submit_button": "Save this generator"
   },
-  "project_item": {
+  "generator_item": {
     "categories_counter": "Categories : {{count}}",
     "constraints_counter": "Constraints : {{count}}"
   },

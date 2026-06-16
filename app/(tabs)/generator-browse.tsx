@@ -2,34 +2,34 @@ import { AddButton } from "@/components/generic/add-button";
 import { ConfirmCancelButton } from "@/components/generic/confirm-cancel-buttons";
 import { Header } from "@/components/generic/header";
 import { ModalGeneric } from "@/components/generic/modal-generic";
-import ProjectLanguageFilter from "@/components/generic/project-language-filter";
+import GeneratorLanguageFilter from "@/components/generic/generator-language-filter";
 import Auth from "@/components/specific/auth";
-import ProjectSection from "@/components/specific/project/project-section";
+import GeneratorSection from "@/components/specific/generator/generator-section";
 import {
-  getDefaultProjectLanguage,
-  getDefaultProjectSupportedFileType,
-  getDefaultProjectTags,
-  matchesProjectLanguage,
-  ProjectLanguage,
-} from "@/constants/project-metadata";
+  getDefaultGeneratorLanguage,
+  getDefaultGeneratorSupportedFileType,
+  getDefaultGeneratorTags,
+  matchesGeneratorLanguage,
+  GeneratorLanguage,
+} from "@/constants/generator-metadata";
 import { useAuth } from "@/contexts/auth-context";
-import { useProjectDraft } from "@/contexts/project-draft-context";
+import { useGeneratorDraft } from "@/contexts/generator-draft-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
 import {
-  Project,
-  ProjectRelation,
-  ProjectSectionData,
-  UserProjectSelection,
-} from "@/types/projects";
+  Generator,
+  GeneratorRelation,
+  GeneratorSectionData,
+  UserGeneratorSelection,
+} from "@/types/generators";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ActivityIndicator, FlatList, View } from "react-native";
 
-export default function ProjectBrowseScreen() {
+export default function GeneratorBrowseScreen() {
   const { type: projectLabel } = useLocalSearchParams<{
     type: string;
   }>();
@@ -37,8 +37,8 @@ export default function ProjectBrowseScreen() {
   const { session } = useAuth();
   const { t, i18n } = useTranslation();
   const headerHeight = useHeaderHeight();
-  const [languageFilter, setLanguageFilter] = useState<ProjectLanguage | null>(
-    () => getDefaultProjectLanguage(i18n.language),
+  const [languageFilter, setLanguageFilter] = useState<GeneratorLanguage | null>(
+    () => getDefaultGeneratorLanguage(i18n.language),
   );
 
   const userId = session?.user?.id;
@@ -48,8 +48,8 @@ export default function ProjectBrowseScreen() {
     updateRecord,
     refresh,
     loading,
-    deleteRecord: deleteProject,
-  } = useCollection<ProjectRelation>("projects", {
+    deleteRecord: deleteGenerator,
+  } = useCollection<GeneratorRelation>("projects", {
     select: `
     *,
     project_category_relations (
@@ -69,17 +69,17 @@ export default function ProjectBrowseScreen() {
   });
   const {
     data: selected,
-    addRecord: addProjectSelection,
-    deleteRecords: deleteProjectSelections,
-    refresh: refreshSelectedProjects,
-  } = useCollection<UserProjectSelection>("user_project_selections", {
+    addRecord: addGeneratorSelection,
+    deleteRecords: deleteGeneratorSelections,
+    refresh: refreshSelectedGenerators,
+  } = useCollection<UserGeneratorSelection>("user_project_selections", {
     filterColumn: "owner_id",
     filterValue: userId,
   });
   const { updateRecord: updateCategoryRecord } =
     useCollection<Category>("categories");
 
-  const parsedProjects = useMemo<Project[]>(
+  const parsedGenerators = useMemo<Generator[]>(
     () =>
       data.map(({ project_category_relations, ...project }) => ({
         ...project,
@@ -93,45 +93,45 @@ export default function ProjectBrowseScreen() {
   useFocusEffect(
     useCallback(() => {
       refresh();
-      refreshSelectedProjects();
-    }, [refresh, refreshSelectedProjects]),
+      refreshSelectedGenerators();
+    }, [refresh, refreshSelectedGenerators]),
   );
 
-  const filteredProjects = useMemo(
+  const filteredGenerators = useMemo(
     () =>
-      parsedProjects.filter((project) =>
-        matchesProjectLanguage(project.language, languageFilter),
+      parsedGenerators.filter((project) =>
+        matchesGeneratorLanguage(project.language, languageFilter),
       ),
-    [languageFilter, parsedProjects],
+    [languageFilter, parsedGenerators],
   );
 
-  const personalProjects = useMemo(
+  const personalGenerators = useMemo(
     () =>
-      filteredProjects.filter(
+      filteredGenerators.filter(
         (item) => item.owner_id === userId && item.is_public === false,
       ),
-    [filteredProjects, userId],
+    [filteredGenerators, userId],
   );
 
-  const publishedProjects = useMemo(
+  const publishedGenerators = useMemo(
     () =>
-      filteredProjects.filter(
+      filteredGenerators.filter(
         (item) => item.owner_id === userId && item.is_public === true,
       ),
-    [filteredProjects, userId],
+    [filteredGenerators, userId],
   );
 
-  const officialProjects = useMemo(
-    () => filteredProjects.filter((item) => item.source === "official"),
-    [filteredProjects],
+  const officialGenerators = useMemo(
+    () => filteredGenerators.filter((item) => item.source === "official"),
+    [filteredGenerators],
   );
 
-  const communityProjects = useMemo(
+  const communityGenerators = useMemo(
     () =>
-      filteredProjects.filter(
+      filteredGenerators.filter(
         (item) => item.source === "community" && item.owner_id !== userId,
       ),
-    [filteredProjects, userId],
+    [filteredGenerators, userId],
   );
 
   const persistedSelectedIds = useMemo(() => {
@@ -141,49 +141,49 @@ export default function ProjectBrowseScreen() {
       new Set(selected.map((selection) => selection.project_id.toString())),
     );
   }, [selected]);
-  const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
+  const [selectedGeneratorIds, setSelectedGeneratorIds] = useState<string[]>([]);
   const [visibleLogin, setVisibleLogin] = useState(false);
 
   useEffect(() => {
-    setSelectedProjectIds(persistedSelectedIds);
+    setSelectedGeneratorIds(persistedSelectedIds);
   }, [persistedSelectedIds]);
 
   useEffect(() => {
-    setLanguageFilter(getDefaultProjectLanguage(i18n.language));
+    setLanguageFilter(getDefaultGeneratorLanguage(i18n.language));
   }, [i18n.language]);
 
   const hasSelectionChanges = useMemo(() => {
-    if (selectedProjectIds.length !== persistedSelectedIds.length) {
+    if (selectedGeneratorIds.length !== persistedSelectedIds.length) {
       return true;
     }
 
     const persistedSelectionSet = new Set(persistedSelectedIds);
 
-    return selectedProjectIds.some(
+    return selectedGeneratorIds.some(
       (projectId) => !persistedSelectionSet.has(projectId),
     );
-  }, [persistedSelectedIds, selectedProjectIds]);
+  }, [persistedSelectedIds, selectedGeneratorIds]);
 
-  const sections: ProjectSectionData[] = [
+  const sections: GeneratorSectionData[] = [
     {
-      title: t("screen:project_browse.personal_section"),
-      data: personalProjects,
-      selected: selectedProjectIds,
+      title: t("screen:generator_browse.personal_section"),
+      data: personalGenerators,
+      selected: selectedGeneratorIds,
     },
     {
-      title: t("screen:project_browse.published_section"),
-      data: publishedProjects,
-      selected: selectedProjectIds,
+      title: t("screen:generator_browse.published_section"),
+      data: publishedGenerators,
+      selected: selectedGeneratorIds,
     },
     {
-      title: t("screen:project_browse.official_section"),
-      data: officialProjects,
-      selected: selectedProjectIds,
+      title: t("screen:generator_browse.official_section"),
+      data: officialGenerators,
+      selected: selectedGeneratorIds,
     },
     {
-      title: t("screen:project_browse.community_section"),
-      data: communityProjects,
-      selected: selectedProjectIds,
+      title: t("screen:generator_browse.community_section"),
+      data: communityGenerators,
+      selected: selectedGeneratorIds,
     },
   ];
 
@@ -195,36 +195,36 @@ export default function ProjectBrowseScreen() {
     setSupportedFileType,
     setTags,
     setSelectedCategories,
-    resetProjectDraft,
-  } = useProjectDraft();
+    resetGeneratorDraft,
+  } = useGeneratorDraft();
 
-  const openProjectForm = useCallback(() => {
-    resetProjectDraft();
+  const openGeneratorForm = useCallback(() => {
+    resetGeneratorDraft();
     router.push({
-      pathname: "/project-form",
+      pathname: "/generator-form",
       params: { id: 1, type: projectLabel },
     });
-  }, [projectLabel, resetProjectDraft]);
+  }, [projectLabel, resetGeneratorDraft]);
 
   const setupDraft = ({
     draft,
     isForked,
   }: {
-    draft: Project;
+    draft: Generator;
     isForked: boolean;
   }) => {
     setName(draft.name);
     setDescription(draft.description);
-    setLanguage(getDefaultProjectLanguage(draft.language ?? i18n.language));
+    setLanguage(getDefaultGeneratorLanguage(draft.language ?? i18n.language));
     setSupportedFileType(
-      getDefaultProjectSupportedFileType(draft.supported_files),
+      getDefaultGeneratorSupportedFileType(draft.supported_files),
     );
-    setTags(getDefaultProjectTags(draft.tags));
+    setTags(getDefaultGeneratorTags(draft.tags));
     setSelectedCategories(draft.categories);
     setId(isForked ? "" : draft.id);
   };
 
-  const syncProjectVisibility = async (project: Project) => {
+  const syncGeneratorVisibility = async (project: Generator) => {
     const nextIsPublic = !project.is_public;
     const ownedCategories = project.categories.filter(
       (category) => category.owner_id === userId,
@@ -288,14 +288,14 @@ export default function ProjectBrowseScreen() {
     }
 
     setVisibleLogin(false);
-    openProjectForm();
-  }, [openProjectForm, session?.user, visibleLogin]);
+    openGeneratorForm();
+  }, [openGeneratorForm, session?.user, visibleLogin]);
 
   const handleConfirmSelection = async () => {
     const selectionIdsToDelete = selected.map((selection) => selection.id);
 
     if (selectionIdsToDelete.length > 0) {
-      const didDelete = await deleteProjectSelections(selectionIdsToDelete);
+      const didDelete = await deleteGeneratorSelections(selectionIdsToDelete);
 
       if (!didDelete) {
         console.error("Failed to delete old project selections");
@@ -303,8 +303,8 @@ export default function ProjectBrowseScreen() {
       }
     }
 
-    const nextSelections = parsedProjects
-      .filter((project) => selectedProjectIds.includes(project.id))
+    const nextSelections = parsedGenerators
+      .filter((project) => selectedGeneratorIds.includes(project.id))
       .map((project) => ({
         project_id: project.id,
         selected_category_ids: project.categories.map(
@@ -314,7 +314,7 @@ export default function ProjectBrowseScreen() {
 
     if (nextSelections.length > 0) {
       const insertedSelections = await Promise.all(
-        nextSelections.map((selection) => addProjectSelection(selection)),
+        nextSelections.map((selection) => addGeneratorSelection(selection)),
       );
 
       if (insertedSelections.some((selection) => !selection)) {
@@ -332,10 +332,10 @@ export default function ProjectBrowseScreen() {
   return (
     <View style={globalStyles.screenContainer}>
       <Header
-        title={t("screen:project_browse.title", { type: projectLabel })}
+        title={t("screen:generator_browse.title", { type: projectLabel })}
       />
       <View style={{ marginTop: 16, marginBottom: 8 }}>
-        <ProjectLanguageFilter
+        <GeneratorLanguageFilter
           label={t("component:metadata.language_label")}
           selectedLanguage={languageFilter}
           onChange={setLanguageFilter}
@@ -353,16 +353,16 @@ export default function ProjectBrowseScreen() {
           data={sections}
           keyExtractor={(item) => item.title}
           renderItem={({ item: section }) => (
-            <ProjectSection
+            <GeneratorSection
               key={section.title}
               section={section}
               onDelete={(id) => {
-                deleteProject(id);
+                deleteGenerator(id);
               }}
               onEdit={(project) => {
                 setupDraft({ draft: project, isForked: false });
                 router.push({
-                  pathname: "/project-form",
+                  pathname: "/generator-form",
                   params: {
                     id: 1,
                     type: projectLabel,
@@ -372,7 +372,7 @@ export default function ProjectBrowseScreen() {
               onFork={(project) => {
                 setupDraft({ draft: project, isForked: true });
                 router.push({
-                  pathname: "/project-form",
+                  pathname: "/generator-form",
                   params: {
                     id: 1,
                     type: projectLabel,
@@ -380,10 +380,10 @@ export default function ProjectBrowseScreen() {
                 });
               }}
               onPublish={(project) => {
-                syncProjectVisibility(project);
+                syncGeneratorVisibility(project);
               }}
-              onToggleProject={(projectId) => {
-                setSelectedProjectIds((prev) =>
+              onToggleGenerator={(projectId) => {
+                setSelectedGeneratorIds((prev) =>
                   prev.includes(projectId)
                     ? prev.filter((id) => id !== projectId)
                     : [...prev, projectId],
@@ -397,20 +397,20 @@ export default function ProjectBrowseScreen() {
         />
       )}
       <AddButton
-        projectColor={colors.tint}
-        label={t("screen:project_browse.add_button")}
+        generatorColor={colors.tint}
+        label={t("screen:generator_browse.add_button")}
         onClick={() => {
           if (!session?.user) {
             setVisibleLogin(true);
             return;
           }
 
-          openProjectForm();
+          openGeneratorForm();
         }}
       />
       <ConfirmCancelButton
         color={colors.tint}
-        labelConfirm={t("screen:project_browse.confirm_button")}
+        labelConfirm={t("screen:generator_browse.confirm_button")}
         isActive={hasSelectionChanges}
         onClickConfirm={handleConfirmSelection}
         onClickCancel={() =>

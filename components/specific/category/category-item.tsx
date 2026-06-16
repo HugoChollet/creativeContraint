@@ -11,7 +11,7 @@ interface CategoryItemProps {
   onEdit?: (category: Category) => void;
   onFork?: (category: Category) => void;
   onPublish?: () => void;
-  projectColor: string;
+  generatorColor: string;
   category: Category;
   selected: boolean;
   onToggleCategory: (category: Category) => void;
@@ -25,7 +25,7 @@ export default function CategoryItem({
   onEdit,
   onFork,
   onPublish,
-  projectColor,
+  generatorColor,
   selected,
   onToggleCategory,
   category,
@@ -68,7 +68,7 @@ export default function CategoryItem({
           onToggle={() => onToggleCategory(category)}
           isExpanded={expanded}
           onExpand={() => toggleExpand()}
-          color={projectColor}
+          color={generatorColor}
           isEnabled={selected}
           subtitle={
             category.options
@@ -80,7 +80,7 @@ export default function CategoryItem({
         />
         {expanded && (
           <>
-            <Crud actions={actions} color={projectColor} />
+            <Crud actions={actions} color={generatorColor} />
             <View>
               {category.options
                 ? category.options.map((item) => (
@@ -92,7 +92,7 @@ export default function CategoryItem({
                           item.difficulty
                         }
                         description={item.description}
-                        color={projectColor}
+                        color={generatorColor}
                       />
                     </View>
                   ))

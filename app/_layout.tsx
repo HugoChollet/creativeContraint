@@ -1,6 +1,6 @@
 import { TutorialCarousel } from "@/components/specific/tutorial/tutorial-carousel";
 import { AuthProvider } from "@/contexts/auth-context";
-import { ProjectDraftProvider } from "@/contexts/project-draft-context";
+import { GeneratorDraftProvider } from "@/contexts/generator-draft-context";
 import { ThemeProvider } from "@/contexts/theme-context";
 import { TutorialProvider } from "@/contexts/tutorial-context";
 import { useStyles } from "@/hooks/use-styles";
@@ -73,14 +73,14 @@ export default function RootLayout() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <ProjectDraftProvider>
+        <GeneratorDraftProvider>
           <TutorialProvider>
             <SafeAreaProvider>
               <AppLayout />
               <TutorialCarousel />
             </SafeAreaProvider>
           </TutorialProvider>
-        </ProjectDraftProvider>
+        </GeneratorDraftProvider>
       </AuthProvider>
     </ThemeProvider>
   );

@@ -1,17 +1,17 @@
 import { CommentButton } from "@/components/generic/comment-button";
 import MetadataBadges from "@/components/generic/metadata-badges";
 import { LikeButton } from "@/components/generic/like-button";
-import { getProjectColor } from "@/constants/theme";
-import { useProjectTranslations } from "@/hooks/use-project-translations";
+import { getGeneratorColor } from "@/constants/theme";
+import { useGeneratorTranslations } from "@/hooks/use-generator-translations";
 import { useStyles } from "@/hooks/use-styles";
 import {
-  getConstraintSetProjectColor,
-  getConstraintSetProjectDataSource,
+  getConstraintSetGeneratorColor,
+  getConstraintSetGeneratorDataSource,
   getConstraintSetName,
-  getConstraintSetProjectLabel,
-  getConstraintSetProjectLanguage,
-  getConstraintSetProjectSupportedFile,
-  getConstraintSetProjectTags,
+  getConstraintSetGeneratorLabel,
+  getConstraintSetGeneratorLanguage,
+  getConstraintSetGeneratorSupportedFile,
+  getConstraintSetGeneratorTags,
 } from "@/lib/constraint-set-data";
 import { SavedConstraintSet } from "@/types/constraints";
 import { Ionicons } from "@expo/vector-icons";
@@ -58,29 +58,29 @@ export function ConstraintsSetCard({
   const { t } = useTranslation();
   const { globalStyles, colors, theme } = useStyles();
   const constraintSetName = getConstraintSetName(item);
-  const projectLabel = getConstraintSetProjectLabel(item);
-  const solidColor = getConstraintSetProjectColor({
+  const projectLabel = getConstraintSetGeneratorLabel(item);
+  const solidColor = getConstraintSetGeneratorColor({
     constraintSet: item,
     theme,
   });
 
   const projectBackgroundColor = item.color
-    ? getProjectColor({
+    ? getGeneratorColor({
         color: item.color,
         opacity: 0.1,
         theme,
       })
-    : getProjectColor({
+    : getGeneratorColor({
         label: item.project?.name ?? item.project_label,
         opacity: 0.1,
         theme,
       });
 
   const dataSource = useMemo(() => {
-    return getConstraintSetProjectDataSource({ constraintSet: item });
+    return getConstraintSetGeneratorDataSource({ constraintSet: item });
   }, [item]);
 
-  const translatedConstraints = useProjectTranslations(
+  const translatedConstraints = useGeneratorTranslations(
     item.constraints,
     dataSource?.categories,
   );
@@ -180,9 +180,9 @@ export function ConstraintsSetCard({
 
       <View style={{ marginBottom: 12 }}>
         <MetadataBadges
-          language={getConstraintSetProjectLanguage(item)}
-          supportedFile={getConstraintSetProjectSupportedFile(item)}
-          tags={getConstraintSetProjectTags(item)}
+          language={getConstraintSetGeneratorLanguage(item)}
+          supportedFile={getConstraintSetGeneratorSupportedFile(item)}
+          tags={getConstraintSetGeneratorTags(item)}
           color={solidColor}
         />
       </View>
@@ -209,7 +209,7 @@ export function ConstraintsSetCard({
         ))}
         {translatedConstraints.length === 0 && (
           <Text style={{ color: colors.textDiscreet }}>
-            {t("screen:lab.empty_result")}
+            {t("screen:generators.empty_result")}
           </Text>
         )}
       </View>

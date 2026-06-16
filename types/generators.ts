@@ -1,8 +1,8 @@
 import {
-  ProjectLanguage,
-  ProjectSupportedFileType,
-  ProjectTag,
-} from "@/constants/project-metadata";
+  GeneratorLanguage,
+  GeneratorSupportedFileType,
+  GeneratorTag,
+} from "@/constants/generator-metadata";
 import { Category } from "./category";
 
 export enum Source {
@@ -11,15 +11,15 @@ export enum Source {
   User = "user",
 }
 
-export interface Project {
+export interface Generator {
   id: string;
   name: string;
   description: string;
   source: Source;
   categories: Category[];
-  language?: ProjectLanguage | null;
-  supported_files?: ProjectSupportedFileType | null;
-  tags?: ProjectTag[] | null;
+  language?: GeneratorLanguage | null;
+  supported_files?: GeneratorSupportedFileType | null;
+  tags?: GeneratorTag[] | null;
   is_public: boolean;
   owner_id: string;
   color?: string;
@@ -27,13 +27,13 @@ export interface Project {
   created_at?: string;
 }
 
-export interface ProjectSectionData {
+export interface GeneratorSectionData {
   title: string;
-  data: Project[];
+  data: Generator[];
   selected: string[];
 }
 
-export interface UserProjectSelection {
+export interface UserGeneratorSelection {
   id: string;
   owner_id: string;
   project_id: string;
@@ -41,29 +41,29 @@ export interface UserProjectSelection {
   created_at: string;
 }
 
-export interface ProjectCategoryRelation {
+export interface GeneratorCategoryRelation {
   id: string;
   project_id: string;
   category_id: string;
   owner_id: string;
 }
 
-export interface ProjectCategoryRelationResult {
+export interface GeneratorCategoryRelationResult {
   categories: Category | null;
 }
 
-export interface ProjectRelation {
+export interface GeneratorRelation {
   id: string;
   name: string;
   description: string;
   source: Source;
-  language?: ProjectLanguage | null;
-  supported_files?: ProjectSupportedFileType | null;
-  tags?: ProjectTag[] | null;
+  language?: GeneratorLanguage | null;
+  supported_files?: GeneratorSupportedFileType | null;
+  tags?: GeneratorTag[] | null;
   is_public: boolean;
   owner_id: string;
   color?: string;
   created_at: string;
   favorited_counter: number;
-  project_category_relations: ProjectCategoryRelationResult[];
+  project_category_relations: GeneratorCategoryRelationResult[];
 }

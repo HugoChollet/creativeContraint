@@ -2,7 +2,7 @@ import { Tabs } from "expo-router";
 import React, { useEffect } from "react";
 
 import { HapticTab } from "@/components/haptic-tab";
-import { HomeProjectsProvider } from "@/contexts/home-projects-context";
+import { HomeGeneratorsProvider } from "@/contexts/home-generators-context";
 import { useProfile } from "@/hooks/use-profile";
 import { useStyles } from "@/hooks/use-styles";
 import {
@@ -47,7 +47,7 @@ export default function TabLayout() {
   }, [data, i18n, setThemeMode]);
 
   return (
-    <HomeProjectsProvider>
+    <HomeGeneratorsProvider>
       <Tabs
         screenOptions={{
           tabBarStyle: {
@@ -62,7 +62,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: t("screen:layout.Lab"),
+            title: t("screen:layout.Generators"),
             tabBarIcon: ({ color }) => (
               <Ionicons size={28} name="flask" color={color} />
             ),
@@ -97,10 +97,10 @@ export default function TabLayout() {
         />
 
         <Tabs.Screen
-          name="lab"
+          name="generators"
           options={{
             href: null,
-            title: "Lab",
+            title: "Generators",
           }}
         />
         <Tabs.Screen
@@ -126,17 +126,17 @@ export default function TabLayout() {
         />
 
         <Tabs.Screen
-          name="project-browse"
+          name="generator-browse"
           options={{
             href: null,
-            title: "Browse Projects",
+            title: "Browse Generators",
           }}
         />
         <Tabs.Screen
-          name="project-form"
+          name="generator-form"
           options={{
             href: null,
-            title: "New Project",
+            title: "New Generator",
           }}
         />
         <Tabs.Screen
@@ -154,6 +154,6 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-    </HomeProjectsProvider>
+    </HomeGeneratorsProvider>
   );
 }

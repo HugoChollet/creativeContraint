@@ -1,4 +1,4 @@
-import { TranslatedRow } from "@/hooks/use-project-translations";
+import { TranslatedRow } from "@/hooks/use-generator-translations";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { useTranslation } from "react-i18next";

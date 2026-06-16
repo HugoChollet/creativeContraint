@@ -9,30 +9,30 @@ import { Spacer } from "@/components/generic/spacer";
 import TagSelector, {
   TagSelectorOption,
 } from "@/components/generic/tag-selector";
-import ProjectJsonImporter, {
+import GeneratorJsonImporter, {
   isImportedDraftCategory,
-} from "@/components/specific/project/project-json-importer";
+} from "@/components/specific/generator/generator-json-importer";
 import {
-  getCategoryTagsFromProject,
-  getDefaultProjectSupportedFileType,
-  getDefaultProjectTags,
-  getPrimaryProjectTag,
-  normalizeProjectTags,
-  prioritizeProjectTag,
-  PROJECT_SUPPORTED_FILE_TYPES,
-  PROJECT_TAGS,
-  ProjectLanguage,
-  ProjectTag,
-  toggleProjectTag,
-} from "@/constants/project-metadata";
-import { getHomeProjectImageFromTag } from "@/constants/home-projects";
-import { getProjectColor } from "@/constants/theme";
-import { useProjectDraft } from "@/contexts/project-draft-context";
+  getCategoryTagsFromGenerator,
+  getDefaultGeneratorSupportedFileType,
+  getDefaultGeneratorTags,
+  getPrimaryGeneratorTag,
+  normalizeGeneratorTags,
+  prioritizeGeneratorTag,
+  GENERATOR_SUPPORTED_FILE_TYPES,
+  GENERATOR_TAGS,
+  GeneratorLanguage,
+  GeneratorTag,
+  toggleGeneratorTag,
+} from "@/constants/generator-metadata";
+import { getHomeGeneratorImageFromTag } from "@/constants/home-generators";
+import { getGeneratorColor } from "@/constants/theme";
+import { useGeneratorDraft } from "@/contexts/generator-draft-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import { Category } from "@/types/category";
 import { Option } from "@/types/constraints";
-import { Project, ProjectCategoryRelation } from "@/types/projects";
+import { Generator, GeneratorCategoryRelation } from "@/types/generators";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useMemo, useState } from "react";
@@ -46,17 +46,17 @@ import {
   View,
 } from "react-native";
 
-const ProjectFormRequirements = {
+const GeneratorFormRequirements = {
   MIN_CATEGORIES: 2,
   NAME_LENGTH_MIN: 2,
-  PROJECT_TAGS_MIN: 1,
+  GENERATOR_TAGS_MIN: 1,
   PROJECT_FILE_MIN: 1,
 };
 const PROJECT_TAG_LIMIT = 4;
 
 const normalizeCategoryName = (value: string) => value.trim().toLowerCase();
 
-export default function ProjectFormScreen() {
+export default function GeneratorFormScreen() {
   const { type: projectLabel } = useLocalSearchParams<{
     type: string;
   }>();
@@ -68,8 +68,8 @@ export default function ProjectFormScreen() {
   const {
     addRecord,
     updateRecord,
-    loading: isSavingProject,
-  } = useCollection<Project>("projects");
+    loading: isSavingGenerator,
+  } = useCollection<Generator>("projects");
   const {
     data: existingCategories,
     fetchCollection: fetchCategories,
@@ -80,11 +80,11 @@ export default function ProjectFormScreen() {
     ascending: true,
   });
   const {
-    fetchCollection: fetchProjectCategoryRelations,
-    addRecords: addProjectCategoryRelations,
-    deleteRecords: deleteProjectCategoryRelations,
+    fetchCollection: fetchGeneratorCategoryRelations,
+    addRecords: addGeneratorCategoryRelations,
+    deleteRecords: deleteGeneratorCategoryRelations,
     loading: isSavingRelation,
-  } = useCollection<ProjectCategoryRelation>("project_category_relations");
+  } = useCollection<GeneratorCategoryRelation>("project_category_relations");
 
   const router = useRouter();
   const {
@@ -99,16 +99,16 @@ export default function ProjectFormScreen() {
     setSupportedFileType,
     tags,
     setTags,
-    projectColor,
+    generatorColor,
     selectedCategories,
     setSelectedCategories,
-    resetProjectDraft,
-  } = useProjectDraft();
+    resetGeneratorDraft,
+  } = useGeneratorDraft();
 
   const [isLoading] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
-  const projectColorSoft = getProjectColor({
-    color: projectColor,
+  const generatorColorSoft = getGeneratorColor({
+    color: generatorColor,
     opacity: 0.2,
     theme,
   });
@@ -116,14 +116,14 @@ export default function ProjectFormScreen() {
     a.name.localeCompare(b.name),
   );
   const isBusy = isLoading || isImporting;
-  const normalizedTags = normalizeProjectTags(tags);
+  const normalizedTags = normalizeGeneratorTags(tags);
   const selectedSupportedFileTypes = supportedFileType
     ? [supportedFileType]
     : [];
   const trimmedName = name.trim();
   const tagOptions = useMemo<TagSelectorOption[]>(
     () =>
-      PROJECT_TAGS.map((value) => ({
+      GENERATOR_TAGS.map((value) => ({
         value,
         label: t(`component:metadata.tag_values.${value}`),
       })),
@@ -131,13 +131,13 @@ export default function ProjectFormScreen() {
   );
   const supportedFileTypeOptions = useMemo<TagSelectorOption[]>(
     () =>
-      PROJECT_SUPPORTED_FILE_TYPES.map((value) => ({
+      GENERATOR_SUPPORTED_FILE_TYPES.map((value) => ({
         value,
         label: t(`component:metadata.supported_files.${value}`),
       })),
     [t],
   );
-  const visualTag = getPrimaryProjectTag(normalizedTags);
+  const visualTag = getPrimaryGeneratorTag(normalizedTags);
   const visualTagOptions = useMemo<TagSelectorOption[]>(
     () =>
       normalizedTags.map((value) => ({
@@ -146,8 +146,8 @@ export default function ProjectFormScreen() {
       })),
     [normalizedTags, t],
   );
-  const previewImage = getHomeProjectImageFromTag(visualTag);
-  const previewTitle = trimmedName || t("screen:project_form.name_placeholder");
+  const previewImage = getHomeGeneratorImageFromTag(visualTag);
+  const previewTitle = trimmedName || t("screen:generator_form.name_placeholder");
 
   const resolveSelectedCategories = async () => {
     const fetchedCategories = await fetchCategories({
@@ -169,8 +169,8 @@ export default function ProjectFormScreen() {
       name: string;
       description: string;
       options: Option[];
-      language: ProjectLanguage;
-      tags: ProjectTag[];
+      language: GeneratorLanguage;
+      tags: GeneratorTag[];
       is_public: boolean;
       favorited_counter: number;
     }[] = [];
@@ -200,7 +200,7 @@ export default function ProjectFormScreen() {
         language,
         // Imported categories inherit the project's metadata while
         // keeping the tighter category tag limit.
-        tags: getCategoryTagsFromProject(tags),
+        tags: getCategoryTagsFromGenerator(tags),
         is_public: false,
         favorited_counter: 0,
       });
@@ -245,11 +245,11 @@ export default function ProjectFormScreen() {
     return resolvedCategories;
   };
 
-  const syncProjectCategories = async (
+  const syncGeneratorCategories = async (
     projectId: string,
     categoryIds: string[],
   ) => {
-    const existingRelations = await fetchProjectCategoryRelations({
+    const existingRelations = await fetchGeneratorCategoryRelations({
       filterColumn: "project_id",
       filterValue: projectId,
     });
@@ -265,7 +265,7 @@ export default function ProjectFormScreen() {
 
     if (relationIdsToDelete.length > 0) {
       const didDelete =
-        await deleteProjectCategoryRelations(relationIdsToDelete);
+        await deleteGeneratorCategoryRelations(relationIdsToDelete);
       if (!didDelete) throw new Error("Failed to delete project relations");
     }
 
@@ -280,7 +280,7 @@ export default function ProjectFormScreen() {
       console.log(relationsToInsert);
 
       const insertedRelations =
-        await addProjectCategoryRelations(relationsToInsert);
+        await addGeneratorCategoryRelations(relationsToInsert);
       if (insertedRelations.length !== relationsToInsert.length) {
         throw new Error("Failed to insert project relations");
       }
@@ -288,7 +288,7 @@ export default function ProjectFormScreen() {
   };
 
   const handleSubmit = async () => {
-    if (!isFormValid || isSavingProject || isImporting) return;
+    if (!isFormValid || isSavingGenerator || isImporting) return;
 
     const projectDraft = {
       name: trimmedName,
@@ -297,7 +297,7 @@ export default function ProjectFormScreen() {
       supported_files: supportedFileType,
       tags: normalizedTags,
       is_public: false, // Defaulting to private for now
-      color: projectColor,
+      color: generatorColor,
     };
 
     const result =
@@ -308,7 +308,7 @@ export default function ProjectFormScreen() {
     if (result) {
       try {
         const resolvedCategories = await resolveSelectedCategories();
-        await syncProjectCategories(
+        await syncGeneratorCategories(
           result.id,
           resolvedCategories.map((category) => category.id),
         );
@@ -317,9 +317,9 @@ export default function ProjectFormScreen() {
         return;
       }
 
-      resetProjectDraft();
+      resetGeneratorDraft();
       router.push({
-        pathname: "/project-browse",
+        pathname: "/generator-browse",
         params: { id: 1 },
       });
     } else {
@@ -329,18 +329,18 @@ export default function ProjectFormScreen() {
   };
 
   const isFormValid =
-    trimmedName.length >= ProjectFormRequirements.NAME_LENGTH_MIN &&
-    normalizedTags.length >= ProjectFormRequirements.PROJECT_TAGS_MIN &&
+    trimmedName.length >= GeneratorFormRequirements.NAME_LENGTH_MIN &&
+    normalizedTags.length >= GeneratorFormRequirements.GENERATOR_TAGS_MIN &&
     selectedSupportedFileTypes.length >=
-      ProjectFormRequirements.PROJECT_FILE_MIN &&
-    selectedCategories.length >= ProjectFormRequirements.MIN_CATEGORIES &&
+      GeneratorFormRequirements.PROJECT_FILE_MIN &&
+    selectedCategories.length >= GeneratorFormRequirements.MIN_CATEGORIES &&
     !isBusy;
 
   return (
     <>
       <Header
-        title={t("screen:project_form.title", { type: projectLabel })}
-        color={projectColor}
+        title={t("screen:generator_form.title", { type: projectLabel })}
+        color={generatorColor}
       />
       <View style={globalStyles.screenContainer}>
         <KeyboardAvoidingView
@@ -361,14 +361,14 @@ export default function ProjectFormScreen() {
               }}
             >
               <Text style={globalStyles.label}>
-                {t("screen:project_form.name_label") + " *"}
+                {t("screen:generator_form.name_label") + " *"}
               </Text>
               <TextInput
                 style={[
                   globalStyles.input,
-                  { borderColor: projectColorSoft },
+                  { borderColor: generatorColorSoft },
                 ]}
-                placeholder={t("screen:project_form.name_placeholder")}
+                placeholder={t("screen:generator_form.name_placeholder")}
                 placeholderTextColor={colors.placeholder}
                 value={name}
                 onChangeText={setName}
@@ -378,13 +378,13 @@ export default function ProjectFormScreen() {
 
             <View>
               <Text style={globalStyles.label}>
-                {t("screen:project_form.description_label")}
+                {t("screen:generator_form.description_label")}
               </Text>
               <Description
                 description={description}
                 setDescription={setDescription}
-                placeholder={t("screen:project_form.description_placeholder")}
-                projectColor={projectColor}
+                placeholder={t("screen:generator_form.description_placeholder")}
+                generatorColor={generatorColor}
                 isLoading={isBusy}
               />
             </View>
@@ -395,7 +395,7 @@ export default function ProjectFormScreen() {
               label={t("component:metadata.language_label")}
               selectedLanguage={language}
               onChange={setLanguage}
-              color={projectColor}
+              color={generatorColor}
             />
 
             <TagSelector
@@ -404,14 +404,14 @@ export default function ProjectFormScreen() {
               selectedValues={selectedSupportedFileTypes}
               onChange={(values) =>
                 setSupportedFileType(
-                  getDefaultProjectSupportedFileType(values[0]),
+                  getDefaultGeneratorSupportedFileType(values[0]),
                 )
               }
               helperText={t("component:metadata.selection_min", {
                 count: selectedSupportedFileTypes.length,
-                min: ProjectFormRequirements.PROJECT_FILE_MIN,
+                min: GeneratorFormRequirements.PROJECT_FILE_MIN,
               })}
-              color={projectColor}
+              color={generatorColor}
               singleSelect={true}
               maxVisibleRows={2}
             />
@@ -422,30 +422,30 @@ export default function ProjectFormScreen() {
               selectedValues={tags}
               onChange={(values) => {
                 const latestValue = values.find(
-                  (value): value is ProjectTag =>
-                    PROJECT_TAGS.includes(value as ProjectTag) &&
-                    !tags.includes(value as ProjectTag),
+                  (value): value is GeneratorTag =>
+                    GENERATOR_TAGS.includes(value as GeneratorTag) &&
+                    !tags.includes(value as GeneratorTag),
                 );
 
                 if (!latestValue) {
-                  setTags(normalizeProjectTags(values));
+                  setTags(normalizeGeneratorTags(values));
                   return;
                 }
 
                 setTags(
-                  toggleProjectTag(
+                  toggleGeneratorTag(
                     tags,
-                    latestValue as ProjectTag,
+                    latestValue as GeneratorTag,
                     PROJECT_TAG_LIMIT,
                   ),
                 );
               }}
               helperText={t("component:metadata.tags_range", {
                 count: normalizedTags.length,
-                min: ProjectFormRequirements.PROJECT_TAGS_MIN,
+                min: GeneratorFormRequirements.GENERATOR_TAGS_MIN,
                 max: PROJECT_TAG_LIMIT,
               })}
-              color={projectColor}
+              color={generatorColor}
               maxSelections={PROJECT_TAG_LIMIT}
               alwaysEnabledValues={["all"]}
             />
@@ -462,47 +462,47 @@ export default function ProjectFormScreen() {
                 }
 
                 setTags(
-                  prioritizeProjectTag(
+                  prioritizeGeneratorTag(
                     normalizedTags,
-                    nextVisualTag as ProjectTag,
+                    nextVisualTag as GeneratorTag,
                   ),
                 );
               }}
               helperText={t("component:metadata.visual_tag_helper")}
-              color={projectColor}
+              color={generatorColor}
               singleSelect={true}
               maxVisibleRows={2}
             />
 
             <View style={{ marginBottom: 20 }}>
               <Text style={globalStyles.label}>
-                {t("screen:project_form.preview_label")}
+                {t("screen:generator_form.preview_label")}
               </Text>
               <MainButton
                 title={previewTitle}
                 subtitle={t(`component:metadata.tag_values.${visualTag}`)}
                 description={description || undefined}
                 tags={normalizedTags}
-                color={projectColor}
+                color={generatorColor}
                 image={previewImage}
                 onPress={() => {}}
               />
             </View>
 
             <Text style={globalStyles.label}>
-              {t("screen:project_form.category_list_label", {
-                min: ProjectFormRequirements.MIN_CATEGORIES,
+              {t("screen:generator_form.category_list_label", {
+                min: GeneratorFormRequirements.MIN_CATEGORIES,
               })}
             </Text>
             <Text style={[globalStyles.discreetText, { marginBottom: 8 }]}>
               {t("component:metadata.selection_min", {
                 count: selectedCategories.length,
-                min: ProjectFormRequirements.MIN_CATEGORIES,
+                min: GeneratorFormRequirements.MIN_CATEGORIES,
               })}
             </Text>
             <AddButton
-              projectColor={projectColor}
-              label={t("screen:lab.add-button.label-category")}
+              generatorColor={generatorColor}
+              label={t("screen:generators.add-button.label-category")}
               onClick={() =>
                 router.push({
                   pathname: "/category-browse",
@@ -522,7 +522,7 @@ export default function ProjectFormScreen() {
                       description={category.description}
                       tags={category.tags}
                       isExpanded={false}
-                      color={projectColor}
+                      color={generatorColor}
                       isEnabled={true}
                       subtitle={
                         category.options
@@ -535,7 +535,7 @@ export default function ProjectFormScreen() {
                     {category.id !==
                       sortedCategories[sortedCategories.length - 1].id && (
                       <>
-                        <Spacer divider={true} color={projectColorSoft} />
+                        <Spacer divider={true} color={generatorColorSoft} />
                         <Spacer height={8} />
                       </>
                     )}
@@ -546,8 +546,8 @@ export default function ProjectFormScreen() {
 
             <Spacer height={16} />
 
-            <ProjectJsonImporter
-              projectColor={projectColor}
+            <GeneratorJsonImporter
+              generatorColor={generatorColor}
               fallbackProjectName={name}
               onImportingChange={setIsImporting}
               onImported={(draft) => {
@@ -557,7 +557,7 @@ export default function ProjectFormScreen() {
                 setDescription(draft.description);
                 setLanguage(draft.language);
                 setSupportedFileType(draft.supportedFileType);
-                setTags(getDefaultProjectTags(draft.tags));
+                setTags(getDefaultGeneratorTags(draft.tags));
                 setSelectedCategories(draft.categories);
               }}
             />
@@ -565,16 +565,16 @@ export default function ProjectFormScreen() {
         </KeyboardAvoidingView>
 
         <ConfirmCancelButton
-          color={projectColor}
-          labelConfirm={t("screen:project_form.submit_button")}
+          color={generatorColor}
+          labelConfirm={t("screen:generator_form.submit_button")}
           isActive={isFormValid}
           isLoading={
-            isBusy || isSavingProject || isSavingRelation || isSavingCategories
+            isBusy || isSavingGenerator || isSavingRelation || isSavingCategories
           }
           onClickConfirm={handleSubmit}
           onClickCancel={() =>
             router.navigate({
-              pathname: "/project-browse",
+              pathname: "/generator-browse",
               params: { type: projectLabel },
             })
           }

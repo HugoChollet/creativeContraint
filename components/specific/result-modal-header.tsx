@@ -123,7 +123,7 @@ export default function ResultModalHeader({
         </TouchableOpacity>
         <View style={styles.generateButtonWrapper}>
           <ConfirmButton
-            projectColor={color}
+            generatorColor={color}
             label={t("component:result-modal-header.generate_again_button")}
             isActive={canGenerateAnother && !isBusy}
             onClick={onGenerateAnother}

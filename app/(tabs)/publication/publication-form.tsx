@@ -3,14 +3,14 @@ import {
   MediaPicker,
   MediaPickerResult,
 } from "@/components/specific/pickers/media-pickers";
-import { getContrastingColor, getProjectColor } from "@/constants/theme";
+import { getContrastingColor, getGeneratorColor } from "@/constants/theme";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import {
   CONSTRAINT_SET_SELECT,
-  getConstraintSetProjectColor,
-  getConstraintSetProjectLabel,
-  getConstraintSetProjectSupportedFile,
+  getConstraintSetGeneratorColor,
+  getConstraintSetGeneratorLabel,
+  getConstraintSetGeneratorSupportedFile,
 } from "@/lib/constraint-set-data";
 import { supabase } from "@/lib/supabase";
 import { publicationService } from "@/services/publication.service";
@@ -45,23 +45,23 @@ export default function PublicationFormScreen() {
     });
   const constraintSet = constraintSets[0] ?? null;
   const projectLabel = constraintSet
-    ? getConstraintSetProjectLabel(constraintSet)
-    : "Project";
-  const projectColor = constraintSet
-    ? getConstraintSetProjectColor({
+    ? getConstraintSetGeneratorLabel(constraintSet)
+    : "Generator";
+  const generatorColor = constraintSet
+    ? getConstraintSetGeneratorColor({
         constraintSet,
         theme,
       })
     : colors.tint;
-  const projectColorSoft = constraintSet?.color
-    ? getProjectColor({
+  const generatorColorSoft = constraintSet?.color
+    ? getGeneratorColor({
         color: constraintSet.color,
         opacity: 0.2,
         theme,
       })
     : colors.borderColor;
   const supportedFileType = constraintSet
-    ? getConstraintSetProjectSupportedFile(constraintSet)
+    ? getConstraintSetGeneratorSupportedFile(constraintSet)
     : null;
 
   const [title, setTitle] = useState("");
@@ -74,7 +74,7 @@ export default function PublicationFormScreen() {
 
   const [isLoading, setIsLoading] = useState(false);
   const isFormValid = title.length > 2 && media.isValid && !isLoading;
-  const submitButtonColor = isFormValid ? projectColor : colors.disable;
+  const submitButtonColor = isFormValid ? generatorColor : colors.disable;
   const submitButtonTextColor = getContrastingColor(
     submitButtonColor,
     "primary",
@@ -93,7 +93,7 @@ export default function PublicationFormScreen() {
   if (!routeConstraintId || !constraintSet) {
     return (
       <View style={globalStyles.screenContainer}>
-        <Header title={t("screen:submit.publish")} color={projectColor} />
+        <Header title={t("screen:submit.publish")} color={generatorColor} />
         <Text style={globalStyles.subtitle}>
           {t("screen:submit.errors.publish_failed")}
         </Text>
@@ -151,7 +151,7 @@ export default function PublicationFormScreen() {
     <>
       <Header
         title={t("screen:submit.publish") + " " + projectLabel}
-        color={projectColor}
+        color={generatorColor}
       />
       <ScrollView
         style={globalStyles.screenContainer}
@@ -163,7 +163,7 @@ export default function PublicationFormScreen() {
             {t("screen:submit.title_label")}
           </Text>
           <TextInput
-            style={[globalStyles.input, { borderColor: projectColorSoft }]}
+            style={[globalStyles.input, { borderColor: generatorColorSoft }]}
             placeholder={t("screen:submit.title_placeholder")}
             placeholderTextColor={colors.placeholder}
             value={title}
@@ -183,7 +183,7 @@ export default function PublicationFormScreen() {
                 height: 120,
                 textAlignVertical: "top",
                 paddingTop: 12,
-                borderColor: projectColorSoft,
+                borderColor: generatorColorSoft,
               },
             ]}
             placeholder={t("screen:submit.description_placeholder")}
@@ -199,7 +199,7 @@ export default function PublicationFormScreen() {
         <MediaPicker
           projectLabel={projectLabel}
           supportedFileType={supportedFileType}
-          projectColor={projectColor}
+          generatorColor={generatorColor}
           onChange={setMedia}
         />
         <TouchableOpacity

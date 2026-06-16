@@ -50,7 +50,7 @@ export const ConfirmCancelButton = ({
     >
       <View style={{ flex: 2 }}>
         <ConfirmButton
-          projectColor={color}
+          generatorColor={color}
           label={labelConfirm ?? t("component:confirm-cancel.confirm")}
           isActive={isActive}
           isLoading={isLoading}

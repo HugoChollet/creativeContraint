@@ -10,7 +10,7 @@ export interface TranslatedRow {
   description?: string;
 }
 
-export const useProjectTranslations = (
+export const useGeneratorTranslations = (
   constraintsData: Record<string, number>,
   dataSheet?: CategoryJSON[] | null,
 ) => {

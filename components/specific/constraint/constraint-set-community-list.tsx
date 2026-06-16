@@ -1,21 +1,21 @@
 import { ConfirmButton } from "@/components/generic/confirm-button";
-import ProjectLanguageFilter from "@/components/generic/project-language-filter";
+import GeneratorLanguageFilter from "@/components/generic/generator-language-filter";
 import { SearchBar } from "@/components/generic/search-bar";
 import {
-  matchesProjectLanguage,
-  matchesProjectTags,
-  ProjectLanguage,
-  ProjectTag,
-} from "@/constants/project-metadata";
+  matchesGeneratorLanguage,
+  matchesGeneratorTags,
+  GeneratorLanguage,
+  GeneratorTag,
+} from "@/constants/generator-metadata";
 import { CommentSummary } from "@/hooks/use-comments";
 import { useStyles } from "@/hooks/use-styles";
 import { LikeSummary } from "@/hooks/use-likes";
 import {
   getConstraintSetName,
-  getConstraintSetProjectLanguage,
-  getConstraintSetProjectLabel,
-  getConstraintSetProjectSupportedFile,
-  getConstraintSetProjectTags,
+  getConstraintSetGeneratorLanguage,
+  getConstraintSetGeneratorLabel,
+  getConstraintSetGeneratorSupportedFile,
+  getConstraintSetGeneratorTags,
 } from "@/lib/constraint-set-data";
 import { SavedConstraintSet } from "@/types/constraints";
 import React, { useMemo, useState } from "react";
@@ -57,10 +57,10 @@ export function ConstraintSetCommunityList({
   const { t } = useTranslation();
   const { globalStyles, colors } = useStyles();
   const [searchQuery, setSearchQuery] = useState("");
-  const [languageFilter, setLanguageFilter] = useState<ProjectLanguage | null>(
+  const [languageFilter, setLanguageFilter] = useState<GeneratorLanguage | null>(
     null,
   );
-  const [tagFilters, setTagFilters] = useState<ProjectTag[]>([]);
+  const [tagFilters, setTagFilters] = useState<GeneratorTag[]>([]);
 
   const communityConstraintSets = useMemo(() => {
     const normalizedQuery = normalizeSearchText(searchQuery);
@@ -70,12 +70,12 @@ export function ConstraintSetCommunityList({
         return false;
       }
 
-      const tags = getConstraintSetProjectTags(item);
+      const tags = getConstraintSetGeneratorTags(item);
       const searchableText = [
         getConstraintSetName(item),
-        getConstraintSetProjectLabel(item),
-        getConstraintSetProjectLanguage(item),
-        getConstraintSetProjectSupportedFile(item),
+        getConstraintSetGeneratorLabel(item),
+        getConstraintSetGeneratorLanguage(item),
+        getConstraintSetGeneratorSupportedFile(item),
         ...tags,
       ]
         .filter(Boolean)
@@ -84,11 +84,11 @@ export function ConstraintSetCommunityList({
 
       return (
         searchableText.includes(normalizedQuery) &&
-        matchesProjectLanguage(
-          getConstraintSetProjectLanguage(item),
+        matchesGeneratorLanguage(
+          getConstraintSetGeneratorLanguage(item),
           languageFilter,
         ) &&
-        matchesProjectTags(tags, tagFilters)
+        matchesGeneratorTags(tags, tagFilters)
       );
     });
   }, [constraintSets, currentUserId, languageFilter, searchQuery, tagFilters]);
@@ -102,7 +102,7 @@ export function ConstraintSetCommunityList({
         style={styles.searchBar}
       />
 
-      <ProjectLanguageFilter
+      <GeneratorLanguageFilter
         label={t("screen:constraint_set_browse.filters_label")}
         languageLabel={t("component:metadata.language_label")}
         tagsLabel={t("component:metadata.tags_label")}
@@ -155,7 +155,7 @@ export function ConstraintSetCommunityList({
             {t("screen:constraint_set_browse.no_constraint_sets")}
           </Text>
           <ConfirmButton
-            projectColor={colors.tint}
+            generatorColor={colors.tint}
             label={t("screen:constraint_sets.refresh")}
             onClick={() => {
               void onRefresh();
