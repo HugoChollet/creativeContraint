@@ -4,7 +4,7 @@
     "Generators": "Generators",
     "Settings": "Settings",
     "constraint_sets": "Constraint Sets",
-    "Publication_Feed": "Publication"
+    "Publication_Feed": "Publications"
   },
   "generators": {
     "generator_title": "{{type}} Generator",

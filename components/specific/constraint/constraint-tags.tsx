@@ -20,7 +20,9 @@ export function ConstraintsTags({
   });
 
   const dataSource = useMemo(() => {
-    return getConstraintSetGeneratorDataSource({ constraintSet: constraintSet });
+    return getConstraintSetGeneratorDataSource({
+      constraintSet: constraintSet,
+    });
   }, [constraintSet]);
 
   const translatedConstraints = useGeneratorTranslations(
@@ -33,7 +35,6 @@ export function ConstraintsTags({
       style={[
         globalStyles.shadeContainer,
         {
-          borderRadius: 0,
           overflow: "hidden",
           backgroundColor: constraintSet.color
             ? solidColor

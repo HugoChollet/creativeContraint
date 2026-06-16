@@ -1,6 +1,12 @@
 import { useStyles } from "@/hooks/use-styles";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View, ViewStyle } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native";
 
 interface SegmentedTabOption<T extends string> {
   label: string;
@@ -42,7 +48,7 @@ export function SegmentedTabs<T extends string>({
             <Text
               style={[
                 globalStyles.tabText,
-                { color: isActive ? colors.invertedText : colors.text },
+                { color: isActive ? colors.textOnTint : colors.text },
               ]}
             >
               {option.label}

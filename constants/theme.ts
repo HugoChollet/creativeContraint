@@ -13,6 +13,7 @@ export const Themes = {
   light: {
     text: textDark,
     textActive: tintColorLight,
+    textOnTint: textWhite,
     invertedText: textWhite,
     textDiscreet: "rgb(142, 142, 147)",
     background: "#fff",
@@ -41,6 +42,7 @@ export const Themes = {
   dark: {
     text: textWhite,
     textActive: tintColorDark,
+    textOnTint: textWhite,
     invertedText: textDark,
     textDiscreet: "rgb(156, 156, 156)",
     background: "#151718",

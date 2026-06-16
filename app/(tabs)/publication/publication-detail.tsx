@@ -7,8 +7,8 @@ import { useComments } from "@/hooks/use-comments";
 import { useLikes } from "@/hooks/use-likes";
 import { useStyles } from "@/hooks/use-styles";
 import {
-  getConstraintSetName,
   getConstraintSetGeneratorLabel,
+  getConstraintSetName,
 } from "@/lib/constraint-set-data";
 import { publicationService } from "@/services/publication.service";
 import { Publication } from "@/types/publication";
@@ -170,30 +170,35 @@ export default function PublicationDetailScreen() {
                 }
               >
                 <Text
-                  style={[globalStyles.inlineLinkText, { color: generatorColor }]}
+                  style={[
+                    globalStyles.inlineLinkText,
+                    { color: generatorColor },
+                  ]}
                   numberOfLines={1}
                 >
                   {getConstraintSetName(constraintSet)}
                 </Text>
-                <Ionicons name="arrow-forward" size={14} color={generatorColor} />
+                <Ionicons
+                  name="arrow-forward"
+                  size={14}
+                  color={generatorColor}
+                />
               </TouchableOpacity>
+              {publication.media_type === "image" && publication.media_url && (
+                <Image
+                  source={{ uri: publication.media_url }}
+                  style={styles.mediaImage}
+                />
+              )}
+              {publication.media_type === "book_text" &&
+                publication.content_text && (
+                  <Text style={[styles.contentText, { color: colors.text }]}>
+                    {publication.content_text}
+                  </Text>
+                )}
               <ConstraintsTags constraintSet={constraintSet} />
             </>
           )}
-
-          {publication.media_type === "image" && publication.media_url && (
-            <Image
-              source={{ uri: publication.media_url }}
-              style={styles.mediaImage}
-            />
-          )}
-
-          {publication.media_type === "book_text" &&
-            publication.content_text && (
-              <Text style={[styles.contentText, { color: colors.text }]}>
-                {publication.content_text}
-              </Text>
-            )}
         </View>
 
         <View onLayout={(event) => setCommentsY(event.nativeEvent.layout.y)}>
