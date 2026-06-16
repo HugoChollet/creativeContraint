@@ -4,8 +4,14 @@ import { ProjectDraftProvider } from "@/contexts/project-draft-context";
 import { ThemeProvider } from "@/contexts/theme-context";
 import { TutorialProvider } from "@/contexts/tutorial-context";
 import { useStyles } from "@/hooks/use-styles";
+import {
+  getStoredAppLanguage,
+  getStoredThemeMode,
+} from "@/lib/app-preferences";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Platform, StyleSheet, View } from "react-native";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -20,7 +26,31 @@ export const unstable_settings = {
 };
 
 function AppLayout() {
-  const { colors } = useStyles();
+  const { colors, setThemeMode } = useStyles();
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    const loadAppPreferences = async () => {
+      try {
+        const [storedLanguage, storedTheme] = await Promise.all([
+          getStoredAppLanguage(),
+          getStoredThemeMode(),
+        ]);
+
+        if (storedLanguage && storedLanguage !== i18n.language) {
+          await i18n.changeLanguage(storedLanguage);
+        }
+
+        if (storedTheme) {
+          setThemeMode(storedTheme);
+        }
+      } catch (error) {
+        console.error("Could not load app preferences:", error);
+      }
+    };
+
+    loadAppPreferences();
+  }, [i18n, setThemeMode]);
 
   return (
     <View

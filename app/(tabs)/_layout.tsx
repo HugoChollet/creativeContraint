@@ -3,10 +3,14 @@ import React, { useEffect } from "react";
 
 import { HapticTab } from "@/components/haptic-tab";
 import { HomeProjectsProvider } from "@/contexts/home-projects-context";
-import { ThemeMode } from "@/contexts/theme-context";
-import { isProjectLanguage } from "@/constants/project-metadata";
 import { useProfile } from "@/hooks/use-profile";
 import { useStyles } from "@/hooks/use-styles";
+import {
+  getStoredAppLanguage,
+  getStoredThemeMode,
+  isSupportedAppLanguage,
+  isSupportedThemeMode,
+} from "@/lib/app-preferences";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 
@@ -20,11 +24,26 @@ export default function TabLayout() {
   });
 
   useEffect(() => {
-    if (isProjectLanguage(data.language) && data.language !== i18n.language) {
-      i18n.changeLanguage(data.language);
-    }
+    const applyProfilePreferences = async () => {
+      const [storedLanguage, storedTheme] = await Promise.all([
+        getStoredAppLanguage(),
+        getStoredThemeMode(),
+      ]);
 
-    setThemeMode((data.theme as ThemeMode) || "light");
+      if (
+        !storedLanguage &&
+        isSupportedAppLanguage(data.language) &&
+        data.language !== i18n.language
+      ) {
+        await i18n.changeLanguage(data.language);
+      }
+
+      if (!storedTheme && isSupportedThemeMode(data.theme)) {
+        setThemeMode(data.theme);
+      }
+    };
+
+    applyProfilePreferences();
   }, [data, i18n, setThemeMode]);
 
   return (
