@@ -4,15 +4,15 @@ import Auth from "@/components/specific/auth";
 import { ConstraintSetCommunityList } from "@/components/specific/constraint/constraint-set-community-list";
 import { ConstraintSetPersonalList } from "@/components/specific/constraint/constraint-set-personal-list";
 import { useAuth } from "@/contexts/auth-context";
-import { useComments } from "@/hooks/use-comments";
 import { useCollection } from "@/hooks/use-collection";
+import { useComments } from "@/hooks/use-comments";
 import { useLikes } from "@/hooks/use-likes";
 import { useStyles } from "@/hooks/use-styles";
 import {
   CONSTRAINT_SET_SELECT,
   getConstraintSetName,
-  getConstraintSetProjectLanguage,
   getConstraintSetProjectLabel,
+  getConstraintSetProjectLanguage,
   getConstraintSetProjectSupportedFile,
   getConstraintSetProjectTags,
 } from "@/lib/constraint-set-data";
@@ -69,9 +69,11 @@ export default function ConstraintSetsScreen() {
     pendingId: pendingConstraintSetLikeId,
     toggleLike: toggleConstraintSetLike,
   } = useLikes("constraint_set", constraintSetIds, userId);
-  const {
-    summaries: constraintSetCommentSummaries,
-  } = useComments("constraint_set", constraintSetIds, userId);
+  const { summaries: constraintSetCommentSummaries } = useComments(
+    "constraint_set",
+    constraintSetIds,
+    userId,
+  );
   const personalConstraintSets = useMemo(
     () => constraintSets.filter((item) => item.owner_id === userId),
     [constraintSets, userId],
@@ -205,13 +207,13 @@ export default function ConstraintSetsScreen() {
               }}
               onOpenComments={(item) => {
                 router.push({
-                  pathname: "/constraint-set-detail",
+                  pathname: "/(tabs)/constraint-set/constraint-set-detail",
                   params: { id: item.id.toString() },
                 });
               }}
               onOpenDetails={(item) => {
                 router.push({
-                  pathname: "/constraint-set-detail",
+                  pathname: "/(tabs)/constraint-set/constraint-set-detail",
                   params: { id: item.id.toString() },
                 });
               }}

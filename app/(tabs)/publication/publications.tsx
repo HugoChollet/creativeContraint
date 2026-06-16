@@ -89,13 +89,13 @@ export default function PublicationsScreen() {
               commentCount={commentSummary.count}
               onOpenComments={() =>
                 router.push({
-                  pathname: "/publication-detail",
+                  pathname: "/(tabs)/publication/publication-detail",
                   params: { id: item.id },
                 })
               }
               onOpenDetails={() =>
                 router.push({
-                  pathname: "/publication-detail",
+                  pathname: "/(tabs)/publication/publication-detail",
                   params: { id: item.id },
                 })
               }

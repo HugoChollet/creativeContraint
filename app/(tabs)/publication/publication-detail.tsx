@@ -91,7 +91,11 @@ export default function PublicationDetailScreen() {
   if (loading) {
     return (
       <View
-        style={[globalStyles.backgroundColor, globalStyles.root, globalStyles.centered]}
+        style={[
+          globalStyles.backgroundColor,
+          globalStyles.root,
+          globalStyles.centered,
+        ]}
       >
         <ActivityIndicator color={colors.tint} />
       </View>
@@ -101,7 +105,11 @@ export default function PublicationDetailScreen() {
   if (!publication || !id) {
     return (
       <View
-        style={[globalStyles.backgroundColor, globalStyles.root, globalStyles.centered]}
+        style={[
+          globalStyles.backgroundColor,
+          globalStyles.root,
+          globalStyles.centered,
+        ]}
       >
         <Text style={globalStyles.subtitle}>Publication not found.</Text>
       </View>
@@ -156,7 +164,7 @@ export default function PublicationDetailScreen() {
                 style={globalStyles.inlineLink}
                 onPress={() =>
                   router.push({
-                    pathname: "/constraint-set-detail",
+                    pathname: "/(tabs)/constraint-set/constraint-set-detail",
                     params: { id: constraintSet.id.toString() },
                   })
                 }
@@ -167,11 +175,7 @@ export default function PublicationDetailScreen() {
                 >
                   {getConstraintSetName(constraintSet)}
                 </Text>
-                <Ionicons
-                  name="arrow-forward"
-                  size={14}
-                  color={projectColor}
-                />
+                <Ionicons name="arrow-forward" size={14} color={projectColor} />
               </TouchableOpacity>
               <ConstraintsTags constraintSet={constraintSet} />
             </>

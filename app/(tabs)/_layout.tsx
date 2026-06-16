@@ -69,7 +69,7 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="constraint-sets"
+          name="constraint-set/constraint-sets"
           options={{
             title: t("screen:layout.constraint_sets"),
             tabBarIcon: ({ color }) => (
@@ -78,7 +78,7 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="publications"
+          name="publication/publications"
           options={{
             title: t("screen:layout.Publication_Feed"),
             tabBarIcon: ({ color }) => (
@@ -104,10 +104,24 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="publication-form"
+          name="publication/publication-form"
           options={{
             href: null,
             title: "Submit Publication",
+          }}
+        />
+        <Tabs.Screen
+          name="publication/publication-detail"
+          options={{
+            href: null,
+            title: "Publication Detail",
+          }}
+        />
+        <Tabs.Screen
+          name="constraint-set/constraint-set-detail"
+          options={{
+            href: null,
+            title: "Constraint Set Detail",
           }}
         />
 

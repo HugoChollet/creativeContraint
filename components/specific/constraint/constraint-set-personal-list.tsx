@@ -38,7 +38,7 @@ export function ConstraintSetPersonalList({
           isPublishing={publishingConstraintSetId === item.id}
           submit={() =>
             router.push({
-              pathname: "/publication-form",
+              pathname: "/(tabs)/publication/publication-form",
               params: { id: item.id.toString() },
             })
           }

@@ -130,7 +130,13 @@ export default function PublicationFormScreen() {
         Alert.alert(
           t("screen:submit.success_title"),
           t("screen:submit.success_msg"),
-          [{ text: "OK", onPress: () => router.replace("/constraint-sets") }],
+          [
+            {
+              text: "OK",
+              onPress: () =>
+                router.replace("/(tabs)/constraint-set/constraint-sets"),
+            },
+          ],
         );
       }
     } catch (error) {
