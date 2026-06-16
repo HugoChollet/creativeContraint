@@ -5,7 +5,7 @@
     "Settings": "Paramètres",
     "Projects": "Générateurs",
     "constraint_sets": "Sets de Contraintes",
-    "Publication_Feed": "Fil de Publications"
+    "Publication_Feed": "Publication"
   },
   "generators": {
     "generator_title": "Générateur pour {{type}}",

@@ -1,4 +1,3 @@
-import { Header } from "@/components/generic/header";
 import { PublicationCard } from "@/components/specific/publication-card";
 import { useAuth } from "@/contexts/auth-context";
 import { useComments } from "@/hooks/use-comments";
@@ -8,14 +7,17 @@ import { publicationService } from "@/services/publication.service";
 import { Publication } from "@/types/publication";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   FlatList,
   RefreshControl,
+  Text,
   View,
 } from "react-native";
 
 export default function PublicationsScreen() {
+  const { t } = useTranslation();
   const { globalStyles, colors } = useStyles();
   const { session } = useAuth();
   const currentUserId = session?.user.id;
@@ -31,9 +33,11 @@ export default function PublicationsScreen() {
     pendingId: pendingPublicationLikeId,
     toggleLike: togglePublicationLike,
   } = useLikes("publication", publicationIds, currentUserId);
-  const {
-    summaries: publicationCommentSummaries,
-  } = useComments("publication", publicationIds, currentUserId);
+  const { summaries: publicationCommentSummaries } = useComments(
+    "publication",
+    publicationIds,
+    currentUserId,
+  );
 
   const loadFeed = useCallback(async () => {
     try {
@@ -63,7 +67,9 @@ export default function PublicationsScreen() {
 
   return (
     <View style={globalStyles.screenContainer}>
-      <Header title="Community Feed" />
+      <Text style={[globalStyles.title, { marginBottom: 20 }]}>
+        {t("screen:layout.Publication_Feed")}
+      </Text>
       <FlatList
         data={publications}
         keyExtractor={(item) => item.id}
@@ -75,7 +81,9 @@ export default function PublicationsScreen() {
           const commentSummary = publicationCommentSummaries[item.id] ?? {
             count: 0,
           };
-          const canLike = Boolean(currentUserId && item.user_id !== currentUserId);
+          const canLike = Boolean(
+            currentUserId && item.user_id !== currentUserId,
+          );
 
           return (
             <PublicationCard
