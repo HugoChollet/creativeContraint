@@ -1,54 +1,54 @@
 import ExpandableHeader from "@/components/generic/expandable-header";
 import { Item } from "@/components/generic/item";
 import { useStyles } from "@/hooks/use-styles";
-import { Project } from "@/types/projects";
+import { Generator } from "@/types/generators";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import Crud, { Action, CrudActionItem } from "../../generic/crud";
 
-interface ProjectItemProps {
+interface GeneratorItemProps {
   onDelete?: () => void;
   onEdit?: () => void;
   onFork?: () => void;
   onPublish?: () => void;
-  projectColor: string;
-  project: Project;
+  generatorColor: string;
+  generator: Generator;
   selected: boolean;
   expanded: boolean;
   toggleExpand: () => void;
-  onToggleProject: () => void;
+  onToggleGenerator: () => void;
   type: string;
 }
 
-export default function ProjectItem({
+export default function GeneratorItem({
   onDelete,
   onEdit,
   onFork,
   onPublish,
-  projectColor,
+  generatorColor,
   selected,
-  project,
+  generator,
   expanded,
   toggleExpand,
-  onToggleProject,
+  onToggleGenerator,
   type,
-}: ProjectItemProps) {
+}: GeneratorItemProps) {
   const { globalStyles } = useStyles();
   const { t } = useTranslation();
-  const isPersonalProject =
-    type === t("screen:project_browse.personal_section");
+  const isPersonalGenerator =
+    type === t("screen:generator_browse.personal_section");
 
   const actions: CrudActionItem[] = [
-    ...(isPersonalProject && onEdit
+    ...(isPersonalGenerator && onEdit
       ? [{ action: Action.EDIT, onPress: onEdit }]
       : []),
-    ...(isPersonalProject && onDelete
+    ...(isPersonalGenerator && onDelete
       ? [{ action: Action.DELETE, onPress: onDelete }]
       : []),
-    ...(isPersonalProject && onPublish
+    ...(isPersonalGenerator && onPublish
       ? [{ action: Action.PUBLISH, onPress: onPublish }]
       : []),
-    ...(!isPersonalProject && onFork
+    ...(!isPersonalGenerator && onFork
       ? [{ action: Action.FORK, onPress: onFork }]
       : []),
   ];
@@ -62,39 +62,39 @@ export default function ProjectItem({
     >
       <View style={[globalStyles.card, { width: "100%" }]}>
         <ExpandableHeader
-          title={project.name}
-          description={project.description}
-          tags={project.tags}
-          onToggle={onToggleProject}
+          title={generator.name}
+          description={generator.description}
+          tags={generator.tags}
+          onToggle={onToggleGenerator}
           isExpanded={expanded}
           onExpand={() => toggleExpand()}
-          color={projectColor}
+          color={generatorColor}
           isEnabled={selected}
           subtitle={
-            project.categories
-              ? t("component:project_item.categories_counter", {
-                  count: project.categories.length,
+            generator.categories
+              ? t("component:generator_item.categories_counter", {
+                  count: generator.categories.length,
                 })
               : undefined
           }
         />
         {expanded && (
           <>
-            <Crud actions={actions} color={projectColor} />
+            <Crud actions={actions} color={generatorColor} />
             <View>
-              {project.categories
-                ? project.categories.map((item) => (
+              {generator.categories
+                ? generator.categories.map((item) => (
                     <View key={item.id.toString()} style={{ padding: 8 }}>
                       <Item
                         title={item.name}
                         subtitle={t(
-                          "component:project_item.constraints_counter",
+                          "component:generator_item.constraints_counter",
                           {
                             count: item.options.length,
                           },
                         )}
                         description={item.description}
-                        color={projectColor}
+                        color={generatorColor}
                       />
                     </View>
                   ))

@@ -1,8 +1,8 @@
 import { ImageSourcePropType } from "react-native";
-import { normalizeProjectTags, ProjectTag } from "./project-metadata";
-import { getProjectColor } from "./theme";
+import { normalizeGeneratorTags, GeneratorTag } from "./generator-metadata";
+import { getGeneratorColor } from "./theme";
 
-export interface HomeProjectConfig {
+export interface HomeGeneratorConfig {
   type: string;
   labelKey: string;
   image: ImageSourcePropType;
@@ -37,13 +37,13 @@ const PROJECT_IMAGES = {
   website: require("@/assets/images/projects/png/website.png"),
 } as const;
 
-interface HomeProjectTagVisual {
-  type: HomeProjectConfig["type"];
+interface HomeGeneratorTagVisual {
+  type: HomeGeneratorConfig["type"];
   image: ImageSourcePropType;
   color: string;
 }
 
-export const HOME_PROJECTS: HomeProjectConfig[] = [
+export const HOME_GENERATORS: HomeGeneratorConfig[] = [
   {
     type: "videoInternet",
     labelKey: "screen:home.videointernet_button",
@@ -86,7 +86,7 @@ export const HOME_PROJECTS: HomeProjectConfig[] = [
   },
 ];
 
-const homeProjectTypeAliases: Record<string, string> = {
+const homeGeneratorTypeAliases: Record<string, string> = {
   book: "book",
   music: "music",
   photography: "photography",
@@ -102,29 +102,29 @@ const homeProjectTypeAliases: Record<string, string> = {
   videogame: "videoGame",
 };
 
-export const getHomeProjectType = (value?: string | null) => {
+export const getHomeGeneratorType = (value?: string | null) => {
   if (!value) return undefined;
 
-  return homeProjectTypeAliases[value.trim().toLowerCase()];
+  return homeGeneratorTypeAliases[value.trim().toLowerCase()];
 };
 
-export const getHomeProjectConfig = (value?: string | null) => {
-  const type = getHomeProjectType(value);
+export const getHomeGeneratorConfig = (value?: string | null) => {
+  const type = getHomeGeneratorType(value);
 
   if (!type) {
     return undefined;
   }
 
-  return HOME_PROJECTS.find((project) => project.type === type);
+  return HOME_GENERATORS.find((project) => project.type === type);
 };
 
-const homeProjectVisualsByTag: Partial<
-  Record<ProjectTag, HomeProjectTagVisual>
+const homeGeneratorVisualsByTag: Partial<
+  Record<GeneratorTag, HomeGeneratorTagVisual>
 > = {
   all: {
-    type: "book",
+    type: "all",
     image: PROJECT_IMAGES.allOther,
-    color: "#C3C3C3",
+    color: "#9e9d9d",
   },
   fiction: {
     type: "videoFiction",
@@ -152,7 +152,7 @@ const homeProjectVisualsByTag: Partial<
     color: "rgba(23, 184, 166, 1)",
   },
   character: {
-    type: "videoFiction",
+    type: "character",
     image: PROJECT_IMAGES.character,
     color: "#5ECCFF",
   },
@@ -197,27 +197,27 @@ const homeProjectVisualsByTag: Partial<
     color: "rgba(255, 114, 94, 1)",
   },
   vlog: {
-    type: "videoInternet",
+    type: "vlog",
     image: PROJECT_IMAGES.vlog,
     color: "#A7D257",
   },
   stream: {
-    type: "videoInternet",
+    type: "stream",
     image: PROJECT_IMAGES.stream,
     color: "#9800DF",
   },
   dnd: {
-    type: "boardgame",
+    type: "dnd",
     image: PROJECT_IMAGES.dnd,
     color: "#B61400",
   },
   sport: {
-    type: "videoInternet",
+    type: "sport",
     image: PROJECT_IMAGES.sports,
     color: "#FF8433",
   },
   clothe: {
-    type: "photography",
+    type: "clothe",
     image: PROJECT_IMAGES.clothes,
     color: "#FF002B",
   },
@@ -227,97 +227,97 @@ const homeProjectVisualsByTag: Partial<
     color: "#D2B079",
   },
   business: {
-    type: "book",
+    type: "business",
     image: PROJECT_IMAGES.business,
     color: "#349C81",
   },
   product: {
-    type: "photography",
+    type: "product",
     image: PROJECT_IMAGES.product,
     color: "rgba(184, 22, 128, 1)",
   },
   website: {
-    type: "videoInternet",
+    type: "website",
     image: PROJECT_IMAGES.website,
     color: "#BEA6ED",
   },
   comic: {
-    type: "videoFiction",
+    type: "comic",
     image: PROJECT_IMAGES.comic,
     color: "#A4662A",
   },
   architecture: {
-    type: "photography",
+    type: "architecture",
     image: PROJECT_IMAGES.architecture,
     color: "#FFE5BA",
   },
   education: {
-    type: "book",
+    type: "education",
     image: PROJECT_IMAGES.education,
     color: "#92E3D5",
   },
   enigma: {
-    type: "boardgame",
+    type: "enigma",
     image: PROJECT_IMAGES.enigma,
     color: "#FF4082",
   },
   other: {
-    type: "book",
+    type: "other",
     image: PROJECT_IMAGES.allOther,
-    color: "#C3C3C3",
+    color: "#9e9d9d",
   },
 };
 
-export const getHomeProjectImage = (
+export const getHomeGeneratorImage = (
   value?: string | null,
 ): ImageSourcePropType =>
-  getHomeProjectConfig(value)?.image ?? PROJECT_IMAGES.book;
+  getHomeGeneratorConfig(value)?.image ?? PROJECT_IMAGES.book;
 
-export const getHomeProjectTypeFromTag = (
+export const getHomeGeneratorTypeFromTag = (
   tag?: string | null,
-): HomeProjectConfig["type"] | undefined => {
+): HomeGeneratorConfig["type"] | undefined => {
   if (!tag) {
     return undefined;
   }
 
-  return homeProjectVisualsByTag[tag as ProjectTag]?.type;
+  return homeGeneratorVisualsByTag[tag as GeneratorTag]?.type;
 };
 
-export const getHomeProjectTypeFromTags = (
+export const getHomeGeneratorTypeFromTags = (
   tags?: readonly string[] | null,
-): HomeProjectConfig["type"] => {
-  const [primaryTag] = normalizeProjectTags(tags);
+): HomeGeneratorConfig["type"] => {
+  const [primaryTag] = normalizeGeneratorTags(tags);
 
-  return getHomeProjectTypeFromTag(primaryTag) ?? "book";
+  return getHomeGeneratorTypeFromTag(primaryTag) ?? "book";
 };
 
-export const getHomeProjectColorFromTag = (
+export const getHomeGeneratorColorFromTag = (
   tag?: string | null,
   opacity = 1,
 ): string =>
-  getProjectColor({
-    color: homeProjectVisualsByTag[tag as ProjectTag]?.color,
+  getGeneratorColor({
+    color: homeGeneratorVisualsByTag[tag as GeneratorTag]?.color,
     opacity,
   });
 
-export const getHomeProjectColorFromTags = (
+export const getHomeGeneratorColorFromTags = (
   tags?: readonly string[] | null,
   opacity = 1,
 ): string => {
-  const [primaryTag] = normalizeProjectTags(tags);
+  const [primaryTag] = normalizeGeneratorTags(tags);
 
-  return getHomeProjectColorFromTag(primaryTag, opacity);
+  return getHomeGeneratorColorFromTag(primaryTag, opacity);
 };
 
-export const getHomeProjectImageFromTag = (
+export const getHomeGeneratorImageFromTag = (
   tag?: string | null,
 ): ImageSourcePropType =>
-  homeProjectVisualsByTag[tag as ProjectTag]?.image ?? PROJECT_IMAGES.book;
+  homeGeneratorVisualsByTag[tag as GeneratorTag]?.image ?? PROJECT_IMAGES.book;
 
-export const getHomeProjectImageFromTags = (
+export const getHomeGeneratorImageFromTags = (
   tags?: readonly string[] | null,
 ): ImageSourcePropType => {
-  const [primaryTag] = normalizeProjectTags(tags);
+  const [primaryTag] = normalizeGeneratorTags(tags);
 
-  return getHomeProjectImageFromTag(primaryTag);
+  return getHomeGeneratorImageFromTag(primaryTag);
 };

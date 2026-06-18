@@ -5,6 +5,7 @@ This Hybrid App/Website can help Content Creator find inspiration, from Music to
 
 The idea is simple, sometimes having constraint to respect can help bring creativity !
 For example for Music if I give the following constraints :
+
 - Instruments : Banjo
 - Style : Hard Rock
 - Sound Effect : Reverb
@@ -20,16 +21,14 @@ All Generation Constraint are customizable, meaning if you only wants to have co
 
 Here you can see the standard flow of the basic usage for the app :
 
-| Step | Screen | Preview |
-|---|---|---|
-| 1 | Home | <img src="https://github.com/user-attachments/assets/1ec74b2d-3327-4103-8ba1-50ec2b4e227a" alt="Home screen" width="140" /> |
-| 2 | Lab | <img src="https://github.com/user-attachments/assets/ce2290c5-039b-4370-9009-85a954f3b514" alt="Lab screen" width="140" /> |
-| 3 | Generator | <img src="https://github.com/user-attachments/assets/545e5301-02c6-478c-ba72-d29cfef36ed4" alt="Generator screen" width="140" /> |
-| 4 | Constraint Sets Saved | <img src="https://github.com/user-attachments/assets/a1b3887f-b64d-4fd1-8802-585e11d1cb4f" alt="Constraint sets saved screen" width="140" /> |
-| 5 | Publication Form | <img src="https://github.com/user-attachments/assets/a1aa86e7-f7c6-45ba-a947-b9d594783a9a" alt="Publication form screen" width="140" /> |
-| 6 | Publication Feed | <img src="https://github.com/user-attachments/assets/6679eb18-2e8c-426b-a19a-b63aa8007de0" alt="Publication feed screen" width="140" /> |
-
-
+| Step | Screen                | Preview                                                                                                                                      |
+| ---- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | Home                  | <img src="https://github.com/user-attachments/assets/1ec74b2d-3327-4103-8ba1-50ec2b4e227a" alt="Home screen" width="140" />                  |
+| 2    | Generator             | <img src="https://github.com/user-attachments/assets/ce2290c5-039b-4370-9009-85a954f3b514" alt="Generator screen" width="140" />             |
+| 3    | Generator             | <img src="https://github.com/user-attachments/assets/545e5301-02c6-478c-ba72-d29cfef36ed4" alt="Generator screen" width="140" />             |
+| 4    | Constraint Sets Saved | <img src="https://github.com/user-attachments/assets/a1b3887f-b64d-4fd1-8802-585e11d1cb4f" alt="Constraint sets saved screen" width="140" /> |
+| 5    | Publication Form      | <img src="https://github.com/user-attachments/assets/a1aa86e7-f7c6-45ba-a947-b9d594783a9a" alt="Publication form screen" width="140" />      |
+| 6    | Publication Feed      | <img src="https://github.com/user-attachments/assets/6679eb18-2e8c-426b-a19a-b63aa8007de0" alt="Publication feed screen" width="140" />      |
 
 ## Get started
 

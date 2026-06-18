@@ -2,10 +2,15 @@ import { Tabs } from "expo-router";
 import React, { useEffect } from "react";
 
 import { HapticTab } from "@/components/haptic-tab";
-import { HomeProjectsProvider } from "@/contexts/home-projects-context";
-import { ThemeMode } from "@/contexts/theme-context";
+import { HomeGeneratorsProvider } from "@/contexts/home-generators-context";
 import { useProfile } from "@/hooks/use-profile";
 import { useStyles } from "@/hooks/use-styles";
+import {
+  getStoredAppLanguage,
+  getStoredThemeMode,
+  isSupportedAppLanguage,
+  isSupportedThemeMode,
+} from "@/lib/app-preferences";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 
@@ -19,13 +24,30 @@ export default function TabLayout() {
   });
 
   useEffect(() => {
-    // Update language based on saved user preference
-    i18n.changeLanguage(data.language ?? "en");
-    setThemeMode((data.theme as ThemeMode) || "light");
+    const applyProfilePreferences = async () => {
+      const [storedLanguage, storedTheme] = await Promise.all([
+        getStoredAppLanguage(),
+        getStoredThemeMode(),
+      ]);
+
+      if (
+        !storedLanguage &&
+        isSupportedAppLanguage(data.language) &&
+        data.language !== i18n.language
+      ) {
+        await i18n.changeLanguage(data.language);
+      }
+
+      if (!storedTheme && isSupportedThemeMode(data.theme)) {
+        setThemeMode(data.theme);
+      }
+    };
+
+    applyProfilePreferences();
   }, [data, i18n, setThemeMode]);
 
   return (
-    <HomeProjectsProvider>
+    <HomeGeneratorsProvider>
       <Tabs
         screenOptions={{
           tabBarStyle: {
@@ -40,14 +62,14 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: t("screen:layout.Lab"),
+            title: t("screen:layout.Generators"),
             tabBarIcon: ({ color }) => (
               <Ionicons size={28} name="flask" color={color} />
             ),
           }}
         />
         <Tabs.Screen
-          name="constraint-sets"
+          name="constraint-set/constraint-sets"
           options={{
             title: t("screen:layout.constraint_sets"),
             tabBarIcon: ({ color }) => (
@@ -56,7 +78,7 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="publications"
+          name="publication/publications"
           options={{
             title: t("screen:layout.Publication_Feed"),
             tabBarIcon: ({ color }) => (
@@ -75,32 +97,46 @@ export default function TabLayout() {
         />
 
         <Tabs.Screen
-          name="lab"
+          name="generators"
           options={{
             href: null,
-            title: "Lab",
+            title: "Generators",
           }}
         />
         <Tabs.Screen
-          name="publication-form"
+          name="publication/publication-form"
           options={{
             href: null,
             title: "Submit Publication",
           }}
         />
-
         <Tabs.Screen
-          name="project-browse"
+          name="publication/publication-detail"
           options={{
             href: null,
-            title: "Browse Projects",
+            title: "Publication Detail",
           }}
         />
         <Tabs.Screen
-          name="project-form"
+          name="constraint-set/constraint-set-detail"
           options={{
             href: null,
-            title: "New Project",
+            title: "Constraint Set Detail",
+          }}
+        />
+
+        <Tabs.Screen
+          name="generator-browse"
+          options={{
+            href: null,
+            title: "Browse Generators",
+          }}
+        />
+        <Tabs.Screen
+          name="generator-form"
+          options={{
+            href: null,
+            title: "New Generator",
           }}
         />
         <Tabs.Screen
@@ -118,6 +154,6 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-    </HomeProjectsProvider>
+    </HomeGeneratorsProvider>
   );
 }

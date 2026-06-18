@@ -7,12 +7,12 @@ import { useTranslation } from "react-i18next";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
 
 interface MusicMediaPickerProps {
-  projectColor: string;
+  generatorColor: string;
   onFileSelected: (file: DocumentPicker.DocumentPickerResult | null) => void;
 }
 
 export const MusicMediaPicker = ({
-  projectColor,
+  generatorColor,
   onFileSelected,
 }: MusicMediaPickerProps) => {
   const { globalStyles } = useStyles();
@@ -54,7 +54,7 @@ export const MusicMediaPicker = ({
           style={[
             globalStyles.mediaIntegrationContainer,
             {
-              borderColor: projectColor,
+              borderColor: generatorColor,
             },
           ]}
           onPress={pickAudio}
@@ -62,10 +62,10 @@ export const MusicMediaPicker = ({
           <Ionicons
             name="musical-notes-outline"
             size={32}
-            color={projectColor}
+            color={generatorColor}
           />
           <Text
-            style={[globalStyles.text, { color: projectColor, marginTop: 8 }]}
+            style={[globalStyles.text, { color: generatorColor, marginTop: 8 }]}
           >
             {t("component:music-picker.placeholder")}
           </Text>
@@ -81,7 +81,7 @@ export const MusicMediaPicker = ({
               padding: 16,
               flexDirection: "row",
               alignItems: "center",
-              borderColor: projectColor,
+              borderColor: generatorColor,
               borderWidth: 1,
             },
           ]}
@@ -89,7 +89,7 @@ export const MusicMediaPicker = ({
           <Ionicons
             name="musical-note"
             size={24}
-            color={projectColor}
+            color={generatorColor}
             style={{ marginRight: 12 }}
           />
 

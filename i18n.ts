@@ -8,6 +8,7 @@ import cookingEN from "./assets/locales/en/cooking.json";
 import musicEN from "./assets/locales/en/music.json";
 import photoEN from "./assets/locales/en/photography.json";
 import screenEN from "./assets/locales/en/screen.json";
+import tutorialEN from "./assets/locales/en/tutorial.json";
 import videoFictionEN from "./assets/locales/en/videoFiction.json";
 import videoInternetEN from "./assets/locales/en/videoInternet.json";
 
@@ -18,6 +19,7 @@ import cookingFR from "./assets/locales/fr/cooking.json";
 import musicFR from "./assets/locales/fr/music.json";
 import photoFR from "./assets/locales/fr/photography.json";
 import screenFR from "./assets/locales/fr/screen.json";
+import tutorialFR from "./assets/locales/fr/tutorial.json";
 import videoFictionFR from "./assets/locales/fr/videoFiction.json";
 import videoInternetFR from "./assets/locales/fr/videoInternet.json";
 
@@ -29,6 +31,7 @@ i18n.use(initReactI18next).init({
       book: bookEN,
       music: musicEN,
       photo: photoEN,
+      tutorial: tutorialEN,
       videoFiction: videoFictionEN,
       videoInternet: videoInternetEN,
       cooking: cookingEN,
@@ -40,6 +43,7 @@ i18n.use(initReactI18next).init({
       book: bookFR,
       music: musicFR,
       photo: photoFR,
+      tutorial: tutorialFR,
       videoFiction: videoFictionFR,
       videoInternet: videoInternetFR,
       cooking: cookingFR,

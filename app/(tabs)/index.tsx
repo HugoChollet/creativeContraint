@@ -1,25 +1,25 @@
 import { AddButton } from "@/components/generic/add-button";
-import ProjectLanguageFilter from "@/components/generic/project-language-filter";
-import HomeProjectButton from "@/components/specific/home/home-project-button";
+import GeneratorLanguageFilter from "@/components/generic/generator-language-filter";
+import HomeGeneratorButton from "@/components/specific/home/home-generator-button";
 import {
-  getDefaultProjectLanguage,
-  matchesProjectLanguage,
-  ProjectLanguage,
-} from "@/constants/project-metadata";
+  getDefaultGeneratorLanguage,
+  matchesGeneratorLanguage,
+  GeneratorLanguage,
+} from "@/constants/generator-metadata";
 import { useAuth } from "@/contexts/auth-context";
 import {
-  HomeContextProject,
-  useHomeProjects,
-} from "@/contexts/home-projects-context";
+  HomeContextGenerator,
+  useHomeGenerators,
+} from "@/contexts/home-generators-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
 import {
-  buildProjectFromProjectRelation,
-  buildProjectJsonFromProject,
-  getProjectRouteType,
-  PROJECT_RELATION_SELECT,
-} from "@/lib/project-data";
-import { ProjectRelation } from "@/types/projects";
+  buildGeneratorFromGeneratorRelation,
+  buildGeneratorJsonFromGenerator,
+  getGeneratorRouteType,
+  GENERATOR_RELATION_SELECT,
+} from "@/lib/generator-data";
+import { GeneratorRelation } from "@/types/generators";
 import { useFocusEffect, useRouter } from "expo-router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -36,17 +36,17 @@ export default function HomeScreen() {
   const { session, loading: loadingAuth } = useAuth();
   const { t, i18n } = useTranslation();
   const { globalStyles, colors } = useStyles();
-  const { projects: selectedProjects, loading: loadingSelected, refreshProjects } =
-    useHomeProjects();
-  const [languageFilter, setLanguageFilter] = useState<ProjectLanguage | null>(
-    () => getDefaultProjectLanguage(i18n.language),
+  const { generators: selectedGenerators, loading: loadingSelectedGenerators, refreshGenerators } =
+    useHomeGenerators();
+  const [languageFilter, setLanguageFilter] = useState<GeneratorLanguage | null>(
+    () => getDefaultGeneratorLanguage(i18n.language),
   );
   const {
-    data: officialProjectRelations,
-    loading: loadingOfficial,
-    refresh: refreshOfficialProjects,
-  } = useCollection<ProjectRelation>("projects", {
-    select: PROJECT_RELATION_SELECT,
+    data: officialGeneratorRelations,
+    loading: loadingOfficialGenerators,
+    refresh: refreshOfficialGenerators,
+  } = useCollection<GeneratorRelation>("projects", {
+    select: GENERATOR_RELATION_SELECT,
     filterColumn: "source",
     filterValue: "official",
     orderBy: "name",
@@ -56,45 +56,45 @@ export default function HomeScreen() {
   useFocusEffect(
     useCallback(() => {
       if (session) {
-        void refreshProjects();
+        void refreshGenerators();
         return;
       }
 
-      void refreshOfficialProjects();
-    }, [refreshOfficialProjects, refreshProjects, session]),
+      void refreshOfficialGenerators();
+    }, [refreshOfficialGenerators, refreshGenerators, session]),
   );
 
   useEffect(() => {
-    setLanguageFilter(getDefaultProjectLanguage(i18n.language));
+    setLanguageFilter(getDefaultGeneratorLanguage(i18n.language));
   }, [i18n.language]);
 
-  const officialProjects = useMemo<HomeContextProject[]>(
+  const officialGenerators = useMemo<HomeContextGenerator[]>(
     () =>
-      officialProjectRelations.map((projectRelation) => {
-        const project = buildProjectFromProjectRelation(projectRelation);
-        const routeType = getProjectRouteType(project.name);
+      officialGeneratorRelations.map((projectRelation) => {
+        const project = buildGeneratorFromGeneratorRelation(projectRelation);
+        const routeType = getGeneratorRouteType(project.name);
 
         return {
           ...project,
           selected_category_ids: project.categories.map((category) => category.id),
           routeType,
           ownerUsername: null,
-          dataSource: buildProjectJsonFromProject(project, routeType),
+          dataSource: buildGeneratorJsonFromGenerator(project, routeType),
         };
       }),
-    [officialProjectRelations],
+    [officialGeneratorRelations],
   );
 
-  const projects = session ? selectedProjects : officialProjects;
-  const filteredProjects = useMemo(
+  const generators = session ? selectedGenerators : officialGenerators;
+  const filteredGenerators = useMemo(
     () =>
-      projects.filter((project) =>
-        matchesProjectLanguage(project.language, languageFilter),
+      generators.filter((generator) =>
+        matchesGeneratorLanguage(generator.language, languageFilter),
       ),
-    [languageFilter, projects],
+    [languageFilter, generators],
   );
   const isLoading =
-    loadingAuth || (session ? loadingSelected : loadingOfficial);
+    loadingAuth || (session ? loadingSelectedGenerators : loadingOfficialGenerators);
 
   if (isLoading) {
     return (
@@ -111,11 +111,11 @@ export default function HomeScreen() {
       <Text style={[globalStyles.title, { marginBottom: 20 }]}>
         {t(
           session
-            ? "screen:home.selected_project_choice"
-            : "screen:home.project_choice",
+            ? "screen:home.selected_generator_choice"
+            : "screen:home.generator_choice",
         )}
       </Text>
-      <ProjectLanguageFilter
+      <GeneratorLanguageFilter
         label={t("component:metadata.language_label")}
         selectedLanguage={languageFilter}
         onChange={setLanguageFilter}
@@ -123,38 +123,38 @@ export default function HomeScreen() {
       />
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {filteredProjects.length > 0 ? (
-          filteredProjects.map((project) => (
-            <HomeProjectButton
+        {filteredGenerators.length > 0 ? (
+          filteredGenerators.map((project) => (
+            <HomeGeneratorButton
               key={project.id}
               project={project}
               currentUserId={session?.user.id}
             />
           ))
-        ) : projects.length > 0 ? (
+        ) : generators.length > 0 ? (
           <View style={[globalStyles.card, styles.emptyState]}>
             <Text style={globalStyles.subtitle}>
               {t(
                 session
-                  ? "screen:home.no_filtered_projects"
-                  : "screen:home.no_official_projects",
+                  ? "screen:home.no_filtered_generators"
+                  : "screen:home.no_official_generators",
               )}
             </Text>
             <Text style={globalStyles.discreetText}>
               {t(
                 session
-                  ? "screen:home.no_filtered_projects_hint"
-                  : "screen:home.no_official_projects_hint",
+                  ? "screen:home.no_filtered_generators_hint"
+                  : "screen:home.no_official_generators_hint",
               )}
             </Text>
           </View>
         ) : session ? (
           <View style={[globalStyles.card, styles.emptyState]}>
             <Text style={globalStyles.subtitle}>
-              {t("screen:home.no_selected_projects")}
+              {t("screen:home.no_selected_generators")}
             </Text>
             <Text style={globalStyles.discreetText}>
-              {t("screen:home.no_selected_projects_hint", {
+              {t("screen:home.no_selected_generators_hint", {
                 email: session.user.email ?? "",
               })}
             </Text>
@@ -162,17 +162,17 @@ export default function HomeScreen() {
         ) : (
           <View style={[globalStyles.card, styles.emptyState]}>
             <Text style={globalStyles.subtitle}>
-              {t("screen:project_browse.no_projects")}
+              {t("screen:generator_browse.no_projects")}
             </Text>
           </View>
         )}
 
         <AddButton
-          projectColor={colors.tint}
-          label={t("screen:home.manage_projects_button")}
+          generatorColor={colors.tint}
+          label={t("screen:home.manage_generators_button")}
           onClick={() =>
             router.push({
-              pathname: "/project-browse",
+              pathname: "/generator-browse",
               params: { id: 1, type: "new" },
             })
           }

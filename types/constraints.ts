@@ -1,9 +1,9 @@
 import {
-  ProjectLanguage,
-  ProjectSupportedFileType,
-  ProjectTag,
-} from "@/constants/project-metadata";
-import { ProjectRelation } from "./projects";
+  GeneratorLanguage,
+  GeneratorSupportedFileType,
+  GeneratorTag,
+} from "@/constants/generator-metadata";
+import { GeneratorRelation } from "./generators";
 
 export interface Option {
   id: number;
@@ -32,9 +32,9 @@ export type GeneratedConstraintSet = {
   name: string;
   projectId?: string | null;
   projectLabel: string;
-  language?: ProjectLanguage | null;
-  supportedFiles?: ProjectSupportedFileType | null;
-  tags?: ProjectTag[] | null;
+  language?: GeneratorLanguage | null;
+  supportedFiles?: GeneratorSupportedFileType | null;
+  tags?: GeneratorTag[] | null;
   color?: string | null;
   generatedAt: string;
   constraints: GeneratedConstraints;
@@ -47,14 +47,14 @@ export type SavedConstraintSet = {
   name: string;
   project_id?: string | null;
   project_label: string;
-  language?: ProjectLanguage | null;
-  supported_files?: ProjectSupportedFileType | null;
-  tags?: ProjectTag[] | null;
+  language?: GeneratorLanguage | null;
+  supported_files?: GeneratorSupportedFileType | null;
+  tags?: GeneratorTag[] | null;
   color?: string | null;
   difficulty: number;
   constraints: IdSetConstraint;
   created_at?: string;
   owner_id?: string;
   is_public?: boolean;
-  project?: ProjectRelation | null;
+  project?: GeneratorRelation | null;
 };

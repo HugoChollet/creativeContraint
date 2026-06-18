@@ -47,7 +47,7 @@ export const ProfileImagePicker = ({
   };
 
   useEffect(() => {
-    if (initialImage) setImage(initialImage); // Initialize with prop value, fallback to null
+    setImage(initialImage || null);
   }, [initialImage]);
 
   return (

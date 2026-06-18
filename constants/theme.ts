@@ -13,8 +13,9 @@ export const Themes = {
   light: {
     text: textDark,
     textActive: tintColorLight,
+    textOnTint: textWhite,
     invertedText: textWhite,
-    textDiscreet: "#8E8E93",
+    textDiscreet: "rgb(142, 142, 147)",
     background: "#fff",
     invertedBackground: softContainerDark,
     shadeContainer: shadeContainerLight,
@@ -24,7 +25,7 @@ export const Themes = {
     icon: "#687076",
     tabIconDefault: "#687076",
     tabIconSelected: tintColorLight,
-    placeholder: "#979797ff",
+    placeholder: "rgb(151, 151, 151)",
     borderColor: shadeContainerLight,
     disable: "#ccc",
     custom: tintColorLight,
@@ -41,8 +42,9 @@ export const Themes = {
   dark: {
     text: textWhite,
     textActive: tintColorDark,
+    textOnTint: textWhite,
     invertedText: textDark,
-    textDiscreet: "#bbb",
+    textDiscreet: "rgb(156, 156, 156)",
     background: "#151718",
     invertedBackground: softContainerLight,
     shadeContainer: shadeContainerDark,
@@ -52,7 +54,7 @@ export const Themes = {
     icon: "#9BA1A6",
     tabIconDefault: "#9BA1A6",
     tabIconSelected: tintColorDark,
-    placeholder: "#555555ff",
+    placeholder: "rgb(85, 85, 85)",
     borderColor: shadeContainerDark,
     disable: "#6d6c6cff",
     custom: "#007AFF",
@@ -68,7 +70,7 @@ export const Themes = {
   },
 } as const;
 
-export const ProjectsColors = {
+export const GeneratorsColors = {
   light: {
     book: "rgba(27, 23, 208, 1)",
     music: "rgba(23, 184, 166, 1)",
@@ -91,17 +93,17 @@ export const ProjectsColors = {
   },
 } as const;
 
-export type ProjectKey = keyof typeof ProjectsColors.light;
-export type ProjectLabel = ProjectKey | string;
-export type ProjectColorValue = string;
-interface GetProjectColorParams {
-  label?: ProjectLabel;
-  color?: ProjectColorValue;
+export type GeneratorKey = keyof typeof GeneratorsColors.light;
+export type GeneratorLabel = GeneratorKey | string;
+export type GeneratorColorValue = string;
+interface GetGeneratorColorParams {
+  label?: GeneratorLabel;
+  color?: GeneratorColorValue;
   opacity?: number;
   theme?: AppTheme;
 }
 
-const projectKeyMap: Record<string, ProjectKey> = {
+const generatorKeyMap: Record<string, GeneratorKey> = {
   book: "book",
   music: "music",
   photography: "photography",
@@ -116,13 +118,13 @@ const projectKeyMap: Record<string, ProjectKey> = {
   videogame: "videogame",
 };
 
-export const getProjectColor = ({
+export const getGeneratorColor = ({
   label,
   color,
   opacity = 1,
   theme = "light",
-}: GetProjectColorParams = {}): string => {
-  const map: Record<string, ProjectKey> = {
+}: GetGeneratorColorParams = {}): string => {
+  const map: Record<string, GeneratorKey> = {
     Book: "book",
     Music: "music",
     Photography: "photography",
@@ -135,8 +137,8 @@ export const getProjectColor = ({
 
   if (label) {
     const normalizedLabel = label.trim().toLowerCase();
-    const key = map[label] || projectKeyMap[normalizedLabel] || "book";
-    const baseColor = ProjectsColors[theme][key];
+    const key = map[label] || generatorKeyMap[normalizedLabel] || "book";
+    const baseColor = GeneratorsColors[theme][key];
     return withOpacity(baseColor, opacity);
   }
 

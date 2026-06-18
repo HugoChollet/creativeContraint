@@ -1,12 +1,12 @@
-import { normalizeProjectTags } from "@/constants/project-metadata";
-import { AppTheme, getProjectColor } from "@/constants/theme";
-import { buildProjectJsonFromProject } from "@/lib/project-data";
+import { normalizeGeneratorTags } from "@/constants/generator-metadata";
+import { AppTheme, getGeneratorColor } from "@/constants/theme";
+import { buildGeneratorJsonFromGenerator } from "@/lib/generator-data";
 import {
   GeneratedConstraintSet,
   SavedConstraintSet,
 } from "@/types/constraints";
-import { CategoryJSON, ProjectJSON } from "@/types/json-objects";
-import { Project } from "@/types/projects";
+import { CategoryJSON, GeneratorJSON } from "@/types/json-objects";
+import { Generator } from "@/types/generators";
 
 type ConstraintCategoryLike = Pick<CategoryJSON, "id" | "name">;
 
@@ -90,9 +90,9 @@ const parseConstraintKey = (key: string): ParsedConstraintKey | null => {
   }
 };
 
-const flattenConstraintSetProject = (
+const flattenConstraintSetGenerator = (
   project: NonNullable<SavedConstraintSet["project"]>,
-): Project => {
+): Generator => {
   const { project_category_relations, ...projectRecord } = project;
 
   return {
@@ -151,7 +151,7 @@ export const resolveConstraintCategoryContext = (
 };
 
 export const getDefaultConstraintSetName = (projectLabel?: string | null) =>
-  projectLabel?.trim() || "Project";
+  projectLabel?.trim() || "Generator";
 
 export const normalizeConstraintSetName = (
   value: string | null | undefined,
@@ -174,21 +174,21 @@ export const getConstraintSetName = (
   constraintSet: Pick<SavedConstraintSet, "name" | "project_label">,
 ) => normalizeConstraintSetName(constraintSet.name, constraintSet.project_label);
 
-export const getConstraintSetProjectLabel = (constraintSet: SavedConstraintSet) =>
-  constraintSet.project_label.trim() || constraintSet.project?.name?.trim() || "Project";
+export const getConstraintSetGeneratorLabel = (constraintSet: SavedConstraintSet) =>
+  constraintSet.project_label.trim() || constraintSet.project?.name?.trim() || "Generator";
 
-export const getConstraintSetProjectLanguage = (
+export const getConstraintSetGeneratorLanguage = (
   constraintSet: SavedConstraintSet,
 ) => constraintSet.language ?? constraintSet.project?.language ?? null;
 
-export const getConstraintSetProjectSupportedFile = (
+export const getConstraintSetGeneratorSupportedFile = (
   constraintSet: SavedConstraintSet,
 ) => constraintSet.supported_files ?? constraintSet.project?.supported_files ?? null;
 
-export const getConstraintSetProjectTags = (constraintSet: SavedConstraintSet) =>
-  normalizeProjectTags(constraintSet.tags ?? constraintSet.project?.tags ?? []);
+export const getConstraintSetGeneratorTags = (constraintSet: SavedConstraintSet) =>
+  normalizeGeneratorTags(constraintSet.tags ?? constraintSet.project?.tags ?? []);
 
-export const getConstraintSetProjectColor = ({
+export const getConstraintSetGeneratorColor = ({
   constraintSet,
   theme,
 }: {
@@ -196,29 +196,29 @@ export const getConstraintSetProjectColor = ({
   theme: AppTheme;
 }) => {
   if (constraintSet.color) {
-    return getProjectColor({ color: constraintSet.color, theme });
+    return getGeneratorColor({ color: constraintSet.color, theme });
   }
 
   if (constraintSet.project?.color) {
-    return getProjectColor({ color: constraintSet.project.color, theme });
+    return getGeneratorColor({ color: constraintSet.project.color, theme });
   }
 
-  return getProjectColor({
+  return getGeneratorColor({
     label: constraintSet.project?.name ?? constraintSet.project_label,
     theme,
   });
 };
 
-export const getConstraintSetProjectDataSource = ({
+export const getConstraintSetGeneratorDataSource = ({
   constraintSet,
 }: {
   constraintSet: SavedConstraintSet;
-}): ProjectJSON | null => {
+}): GeneratorJSON | null => {
   if (!constraintSet.project) {
     return null;
   }
 
-  const project = flattenConstraintSetProject(constraintSet.project);
+  const project = flattenConstraintSetGenerator(constraintSet.project);
 
-  return buildProjectJsonFromProject(project);
+  return buildGeneratorJsonFromGenerator(project);
 };

@@ -11,27 +11,27 @@ import TagSelector, {
 } from "@/components/generic/tag-selector";
 import CategorySection from "@/components/specific/category/category-section";
 import {
-  isProjectLanguage,
-  matchesProjectLanguage,
-  matchesProjectTags,
-  normalizeProjectTags,
-  PROJECT_TAGS,
-  ProjectLanguage,
-  ProjectTag,
-} from "@/constants/project-metadata";
-import { getProjectColor } from "@/constants/theme";
+  isGeneratorLanguage,
+  matchesGeneratorLanguage,
+  matchesGeneratorTags,
+  normalizeGeneratorTags,
+  GENERATOR_TAGS,
+  GeneratorLanguage,
+  GeneratorTag,
+} from "@/constants/generator-metadata";
+import { getGeneratorColor } from "@/constants/theme";
 import { useAuth } from "@/contexts/auth-context";
-import { useHomeProjects } from "@/contexts/home-projects-context";
-import { useProjectDraft } from "@/contexts/project-draft-context";
+import { useHomeGenerators } from "@/contexts/home-generators-context";
+import { useGeneratorDraft } from "@/contexts/generator-draft-context";
 import { useCollection } from "@/hooks/use-collection";
 import { useStyles } from "@/hooks/use-styles";
-import { getProjectTitle } from "@/lib/project-data";
+import { getGeneratorTitle } from "@/lib/generator-data";
 import { Category, CategorySectionData } from "@/types/category";
 import {
-  Project,
-  ProjectCategoryRelation,
-  UserProjectSelection,
-} from "@/types/projects";
+  Generator,
+  GeneratorCategoryRelation,
+  UserGeneratorSelection,
+} from "@/types/generators";
 import { Ionicons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
@@ -62,11 +62,11 @@ export default function CategoryBrowseScreen() {
   const { globalStyles, theme, colors } = useStyles();
   const { session } = useAuth();
   const {
-    activeProject,
-    loading: loadingHomeProjects,
-    refreshProjects,
-    setActiveProjectId,
-  } = useHomeProjects();
+    activeGenerator,
+    loading: loadingHomeGenerators,
+    refreshGenerators,
+    setActiveGeneratorId,
+  } = useHomeGenerators();
   const { t } = useTranslation();
   const headerHeight = useHeaderHeight();
 
@@ -79,54 +79,54 @@ export default function CategoryBrowseScreen() {
     selectedCategories,
     setSelectedCategories,
     toggleSelectedCategory,
-    projectColor: draftProjectColor,
+    generatorColor: draftProjectColor,
     language,
     tags,
-  } = useProjectDraft();
+  } = useGeneratorDraft();
   // Edition mode batches checkbox changes locally until the user confirms.
   const [editionSelectedCategoryIds, setEditionSelectedCategoryIds] = useState<
     string[]
   >([]);
-  const activeProjectTitle = activeProject
-    ? getProjectTitle(activeProject.dataSource)
+  const activeGeneratorTitle = activeGenerator
+    ? getGeneratorTitle(activeGenerator.dataSource)
     : undefined;
-  const activeProjectColor = activeProject?.color
-    ? getProjectColor({
-        color: activeProject.color,
+  const activeGeneratorColor = activeGenerator?.color
+    ? getGeneratorColor({
+        color: activeGenerator.color,
         theme,
       })
-    : getProjectColor({
-        label: activeProject?.routeType,
+    : getGeneratorColor({
+        label: activeGenerator?.routeType,
         theme,
       });
-  const screenProjectTitle =
-    (isCreation ? name : activeProjectTitle) ?? activeProjectTitle ?? "Project";
-  const screenProjectColor = isCreation
+  const screenGeneratorTitle =
+    (isCreation ? name : activeGeneratorTitle) ?? activeGeneratorTitle ?? "Generator";
+  const screenGeneratorColor = isCreation
     ? draftProjectColor
-    : activeProjectColor;
+    : activeGeneratorColor;
   // Creation mode reads from the draft project, edition mode reads from the active home project.
-  const currentProjectLanguage = isCreation
+  const currentGeneratorLanguage = isCreation
     ? language
-    : activeProject?.language;
-  const currentProjectTags = useMemo(
+    : activeGenerator?.language;
+  const currentGeneratorTags = useMemo(
     () =>
-      normalizeProjectTags(
-        isCreation ? tags : (activeProject?.tags ?? undefined),
+      normalizeGeneratorTags(
+        isCreation ? tags : (activeGenerator?.tags ?? undefined),
       ),
-    [activeProject?.tags, isCreation, tags],
+    [activeGenerator?.tags, isCreation, tags],
   );
   const browseFilterSeed = useMemo(
     () =>
       isCreation
-        ? `creation:${currentProjectLanguage ?? ""}:${currentProjectTags.join("|")}`
-        : `edition:${activeProject?.id ?? ""}:${currentProjectLanguage ?? ""}:${currentProjectTags.join("|")}`,
-    [activeProject?.id, currentProjectLanguage, currentProjectTags, isCreation],
+        ? `creation:${currentGeneratorLanguage ?? ""}:${currentGeneratorTags.join("|")}`
+        : `edition:${activeGenerator?.id ?? ""}:${currentGeneratorLanguage ?? ""}:${currentGeneratorTags.join("|")}`,
+    [activeGenerator?.id, currentGeneratorLanguage, currentGeneratorTags, isCreation],
   );
   const [browseLanguageFilter, setBrowseLanguageFilter] = useState<
     string | null
-  >(isProjectLanguage(currentProjectLanguage) ? currentProjectLanguage : null);
+  >(isGeneratorLanguage(currentGeneratorLanguage) ? currentGeneratorLanguage : null);
   const [browseTagFilters, setBrowseTagFilters] =
-    useState<string[]>(currentProjectTags);
+    useState<string[]>(currentGeneratorTags);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
   const [visibleLogin, setVisibleLogin] = useState(false);
   const previousBrowseFilterSeedRef = useRef<string | null>(null);
@@ -137,18 +137,18 @@ export default function CategoryBrowseScreen() {
     }
 
     setBrowseLanguageFilter(
-      isProjectLanguage(currentProjectLanguage) ? currentProjectLanguage : null,
+      isGeneratorLanguage(currentGeneratorLanguage) ? currentGeneratorLanguage : null,
     );
-    setBrowseTagFilters(currentProjectTags);
+    setBrowseTagFilters(currentGeneratorTags);
     previousBrowseFilterSeedRef.current = browseFilterSeed;
-  }, [browseFilterSeed, currentProjectLanguage, currentProjectTags]);
+  }, [browseFilterSeed, currentGeneratorLanguage, currentGeneratorTags]);
 
   useEffect(() => {
     // Reset the local edition selection whenever we switch to another active project.
     if (!isCreation) {
-      setEditionSelectedCategoryIds(activeProject?.selected_category_ids ?? []);
+      setEditionSelectedCategoryIds(activeGenerator?.selected_category_ids ?? []);
     }
-  }, [activeProject?.id, activeProject?.selected_category_ids, isCreation]);
+  }, [activeGenerator?.id, activeGenerator?.selected_category_ids, isCreation]);
 
   // Creation mode reads from the draft, edition mode reads from the local checkbox buffer.
   const selectedCategoryIds = useMemo(
@@ -166,42 +166,42 @@ export default function CategoryBrowseScreen() {
     loading,
   } = useCollection<Category>("categories");
   const {
-    data: userProjectSelections,
-    updateRecord: updateProjectSelection,
-    refresh: refreshProjectSelections,
-    loading: loadingProjectSelections,
-  } = useCollection<UserProjectSelection>("user_project_selections", {
+    data: userGeneratorSelections,
+    updateRecord: updateGeneratorSelection,
+    refresh: refreshGeneratorSelections,
+    loading: loadingGeneratorSelections,
+  } = useCollection<UserGeneratorSelection>("user_project_selections", {
     filterColumn: "owner_id",
     filterValue: scopedUserId,
   });
   const {
-    fetchCollection: fetchProjectCategoryRelations,
-    addRecords: addProjectCategoryRelations,
-    deleteRecords: deleteProjectCategoryRelations,
-    loading: loadingProjectCategoryRelations,
-  } = useCollection<ProjectCategoryRelation>("project_category_relations");
+    fetchCollection: fetchGeneratorCategoryRelations,
+    addRecords: addGeneratorCategoryRelations,
+    deleteRecords: deleteGeneratorCategoryRelations,
+    loading: loadingGeneratorCategoryRelations,
+  } = useCollection<GeneratorCategoryRelation>("project_category_relations");
   const {
     addRecord: addProjectRecord,
-    deleteRecord: deleteProjectRecord,
-    loading: loadingProjectFork,
-  } = useCollection<Project>("projects");
+    deleteRecord: deleteGeneratorRecord,
+    loading: loadingGeneratorFork,
+  } = useCollection<Generator>("projects");
 
   useFocusEffect(
     useCallback(() => {
       // Category browse keeps its own collection state, so refetch after coming back from the form.
       refresh();
-      refreshProjectSelections();
-      refreshProjects();
-    }, [refresh, refreshProjectSelections, refreshProjects]),
+      refreshGeneratorSelections();
+      refreshGenerators();
+    }, [refresh, refreshGeneratorSelections, refreshGenerators]),
   );
 
   // This row represents "which project this user is currently using" plus its selected categories.
-  const activeProjectSelection = useMemo(
+  const activeGeneratorSelection = useMemo(
     () =>
-      userProjectSelections.find(
-        (selection) => selection.project_id === activeProject?.id,
+      userGeneratorSelections.find(
+        (selection) => selection.project_id === activeGenerator?.id,
       ) ?? null,
-    [activeProject?.id, userProjectSelections],
+    [activeGenerator?.id, userGeneratorSelections],
   );
 
   const filteredCategories = useMemo(
@@ -209,8 +209,8 @@ export default function CategoryBrowseScreen() {
       // Keep the tag/language rule in one place so the same OR logic applies everywhere.
       data.filter((item) => {
         return (
-          matchesProjectLanguage(item.language, browseLanguageFilter) &&
-          matchesProjectTags(item.tags, browseTagFilters)
+          matchesGeneratorLanguage(item.language, browseLanguageFilter) &&
+          matchesGeneratorTags(item.tags, browseTagFilters)
         );
       }),
     [browseLanguageFilter, browseTagFilters, data],
@@ -253,7 +253,7 @@ export default function CategoryBrowseScreen() {
   ];
   const tagOptions = useMemo<TagSelectorOption[]>(
     () =>
-      PROJECT_TAGS.map((value) => ({
+      GENERATOR_TAGS.map((value) => ({
         value,
         label: t(`component:metadata.tag_values.${value}`),
       })),
@@ -268,7 +268,7 @@ export default function CategoryBrowseScreen() {
     );
   }, []);
 
-  const persistProjectSelection = useCallback(
+  const persistGeneratorSelection = useCallback(
     async ({
       projectId,
       selectionId,
@@ -284,7 +284,7 @@ export default function CategoryBrowseScreen() {
       const uniqueSelectedCategoryIds = Array.from(
         new Set(selectedCategoryIds),
       );
-      const existingRelations = await fetchProjectCategoryRelations({
+      const existingRelations = await fetchGeneratorCategoryRelations({
         filterColumn: "project_id",
         filterValue: projectId,
       });
@@ -300,7 +300,7 @@ export default function CategoryBrowseScreen() {
 
       if (relationsToInsert.length > 0) {
         const insertedRelations =
-          await addProjectCategoryRelations(relationsToInsert);
+          await addGeneratorCategoryRelations(relationsToInsert);
 
         if (insertedRelations.length !== relationsToInsert.length) {
           console.error("Failed to insert project category relations");
@@ -308,7 +308,7 @@ export default function CategoryBrowseScreen() {
         }
       }
 
-      const updatedSelection = await updateProjectSelection(selectionId, {
+      const updatedSelection = await updateGeneratorSelection(selectionId, {
         ...(nextProjectId ? { project_id: nextProjectId } : {}),
         selected_category_ids: uniqueSelectedCategoryIds,
       });
@@ -321,23 +321,23 @@ export default function CategoryBrowseScreen() {
       return true;
     },
     [
-      addProjectCategoryRelations,
-      fetchProjectCategoryRelations,
-      updateProjectSelection,
+      addGeneratorCategoryRelations,
+      fetchGeneratorCategoryRelations,
+      updateGeneratorSelection,
     ],
   );
 
   const persistEditionSelection = useCallback(async () => {
-    if (!activeProject || !activeProjectSelection) {
+    if (!activeGenerator || !activeGeneratorSelection) {
       console.error("Missing active project selection");
       return false;
     }
 
     // Private projects can be updated in place for the current user selection.
-    if (!activeProject.is_public) {
-      const didPersist = await persistProjectSelection({
-        projectId: activeProject.id,
-        selectionId: activeProjectSelection.id,
+    if (!activeGenerator.is_public) {
+      const didPersist = await persistGeneratorSelection({
+        projectId: activeGenerator.id,
+        selectionId: activeGeneratorSelection.id,
         selectedCategoryIds: editionSelectedCategoryIds,
       });
 
@@ -345,19 +345,19 @@ export default function CategoryBrowseScreen() {
         return false;
       }
 
-      await refreshProjects();
-      return activeProject.id;
+      await refreshGenerators();
+      return activeGenerator.id;
     }
 
     // Public projects stay immutable here: fork first, then move the user's selection to the fork.
     const forkedProject = await addProjectRecord({
-      name: activeProject.name,
-      description: activeProject.description,
-      language: activeProject.language ?? undefined,
-      tags: normalizeProjectTags(activeProject.tags),
+      name: activeGenerator.name,
+      description: activeGenerator.description,
+      language: activeGenerator.language ?? undefined,
+      tags: normalizeGeneratorTags(activeGenerator.tags),
       is_public: false,
       favorited_counter: 0,
-      color: activeProject.color,
+      color: activeGenerator.color,
     });
 
     if (!forkedProject) {
@@ -365,30 +365,30 @@ export default function CategoryBrowseScreen() {
       return false;
     }
 
-    const didPersistFork = await persistProjectSelection({
+    const didPersistFork = await persistGeneratorSelection({
       projectId: forkedProject.id,
-      selectionId: activeProjectSelection.id,
+      selectionId: activeGeneratorSelection.id,
       selectedCategoryIds: editionSelectedCategoryIds,
       nextProjectId: forkedProject.id,
     });
 
     if (!didPersistFork) {
-      await deleteProjectRecord(forkedProject.id);
+      await deleteGeneratorRecord(forkedProject.id);
       return false;
     }
 
-    setActiveProjectId(forkedProject.id);
-    await refreshProjects();
+    setActiveGeneratorId(forkedProject.id);
+    await refreshGenerators();
     return forkedProject.id;
   }, [
-    activeProject,
-    activeProjectSelection,
+    activeGenerator,
+    activeGeneratorSelection,
     addProjectRecord,
-    deleteProjectRecord,
+    deleteGeneratorRecord,
     editionSelectedCategoryIds,
-    persistProjectSelection,
-    refreshProjects,
-    setActiveProjectId,
+    persistGeneratorSelection,
+    refreshGenerators,
+    setActiveGeneratorId,
   ]);
 
   const returnBrowseMode = isCreation ? "creation" : "edition";
@@ -426,7 +426,7 @@ export default function CategoryBrowseScreen() {
   const handleDeleteCategory = useCallback(
     async (category: Category) => {
       const relationIds = (
-        await fetchProjectCategoryRelations({
+        await fetchGeneratorCategoryRelations({
           filterColumn: "category_id",
           filterValue: category.id,
         })
@@ -434,7 +434,7 @@ export default function CategoryBrowseScreen() {
 
       if (relationIds.length > 0) {
         const didDeleteRelations =
-          await deleteProjectCategoryRelations(relationIds);
+          await deleteGeneratorCategoryRelations(relationIds);
 
         if (!didDeleteRelations) {
           console.error("Failed to delete project category relations");
@@ -442,14 +442,14 @@ export default function CategoryBrowseScreen() {
         }
       }
 
-      const selectionUpdates = userProjectSelections.filter((selection) =>
+      const selectionUpdates = userGeneratorSelections.filter((selection) =>
         selection.selected_category_ids.includes(category.id),
       );
 
       if (selectionUpdates.length > 0) {
         const updatedSelections = await Promise.all(
           selectionUpdates.map((selection) =>
-            updateProjectSelection(selection.id, {
+            updateGeneratorSelection(selection.id, {
               selected_category_ids: selection.selected_category_ids.filter(
                 (categoryId) => categoryId !== category.id,
               ),
@@ -481,25 +481,25 @@ export default function CategoryBrowseScreen() {
       }
 
       await refresh();
-      await refreshProjectSelections();
-      await refreshProjects();
+      await refreshGeneratorSelections();
+      await refreshGenerators();
     },
     [
       deleteCategoryRecord,
-      deleteProjectCategoryRelations,
-      fetchProjectCategoryRelations,
+      deleteGeneratorCategoryRelations,
+      fetchGeneratorCategoryRelations,
       isCreation,
       refresh,
-      refreshProjectSelections,
-      refreshProjects,
+      refreshGeneratorSelections,
+      refreshGenerators,
       selectedCategories,
       setSelectedCategories,
-      updateProjectSelection,
-      userProjectSelections,
+      updateGeneratorSelection,
+      userGeneratorSelections,
     ],
   );
 
-  if (!isCreation && loadingHomeProjects && !activeProject) {
+  if (!isCreation && loadingHomeGenerators && !activeGenerator) {
     return (
       <View
         style={[globalStyles.screenContainer, { justifyContent: "center" }]}
@@ -512,7 +512,7 @@ export default function CategoryBrowseScreen() {
   return (
     <View style={globalStyles.screenContainer}>
       <Header
-        title={t("screen:category_browse.title", { type: screenProjectTitle })}
+        title={t("screen:category_browse.title", { type: screenGeneratorTitle })}
       />
       <View style={{ marginTop: 16, marginBottom: 8 }}>
         <Text style={globalStyles.label}>
@@ -521,7 +521,7 @@ export default function CategoryBrowseScreen() {
         <MetadataBadges
           language={browseLanguageFilter}
           tags={browseTagFilters}
-          color={screenProjectColor}
+          color={screenGeneratorColor}
           onRemoveBadge={(badge) => {
             if (badge.type === "language") {
               setBrowseLanguageFilter(null);
@@ -543,12 +543,12 @@ export default function CategoryBrowseScreen() {
                 globalStyles.elementAndDescriptorContainer,
                 styles.addFilterButton,
                 {
-                  borderColor: screenProjectColor,
+                  borderColor: screenGeneratorColor,
                 },
               ]}
               accessibilityLabel="Add filters"
             >
-              <Ionicons name="add" size={14} color={screenProjectColor} />
+              <Ionicons name="add" size={14} color={screenGeneratorColor} />
             </Pressable>
           }
         />
@@ -557,7 +557,7 @@ export default function CategoryBrowseScreen() {
         <View
           style={[globalStyles.screenContainer, { justifyContent: "center" }]}
         >
-          <ActivityIndicator size="large" color={screenProjectColor} />
+          <ActivityIndicator size="large" color={screenGeneratorColor} />
         </View>
       ) : (
         <FlatList
@@ -567,7 +567,7 @@ export default function CategoryBrowseScreen() {
             <CategorySection
               key={section.title}
               section={section}
-              projectColor={screenProjectColor}
+              generatorColor={screenGeneratorColor}
               onDelete={handleDeleteCategory}
               onEdit={(category) =>
                 openCategoryForm({
@@ -596,9 +596,9 @@ export default function CategoryBrowseScreen() {
           }}
         />
       )}
-      {!isCreation && activeProject && (
+      {!isCreation && activeGenerator && (
         <AddButton
-          projectColor={screenProjectColor}
+          generatorColor={screenGeneratorColor}
           label={t("screen:category_browse.add_button")}
           onClick={() => {
             if (!session?.user) {
@@ -612,17 +612,17 @@ export default function CategoryBrowseScreen() {
       )}
 
       <ConfirmCancelButton
-        color={screenProjectColor}
+        color={screenGeneratorColor}
         labelConfirm={t("screen:category_browse.confirm_button")}
         isLoading={
-          loadingProjectSelections ||
-          loadingProjectCategoryRelations ||
-          loadingProjectFork
+          loadingGeneratorSelections ||
+          loadingGeneratorCategoryRelations ||
+          loadingGeneratorFork
         }
         onClickConfirm={async () => {
           if (isCreation) {
             router.navigate({
-              pathname: "/project-form",
+              pathname: "/generator-form",
               params: {
                 type, // TODO refacto to prevent to have send param back to the original screen
               },
@@ -630,7 +630,7 @@ export default function CategoryBrowseScreen() {
             return;
           }
 
-          if (activeProject) {
+          if (activeGenerator) {
             const nextProjectId = await persistEditionSelection();
 
             if (!nextProjectId) {
@@ -638,10 +638,10 @@ export default function CategoryBrowseScreen() {
             }
 
             router.navigate({
-              pathname: "/lab",
+              pathname: "/generators",
               params: {
                 id: nextProjectId,
-                type: screenProjectTitle,
+                type: screenGeneratorTitle,
               },
             });
             return;
@@ -652,22 +652,22 @@ export default function CategoryBrowseScreen() {
         onClickCancel={() =>
           isCreation
             ? router.navigate({
-                pathname: "/project-form",
+                pathname: "/generator-form",
                 params: {
                   type,
                 },
               })
-            : activeProject
+            : activeGenerator
               ? (() => {
                   setEditionSelectedCategoryIds(
-                    activeProject.selected_category_ids ?? [],
+                    activeGenerator.selected_category_ids ?? [],
                   );
 
                   router.navigate({
-                    pathname: "/lab",
+                    pathname: "/generators",
                     params: {
-                      id: activeProject.id,
-                      type: screenProjectTitle,
+                      id: activeGenerator.id,
+                      type: screenGeneratorTitle,
                     },
                   });
                 })()
@@ -689,26 +689,26 @@ export default function CategoryBrowseScreen() {
           <LanguageSelector
             label={t("component:metadata.language_label")}
             selectedLanguage={
-              isProjectLanguage(browseLanguageFilter)
-                ? (browseLanguageFilter as ProjectLanguage)
+              isGeneratorLanguage(browseLanguageFilter)
+                ? (browseLanguageFilter as GeneratorLanguage)
                 : null
             }
             onChange={(nextLanguage) => setBrowseLanguageFilter(nextLanguage)}
-            color={screenProjectColor}
+            color={screenGeneratorColor}
           />
           <TagSelector
             label={t("component:metadata.tags_label")}
             options={tagOptions}
             selectedValues={browseTagFilters}
             onChange={(values) =>
-              setBrowseTagFilters(normalizeProjectTags(values) as ProjectTag[])
+              setBrowseTagFilters(normalizeGeneratorTags(values) as GeneratorTag[])
             }
-            color={screenProjectColor}
+            color={screenGeneratorColor}
             maxVisibleRows={3}
           />
         </ScrollView>
         <ConfirmButton
-          projectColor={screenProjectColor}
+          generatorColor={screenGeneratorColor}
           label={t("component:confirm-cancel.confirm")}
           onClick={() => setIsFilterModalVisible(false)}
         />

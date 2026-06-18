@@ -1,12 +1,12 @@
-export const PROJECT_LANGUAGES = ["en", "fr"] as const;
-export const PROJECT_SUPPORTED_FILE_TYPES = [
+export const GENERATOR_LANGUAGES = ["en", "fr"] as const;
+export const GENERATOR_SUPPORTED_FILE_TYPES = [
   "png/jpg",
   "docs/pdf",
   "plain text",
   "youtube link",
   "mp3",
 ] as const;
-export const PROJECT_TAGS = [
+export const GENERATOR_TAGS = [
   "all",
   "fiction",
   "writing",
@@ -38,58 +38,58 @@ export const PROJECT_TAGS = [
   "other",
 ] as const;
 
-export type ProjectLanguage = (typeof PROJECT_LANGUAGES)[number];
-export type ProjectSupportedFileType =
-  (typeof PROJECT_SUPPORTED_FILE_TYPES)[number];
-export type ProjectTag = (typeof PROJECT_TAGS)[number];
+export type GeneratorLanguage = (typeof GENERATOR_LANGUAGES)[number];
+export type GeneratorSupportedFileType =
+  (typeof GENERATOR_SUPPORTED_FILE_TYPES)[number];
+export type GeneratorTag = (typeof GENERATOR_TAGS)[number];
 
-export const DEFAULT_PROJECT_LANGUAGE: ProjectLanguage = "en";
-export const DEFAULT_PROJECT_SUPPORTED_FILE_TYPE: ProjectSupportedFileType =
+export const DEFAULT_GENERATOR_LANGUAGE: GeneratorLanguage = "en";
+export const DEFAULT_GENERATOR_SUPPORTED_FILE_TYPE: GeneratorSupportedFileType =
   "plain text";
-export const DEFAULT_PROJECT_TAGS: ProjectTag[] = ["all"];
-export const PROJECT_LANGUAGE_FLAGS: Record<ProjectLanguage, string> = {
+export const DEFAULT_GENERATOR_TAGS: GeneratorTag[] = ["all"];
+export const PROJECT_LANGUAGE_FLAGS: Record<GeneratorLanguage, string> = {
   en: "🇬🇧",
   fr: "🇫🇷",
 };
 
-const projectLanguageSet = new Set<string>(PROJECT_LANGUAGES);
+const projectLanguageSet = new Set<string>(GENERATOR_LANGUAGES);
 const projectSupportedFileTypeSet = new Set<string>(
-  PROJECT_SUPPORTED_FILE_TYPES,
+  GENERATOR_SUPPORTED_FILE_TYPES,
 );
-const projectTagSet = new Set<string>(PROJECT_TAGS);
+const projectTagSet = new Set<string>(GENERATOR_TAGS);
 
-export const isProjectLanguage = (
+export const isGeneratorLanguage = (
   value?: string | null,
-): value is ProjectLanguage => projectLanguageSet.has(value ?? "");
+): value is GeneratorLanguage => projectLanguageSet.has(value ?? "");
 
-export const getDefaultProjectLanguage = (
+export const getDefaultGeneratorLanguage = (
   preferredLanguage?: string | null,
-): ProjectLanguage =>
-  isProjectLanguage(preferredLanguage)
+): GeneratorLanguage =>
+  isGeneratorLanguage(preferredLanguage)
     ? preferredLanguage
-    : DEFAULT_PROJECT_LANGUAGE;
+    : DEFAULT_GENERATOR_LANGUAGE;
 
-export const isProjectSupportedFileType = (
+export const isGeneratorSupportedFileType = (
   value?: string | null,
-): value is ProjectSupportedFileType =>
+): value is GeneratorSupportedFileType =>
   projectSupportedFileTypeSet.has(value ?? "");
 
-export const getDefaultProjectSupportedFileType = (
+export const getDefaultGeneratorSupportedFileType = (
   preferredFileType?: string | null,
-): ProjectSupportedFileType =>
-  isProjectSupportedFileType(preferredFileType)
+): GeneratorSupportedFileType =>
+  isGeneratorSupportedFileType(preferredFileType)
     ? preferredFileType
-    : DEFAULT_PROJECT_SUPPORTED_FILE_TYPE;
+    : DEFAULT_GENERATOR_SUPPORTED_FILE_TYPE;
 
-export const getProjectLanguageFlag = (language: ProjectLanguage) =>
+export const getGeneratorLanguageFlag = (language: GeneratorLanguage) =>
   PROJECT_LANGUAGE_FLAGS[language];
 
-export const normalizeProjectTags = (
+export const normalizeGeneratorTags = (
   values?: readonly string[] | null,
-): ProjectTag[] => {
+): GeneratorTag[] => {
   const normalized = Array.from(
     new Set(
-      (values ?? []).filter((value): value is ProjectTag =>
+      (values ?? []).filter((value): value is GeneratorTag =>
         projectTagSet.has(value),
       ),
     ),
@@ -98,23 +98,23 @@ export const normalizeProjectTags = (
   return normalized.includes("all") ? ["all"] : normalized;
 };
 
-export const getDefaultProjectTags = (
+export const getDefaultGeneratorTags = (
   preferredTags?: readonly string[] | null,
-): ProjectTag[] => {
-  const normalizedTags = normalizeProjectTags(preferredTags);
+): GeneratorTag[] => {
+  const normalizedTags = normalizeGeneratorTags(preferredTags);
 
-  return normalizedTags.length > 0 ? normalizedTags : DEFAULT_PROJECT_TAGS;
+  return normalizedTags.length > 0 ? normalizedTags : DEFAULT_GENERATOR_TAGS;
 };
 
-export const getPrimaryProjectTag = (
+export const getPrimaryGeneratorTag = (
   values?: readonly string[] | null,
-): ProjectTag => getDefaultProjectTags(values)[0];
+): GeneratorTag => getDefaultGeneratorTags(values)[0];
 
-export const prioritizeProjectTag = (
+export const prioritizeGeneratorTag = (
   values: readonly string[],
-  preferredTag: ProjectTag,
-): ProjectTag[] => {
-  const normalizedTags = getDefaultProjectTags(values);
+  preferredTag: GeneratorTag,
+): GeneratorTag[] => {
+  const normalizedTags = getDefaultGeneratorTags(values);
 
   if (!normalizedTags.includes(preferredTag)) {
     return normalizedTags;
@@ -126,12 +126,12 @@ export const prioritizeProjectTag = (
   ];
 };
 
-export const toggleProjectTag = (
+export const toggleGeneratorTag = (
   currentTags: readonly string[],
-  nextTag: ProjectTag,
+  nextTag: GeneratorTag,
   limit: number,
-): ProjectTag[] => {
-  const normalizedCurrent = normalizeProjectTags(currentTags);
+): GeneratorTag[] => {
+  const normalizedCurrent = normalizeGeneratorTags(currentTags);
 
   if (normalizedCurrent.includes(nextTag)) {
     return normalizedCurrent.filter((tag) => tag !== nextTag);
@@ -150,16 +150,16 @@ export const toggleProjectTag = (
   return [...withoutAll, nextTag];
 };
 
-export const getCategoryTagsFromProject = (
+export const getCategoryTagsFromGenerator = (
   values?: readonly string[] | null,
   limit = 2,
-): ProjectTag[] => {
-  const normalized = normalizeProjectTags(values);
+): GeneratorTag[] => {
+  const normalized = normalizeGeneratorTags(values);
 
   return normalized.includes("all") ? ["all"] : normalized.slice(0, limit);
 };
 
-export const matchesProjectLanguage = (
+export const matchesGeneratorLanguage = (
   candidateLanguage?: string | null,
   filterLanguage?: string | null,
 ) => {
@@ -169,17 +169,17 @@ export const matchesProjectLanguage = (
   return candidateLanguage === filterLanguage;
 };
 
-export const matchesProjectTags = (
+export const matchesGeneratorTags = (
   candidateTags?: readonly string[] | null,
   filterTags?: readonly string[] | null,
 ) => {
-  const normalizedFilter = normalizeProjectTags(filterTags);
+  const normalizedFilter = normalizeGeneratorTags(filterTags);
 
   if (normalizedFilter.length === 0) {
     return true;
   }
 
-  const normalizedCandidate = normalizeProjectTags(candidateTags);
+  const normalizedCandidate = normalizeGeneratorTags(candidateTags);
 
   if (normalizedCandidate.length === 0) {
     return false;

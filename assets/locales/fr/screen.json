@@ -1,36 +1,36 @@
 {
   "layout": {
     "Home": "Accueil",
-    "Lab": "Lab",
+    "Generators": "Générateurs",
     "Settings": "Paramètres",
-    "Projects": "Projets",
+    "Projects": "Générateurs",
     "constraint_sets": "Sets de Contraintes",
-    "Publication_Feed": "Fil de Publications"
+    "Publication_Feed": "Publications"
   },
-  "lab": {
-    "lab_title": "Labo pour {{type}}",
+  "generators": {
+    "generator_title": "Générateur pour {{type}}",
     "generate_button": "Générer une idée de {{type}}",
     "latest_result_button": "Voir le dernier résultat",
-    "back_button": "Retour au Lab",
+    "back_button": "Retour aux générateurs",
     "empty_result": "-",
     "add-button": {
       "label-category": "Ajouter une catégorie",
-      "label-project": "Ajouter un générateur de projet"
+      "label-generator": "Ajouter un générateur"
     }
   },
   "home": {
-    "project_choice": "Choisissez un projet pour commencer",
-    "selected_project_choice": "Choisissez un de vos générateurs de projet sauvegardés",
-    "no_selected_projects": "Vous n'avez pas encore de générateurs de projet sauvegardés",
-    "no_selected_projects_hint": "Choisissez des générateurs depuis l'écran de navigation et ils apparaîtront ici.",
-    "no_filtered_projects": "Aucun générateur sauvegardé ne correspond à cette langue pour le moment",
-    "no_filtered_projects_hint": "Retirez le filtre de langue pour voir vos autres générateurs sauvegardés.",
-    "no_official_projects": "Aucun générateur officiel ne correspond à cette langue pour le moment",
-    "no_official_projects_hint": "Retirez le filtre de langue pour explorer les autres générateurs officiels.",
-    "project_source_official": "Officiel",
-    "project_source_you": "Créé par vous",
-    "project_source_user": "Créé par {{username}}",
-    "manage_projects_button": "Gérer les générateurs de projet",
+    "generator_choice": "Choisissez un générateur pour commencer",
+    "selected_generator_choice": "Choisissez un de vos générateurs sauvegardés",
+    "no_selected_generators": "Vous n'avez pas encore de générateurs sauvegardés",
+    "no_selected_generators_hint": "Choisissez des générateurs depuis l'écran de navigation et ils apparaîtront ici.",
+    "no_filtered_generators": "Aucun générateur sauvegardé ne correspond à cette langue pour le moment",
+    "no_filtered_generators_hint": "Retirez le filtre de langue pour voir vos autres générateurs sauvegardés.",
+    "no_official_generators": "Aucun générateur officiel ne correspond à cette langue pour le moment",
+    "no_official_generators_hint": "Retirez le filtre de langue pour explorer les autres générateurs officiels.",
+    "generator_source_official": "Officiel",
+    "generator_source_you": "Créé par vous",
+    "generator_source_user": "Créé par {{username}}",
+    "manage_generators_button": "Gérer les générateurs",
     "book_button": "Ecrire une fiction",
     "music_button": "Composer une musique",
     "videointernet_button": "Créer un contenu Video",
@@ -45,16 +45,35 @@
     "language_selection": "Langue de l'application"
   },
   "constraint_sets": {
-    "title": "Mes Sets de Contraintes",
+    "title": "Sets de Contraintes",
     "no_constraint_sets": "Vous n'avez pas encore de Sets de Contraintes. Commencez par en créer un !",
-    "create_button": "Créer un nouveau projet",
-    "delete_button": "Supprimer le projet",
-    "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce projet ? Cette action est irréversible.",
+    "personal_tab": "Personnel",
+    "community_tab": "Communauté",
+    "publish_to_community": "Envoyer à la communauté",
+    "published_to_community": "Déjà dans la communauté",
+    "publish_success_title": "Envoyé",
+    "publish_success_message": "Ce set de contraintes est maintenant disponible pour la communauté.",
+    "publish_error_title": "Échec de l'envoi",
+    "publish_error_message": "Impossible d'envoyer ce set de contraintes. Veuillez réessayer.",
+    "create_button": "Créer un nouveau générateur",
+    "delete_button": "Supprimer le générateur",
+    "confirm_delete": "Êtes-vous sûr de vouloir supprimer ce générateur ? Cette action est irréversible.",
     "cancel_button": "Annuler",
     "confirm_button": "Confirmer",
     "difficulty": "Difficulté",
     "refresh": "Actualiser",
     "auth_required": "Vous devez vous connecter pour voir vos Sets de Contraintes."
+  },
+  "constraint_set_browse": {
+    "title": "Sets de Contraintes de la communauté",
+    "search_placeholder": "Rechercher un set, générateur, tag...",
+    "filters_label": "Filtres",
+    "no_constraint_sets": "Aucun set de contraintes de la communauté ne correspond à ces filtres.",
+    "save_button": "Sauvegarder dans mes sets",
+    "save_success_title": "Sauvegardé",
+    "save_success_message": "Ce set de contraintes est maintenant dans vos sets sauvegardés.",
+    "save_error_title": "Échec de la sauvegarde",
+    "save_error_message": "Impossible de sauvegarder ce set de contraintes. Veuillez réessayer."
   },
   "submit": {
     "publish": "publier : ",
@@ -82,7 +101,7 @@
   },
   "category_browse": {
     "title": "Parcourir les catégories de {{type}}",
-    "filters_label": "Correspond aux filtres de votre projet",
+    "filters_label": "Correspond aux filtres de votre générateur",
     "personal_section": "Personnel",
     "published_section": "Publié par vous",
     "community_section": "Communauté",
@@ -91,30 +110,30 @@
     "add_button": "Créer votre propre catégorie",
     "confirm_button": "Confirmer la sélection"
   },
-  "project_browse": {
-    "title": "Parcourir les générateurs de projet de {{type}}",
+  "generator_browse": {
+    "title": "Parcourir les générateurs de {{type}}",
     "personal_section": "Personnel",
     "published_section": "Publié par vous",
     "community_section": "Communauté",
     "official_section": "Officiel",
-    "add_button": "Créer votre propre générateur de projet",
-    "no_projects": "Il n'y a pas encore de générateur de projet ici",
-    "create_button": "Validez votre nouveau générateur de projet",
+    "add_button": "Créer votre propre générateur",
+    "no_projects": "Il n'y a pas encore de générateur ici",
+    "create_button": "Validez votre nouveau générateur",
     "confirm_button": "Confirmer la sélection"
   },
-  "project_form": {
-    "title": "Nouveau générateur de projet pour {{type}}",
-    "name_label": "Nom du projet",
-    "name_placeholder": "Entrez le nom du projet",
+  "generator_form": {
+    "title": "Nouveau générateur pour {{type}}",
+    "name_label": "Nom du générateur",
+    "name_placeholder": "Entrez le nom du générateur",
     "description_label": "Description",
-    "description_placeholder": "Décrivez le générateur de projet",
+    "description_placeholder": "Décrivez le générateur",
     "import_button": "Importer depuis un JSON",
     "import_helper": "{{fileName}} • {{count}} catégories prêtes à être sauvegardées",
     "import_error_title": "Import impossible",
-    "import_error_invalid": "Sélectionnez un fichier JSON de projet valide avec des catégories.",
+    "import_error_invalid": "Sélectionnez un fichier JSON de générateur valide avec des catégories.",
     "preview_label": "Aperçu",
     "add_button": "Ajouter une nouvelle catégorie",
-    "submit_button": "Sauvegarder le générateur de projet",
-    "category_list_label": "Catégories de ce générateur de projet (minimum {{min}})"
+    "submit_button": "Sauvegarder le générateur",
+    "category_list_label": "Catégories de ce générateur (minimum {{min}})"
   }
 }

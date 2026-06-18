@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 
 interface BookMediaPickerProps {
-  projectColor: string;
+  generatorColor: string;
   onContentChange: (data: {
     type: "text" | "file";
     value: string | DocumentPicker.DocumentPickerResult | null;
@@ -15,7 +15,7 @@ interface BookMediaPickerProps {
 }
 
 export const BookMediaPicker = ({
-  projectColor,
+  generatorColor,
   onContentChange,
 }: BookMediaPickerProps) => {
   const { t } = useTranslation();
@@ -51,7 +51,7 @@ export const BookMediaPicker = ({
           onPress={() => setMode("text")}
           style={[
             globalStyles.tabSegment,
-            mode === "text" && { backgroundColor: projectColor },
+            mode === "text" && { backgroundColor: generatorColor },
           ]}
         >
           <Text
@@ -60,7 +60,7 @@ export const BookMediaPicker = ({
               {
                 color:
                   mode === "text"
-                    ? getContrastingColor(projectColor, "primary")
+                    ? getContrastingColor(generatorColor, "primary")
                     : colors.textDiscreet,
               },
             ]}
@@ -73,7 +73,7 @@ export const BookMediaPicker = ({
           onPress={() => setMode("file")}
           style={[
             globalStyles.tabSegment,
-            mode === "file" && { backgroundColor: projectColor },
+            mode === "file" && { backgroundColor: generatorColor },
           ]}
         >
           <Text
@@ -82,7 +82,7 @@ export const BookMediaPicker = ({
               {
                 color:
                   mode === "file"
-                    ? getContrastingColor(projectColor, "primary")
+                    ? getContrastingColor(generatorColor, "primary")
                     : colors.textDiscreet,
               },
             ]}
@@ -101,7 +101,7 @@ export const BookMediaPicker = ({
               height: 200,
               textAlignVertical: "top",
               paddingTop: 12,
-              borderColor: projectColor,
+              borderColor: generatorColor,
             },
           ]}
           placeholder={t("component:book-picker.input_placeholder")}
@@ -118,7 +118,7 @@ export const BookMediaPicker = ({
           style={[
             globalStyles.mediaIntegrationContainer,
             {
-              borderColor: projectColor,
+              borderColor: generatorColor,
             },
           ]}
           onPress={pickDocument}
@@ -126,10 +126,10 @@ export const BookMediaPicker = ({
           <Ionicons
             name={fileName ? "document-text" : "document-attach-outline"}
             size={32}
-            color={projectColor}
+            color={generatorColor}
           />
           <Text
-            style={[globalStyles.text, { color: projectColor, marginTop: 8 }]}
+            style={[globalStyles.text, { color: generatorColor, marginTop: 8 }]}
           >
             {fileName ? fileName : t("component:book-picker.file_placeholder")}
           </Text>

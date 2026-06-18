@@ -1,15 +1,17 @@
+import { CommentButton } from "@/components/generic/comment-button";
 import MetadataBadges from "@/components/generic/metadata-badges";
-import { getProjectColor } from "@/constants/theme";
-import { useProjectTranslations } from "@/hooks/use-project-translations";
+import { LikeButton } from "@/components/generic/like-button";
+import { getGeneratorColor } from "@/constants/theme";
+import { useGeneratorTranslations } from "@/hooks/use-generator-translations";
 import { useStyles } from "@/hooks/use-styles";
 import {
-  getConstraintSetProjectColor,
-  getConstraintSetProjectDataSource,
+  getConstraintSetGeneratorColor,
+  getConstraintSetGeneratorDataSource,
   getConstraintSetName,
-  getConstraintSetProjectLabel,
-  getConstraintSetProjectLanguage,
-  getConstraintSetProjectSupportedFile,
-  getConstraintSetProjectTags,
+  getConstraintSetGeneratorLabel,
+  getConstraintSetGeneratorLanguage,
+  getConstraintSetGeneratorSupportedFile,
+  getConstraintSetGeneratorTags,
 } from "@/lib/constraint-set-data";
 import { SavedConstraintSet } from "@/types/constraints";
 import { Ionicons } from "@expo/vector-icons";
@@ -23,44 +25,71 @@ import ShareConstraintButton from "../share-constraint-set";
 export function ConstraintsSetCard({
   item,
   deleteRecord,
+  publishRecord,
   submit,
+  submitLabel,
+  isSubmitting = false,
+  isPublishing = false,
+  likeCount = 0,
+  isLiked = false,
+  isLikePending = false,
+  onToggleLike,
+  commentCount = 0,
+  onOpenComments,
+  onOpenDetails,
+  hideHeader = false,
 }: {
   item: SavedConstraintSet;
-  deleteRecord: (id: number | string) => void;
-  submit: () => void;
+  deleteRecord?: (id: number | string) => void;
+  publishRecord?: (item: SavedConstraintSet) => void;
+  submit?: () => void;
+  submitLabel?: string;
+  isSubmitting?: boolean;
+  isPublishing?: boolean;
+  likeCount?: number;
+  isLiked?: boolean;
+  isLikePending?: boolean;
+  onToggleLike?: () => void;
+  commentCount?: number;
+  onOpenComments?: () => void;
+  onOpenDetails?: () => void;
+  hideHeader?: boolean;
 }) {
   const { t } = useTranslation();
   const { globalStyles, colors, theme } = useStyles();
   const constraintSetName = getConstraintSetName(item);
-  const projectLabel = getConstraintSetProjectLabel(item);
-  const solidColor = getConstraintSetProjectColor({
+  const projectLabel = getConstraintSetGeneratorLabel(item);
+  const solidColor = getConstraintSetGeneratorColor({
     constraintSet: item,
     theme,
   });
 
   const projectBackgroundColor = item.color
-    ? getProjectColor({
+    ? getGeneratorColor({
         color: item.color,
         opacity: 0.1,
         theme,
       })
-    : getProjectColor({
+    : getGeneratorColor({
         label: item.project?.name ?? item.project_label,
         opacity: 0.1,
         theme,
       });
 
   const dataSource = useMemo(() => {
-    return getConstraintSetProjectDataSource({ constraintSet: item });
+    return getConstraintSetGeneratorDataSource({ constraintSet: item });
   }, [item]);
 
-  const translatedConstraints = useProjectTranslations(
+  const translatedConstraints = useGeneratorTranslations(
     item.constraints,
     dataSource?.categories,
   );
 
   return (
-    <View
+    <TouchableOpacity
+      activeOpacity={onOpenDetails ? 0.86 : 1}
+      onPress={onOpenDetails}
+      disabled={!onOpenDetails}
       style={[
         globalStyles.shadeContainer,
         {
@@ -70,30 +99,75 @@ export function ConstraintsSetCard({
         },
       ]}
     >
-      <View style={styles.headerContainer}>
-        <DifficultyIndicator difficultyIndicator={item.difficulty} />
-        <View style={styles.titleBlock}>
-          <Text style={[styles.constraintSetTitle, { color: solidColor }]}>
-            {constraintSetName}
-          </Text>
-          <Text style={[globalStyles.discreetText, styles.projectLabelText]}>
-            {projectLabel}
-          </Text>
-        </View>
+      {!hideHeader && (
+        <View style={styles.headerContainer}>
+          <DifficultyIndicator difficultyIndicator={item.difficulty} />
+          <View style={styles.titleBlock}>
+            <Text style={[styles.constraintSetTitle, { color: solidColor }]}>
+              {constraintSetName}
+            </Text>
+            <Text style={[globalStyles.discreetText, styles.projectLabelText]}>
+              {projectLabel}
+            </Text>
+          </View>
 
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <ShareConstraintButton
-            projectLabel={projectLabel}
-            constraints={translatedConstraints}
-            difficulty={item.difficulty}
-            color={solidColor}
-          />
+          <View style={globalStyles.rowCenter}>
+            {onOpenComments && (
+              <CommentButton
+                count={commentCount}
+                color={solidColor}
+                onPress={onOpenComments}
+              />
+            )}
 
-          <TouchableOpacity onPress={() => deleteRecord(item.id)}>
-            <Ionicons name="trash-outline" size={20} color={solidColor} />
-          </TouchableOpacity>
+            {onToggleLike && (
+              <LikeButton
+                count={likeCount}
+                isLiked={isLiked}
+                color={solidColor}
+                isLoading={isLikePending}
+                onPress={onToggleLike}
+              />
+            )}
+
+            <ShareConstraintButton
+              projectLabel={projectLabel}
+              constraints={translatedConstraints}
+              difficulty={item.difficulty}
+              color={solidColor}
+            />
+
+            {publishRecord && (
+              <TouchableOpacity
+                onPress={() => publishRecord(item)}
+                disabled={isPublishing || item.is_public}
+                style={(isPublishing || item.is_public) && { opacity: 0.55 }}
+                accessibilityLabel={t(
+                  item.is_public
+                    ? "screen:constraint_sets.published_to_community"
+                    : "screen:constraint_sets.publish_to_community",
+                )}
+              >
+                <Ionicons
+                  name={
+                    item.is_public
+                      ? "cloud-done-outline"
+                      : "cloud-upload-outline"
+                  }
+                  size={20}
+                  color={solidColor}
+                />
+              </TouchableOpacity>
+            )}
+
+            {deleteRecord && (
+              <TouchableOpacity onPress={() => deleteRecord(item.id)}>
+                <Ionicons name="trash-outline" size={20} color={solidColor} />
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
-      </View>
+      )}
 
       <View
         style={[
@@ -106,14 +180,14 @@ export function ConstraintsSetCard({
 
       <View style={{ marginBottom: 12 }}>
         <MetadataBadges
-          language={getConstraintSetProjectLanguage(item)}
-          supportedFile={getConstraintSetProjectSupportedFile(item)}
-          tags={getConstraintSetProjectTags(item)}
+          language={getConstraintSetGeneratorLanguage(item)}
+          supportedFile={getConstraintSetGeneratorSupportedFile(item)}
+          tags={getConstraintSetGeneratorTags(item)}
           color={solidColor}
         />
       </View>
 
-      <View style={styles.tagContainer}>
+      <View style={globalStyles.wrapRow}>
         {translatedConstraints.map(({ label, displayValue, description }) => (
           <View key={label} style={globalStyles.tag}>
             <Text style={{ fontSize: 12, color: colors.textDiscreet }}>
@@ -135,28 +209,31 @@ export function ConstraintsSetCard({
         ))}
         {translatedConstraints.length === 0 && (
           <Text style={{ color: colors.textDiscreet }}>
-            {t("screen:lab.empty_result")}
+            {t("screen:generators.empty_result")}
           </Text>
         )}
       </View>
 
-      <TouchableOpacity
-        style={[
-          globalStyles.borderButton,
-          { borderColor: solidColor, marginTop: 12 },
-        ]}
-        onPress={submit}
-      >
-        <Text style={{ color: solidColor }}>
-          {t("component:constraint-set-card.upload")}
-        </Text>
-      </TouchableOpacity>
-    </View>
+      {submit && (
+        <TouchableOpacity
+          style={[
+            globalStyles.borderButton,
+            { borderColor: solidColor, marginTop: 12 },
+            isSubmitting && { opacity: 0.65 },
+          ]}
+          onPress={submit}
+          disabled={isSubmitting}
+        >
+          <Text style={{ color: solidColor }}>
+            {submitLabel ?? t("component:constraint-set-card.upload")}
+          </Text>
+        </TouchableOpacity>
+      )}
+    </TouchableOpacity>
   );
 }
 
 export const styles = StyleSheet.create({
-  tagContainer: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",

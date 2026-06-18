@@ -7,12 +7,12 @@ import { useTranslation } from "react-i18next";
 import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 
 interface ImageMediaPickerProps {
-  projectColor: string;
+  generatorColor: string;
   onImageSelected: (uri: string | null) => void;
 }
 
 export const ImageMediaPicker = ({
-  projectColor,
+  generatorColor,
   onImageSelected,
 }: ImageMediaPickerProps) => {
   const { globalStyles } = useStyles();
@@ -60,14 +60,14 @@ export const ImageMediaPicker = ({
           style={[
             globalStyles.mediaIntegrationContainer,
             {
-              borderColor: projectColor,
+              borderColor: generatorColor,
             },
           ]}
           onPress={pickImage}
         >
-          <Ionicons name="camera-outline" size={32} color={projectColor} />
+          <Ionicons name="camera-outline" size={32} color={generatorColor} />
           <Text
-            style={[globalStyles.text, { color: projectColor, marginTop: 8 }]}
+            style={[globalStyles.text, { color: generatorColor, marginTop: 8 }]}
           >
             {t("component:image-picker.placeholder")}
           </Text>

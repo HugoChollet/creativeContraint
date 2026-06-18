@@ -14,14 +14,14 @@ export type MediaPickerResult = {
 interface MediaPickerProps {
   projectLabel?: string;
   supportedFileType?: string | null;
-  projectColor: string;
+  generatorColor: string;
   onChange: (result: MediaPickerResult) => void;
 }
 
 export const MediaPicker = ({
   projectLabel,
   supportedFileType,
-  projectColor,
+  generatorColor,
   onChange,
 }: MediaPickerProps) => {
   const handleImage = (uri: string | null) => {
@@ -73,28 +73,28 @@ export const MediaPicker = ({
     <View style={{ marginBottom: 20 }}>
       {pickerMode === "image" && (
         <ImageMediaPicker
-          projectColor={projectColor}
+          generatorColor={generatorColor}
           onImageSelected={handleImage}
         />
       )}
 
       {pickerMode === "audio" && (
         <MusicMediaPicker
-          projectColor={projectColor}
+          generatorColor={generatorColor}
           onFileSelected={handleMusic}
         />
       )}
 
       {pickerMode === "youtube" && (
         <YoutubeLinkPicker
-          projectColor={projectColor}
+          generatorColor={generatorColor}
           onUrlChange={handleYoutube}
         />
       )}
 
       {pickerMode === "book" && (
         <BookMediaPicker
-          projectColor={projectColor}
+          generatorColor={generatorColor}
           onContentChange={handleBook}
         />
       )}

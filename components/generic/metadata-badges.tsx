@@ -1,8 +1,8 @@
 import {
-  getProjectLanguageFlag,
-  isProjectLanguage,
-  normalizeProjectTags,
-} from "@/constants/project-metadata";
+  getGeneratorLanguageFlag,
+  isGeneratorLanguage,
+  normalizeGeneratorTags,
+} from "@/constants/generator-metadata";
 import { TagSize } from "@/constants/styles";
 import { useStyles } from "@/hooks/use-styles";
 import { Ionicons } from "@expo/vector-icons";
@@ -52,13 +52,13 @@ export default function MetadataBadges({
 }: MetadataBadgesProps) {
   const { t } = useTranslation();
   const { globalStyles, colors } = useStyles();
-  const normalizedTags = normalizeProjectTags(tags);
+  const normalizedTags = normalizeGeneratorTags(tags);
   const badgeLabels: MetadataBadge[] = [
-    ...(isProjectLanguage(language)
+    ...(isGeneratorLanguage(language)
       ? [
           {
             key: `language-${language}`,
-            label: `${getProjectLanguageFlag(language)} ${t(
+            label: `${getGeneratorLanguageFlag(language)} ${t(
               `component:metadata.languages.${language}`,
               {
                 defaultValue: language.toUpperCase(),

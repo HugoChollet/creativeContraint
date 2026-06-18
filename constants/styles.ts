@@ -1,4 +1,4 @@
-import { StyleSheet, TextStyle, ViewStyle } from "react-native";
+import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from "react-native";
 import { AppThemeColors, Colors } from "./theme";
 
 export type TagSize = "small" | "medium" | "big";
@@ -14,8 +14,33 @@ interface GlobalStyles {
   screenContainer: ViewStyle;
   elementAndDescriptorContainer: ViewStyle;
   mediaIntegrationContainer: ViewStyle;
+  root: ViewStyle;
+  centered: ViewStyle;
   rowBetween: ViewStyle;
   wrapRow: ViewStyle;
+  rowCenter: ViewStyle;
+  rowStart: ViewStyle;
+  rowBetweenCenter: ViewStyle;
+  rowEndCenter: ViewStyle;
+  scrollContent: ViewStyle;
+  compactIconStatButton: ViewStyle;
+  contentHeader: ViewStyle;
+  contentHeaderCard: ViewStyle;
+  contentHeaderDetail: ViewStyle;
+  backButtonSmall: ViewStyle;
+  avatarColumn: ViewStyle;
+  titleBlockCenter: ViewStyle;
+  centeredWrapRow: ViewStyle;
+  compactActions: ViewStyle;
+  iconButtonSmall: ViewStyle;
+  circularIconButton: ViewStyle;
+  avatarSmall: ImageStyle;
+  avatarMedium: ImageStyle;
+  avatarLarge: ImageStyle;
+  pill: ViewStyle;
+  roundedBubble: ViewStyle;
+  sectionBlock: ViewStyle;
+  inlineLink: ViewStyle;
 
   text: TextStyle;
   label: TextStyle;
@@ -27,6 +52,15 @@ interface GlobalStyles {
   secondaryButtonText: TextStyle;
   borderButtonText: TextStyle;
   alertText: TextStyle;
+  contentHeaderTitle: TextStyle;
+  contentHeaderDetailTitle: TextStyle;
+  contentHeaderMetaText: TextStyle;
+  contentHeaderUsername: TextStyle;
+  contentHeaderDetailUsername: TextStyle;
+  compactStatText: TextStyle;
+  sectionTitle: TextStyle;
+  inlineLinkText: TextStyle;
+  pillText: TextStyle;
 
   input: ViewStyle & TextStyle;
   secondaryButton: ViewStyle;
@@ -113,9 +147,16 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     mediaIntegrationContainer: {
       ...baseContainer,
       borderRadius: 12,
-      backgroundColor: themes.hardContainer,
+      backgroundColor: themes.softContainer,
       borderStyle: "dashed",
       borderWidth: 2,
+      alignItems: "center",
+    },
+    root: {
+      flex: 1,
+    },
+    centered: {
+      justifyContent: "center",
       alignItems: "center",
     },
     rowBetween: {
@@ -128,6 +169,141 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
       flexDirection: "row",
       flexWrap: "wrap",
       gap: 8,
+    },
+    rowCenter: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 8,
+    },
+    rowStart: {
+      flexDirection: "row",
+      alignItems: "flex-start",
+      gap: 10,
+    },
+    rowBetweenCenter: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      gap: 8,
+    },
+    rowEndCenter: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "flex-end",
+      gap: 8,
+    },
+    scrollContent: {
+      paddingHorizontal: 24,
+      paddingBottom: 40,
+    },
+    compactIconStatButton: {
+      minWidth: 36,
+      height: 28,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 3,
+    },
+    contentHeader: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      gap: 6,
+    },
+    contentHeaderCard: {
+      minHeight: 62,
+      paddingHorizontal: 10,
+      paddingVertical: 6,
+    },
+    contentHeaderDetail: {
+      minHeight: 64,
+      paddingHorizontal: 8,
+      paddingVertical: 8,
+      borderBottomWidth: 1,
+      borderBottomColor: themes.borderColor,
+    },
+    backButtonSmall: {
+      width: 28,
+      height: 34,
+      alignItems: "flex-start",
+      justifyContent: "center",
+    },
+    avatarColumn: {
+      width: 46,
+      alignItems: "center",
+      gap: 2,
+    },
+    titleBlockCenter: {
+      flex: 1,
+      minWidth: 0,
+      alignItems: "center",
+    },
+    centeredWrapRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 5,
+      maxWidth: "100%",
+      flexWrap: "wrap",
+    },
+    compactActions: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "flex-end",
+      minWidth: 82,
+      gap: 1,
+    },
+    iconButtonSmall: {
+      width: 24,
+      height: 28,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    circularIconButton: {
+      width: 48,
+      height: 48,
+      borderRadius: 24,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    avatarSmall: {
+      width: 22,
+      height: 22,
+      borderRadius: 11,
+    },
+    avatarMedium: {
+      width: 28,
+      height: 28,
+      borderRadius: 14,
+    },
+    avatarLarge: {
+      width: 30,
+      height: 30,
+      borderRadius: 15,
+    },
+    pill: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 2,
+      borderRadius: 999,
+      paddingHorizontal: 6,
+      paddingVertical: 2,
+    },
+    roundedBubble: {
+      flex: 1,
+      borderRadius: 12,
+      padding: 12,
+      gap: 6,
+    },
+    sectionBlock: {
+      gap: 14,
+      paddingTop: 18,
+    },
+    inlineLink: {
+      alignSelf: "flex-start",
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 4,
     },
 
     // Texts
@@ -181,6 +357,56 @@ export const getGlobalStyles = (themes: AppThemeColors): GlobalStyles => {
     alertText: {
       ...baseText,
       color: Colors.alert,
+    },
+    contentHeaderTitle: {
+      ...baseText,
+      fontSize: 15,
+      fontWeight: "700",
+    },
+    contentHeaderDetailTitle: {
+      ...baseText,
+      fontSize: 16,
+      fontWeight: "700",
+      textAlign: "center",
+    },
+    contentHeaderMetaText: {
+      ...baseText,
+      fontSize: 11,
+      color: themes.textDiscreet,
+      fontWeight: "600",
+    },
+    contentHeaderUsername: {
+      ...baseText,
+      maxWidth: 46,
+      fontSize: 9,
+      fontWeight: "600",
+    },
+    contentHeaderDetailUsername: {
+      ...baseText,
+      maxWidth: 46,
+      fontSize: 10,
+      fontWeight: "600",
+    },
+    compactStatText: {
+      ...baseText,
+      fontSize: 12,
+      fontWeight: "700",
+    },
+    sectionTitle: {
+      ...baseText,
+      fontSize: 20,
+      fontWeight: "700",
+    },
+    inlineLinkText: {
+      ...baseText,
+      fontSize: 14,
+      fontWeight: "700",
+      textDecorationLine: "underline",
+    },
+    pillText: {
+      ...baseText,
+      fontSize: 10,
+      fontWeight: "700",
     },
 
     // Buttons

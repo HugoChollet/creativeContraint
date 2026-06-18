@@ -15,14 +15,18 @@ export function useProfile<T>(
 ) {
   const { session } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [fetched, setFetched] = useState(false);
   const [data, setData] = useState<T>(initialData);
   const initialDataRef = useRef(initialData);
   const profileId = options?.profileId ?? session?.user?.id;
   const enabled = options?.enabled ?? true;
 
   const fetchData = useCallback(async () => {
+    setFetched(false);
+
     if (!enabled || !profileId) {
       setData(initialDataRef.current);
+      setFetched(true);
       return;
     }
 
@@ -40,6 +44,7 @@ export function useProfile<T>(
       console.error(error);
     } finally {
       setLoading(false);
+      setFetched(true);
     }
   }, [enabled, profileId, tableName]);
 
@@ -92,11 +97,13 @@ export function useProfile<T>(
       if (error) throw error;
 
       setData((prev) => ({ ...prev, ...finalUpdates }));
+      return finalUpdates;
     } catch (error) {
       if (error instanceof Error) {
         console.error("Update Error:", error.message);
         Alert.alert(error.message);
       }
+      return null;
     } finally {
       setLoading(false);
     }
@@ -128,6 +135,7 @@ export function useProfile<T>(
     data,
     setData,
     deleteData,
+    fetched,
     loading,
     updateData,
   };

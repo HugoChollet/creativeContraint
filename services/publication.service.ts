@@ -106,4 +106,30 @@ export const publicationService = {
 
     return data as Publication[];
   },
+
+  async getPublication(id: string): Promise<Publication | null> {
+    const { data, error } = await supabase
+      .from("publications")
+      .select(
+        `
+        *,
+        generated_constraints:constraint_set_id (
+          ${CONSTRAINT_SET_SELECT}
+        ),
+        profile:profiles!fk_publications_profile (
+          username,
+          avatar_url
+        )
+      `,
+      )
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      console.error("Error fetching publication:", error);
+      return null;
+    }
+
+    return data as Publication;
+  },
 };

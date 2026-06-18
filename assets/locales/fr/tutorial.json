@@ -1,0 +1,32 @@
+{
+  "close": "Fermer le tutoriel",
+  "finish": "Commencer à créer",
+  "go_to_slide": "Aller à l'étape {{number}}",
+  "next": "Suivant",
+  "previous": "Précédent",
+  "replay_button": "Revoir le tutoriel",
+  "settings_title": "Tutoriel",
+  "skip": "Passer le tutoriel",
+  "slides": {
+    "inspiration": {
+      "title": "En panne d'inspiration ?",
+      "description": "Kadex transforme une envie créative en challenge concret grâce à des contraintes faites pour passer à l'action."
+    },
+    "generator": {
+      "title": "Choisissez un générateur",
+      "description": "Commencez par le type de générateur que vous voulez utiliser : écriture, musique, vidéo, jeu, photo, cuisine, et plus encore."
+    },
+    "constraints": {
+      "title": "Composez votre challenge",
+      "description": "Sélectionnez vos catégories, ajustez la difficulté, puis générez un set de contraintes qui donne une direction claire à votre création."
+    },
+    "publish": {
+      "title": "Sauvegardez, créez, publiez",
+      "description": "Gardez les sets qui vous inspirent. Une fois votre création réalisée, publiez-la liée au challenge."
+    },
+    "customize": {
+      "title": "Créez vos propres règles",
+      "description": "Créez des générateurs, ajoutez des catégories, partagez-les avec la communauté et découvrez ce que les autres créateurs imaginent."
+    }
+  }
+}

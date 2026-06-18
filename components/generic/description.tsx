@@ -5,7 +5,7 @@ interface DescriptionProps {
   description: string;
   setDescription: (text: string) => void;
   isLoading?: boolean;
-  projectColor?: string;
+  generatorColor?: string;
   placeholder?: string;
   height?: number;
 }
@@ -14,12 +14,12 @@ export default function Description({
   description,
   setDescription,
   isLoading,
-  projectColor = "#000000",
+  generatorColor = "#000000",
   placeholder,
   height = 120,
 }: DescriptionProps) {
   const { globalStyles, colors } = useStyles();
-  const projectColorSoft = projectColor.replace(/[\d.]+\)$/g, `0.2)`);
+  const generatorColorSoft = generatorColor.replace(/[\d.]+\)$/g, `0.2)`);
 
   return (
     <TextInput
@@ -29,7 +29,7 @@ export default function Description({
           height: height,
           textAlignVertical: "top",
           paddingTop: 12,
-          borderColor: projectColorSoft,
+          borderColor: generatorColorSoft,
         },
       ]}
       placeholder={placeholder}

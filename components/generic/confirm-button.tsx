@@ -4,7 +4,7 @@ import React from "react";
 import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 
 interface ConfirmButtonProps {
-  projectColor: string;
+  generatorColor: string;
   label: string;
   isActive?: boolean;
   isLoading?: boolean;
@@ -12,14 +12,14 @@ interface ConfirmButtonProps {
 }
 
 export const ConfirmButton = ({
-  projectColor,
+  generatorColor,
   label,
   isActive = true,
   isLoading = false,
   onClick,
 }: ConfirmButtonProps) => {
   const { globalStyles, colors } = useStyles();
-  const backgroundColor = isActive ? projectColor : colors.disable;
+  const backgroundColor = isActive ? generatorColor : colors.disable;
   const foregroundColor = getContrastingColor(backgroundColor, "primary");
 
   return (

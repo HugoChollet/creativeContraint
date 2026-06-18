@@ -6,12 +6,12 @@ import { useTranslation } from "react-i18next";
 import { Text, TextInput, View } from "react-native";
 
 interface YoutubeLinkPickerProps {
-  projectColor: string;
+  generatorColor: string;
   onUrlChange: (url: string, isValid: boolean) => void;
 }
 
 export const YoutubeLinkPicker = ({
-  projectColor,
+  generatorColor,
   onUrlChange,
 }: YoutubeLinkPickerProps) => {
   const { globalStyles, colors } = useStyles();
@@ -43,7 +43,7 @@ export const YoutubeLinkPicker = ({
         style={[
           globalStyles.hardContainer,
           {
-            borderColor: isValid ? projectColor : Colors.alert, // Orange/Rouge si invalide
+            borderColor: isValid ? generatorColor : Colors.alert, // Orange/Rouge si invalide
             borderWidth: 1,
             padding: 16,
           },
@@ -59,7 +59,7 @@ export const YoutubeLinkPicker = ({
           <Ionicons
             name="logo-youtube"
             size={24}
-            color={projectColor}
+            color={generatorColor}
             style={{ marginRight: 10 }}
           />
           <Text style={globalStyles.text}>

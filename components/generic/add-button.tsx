@@ -3,12 +3,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { Text, TouchableOpacity } from "react-native";
 
 interface AddButtonProps {
-  projectColor: string;
+  generatorColor: string;
   label: string;
   onClick: () => void;
 }
 
-export const AddButton = ({ projectColor, label, onClick }: AddButtonProps) => {
+export const AddButton = ({ generatorColor, label, onClick }: AddButtonProps) => {
   const { globalStyles } = useStyles();
 
   return (
@@ -16,13 +16,13 @@ export const AddButton = ({ projectColor, label, onClick }: AddButtonProps) => {
       style={[
         globalStyles.mediaIntegrationContainer,
         {
-          borderColor: projectColor,
+          borderColor: generatorColor,
         },
       ]}
       onPress={onClick}
     >
-      <Ionicons name="add" size={32} color={projectColor} />
-      <Text style={[globalStyles.text, { color: projectColor }]}>{label}</Text>
+      <Ionicons name="add" size={32} color={generatorColor} />
+      <Text style={[globalStyles.text, { color: generatorColor }]}>{label}</Text>
     </TouchableOpacity>
   );
 };

@@ -56,13 +56,13 @@
     "ok": "Compris"
   },
   "constraint-set-card": {
-    "upload": "Soumettre un projet"
+    "upload": "Soumettre un générateur"
   },
   "metadata": {
     "language_label": "Langue",
     "supported_files_label": "Format de publication supporté",
     "tags_label": "Tags",
-    "visual_tag_label": "Visuel du projet",
+    "visual_tag_label": "Visuel du générateur",
     "visual_tag_helper": "Choisissez le tag qui définit l'image et la couleur",
     "tags_limit": "{{count}} / {{max}} sélectionnés",
     "tags_range": "{{count}} sélectionnés (minimum {{min}}, maximum {{max}})",
@@ -116,15 +116,15 @@
       "long": "Long"
     }
   },
-  "project_form": {
-    "title": "Créer votre générateur de projet",
-    "name_label": "Nom du type projet",
-    "name_placeholder": "Mon super projet",
-    "description_label": "Description du projet",
-    "description_placeholder": "Décrivez votre projet pour inspirer les créateurs",
-    "submit_button": "Sauvegarder ce projet"
+  "generator_form": {
+    "title": "Créer votre générateur",
+    "name_label": "Nom du type de générateur",
+    "name_placeholder": "Mon super générateur",
+    "description_label": "Description du générateur",
+    "description_placeholder": "Décrivez votre générateur pour inspirer les créateurs",
+    "submit_button": "Sauvegarder ce générateur"
   },
-  "project_item": {
+  "generator_item": {
     "categories_counter": "Catégories : {{count}}",
     "constraints_counter": "Contraintes : {{count}}"
   },
@@ -160,7 +160,7 @@
     "title": "Intégration YouTube",
     "placeholder": "https://www.youtube.com/watch?v=...",
     "invalid_error": "Veuillez entrer un lien YouTube valide.",
-    "note": "Note : Votre vidéo doit être en mode 'Publique' ou 'Non répertoriée' pour être visible sur CreativeConstraint."
+    "note": "Note : Votre vidéo doit être en mode 'Publique' ou 'Non répertoriée' pour être visible sur Kadex."
   },
   "book-picker": {
     "label": "Contenu du livre",
