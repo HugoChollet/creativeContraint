@@ -1,23 +1,21 @@
-name: Build APK
+name: Release Android APK
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
-      - main
+      - master
+  workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
-  group: build-apk-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: release-apk-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  build-apk:
-    name: Build Android APK
+  release-apk:
+    name: Build APK and create release
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -25,12 +23,36 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
+
+      - name: Resolve release version
+        id: release
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          TAG="v$VERSION"
+          APK_NAME="kadex-$TAG.apk"
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "apk_name=$APK_NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Ensure release tag does not already exist
+        env:
+          TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          git fetch --tags origin
+
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists. Bump package.json version before releasing." >&2
+            exit 1
+          fi
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -57,9 +79,28 @@ jobs:
         working-directory: android
         run: ./gradlew :app:assembleRelease
 
+      - name: Prepare release artifact
+        env:
+          APK_NAME: ${{ steps.release.outputs.apk_name }}
+        run: |
+          mkdir -p dist
+          cp android/app/build/outputs/apk/release/app-release.apk "dist/$APK_NAME"
+
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: creativecontraint-release-apk
-          path: android/app/build/outputs/apk/release/app-release.apk
+          name: ${{ steps.release.outputs.apk_name }}
+          path: dist/${{ steps.release.outputs.apk_name }}
           if-no-files-found: error
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release.outputs.tag }}
+          VERSION: ${{ steps.release.outputs.version }}
+          APK_NAME: ${{ steps.release.outputs.apk_name }}
+        run: |
+          gh release create "$TAG" "dist/$APK_NAME" \
+            --target "$GITHUB_SHA" \
+            --title "Kadex $TAG" \
+            --notes "Android APK build for Kadex $VERSION."
