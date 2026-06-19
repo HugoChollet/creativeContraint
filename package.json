@@ -22,7 +22,10 @@
     "logs:android": "adb logcat -v time ReactNativeJS:I ReactNative:I Expo:I AndroidRuntime:E *:S",
     "logs:android:all": "adb logcat -v time",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "build:local": "node ./build-local.js",
+    "build:local:android": "node ./build-local.js android",
+    "build:local:ios": "node ./build-local.js ios"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
