@@ -8,6 +8,8 @@ import {
   getStoredAppLanguage,
   getStoredThemeMode,
 } from "@/lib/app-preferences";
+import { Ionicons } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
@@ -70,6 +72,12 @@ function AppLayout() {
 }
 
 export default function RootLayout() {
+  const [iconsLoaded, iconsError] = useFonts(Ionicons.font);
+
+  if (!iconsLoaded && !iconsError) {
+    return null;
+  }
+
   return (
     <ThemeProvider>
       <AuthProvider>
