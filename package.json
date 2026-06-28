@@ -22,7 +22,7 @@
     "logs:android": "adb logcat -v time ReactNativeJS:I ReactNative:I Expo:I AndroidRuntime:E *:S",
     "logs:android:all": "adb logcat -v time",
     "web": "expo start --web",
-    "build": "expo export --platform web",
+    "build": "expo export --platform web && node ./scripts/prepare-web-export.js",
     "lint": "expo lint",
     "build:local": "node ./build-local.js",
     "build:local:android": "node ./build-local.js android",
