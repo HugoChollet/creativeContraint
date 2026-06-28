@@ -28,9 +28,10 @@ if (!ioniconsFontMatch) {
 }
 
 const ioniconsFontUrl = ioniconsFontMatch[1];
+const ioniconsFontPath = path.join(distDir, ioniconsFontUrl);
+const ioniconsFontBase64 = fs.readFileSync(ioniconsFontPath).toString("base64");
 const ioniconsHeadTags = [
-  `<link rel="preload" href="${ioniconsFontUrl}" as="font" type="font/ttf" crossorigin="anonymous" />`,
-  `<style id="ionicons-font-face">@font-face{font-family:"ionicons";src:url("${ioniconsFontUrl}") format("truetype");font-display:block}</style>`,
+  `<style id="ionicons-font-face">@font-face{font-family:"ionicons";src:url("data:font/ttf;base64,${ioniconsFontBase64}") format("truetype");font-display:block}</style>`,
 ].join("\n  ");
 
 let indexHtml = fs.readFileSync(indexPath, "utf8");
@@ -44,4 +45,4 @@ if (fs.existsSync(headersSourcePath)) {
   fs.copyFileSync(headersSourcePath, headersOutputPath);
 }
 
-console.log(`Prepared web export with Ionicons font preload: ${ioniconsFontUrl}`);
+console.log(`Prepared web export with embedded Ionicons font: ${ioniconsFontUrl}`);
